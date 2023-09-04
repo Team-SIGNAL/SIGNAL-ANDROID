@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.signal.design_system"
+    namespace = "com.signal.designsystem"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.signal.design_system"
+        applicationId = "com.signal.designsystem"
         minSdk = 26
         targetSdk = 33
         versionCode = 1
