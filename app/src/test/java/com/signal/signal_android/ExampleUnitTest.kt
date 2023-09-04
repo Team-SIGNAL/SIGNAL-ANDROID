@@ -1,4 +1,4 @@
-package com.signal.android
+package com.signal.signal_android
 
 import org.junit.Test
 
