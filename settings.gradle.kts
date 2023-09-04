@@ -14,5 +14,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Signal-Android"
-include(":app")
- 
+include(":presentation")
+include(":data")
+include(":domain")
+include(":di")
+include(":design-system")
