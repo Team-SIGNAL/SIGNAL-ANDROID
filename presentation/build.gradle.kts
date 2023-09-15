@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.signal.signal_android"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.signal.signal_android"
