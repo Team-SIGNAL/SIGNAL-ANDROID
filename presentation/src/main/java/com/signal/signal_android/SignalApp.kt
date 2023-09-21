@@ -15,7 +15,9 @@ internal fun SignalApp() {
         navController = navController,
         startDestination = NavigationRoute.User.route,
     ) {
-        userNavigation()
+        userNavigation(
+            moveToLanding = { navController.navigate(NavigationRoute.User.Landing) },
+        )
         authNavigation()
     }
 }

@@ -8,7 +8,7 @@ sealed class NavigationRoute(val route: String) {
 
     object User : NavigationRoute(route = "User") {
         const val Splash = "splash"
-        const val Onboarding = "onboarding"
+        const val Landing = "landing"
 
     }
 }
