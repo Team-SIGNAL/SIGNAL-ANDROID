@@ -14,6 +14,12 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.signal.signal_android.designsystem.color.Pink40
+import com.signal.signal_android.designsystem.color.Pink80
+import com.signal.signal_android.designsystem.color.Purple40
+import com.signal.signal_android.designsystem.color.Purple80
+import com.signal.signal_android.designsystem.color.PurpleGrey40
+import com.signal.signal_android.designsystem.color.PurpleGrey80
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -64,7 +70,6 @@ fun SignalAndroidTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
         content = content
     )
 }
