@@ -107,7 +107,7 @@ object JobisTypography {
     )
 
     @Stable
-    val body3 = TextStyle(
+    val caption = TextStyle(
         fontFamily = pretendardFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
@@ -117,7 +117,7 @@ object JobisTypography {
 }
 
 @Composable
-fun Heading1(
+fun TitleLarge2(
     modifier: Modifier = Modifier,
     color: Color = SignalColor.Gray700,
     text: String,
@@ -138,7 +138,7 @@ fun Heading1(
 }
 
 @Composable
-fun Heading2(
+fun TitleLarge(
     modifier: Modifier = Modifier,
     color: Color = SignalColor.Gray700,
     text: String,
@@ -159,7 +159,7 @@ fun Heading2(
 }
 
 @Composable
-fun Heading3(
+fun Title(
     modifier: Modifier = Modifier,
     color: Color = SignalColor.Gray700,
     text: String,
@@ -180,7 +180,7 @@ fun Heading3(
 }
 
 @Composable
-fun Heading4(
+fun SubTitle(
     modifier: Modifier = Modifier,
     color: Color = SignalColor.Gray700,
     text: String,
@@ -201,7 +201,7 @@ fun Heading4(
 }
 
 @Composable
-fun Heading5(
+fun BodyLarge2(
     modifier: Modifier = Modifier,
     color: Color = SignalColor.Gray700,
     text: String,
@@ -222,7 +222,7 @@ fun Heading5(
 }
 
 @Composable
-fun Heading6(
+fun BodyLarge(
     modifier: Modifier = Modifier,
     color: Color = SignalColor.Gray700,
     text: String,
@@ -243,7 +243,7 @@ fun Heading6(
 }
 
 @Composable
-fun Body1(
+fun BodyStrong(
     modifier: Modifier = Modifier,
     color: Color = SignalColor.Gray700,
     text: String,
@@ -285,7 +285,7 @@ fun Body2(
 }
 
 @Composable
-fun Body3(
+fun Body(
     modifier: Modifier = Modifier,
     color: Color = SignalColor.Gray700,
     text: String,
@@ -298,7 +298,7 @@ fun Body3(
         color = color,
         text = text,
         fontFamily = pretendardFamily,
-        style = JobisTypography.body3,
+        style = JobisTypography.caption,
         textDecoration = decoration,
         overflow = overflow,
         maxLines = maxLines,

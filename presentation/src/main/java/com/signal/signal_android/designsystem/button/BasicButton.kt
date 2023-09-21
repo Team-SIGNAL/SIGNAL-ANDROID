@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.signal.signal_android.designsystem.color.ButtonColor
 import com.signal.signal_android.designsystem.color.SignalButtonColor
-import com.signal.signal_android.designsystem.theme.Body1
+import com.signal.signal_android.designsystem.theme.BodyStrong
 import com.signal.signal_android.designsystem.util.signalClickable
 
 @Stable
@@ -74,7 +74,7 @@ private fun BasicButton(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Body1(
+        BodyStrong(
             text = text,
             color = textColor
         )
