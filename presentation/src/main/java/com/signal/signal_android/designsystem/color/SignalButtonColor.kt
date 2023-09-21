@@ -3,6 +3,7 @@ package com.signal.signal_android.designsystem.color
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
+import com.signal.signal_android.designsystem.foundation.SignalColor
 
 data class ButtonColor(
     val backgroundColor: BackgroundColor,

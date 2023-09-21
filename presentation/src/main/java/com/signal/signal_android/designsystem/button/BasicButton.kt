@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.signal.signal_android.designsystem.color.ButtonColor
 import com.signal.signal_android.designsystem.color.SignalButtonColor
-import com.signal.signal_android.designsystem.theme.BodyStrong
+import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.util.signalClickable
 
 @Stable

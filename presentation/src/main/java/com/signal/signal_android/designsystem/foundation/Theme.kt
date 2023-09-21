@@ -1,4 +1,4 @@
-package com.signal.signal_android.designsystem.theme
+package com.signal.signal_android.designsystem.foundation
 
 import android.app.Activity
 import android.os.Build

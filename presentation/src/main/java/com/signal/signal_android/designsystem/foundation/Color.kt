@@ -1,4 +1,4 @@
-package com.signal.signal_android.designsystem.color
+package com.signal.signal_android.designsystem.foundation
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color

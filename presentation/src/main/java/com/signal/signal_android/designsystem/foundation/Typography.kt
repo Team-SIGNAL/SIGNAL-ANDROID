@@ -1,4 +1,4 @@
-package com.signal.signal_android.designsystem.theme
+package com.signal.signal_android.designsystem.foundation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,7 +14,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.signal.signal_android.R
-import com.signal.signal_android.designsystem.color.SignalColor
 
 @Stable
 val maxLine = 1000
