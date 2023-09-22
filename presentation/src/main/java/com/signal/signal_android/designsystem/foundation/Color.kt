@@ -42,5 +42,8 @@ object SignalColor {
     val Gray700 = Color(0xFF333333)
 
     @Stable
+    val Error = Color(0xFFFF2B2B)
+
+    @Stable
     val Transparent = Color(0x00000000)
 }
