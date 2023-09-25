@@ -10,11 +10,11 @@
     <string name="indicator_background_color">Indicator animated background color</string>
 
     <!--landing-->
-    <string name="landing_description_1">하루동안의 감정을 적는 고민 일기</string>
-    <string name="landing_description_2">우울증 정도 파악을 위한 우울증 자가진단</string>
-    <string name="landing_description_3">간편한 유저 소통을 위한 커뮤니티</string>
-    <string name="landing_description_4">여러 종류의 컨텐츠 추천</string>
-    <string name="landing_description_5">전문가 상담을 위한 병원 예약</string>
+    <string name="landing_description_diary">하루동안의 감정을 적는 고민 일기</string>
+    <string name="landing_description_self_diagnosis">우울증 정도 파악을 위한 우울증 자가진단</string>
+    <string name="landing_description_community">간편한 유저 소통을 위한 커뮤니티</string>
+    <string name="landing_description_recommend_contents">여러 종류의 컨텐츠 추천</string>
+    <string name="landing_description_reservation_clinic">전문가 상담을 위한 병원 예약</string>
 
     <string name="landing_sign_in">로그인 하러가기</string>
     <string name="landing_sign_up">회원가입 하러가기</string>

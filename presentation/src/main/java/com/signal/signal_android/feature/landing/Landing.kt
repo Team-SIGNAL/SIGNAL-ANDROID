@@ -29,19 +29,19 @@ import com.signal.signal_android.designsystem.foundation.BodyLarge2
 private const val PAGE_COUNT = 5
 
 private val landingImages = listOf(
-    R.drawable.ic_landing_1,
-    R.drawable.ic_landing_2,
-    R.drawable.ic_landing_3,
-    R.drawable.ic_landing_4,
-    R.drawable.ic_landing_5,
+    R.drawable.ic_landing_diary,
+    R.drawable.ic_landing_self_diagnosis,
+    R.drawable.ic_landing_community,
+    R.drawable.ic_landing_recommend_contents,
+    R.drawable.ic_landing_reservation_clinic,
 )
 
 private val landingDescriptions = listOf(
-    R.string.landing_description_1,
-    R.string.landing_description_2,
-    R.string.landing_description_3,
-    R.string.landing_description_4,
-    R.string.landing_description_5,
+    R.string.landing_description_diary,
+    R.string.landing_description_self_diagnosis,
+    R.string.landing_description_community,
+    R.string.landing_description_recommend_contents,
+    R.string.landing_description_reservation_clinic,
 )
 
 @OptIn(ExperimentalFoundationApi::class)
