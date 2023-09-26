@@ -4,7 +4,6 @@
     <!--global-->
     <string name="id">아이디</string>
     <string name="password">비밀번호</string>
-    <string name="sign_in">로그인</string>
 
     <!--content description-->
     <string name="app_logo">app logo</string>
@@ -33,4 +32,6 @@
 
     <string name="sign_in_no_account">계정이 없다면?</string>
     <string name="sign_in_do_sign_up">회원가입하기</string>
+
+    <string name="sign_in">로그인</string>
 </resources>
