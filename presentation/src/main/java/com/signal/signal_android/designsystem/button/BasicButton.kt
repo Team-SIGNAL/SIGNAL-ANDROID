@@ -25,7 +25,7 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.util.signalClickable
 
 @Stable
-private val ButtonShape = RoundedCornerShape(12.dp)
+private val ButtonShape = RoundedCornerShape(8.dp)
 
 @Composable
 private fun BasicButton(

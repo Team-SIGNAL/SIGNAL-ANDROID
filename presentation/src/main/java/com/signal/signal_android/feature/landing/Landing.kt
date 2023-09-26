@@ -46,14 +46,12 @@ private val landingDescriptions = listOf(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun Landing() {
+internal fun Landing(
+    moveToSignIn: () -> Unit,
+) {
 
     val pagerState = rememberPagerState {
         landingImages.size
-    }
-
-    val onSignInClick: () -> Unit = {
-
     }
 
     val onSignUpClick: () -> Unit = {
@@ -74,7 +72,7 @@ internal fun Landing() {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             SignalFilledButton(
                 text = stringResource(id = R.string.landing_sign_in),
-                onClick = onSignInClick,
+                onClick = moveToSignIn,
             )
             Spacer(modifier = Modifier.height(14.dp))
             SignalOutlinedButton(

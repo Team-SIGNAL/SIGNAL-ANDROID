@@ -5,7 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -59,6 +61,7 @@ internal fun SignalTextField(
                 text = title,
                 color = titleColor,
             )
+            Spacer(modifier = Modifier.height(4.dp))
         }
         BasicTextField(
             modifier = Modifier
@@ -81,9 +84,8 @@ internal fun SignalTextField(
         ) {
             Row(
                 modifier = Modifier.padding(
-                    top = 10.dp,
-                    bottom = 10.dp,
-                    start = 18.dp,
+                    vertical = 14.dp,
+                    horizontal = 18.dp
                 )
             ) {
                 BodyLarge(
@@ -115,7 +117,7 @@ internal fun SignalTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun SignalTextFieldPreview() {
+private fun SignalTextFieldPreview() {
     SignalTextField(
         value = "",
         onValueChange = {},

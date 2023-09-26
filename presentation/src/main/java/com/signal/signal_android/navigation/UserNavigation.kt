@@ -8,6 +8,7 @@ import com.signal.signal_android.feature.splash.Splash
 
 internal fun NavGraphBuilder.userNavigation(
     moveToLanding: () -> Unit,
+    moveToSignIn: () -> Unit,
 ) {
     navigation(
         route = NavigationRoute.User.route,
@@ -18,7 +19,7 @@ internal fun NavGraphBuilder.userNavigation(
         }
 
         composable(NavigationRoute.User.Landing) {
-            Landing()
+            Landing(moveToSignIn = moveToSignIn)
         }
     }
 }
