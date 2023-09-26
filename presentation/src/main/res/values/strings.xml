@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Signal-Android</string>
 
+    <!--global-->
+    <string name="id">아이디</string>
+    <string name="password">비밀번호</string>
+    <string name="sign_in">로그인</string>
+
     <!--content description-->
     <string name="app_logo">app logo</string>
     <string name="landing_image">landing image</string>
@@ -18,4 +23,14 @@
 
     <string name="landing_sign_in">로그인 하러가기</string>
     <string name="landing_sign_up">회원가입 하러가기</string>
+
+    <!--sign in-->
+    <string name="sign_in_hint_id">아이디를 입력하세요</string>
+    <string name="sign_in_hint_password">비밀번호를 입력하세요</string>
+
+    <string name="sign_in_description_id">존재하지 않는 아이디 입니다</string>
+    <string name="sign_in_description_password">비밀번호가 일치하지 않습니다</string>
+
+    <string name="sign_in_no_account">계정이 없다면?</string>
+    <string name="sign_in_do_sign_up">회원가입하기</string>
 </resources>
