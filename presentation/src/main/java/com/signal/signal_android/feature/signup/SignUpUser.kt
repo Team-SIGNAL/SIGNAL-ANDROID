@@ -29,9 +29,12 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.Title
 import com.signal.signal_android.designsystem.radiobutton.SignalRadioButton
 import com.signal.signal_android.designsystem.textfield.SignalTextField
+import com.signal.signal_android.designsystem.util.signalClickable
 
 @Composable
-internal fun SignUpUser() {
+internal fun SignUpUser(
+    moveToSignIn: () -> Unit,
+) {
 
     // TODO viewmodel state 사용
     var name by remember { mutableStateOf("") }
@@ -75,6 +78,7 @@ internal fun SignUpUser() {
             Body(text = stringResource(id = R.string.sign_up_have_account))
             Spacer(modifier = Modifier.width(8.dp))
             Body(
+                modifier = Modifier.signalClickable(onClick = moveToSignIn),
                 text = stringResource(id = R.string.sign_up_sign_in),
                 decoration = TextDecoration.Underline,
                 color = SignalColor.Primary100,
@@ -155,5 +159,7 @@ private fun SignUpInputs(
 @Preview(showBackground = true)
 @Composable
 private fun SignUpUserPreview() {
-    SignUpUser()
+    SignUpUser {
+
+    }
 }
