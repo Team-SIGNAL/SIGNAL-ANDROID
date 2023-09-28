@@ -34,6 +34,7 @@ import com.signal.signal_android.designsystem.util.signalClickable
 @Composable
 internal fun SignUpUser(
     moveToSignIn: () -> Unit,
+    moveToSignUpAccount: () -> Unit,
 ) {
 
     // TODO viewmodel state 사용
@@ -152,7 +153,7 @@ private fun SignUpInputs(
 @Preview(showBackground = true)
 @Composable
 private fun SignUpUserPreview() {
-    SignUpUser {
+    SignUpUser(moveToSignIn = { }) {
 
     }
 }

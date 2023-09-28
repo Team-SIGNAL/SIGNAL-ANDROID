@@ -29,6 +29,7 @@ internal fun SignalApp() {
         authNavigation(
             moveToSignUp = { navController.navigate(NavigationRoute.Auth.SignUpUser) },
             moveToSignIn = { navController.navigate(NavigationRoute.Auth.SignIn) },
+            moveToSignUpAccount = { navController.navigate(NavigationRoute.Auth.SignUpAccount) },
         )
     }
 }
