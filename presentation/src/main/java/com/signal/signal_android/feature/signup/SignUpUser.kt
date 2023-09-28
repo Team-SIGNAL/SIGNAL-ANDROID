@@ -23,10 +23,10 @@ import androidx.compose.ui.unit.dp
 import com.signal.domain.enums.Gender
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalFilledButton
+import com.signal.signal_android.designsystem.component.SignUpTitle
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.BodyLarge
 import com.signal.signal_android.designsystem.foundation.SignalColor
-import com.signal.signal_android.designsystem.foundation.Title
 import com.signal.signal_android.designsystem.radiobutton.SignalRadioButton
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
@@ -55,14 +55,7 @@ internal fun SignUpUser(
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(modifier = Modifier.height(66.dp))
-        Title(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.Start),
-            text = stringResource(id = R.string.sign_up),
-        )
-        Spacer(modifier = Modifier.height(60.dp))
+        SignUpTitle()
         SignUpInputs(
             name = { name },
             birth = { birth },
