@@ -44,10 +44,14 @@
     <string name="birth">생년월일</string>
     <string name="phone_number">전화번호</string>
     <string name="gender">성별</string>
+    <string name="password_confirm">비밀번호 확인</string>
 
     <string name="sign_up_hint_name">이름을 입력하세요</string>
     <string name="sign_up_hint_birth">생년월일을 입력하세요</string>
     <string name="sign_up_hint_phone_number">전화번호를 입력하세요</string>
+    <string name="sign_up_hint_id">아이디를 입력하세요</string>
+    <string name="sign_up_hint_password">비밀번호를 입력하세요</string>
+    <string name="sign_up_hint_password_confirm">비밀번호를 다시 입력하세요</string>
 
     <string name="male">남자</string>
     <string name="female">여자</string>
