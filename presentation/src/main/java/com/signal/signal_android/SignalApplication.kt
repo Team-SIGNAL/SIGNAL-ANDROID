@@ -2,12 +2,15 @@ package com.signal.signal_android
 
 import android.app.Application
 import com.signal.data.api.ApiProvider
-import com.signal.data.datasource.user.UserDataSource
-import com.signal.data.datasource.user.UserDataSourceImpl
+import com.signal.data.datasource.user.local.LocalUserDataSource
+import com.signal.data.datasource.user.local.LocalUserDataSourceImpl
+import com.signal.data.datasource.user.remote.RemoteUserDataSource
+import com.signal.data.datasource.user.remote.RemoteUserDataSourceImpl
 import com.signal.data.repository.UserRepositoryImpl
 import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.SignInUseCase
 import com.signal.signal_android.viewmodel.SignInViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -21,11 +24,17 @@ class SignalApplication : Application() {
         }
 
         val dataSourceModule = module {
-            single<UserDataSource> { UserDataSourceImpl(get()) }
+            single<RemoteUserDataSource> { RemoteUserDataSourceImpl(get()) }
+            single<LocalUserDataSource> { LocalUserDataSourceImpl(get()) }
         }
 
         val repositoryModule = module {
-            single<UserRepository> { UserRepositoryImpl(get()) }
+            single<UserRepository> {
+                UserRepositoryImpl(
+                    remoteUserDataSource = get(),
+                    localUserDataSource = get(),
+                )
+            }
         }
 
         val useCaseModule = module {
@@ -37,6 +46,7 @@ class SignalApplication : Application() {
         }
 
         startKoin {
+            androidContext(applicationContext)
             modules(
                 listOf(
                     apiModule,
@@ -44,7 +54,7 @@ class SignalApplication : Application() {
                     repositoryModule,
                     useCaseModule,
                     viewModelModule,
-                )
+                ),
             )
         }
     }
