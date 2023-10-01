@@ -7,6 +7,7 @@ import com.signal.data.datasource.user.local.LocalUserDataSourceImpl
 import com.signal.data.datasource.user.remote.RemoteUserDataSource
 import com.signal.data.datasource.user.remote.RemoteUserDataSourceImpl
 import com.signal.data.repository.UserRepositoryImpl
+import com.signal.data.util.TokenInterceptor
 import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.SignInUseCase
 import com.signal.signal_android.viewmodel.SignInViewModel
@@ -20,12 +21,13 @@ class SignalApplication : Application() {
         super.onCreate()
 
         val apiModule = module {
-            single { ApiProvider.getUserApi() }
+            single { TokenInterceptor(get()) }
+            single { ApiProvider.getUserApi(get()) }
         }
 
         val dataSourceModule = module {
             single<RemoteUserDataSource> { RemoteUserDataSourceImpl(get()) }
-            single<LocalUserDataSource> { LocalUserDataSourceImpl(get()) }
+            single<LocalUserDataSource> { LocalUserDataSourceImpl(androidContext()) }
         }
 
         val repositoryModule = module {
