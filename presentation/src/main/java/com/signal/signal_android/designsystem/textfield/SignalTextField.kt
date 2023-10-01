@@ -103,7 +103,7 @@ internal fun SignalTextField(
             value = value,
             onValueChange = onValueChange,
             singleLine = singleLine,
-            visualTransformation = if (isPassword && isVisible) PasswordVisualTransformation()
+            visualTransformation = if (isPassword && !isVisible) PasswordVisualTransformation()
             else VisualTransformation.None,
         ) { innerTextField ->
             Row(
@@ -131,7 +131,7 @@ internal fun SignalTextField(
                     Image(
                         modifier = Modifier.signalClickable(onClick = onVisibleChange),
                         painter = painterResource(
-                            id = if (isVisible) R.drawable.ic_visible_off
+                            id = if (!isVisible) R.drawable.ic_visible_off
                             else R.drawable.ic_visible_on,
                         ),
                         contentDescription = stringResource(id = R.string.text_field_icon),
