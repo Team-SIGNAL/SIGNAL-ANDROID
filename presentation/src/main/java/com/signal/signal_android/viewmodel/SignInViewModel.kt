@@ -16,14 +16,34 @@ class SignInViewModel(
 
     internal fun setAccountId(accountId: String) {
         setState(state.value.copy(accountId = accountId))
+        setAccountIdError(accountId.isBlank())
+        setButtonEnabled()
     }
 
     internal fun setPassword(password: String) {
         setState(state.value.copy(password = password))
+        setPasswordError(password.isBlank())
+        setButtonEnabled()
     }
 
     internal fun setAutoSignIn(autoSignIn: Boolean) {
         setState(state.value.copy(autoSignIn = autoSignIn))
+    }
+
+    private fun setButtonEnabled() {
+        with(state.value) {
+            val isBlank = accountId.isBlank() || password.isBlank()
+            val isError = accountIdError || passwordError
+            setState(copy(buttonEnabled = !isBlank && !isError))
+        }
+    }
+
+    private fun setAccountIdError(error: Boolean) {
+        setState(state.value.copy(accountIdError = error))
+    }
+
+    private fun setPasswordError(error: Boolean) {
+        setState(state.value.copy(passwordError = error))
     }
 
     internal fun signIn() {
@@ -34,14 +54,12 @@ class SignInViewModel(
             ).onSuccess {
                 postSideEffect(SignInSideEffect.Success)
             }.onFailure {
-                postSideEffect(
-                    when (it) {
-                        is UnAuthorizationException -> SignInSideEffect.MismatchPassword
-                        is NotFoundException -> SignInSideEffect.NotFound
-                        is OfflineException -> SignInSideEffect.CheckInternetConnection
-                        else -> SignInSideEffect.ServerError
-                    }
-                )
+                when (it) {
+                    is UnAuthorizationException -> setAccountIdError(true)
+                    is NotFoundException -> setPasswordError(true)
+                    is OfflineException -> postSideEffect(SignInSideEffect.CheckInternetConnection)
+                    else -> postSideEffect(SignInSideEffect.ServerError)
+                }
             }
         }
     }

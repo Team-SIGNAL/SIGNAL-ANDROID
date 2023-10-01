@@ -77,6 +77,7 @@ internal fun SignIn(
         SignalFilledButton(
             text = stringResource(id = R.string.sign_in),
             onClick = { signInViewModel.signIn() },
+            enabled = state.buttonEnabled,
         )
         Spacer(modifier = Modifier.height(16.dp))
     }
