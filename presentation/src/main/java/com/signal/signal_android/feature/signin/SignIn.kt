@@ -25,9 +25,12 @@ import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
+import com.signal.signal_android.designsystem.util.signalClickable
 
 @Composable
-internal fun SignIn() {
+internal fun SignIn(
+    moveToSignUp: () -> Unit,
+) {
 
     // TODO 더미값 제거 -> 서버 로직 연동 시
     var id by remember { mutableStateOf("") }
@@ -65,6 +68,7 @@ internal fun SignIn() {
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             Body(text = stringResource(id = R.string.sign_in_no_account))
             Body(
+                modifier = Modifier.signalClickable(onClick = moveToSignUp),
                 text = stringResource(id = R.string.sign_in_do_sign_up),
                 color = SignalColor.Primary100,
                 decoration = TextDecoration.Underline,
@@ -106,5 +110,7 @@ private fun SignInInputs(
 @Preview(showBackground = true)
 @Composable
 private fun SignInPreview() {
-    SignIn()
+    SignIn {
+
+    }
 }

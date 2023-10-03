@@ -48,14 +48,11 @@ private val landingDescriptions = listOf(
 @Composable
 internal fun Landing(
     moveToSignIn: () -> Unit,
+    moveToSignUp: () -> Unit,
 ) {
 
     val pagerState = rememberPagerState {
         landingImages.size
-    }
-
-    val onSignUpClick: () -> Unit = {
-
     }
 
     Column(
@@ -77,7 +74,7 @@ internal fun Landing(
             Spacer(modifier = Modifier.height(14.dp))
             SignalOutlinedButton(
                 text = stringResource(id = R.string.landing_sign_up),
-                onClick = onSignUpClick,
+                onClick = moveToSignUp,
             )
         }
         Spacer(modifier = Modifier.height(44.dp))
