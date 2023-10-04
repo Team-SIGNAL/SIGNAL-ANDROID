@@ -3,7 +3,9 @@ package com.signal.data.repository
 import com.signal.data.datasource.user.local.LocalUserDataSource
 import com.signal.data.datasource.user.remote.RemoteUserDataSource
 import com.signal.data.model.signin.SignInRequest
+import com.signal.data.model.signup.SignUpRequest
 import com.signal.domain.repository.UserRepository
+import java.time.LocalDate
 
 class UserRepositoryImpl(
     private val remoteUserDataSource: RemoteUserDataSource,
@@ -25,5 +27,23 @@ class UserRepositoryImpl(
                 expireAt = it.expireAt,
             )
         }
+    }
+
+    override suspend fun signUp(
+        name: String,
+        birth: LocalDate,
+        phone: String,
+        accountId: String,
+        password: String,
+    ) {
+        remoteUserDataSource.signUp(
+            SignUpRequest(
+                name = name,
+                birth = birth,
+                phone = phone,
+                accountId = accountId,
+                password = password,
+            )
+        )
     }
 }
