@@ -64,5 +64,11 @@
 
     <string name="next">다음</string>
 
-
+    <!--my page-->
+    <string name="my_page">마이페이지</string>
+    <string name="my_page_profile_image">프로필 사진</string>
+    <string name="received_achievement">받은 업적</string>
+    <string name="edit_information">수정하기</string>
+    <string name="more_achievement">더보기</string>
+    
 </resources>
