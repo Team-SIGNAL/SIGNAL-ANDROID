@@ -8,11 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,26 +24,25 @@ import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
+import com.signal.signal_android.viewmodel.SignInViewModel
+import org.koin.androidx.compose.koinViewModel
 import com.signal.signal_android.designsystem.util.signalClickable
 
 @Composable
 internal fun SignIn(
     moveToSignUp: () -> Unit,
+    signInViewModel: SignInViewModel = koinViewModel(),
 ) {
 
-    // TODO 더미값 제거 -> 서버 로직 연동 시
-    var id by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val state by signInViewModel.state.collectAsState()
 
-    val onIdChange = { value: String ->
-        id = value
+    val onIdChange = { accountId: String ->
+        signInViewModel.setAccountId(accountId)
     }
 
-    val onPasswordChange = { value: String ->
-        password = value
+    val onPasswordChange = { password: String ->
+        signInViewModel.setPassword(password)
     }
-
-    val onSignInClick: () -> Unit = {}
 
     Column(
         modifier = Modifier
@@ -54,14 +52,18 @@ internal fun SignIn(
     ) {
         Spacer(modifier = Modifier.height(76.dp))
         Image(
+            modifier = Modifier.size(
+                width = 112.dp,
+                height = 76.dp,
+            ),
             painter = painterResource(id = R.drawable.ic_signal_logo_sign_in),
             contentDescription = stringResource(id = R.string.app_logo),
         )
         Spacer(modifier = Modifier.height(46.dp))
         SignInInputs(
-            id = id,
+            id = { state.accountId },
             onIdChange = onIdChange,
-            password = password,
+            password = { state.password },
             onPasswordChange = onPasswordChange,
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -77,7 +79,8 @@ internal fun SignIn(
         Spacer(modifier = Modifier.height(16.dp))
         SignalFilledButton(
             text = stringResource(id = R.string.sign_in),
-            onClick = onSignInClick,
+            onClick = { signInViewModel.signIn() },
+            enabled = state.buttonEnabled,
         )
         Spacer(modifier = Modifier.height(16.dp))
     }
@@ -85,13 +88,13 @@ internal fun SignIn(
 
 @Composable
 private fun SignInInputs(
-    id: String,
+    id: () -> String,
     onIdChange: (String) -> Unit,
-    password: String,
+    password: () -> String,
     onPasswordChange: (String) -> Unit,
 ) {
     SignalTextField(
-        value = id,
+        value = id(),
         onValueChange = onIdChange,
         hint = stringResource(id = R.string.sign_in_hint_id),
         title = stringResource(id = R.string.id),
@@ -99,18 +102,17 @@ private fun SignInInputs(
     )
     Spacer(modifier = Modifier.height(20.dp))
     SignalTextField(
-        value = password,
+        value = password(),
         onValueChange = onPasswordChange,
         hint = stringResource(id = R.string.sign_in_hint_password),
         title = stringResource(id = R.string.password),
         description = stringResource(id = R.string.sign_in_description_password),
+        isPassword = true,
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun SignInPreview() {
-    SignIn {
-
-    }
+    SignIn {}
 }
