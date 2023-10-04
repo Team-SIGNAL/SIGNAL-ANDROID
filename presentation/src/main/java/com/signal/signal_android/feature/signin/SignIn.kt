@@ -26,9 +26,11 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.viewmodel.SignInViewModel
 import org.koin.androidx.compose.koinViewModel
+import com.signal.signal_android.designsystem.util.signalClickable
 
 @Composable
 internal fun SignIn(
+    moveToSignUp: () -> Unit,
     signInViewModel: SignInViewModel = koinViewModel(),
 ) {
 
@@ -68,6 +70,7 @@ internal fun SignIn(
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             Body(text = stringResource(id = R.string.sign_in_no_account))
             Body(
+                modifier = Modifier.signalClickable(onClick = moveToSignUp),
                 text = stringResource(id = R.string.sign_in_do_sign_up),
                 color = SignalColor.Primary100,
                 decoration = TextDecoration.Underline,
@@ -111,5 +114,5 @@ private fun SignInInputs(
 @Preview(showBackground = true)
 @Composable
 private fun SignInPreview() {
-    SignIn()
+    SignIn {}
 }
