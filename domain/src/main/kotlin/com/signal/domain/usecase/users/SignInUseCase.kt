@@ -1,4 +1,4 @@
-package com.signal.domain.usecase
+package com.signal.domain.usecase.users
 
 import com.signal.domain.repository.UserRepository
 
