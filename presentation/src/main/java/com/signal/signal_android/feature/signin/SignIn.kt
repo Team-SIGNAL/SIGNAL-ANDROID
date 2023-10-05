@@ -114,5 +114,5 @@ private fun SignInInputs(
 @Preview(showBackground = true)
 @Composable
 private fun SignInPreview() {
-    SignIn {}
+    SignIn(moveToSignUp = { /*TODO*/ })
 }

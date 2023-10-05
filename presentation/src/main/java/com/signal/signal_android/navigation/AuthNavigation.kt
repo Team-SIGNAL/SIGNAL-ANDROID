@@ -1,11 +1,17 @@
 package com.signal.signal_android.navigation
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.signal.signal_android.feature.signin.SignIn
 import com.signal.signal_android.feature.signup.SignUpAccount
 import com.signal.signal_android.feature.signup.SignUpUser
+import com.signal.signal_android.feature.signup.SignUpViewModel
+import org.koin.androidx.compose.koinViewModel
+
+private val signUpViewModel: SignUpViewModel
+    @Composable get() = koinViewModel()
 
 internal fun NavGraphBuilder.authNavigation(
     moveToSignUp: () -> Unit,
@@ -26,6 +32,7 @@ internal fun NavGraphBuilder.authNavigation(
             SignUpUser(
                 moveToSignIn = moveToSignIn,
                 moveToSignUpAccount = moveToSignUpAccount,
+                signUpViewModel = signUpViewModel,
             )
         }
 
