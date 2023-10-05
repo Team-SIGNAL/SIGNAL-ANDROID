@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -43,7 +44,8 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.radiobutton.SignalRadioButton
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
-import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,10 +63,13 @@ internal fun SignUpUser(
 
     var isShowDialog by remember { mutableStateOf(false) }
 
-    val birth = SimpleDateFormat("yyyy-MM-dd").format(datePickerState.selectedDateMillis)
+    val selectedMillis = datePickerState.selectedDateMillis ?: System.currentTimeMillis()
 
-    LaunchedEffect(birth) {
-        signUpViewModel.setBirth(birth.toString())
+    LaunchedEffect(selectedMillis) {
+        val localDateTime = Instant.ofEpochMilli(selectedMillis)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+        signUpViewModel.setBirth(localDateTime)
     }
 
     Column(
@@ -101,6 +106,7 @@ internal fun SignUpUser(
         SignalFilledButton(
             text = stringResource(id = R.string.next),
             onClick = onNextButtonClick,
+            enabled = state.buttonEnabled,
         )
         Spacer(modifier = Modifier.height(16.dp))
     }
@@ -131,7 +137,17 @@ private fun SignUpInputs(
         DatePickerDialog(
             onDismissRequest = showDialog,
             confirmButton = {},
-            content = { DatePicker(state = datePickerState()) })
+        ) {
+            DatePicker(
+                state = datePickerState(),
+                colors = DatePickerDefaults.colors(
+                    selectedYearContainerColor = SignalColor.Primary100,
+                    selectedDayContainerColor = SignalColor.Primary100,
+                    todayDateBorderColor = SignalColor.Primary100,
+                    currentYearContentColor = SignalColor.Primary100,
+                )
+            )
+        }
     }
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -153,6 +169,10 @@ private fun SignUpInputs(
                 shape = RoundedCornerShape(8.dp),
             )
             .clip(RoundedCornerShape(8.dp))
+            .signalClickable(
+                rippleEnabled = true,
+                onClick = showDialog,
+            )
             .padding(
                 horizontal = 16.dp,
                 vertical = 12.dp,

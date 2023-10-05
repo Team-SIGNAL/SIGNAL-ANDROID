@@ -14,14 +14,16 @@ class SignUpViewModel(
 
     fun setName(name: String) {
         setState(state.value.copy(name = name))
+        setButtonEnabled()
     }
 
-    fun setBirth(birth: String) {
-        setState(state.value.copy(birth = LocalDate.parse(birth)))
+    fun setBirth(birth: LocalDate) {
+        setState(state.value.copy(birth = birth))
     }
 
     fun setPhone(phone: String) {
         setState(state.value.copy(phone = phone))
+        setButtonEnabled()
     }
 
     fun setGender(gender: Gender) {
@@ -40,12 +42,19 @@ class SignUpViewModel(
         setState(state.value.copy(repeatPassword = repeatPassword))
     }
 
+    private fun setButtonEnabled() {
+        with(state.value) {
+            val isBlank = name.isBlank() || phone.isBlank()
+            setState(state.value.copy(buttonEnabled = !isBlank))
+        }
+    }
+
     fun signUp() {
         viewModelScope.launch(Dispatchers.IO) {
             with(state.value) {
                 signUpUseCase(
                     name = name,
-                    birth = birth!!,
+                    birth = birth,
                     phone = phone,
                     accountId = accountId,
                     password = password,
