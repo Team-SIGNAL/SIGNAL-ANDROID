@@ -70,5 +70,8 @@
     <string name="received_achievement">받은 업적</string>
     <string name="edit_information">수정하기</string>
     <string name="more_achievement">더보기</string>
+    <string name="bug_report">버그 제보</string>
+    <string name="logout">로그아웃</string>
+    <string name="delete_account">회원 탈퇴</string>
     
 </resources>
