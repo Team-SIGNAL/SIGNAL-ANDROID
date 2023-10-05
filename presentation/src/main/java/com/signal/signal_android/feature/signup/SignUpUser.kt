@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -192,6 +193,7 @@ private fun SignUpInputs(
         onValueChange = onPhoneNumberChange,
         hint = stringResource(id = R.string.sign_up_hint_phone_number),
         title = stringResource(id = R.string.phone_number),
+        keyboardType = KeyboardType.NumberPassword,
     )
     Spacer(modifier = Modifier.height(14.dp))
     Column(

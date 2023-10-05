@@ -27,7 +27,7 @@ class SignUpViewModel(
     }
 
     fun setGender(gender: Gender) {
-
+        setState(state.value.copy(gender = gender))
     }
 
     fun setAccountId(accountId: String) {
