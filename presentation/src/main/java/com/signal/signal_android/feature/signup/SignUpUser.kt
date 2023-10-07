@@ -32,9 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.signal.domain.enums.Gender
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalFilledButton
@@ -55,10 +53,7 @@ internal fun SignUpUser(
     moveToSignUpAccount: () -> Unit,
     signUpViewModel: SignUpViewModel,
 ) {
-
     val state by signUpViewModel.state.collectAsState()
-
-    val onNextButtonClick = { }
 
     val datePickerState = rememberDatePickerState()
 
@@ -73,6 +68,12 @@ internal fun SignUpUser(
         signUpViewModel.setBirth(localDateTime)
     }
 
+    LaunchedEffect(Unit) {
+        signUpViewModel.sideEffect.collect {
+            if (it is SignUpSideEffect.Success) moveToSignUpAccount()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,6 +86,7 @@ internal fun SignUpUser(
             isShowDialog = { isShowDialog },
             showDialog = { isShowDialog = !isShowDialog },
             name = { state.name },
+            nameError = { state.nameError },
             birth = { state.birth.toString() },
             phoneNumber = { state.phone },
             gender = { state.gender },
@@ -106,7 +108,7 @@ internal fun SignUpUser(
         Spacer(modifier = Modifier.height(16.dp))
         SignalFilledButton(
             text = stringResource(id = R.string.next),
-            onClick = onNextButtonClick,
+            onClick = signUpViewModel::checkValidate,
             enabled = state.buttonEnabled,
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -120,6 +122,7 @@ private fun SignUpInputs(
     isShowDialog: () -> Boolean,
     showDialog: () -> Unit,
     name: () -> String,
+    nameError: () -> Boolean,
     birth: () -> String,
     phoneNumber: () -> String,
     gender: () -> Gender,
@@ -132,12 +135,19 @@ private fun SignUpInputs(
         onValueChange = onNameChange,
         hint = stringResource(id = R.string.sign_up_hint_name),
         title = stringResource(id = R.string.name),
+        error = nameError(),
+        description = stringResource(id = R.string.sign_up_name_error),
     )
     Spacer(modifier = Modifier.height(14.dp))
     if (isShowDialog()) {
         DatePickerDialog(
             onDismissRequest = showDialog,
-            confirmButton = {},
+            confirmButton = {
+                SignalFilledButton(
+                    text = "text",
+                    onClick = {},
+                )
+            },
         ) {
             DatePicker(
                 state = datePickerState(),
@@ -225,14 +235,4 @@ private fun SignUpInputs(
             BodyLarge(text = stringResource(id = R.string.female))
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun SignUpUserPreview() {
-    SignUpUser(
-        moveToSignIn = { },
-        moveToSignUpAccount = {},
-        signUpViewModel = viewModel(),
-    )
 }

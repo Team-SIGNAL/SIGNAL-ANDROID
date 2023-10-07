@@ -69,9 +69,19 @@ internal fun SignalTextField(
         isVisible = !isVisible
     }
 
-    val titleColor = if (!enabled) color.titleColor.disabled
-    else if (error) SignalColor.Error
-    else color.titleColor.default
+    val titleColor by animateColorAsState(
+        targetValue = if (!enabled) color.titleColor.disabled
+        else if (error) SignalColor.Error
+        else color.titleColor.default,
+        label = "",
+    )
+
+    val descriptionColor by animateColorAsState(
+        targetValue = if (!enabled) color.descriptionColor.disabled
+        else if (error) SignalColor.Error
+        else color.descriptionColor.default,
+        label = "",
+    )
 
     val borderColor by animateColorAsState(
         targetValue = if (!enabled) color.outlineColor.disabled
@@ -159,9 +169,8 @@ internal fun SignalTextField(
                     )
                 ) {
                     Body(
-                        text = description, color = if (!enabled) color.descriptionColor.disabled
-                        else if (error) SignalColor.Error
-                        else color.descriptionColor.default
+                        text = description,
+                        color = descriptionColor,
                     )
                 }
             }

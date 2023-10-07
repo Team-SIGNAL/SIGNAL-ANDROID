@@ -3,6 +3,7 @@ package com.signal.signal_android.feature.signup
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.enums.Gender
 import com.signal.domain.usecase.users.SignUpUseCase
+import com.signal.signal_android.domain.regex.Regexs
 import com.signal.signal_android.viewmodel.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,9 +13,16 @@ class SignUpViewModel(
     private val signUpUseCase: SignUpUseCase,
 ) : BaseViewModel<SignUpState, SignUpSideEffect>(SignUpState.getDefaultState()) {
 
+    private val passwordRegex = Regex(Regexs.PASSWORD)
+
     fun setName(name: String) {
-        setState(state.value.copy(name = name))
-        setButtonEnabled()
+        setState(
+            state.value.copy(
+                name = name,
+                nameError = name.length !in 2..20,
+            )
+        )
+        setButtonEnabledUser()
     }
 
     fun setBirth(birth: LocalDate) {
@@ -23,7 +31,7 @@ class SignUpViewModel(
 
     fun setPhone(phone: String) {
         setState(state.value.copy(phone = phone))
-        setButtonEnabled()
+        setButtonEnabledUser()
     }
 
     fun setGender(gender: Gender) {
@@ -31,21 +39,56 @@ class SignUpViewModel(
     }
 
     fun setAccountId(accountId: String) {
-        setState(state.value.copy(accountId = accountId))
+        setState(
+            state.value.copy(
+                accountId = accountId,
+                accountIdError = accountId.length !in 5..12,
+            )
+        )
+        setButtonEnabledAccount()
     }
 
     fun setPassword(password: String) {
-        setState(state.value.copy(password = password))
+        setState(
+            state.value.copy(
+                password = password,
+                passwordError = !passwordRegex.matches(password)
+            )
+        )
+        setButtonEnabledAccount()
     }
 
     fun setRepeatPassword(repeatPassword: String) {
-        setState(state.value.copy(repeatPassword = repeatPassword))
+        with(state.value) {
+            setState(
+                copy(
+                    repeatPassword = repeatPassword,
+                    repeatPasswordError = repeatPassword != password,
+                )
+            )
+        }
+        setButtonEnabledAccount()
     }
 
-    private fun setButtonEnabled() {
+    fun checkValidate() {
+        with(state.value) {
+            postSideEffect(SignUpSideEffect.Success)
+            setState(copy(buttonEnabled = false))
+        }
+    }
+
+    private fun setButtonEnabledUser() {
         with(state.value) {
             val isBlank = name.isBlank() || phone.isBlank()
-            setState(state.value.copy(buttonEnabled = !isBlank))
+            setState(copy(buttonEnabled = !isBlank && !nameError))
+        }
+    }
+
+    private fun setButtonEnabledAccount() {
+        with(state.value) {
+            val isBlank = accountId.isBlank() || password.isBlank() || repeatPassword.isBlank()
+            val isError = accountIdError || passwordError || repeatPasswordError
+            setState(copy(buttonEnabled = !isBlank && !isError))
         }
     }
 
@@ -60,11 +103,8 @@ class SignUpViewModel(
                     password = password,
                 ).onSuccess {
                     postSideEffect(SignUpSideEffect.Success)
-                }.onFailure {
-
                 }
             }
         }
     }
-
 }

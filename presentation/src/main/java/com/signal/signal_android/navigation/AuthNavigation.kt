@@ -39,6 +39,7 @@ internal fun NavGraphBuilder.authNavigation(
         composable(NavigationRoute.Auth.SignUpAccount) {
             SignUpAccount(
                 moveToSignIn = moveToSignIn,
+                signUpViewModel = signUpViewModel,
             )
         }
     }
