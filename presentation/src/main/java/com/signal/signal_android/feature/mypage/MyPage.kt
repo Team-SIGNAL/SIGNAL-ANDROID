@@ -51,11 +51,21 @@ internal fun MyPage(
         modifier = Modifier
             .fillMaxSize()
             .background(color = SignalColor.White)
-            .padding(16.dp, 30.dp),
+            .padding(
+                horizontal = 16.dp,
+                vertical = 30.dp,
+            ),
     ) {
-        SubTitle(text = stringResource(id = R.string.my_page), color = SignalColor.Black)
+        SubTitle(
+            text = stringResource(id = R.string.my_page),
+            color = SignalColor.Black,
+        )
         Spacer(modifier = Modifier.height(24.dp))
-        ProfileCard(userName, userPhoneNumber, userBirth)
+        ProfileCard(
+            name = userName,
+            phoneNumber = userPhoneNumber,
+            birth = userBirth,
+        )
         Achievement()
         Spacer(modifier = Modifier.height(30.dp))
         UserTools()
@@ -69,21 +79,21 @@ private fun UserTools() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CardUserTool(
-            text = stringResource(id = R.string.bug_report),
+            text = stringResource(id = R.string.my_page_bug_report),
             textColor = SignalColor.Black,
             icon = painterResource(id = R.drawable.ic_bug),
             tint = SignalColor.Black,
         )
         Spacer(modifier = Modifier.height(16.dp))
         CardUserTool(
-            text = stringResource(id = R.string.logout),
+            text = stringResource(id = R.string.my_page_logout),
             textColor = SignalColor.Black,
             icon = painterResource(id = R.drawable.ic_logout),
             tint = SignalColor.Black,
         )
         Spacer(modifier = Modifier.height(16.dp))
         CardUserTool(
-            text = stringResource(id = R.string.delete_account),
+            text = stringResource(id = R.string.my_page_delete_account),
             textColor = SignalColor.Error,
             icon = painterResource(id = R.drawable.ic_delete_account),
             tint = SignalColor.Error,
@@ -96,9 +106,12 @@ private fun UserTools() {
 private fun Achievement() {
     Spacer(modifier = Modifier.height(20.dp))
     Column {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
             Body2(
-                text = stringResource(id = R.string.received_achievement),
+                text = stringResource(id = R.string.my_page_received_achievement),
                 color = SignalColor.Black,
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
