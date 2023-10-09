@@ -10,5 +10,6 @@ sealed class NavigationRoute(val route: String) {
     object User : NavigationRoute(route = "User") {
         const val Splash = "splash"
         const val Landing = "landing"
+        const val MyPage = "myPage"
     }
 }

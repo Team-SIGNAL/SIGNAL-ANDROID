@@ -46,4 +46,10 @@ object SignalColor {
 
     @Stable
     val Transparent = Color(0x00000000)
+
+    @Stable
+    val White = Color(0xFFFFFFFF)
+
+    @Stable
+    val Black = Color(0xFF000000)
 }
