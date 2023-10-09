@@ -71,9 +71,11 @@ class SignUpViewModel(
     }
 
     fun checkValidate() {
-        with(state.value) {
-            postSideEffect(SignUpSideEffect.Success)
-            setState(copy(buttonEnabled = false))
+        viewModelScope.launch(Dispatchers.IO) {
+            with(state.value) {
+                postSideEffect(SignUpSideEffect.Success)
+                setState(copy(buttonEnabled = false))
+            }
         }
     }
 
