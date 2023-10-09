@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,12 +25,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.foundation.Body
@@ -41,9 +38,9 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 
-@Preview
 @Composable
 internal fun MyPage(
+    moveToMyPage: () -> Unit,
 ) {
     val editImage: () -> Unit = {}
     val userName by remember { mutableStateOf("쿼카") }
@@ -54,7 +51,7 @@ internal fun MyPage(
         modifier = Modifier
             .fillMaxSize()
             .background(color = SignalColor.White)
-            .padding(16.dp, 30.dp)
+            .padding(16.dp, 30.dp),
     ) {
         SubTitle(text = stringResource(id = R.string.my_page), color = SignalColor.Black)
         Spacer(modifier = Modifier.height(24.dp))
@@ -116,7 +113,7 @@ private fun Achievement() {
                 )
             }
         }
-        LazyRow(modifier = Modifier.height(66.dp)){
+        LazyRow(modifier = Modifier.height(66.dp)) {
             // Add a single item
             // TODO 업적 구현
         }
