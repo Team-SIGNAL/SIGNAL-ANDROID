@@ -17,7 +17,7 @@ abstract class BaseViewModel<S, E>(initialState: S) : ViewModel() {
         _state.tryEmit(state)
     }
 
-    protected fun postSideEffect(sideEffect: E) {
-        _sideEffect.tryEmit(sideEffect)
+    protected suspend fun postSideEffect(sideEffect: E) {
+        _sideEffect.emit(sideEffect)
     }
 }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -27,6 +28,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,6 +56,8 @@ internal fun SignalTextField(
     isPassword: Boolean = false,
     error: Boolean = false,
     color: TextFieldColor = SignalTextFieldColor.Default,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Done,
     enabled: Boolean = true,
 ) {
 
@@ -64,9 +69,19 @@ internal fun SignalTextField(
         isVisible = !isVisible
     }
 
-    val titleColor = if (!enabled) color.titleColor.disabled
-    else if (error) SignalColor.Error
-    else color.titleColor.default
+    val titleColor by animateColorAsState(
+        targetValue = if (!enabled) color.titleColor.disabled
+        else if (error) SignalColor.Error
+        else color.titleColor.default,
+        label = "",
+    )
+
+    val descriptionColor by animateColorAsState(
+        targetValue = if (!enabled) color.descriptionColor.disabled
+        else if (error) SignalColor.Error
+        else color.descriptionColor.default,
+        label = "",
+    )
 
     val borderColor by animateColorAsState(
         targetValue = if (!enabled) color.outlineColor.disabled
@@ -87,6 +102,7 @@ internal fun SignalTextField(
         BasicTextField(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(48.dp)
                 .clip(TextFieldShape)
                 .border(
                     width = 1.dp,
@@ -105,6 +121,10 @@ internal fun SignalTextField(
             singleLine = singleLine,
             visualTransformation = if (isPassword && !isVisible) PasswordVisualTransformation()
             else VisualTransformation.None,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction,
+            )
         ) { innerTextField ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -149,9 +169,8 @@ internal fun SignalTextField(
                     )
                 ) {
                     Body(
-                        text = description, color = if (!enabled) color.descriptionColor.disabled
-                        else if (error) SignalColor.Error
-                        else color.descriptionColor.default
+                        text = description,
+                        color = descriptionColor,
                     )
                 }
             }

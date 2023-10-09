@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.signal.domain.exception.NotFoundException
 import com.signal.domain.exception.OfflineException
 import com.signal.domain.exception.UnAuthorizationException
-import com.signal.domain.usecase.SignInUseCase
+import com.signal.domain.usecase.users.SignInUseCase
 import com.signal.signal_android.feature.signin.SignInSideEffect
 import com.signal.signal_android.feature.signin.SignInState
 import kotlinx.coroutines.Dispatchers

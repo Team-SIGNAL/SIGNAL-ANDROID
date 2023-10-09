@@ -9,7 +9,9 @@ import com.signal.data.datasource.user.remote.RemoteUserDataSourceImpl
 import com.signal.data.repository.UserRepositoryImpl
 import com.signal.data.util.TokenInterceptor
 import com.signal.domain.repository.UserRepository
-import com.signal.domain.usecase.SignInUseCase
+import com.signal.domain.usecase.users.SignInUseCase
+import com.signal.domain.usecase.users.SignUpUseCase
+import com.signal.signal_android.feature.signup.SignUpViewModel
 import com.signal.signal_android.viewmodel.SignInViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -41,10 +43,12 @@ class SignalApplication : Application() {
 
         val useCaseModule = module {
             single { SignInUseCase(get()) }
+            single { SignUpUseCase(get()) }
         }
 
         val viewModelModule = module {
             viewModel { SignInViewModel(get()) }
+            viewModel { SignUpViewModel(get()) }
         }
 
         startKoin {
