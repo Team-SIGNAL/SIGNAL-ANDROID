@@ -6,19 +6,19 @@ import androidx.compose.ui.graphics.Color
 object SignalColor {
 
     @Stable
-    val Primary100 = Color(0xFF00E252)
+    val Primary100 = Color(0xFF00964C)
 
     @Stable
-    val Primary200 = Color(0xFF43CB74)
+    val Primary200 = Color(0xFF009660)
 
     @Stable
-    val Primary300 = Color(0xFF3CB066)
+    val Primary300 = Color(0xFF009674)
 
     @Stable
-    val Primary400 = Color(0xFF529959)
+    val Primary400 = Color(0xFF009688)
 
     @Stable
-    val Primary500 = Color(0xFF4E8C55)
+    val Primary500 = Color(0xFF00969C)
 
     @Stable
     val Gray100 = Color(0xFFFFFFFF)
