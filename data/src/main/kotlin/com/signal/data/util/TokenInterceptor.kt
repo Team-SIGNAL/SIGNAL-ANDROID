@@ -24,7 +24,7 @@ class TokenInterceptor(
             request
                 .newBuilder()
                 .header("Authorization", localUserDataSource.getAccessToken())
-                .build()
+                .build(),
         )
     }
 }

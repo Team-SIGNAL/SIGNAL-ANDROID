@@ -25,17 +25,23 @@ internal fun SignalRadioButton(
     onValueChange: () -> Unit,
     enabled: Boolean = true,
 ) {
-
     val color by animateColorAsState(
-        targetValue = if (!enabled) SignalColor.Gray400
-        else if (value) SignalColor.Primary100
-        else SignalColor.Gray500,
+        targetValue = if (!enabled) {
+            SignalColor.Gray400
+        } else if (value) {
+            SignalColor.Primary100
+        } else {
+            SignalColor.Gray500
+        },
         label = stringResource(id = R.string.radio_button_color),
     )
 
     val alpha by animateFloatAsState(
-        targetValue = if (value) 1f
-        else 0f,
+        targetValue = if (value) {
+            1f
+        } else {
+            0f
+        },
         label = stringResource(id = R.string.radio_button_alpha),
     )
 
@@ -60,7 +66,7 @@ internal fun SignalRadioButton(
                 .background(
                     color = SignalColor.Gray100,
                     shape = CircleShape,
-                )
+                ),
         )
         Box(
             modifier = Modifier
@@ -70,7 +76,7 @@ internal fun SignalRadioButton(
                 .background(
                     color = color,
                     shape = CircleShape,
-                )
+                ),
         )
     }
 }

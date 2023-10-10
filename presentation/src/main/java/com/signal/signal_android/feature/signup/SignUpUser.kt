@@ -156,7 +156,7 @@ private fun SignUpInputs(
                     selectedDayContainerColor = SignalColor.Primary100,
                     todayDateBorderColor = SignalColor.Primary100,
                     currentYearContentColor = SignalColor.Primary100,
-                )
+                ),
             )
         }
     }

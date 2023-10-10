@@ -43,7 +43,7 @@ object SignalButtonColor {
                 default = SignalColor.Gray100,
                 pressed = SignalColor.Gray100,
                 disabled = SignalColor.Gray100,
-            )
+            ),
         )
 
     @Stable
@@ -63,6 +63,6 @@ object SignalButtonColor {
                 default = SignalColor.Primary100,
                 pressed = SignalColor.Primary100,
                 disabled = SignalColor.Gray400,
-            )
+            ),
         )
 }

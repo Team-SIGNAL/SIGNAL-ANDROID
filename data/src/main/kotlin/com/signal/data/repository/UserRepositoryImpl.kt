@@ -43,7 +43,7 @@ class UserRepositoryImpl(
                 phone = phone,
                 accountId = accountId,
                 password = password,
-            )
+            ),
         )
     }
 }

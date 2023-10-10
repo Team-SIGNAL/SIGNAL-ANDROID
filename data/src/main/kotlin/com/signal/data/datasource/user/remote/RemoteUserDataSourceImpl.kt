@@ -15,7 +15,7 @@ class RemoteUserDataSourceImpl(
                 signInRequest = SignInRequest(
                     accountId = request.accountId,
                     password = request.password,
-                )
+                ),
             )
         }.sendRequest()
 

@@ -54,6 +54,6 @@ object SignalTextFieldColor {
             descriptionColor = DescriptionColor(
                 default = SignalColor.Gray400,
                 disabled = SignalColor.Gray400,
-            )
+            ),
         )
 }
