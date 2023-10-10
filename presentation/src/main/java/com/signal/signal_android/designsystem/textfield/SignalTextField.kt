@@ -60,7 +60,6 @@ internal fun SignalTextField(
     imeAction: ImeAction = ImeAction.Done,
     enabled: Boolean = true,
 ) {
-
     var isFocused by remember { mutableStateOf(false) }
 
     var isVisible by remember { mutableStateOf(false) }
@@ -70,24 +69,37 @@ internal fun SignalTextField(
     }
 
     val titleColor by animateColorAsState(
-        targetValue = if (!enabled) color.titleColor.disabled
-        else if (error) SignalColor.Error
-        else color.titleColor.default,
+        targetValue = if (!enabled) {
+            color.titleColor.disabled
+        } else if (error) {
+            SignalColor.Error
+        } else {
+            color.titleColor.default
+        },
         label = "",
     )
 
     val descriptionColor by animateColorAsState(
-        targetValue = if (!enabled) color.descriptionColor.disabled
-        else if (error) SignalColor.Error
-        else color.descriptionColor.default,
+        targetValue = if (!enabled) {
+            color.descriptionColor.disabled
+        } else if (error) {
+            SignalColor.Error
+        } else {
+            color.descriptionColor.default
+        },
         label = "",
     )
 
     val borderColor by animateColorAsState(
-        targetValue = if (!enabled) color.outlineColor.disabled
-        else if (error) SignalColor.Error
-        else if (isFocused) color.outlineColor.focused
-        else color.outlineColor.default,
+        targetValue = if (!enabled) {
+            color.outlineColor.disabled
+        } else if (error) {
+            SignalColor.Error
+        } else if (isFocused) {
+            color.outlineColor.focused
+        } else {
+            color.outlineColor.default
+        },
         label = stringResource(id = R.string.text_field_border_color),
     )
 
@@ -110,8 +122,11 @@ internal fun SignalTextField(
                     shape = TextFieldShape,
                 )
                 .background(
-                    color = if (!enabled) color.backgroundColor.disabled
-                    else color.backgroundColor.default,
+                    color = if (!enabled) {
+                        color.backgroundColor.disabled
+                    } else {
+                        color.backgroundColor.default
+                    },
                 )
                 .onFocusChanged {
                     isFocused = it.isFocused
@@ -119,12 +134,15 @@ internal fun SignalTextField(
             value = value,
             onValueChange = onValueChange,
             singleLine = singleLine,
-            visualTransformation = if (isPassword && !isVisible) PasswordVisualTransformation()
-            else VisualTransformation.None,
+            visualTransformation = if (isPassword && !isVisible) {
+                PasswordVisualTransformation()
+            } else {
+                VisualTransformation.None
+            },
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,
                 imeAction = imeAction,
-            )
+            ),
         ) { innerTextField ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -136,13 +154,16 @@ internal fun SignalTextField(
                             vertical = 12.dp,
                             horizontal = 16.dp,
                         )
-                        .weight(1f)
+                        .weight(1f),
                 ) {
                     if (value.isEmpty()) {
                         BodyLarge(
                             text = hint,
-                            color = if (!enabled) SignalColor.Gray300
-                            else SignalColor.Gray400,
+                            color = if (!enabled) {
+                                SignalColor.Gray300
+                            } else {
+                                SignalColor.Gray400
+                            },
                         )
                     }
                     innerTextField()
@@ -151,8 +172,11 @@ internal fun SignalTextField(
                     Image(
                         modifier = Modifier.signalClickable(onClick = onVisibleChange),
                         painter = painterResource(
-                            id = if (!isVisible) R.drawable.ic_visible_off
-                            else R.drawable.ic_visible_on,
+                            id = if (!isVisible) {
+                                R.drawable.ic_visible_off
+                            } else {
+                                R.drawable.ic_visible_on
+                            },
                         ),
                         contentDescription = stringResource(id = R.string.text_field_icon),
                     )
@@ -166,7 +190,7 @@ internal fun SignalTextField(
                     modifier = Modifier.padding(
                         top = 4.dp,
                         start = 8.dp,
-                    )
+                    ),
                 ) {
                     Body(
                         text = description,

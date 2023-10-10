@@ -40,19 +40,24 @@ fun IndicatorPreview() {
 
 @Composable
 fun Indicator(isEnabled: Boolean) {
-
     val size by animateDpAsState(
-        targetValue = if (isEnabled) 9.dp
-        else 7.dp,
+        targetValue = if (isEnabled) {
+            9.dp
+        } else {
+            7.dp
+        },
         label = stringResource(id = R.string.indicator_width),
-        animationSpec = tween(DURATION)
+        animationSpec = tween(DURATION),
     )
 
     val backgroundColor by animateColorAsState(
-        targetValue = if (isEnabled) SignalColor.Primary100
-        else SignalColor.Gray100,
+        targetValue = if (isEnabled) {
+            SignalColor.Primary100
+        } else {
+            SignalColor.Gray100
+        },
         label = stringResource(id = R.string.indicator_background_color),
-        animationSpec = tween(DURATION)
+        animationSpec = tween(DURATION),
     )
 
     Box(
@@ -67,6 +72,6 @@ fun Indicator(isEnabled: Boolean) {
                 color = backgroundColor,
                 shape = CircleShape,
             )
-            .clip(CircleShape)
+            .clip(CircleShape),
     )
 }

@@ -101,7 +101,6 @@ private fun UserTools() {
     }
 }
 
-
 @Composable
 private fun Achievement() {
     Spacer(modifier = Modifier.height(20.dp))
@@ -147,7 +146,7 @@ private fun ProfileCard(
                 .height(118.dp)
                 .fillMaxSize(),
             elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
+                defaultElevation = 4.dp,
             ),
         ) {
             Row(
@@ -183,7 +182,7 @@ private fun ProfileCard(
 @Composable
 private fun ProfileImage() {
     Box(
-        modifier = Modifier.padding(19.dp)
+        modifier = Modifier.padding(19.dp),
     ) {
         Image(
             modifier = Modifier
@@ -214,7 +213,7 @@ private fun CardUserTool(
             .fillMaxWidth()
             .height(60.dp),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
+            defaultElevation = 4.dp,
         ),
     ) {
         Row(

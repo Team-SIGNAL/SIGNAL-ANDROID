@@ -34,22 +34,33 @@ private fun BasicButton(
     color: ButtonColor,
     enabled: Boolean,
 ) {
-
     val interactionSource = remember { MutableInteractionSource() }
 
     val isPressed by interactionSource.collectIsPressedAsState()
 
-    val textColor = if (!enabled) color.textColor.disabled
-    else if (isPressed) color.textColor.pressed
-    else color.textColor.default
+    val textColor = if (!enabled) {
+        color.textColor.disabled
+    } else if (isPressed) {
+        color.textColor.pressed
+    } else {
+        color.textColor.default
+    }
 
-    val backgroundColor = if (!enabled) color.backgroundColor.disabled
-    else if (isPressed) color.backgroundColor.pressed
-    else color.backgroundColor.default
+    val backgroundColor = if (!enabled) {
+        color.backgroundColor.disabled
+    } else if (isPressed) {
+        color.backgroundColor.pressed
+    } else {
+        color.backgroundColor.default
+    }
 
-    val outlineColor: Color? = if (!enabled) color.outlineColor?.disabled
-    else if (isPressed) color.outlineColor?.pressed
-    else color.outlineColor?.default
+    val outlineColor: Color? = if (!enabled) {
+        color.outlineColor?.disabled
+    } else if (isPressed) {
+        color.outlineColor?.pressed
+    } else {
+        color.outlineColor?.default
+    }
 
     Column(
         modifier = Modifier
@@ -76,7 +87,7 @@ private fun BasicButton(
     ) {
         BodyStrong(
             text = text,
-            color = textColor
+            color = textColor,
         )
     }
 }

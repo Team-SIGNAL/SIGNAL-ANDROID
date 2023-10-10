@@ -20,7 +20,7 @@ class SignUpViewModel(
             state.value.copy(
                 name = name,
                 nameError = name.length !in 2..20,
-            )
+            ),
         )
         setButtonEnabledUser()
     }
@@ -43,7 +43,7 @@ class SignUpViewModel(
             state.value.copy(
                 accountId = accountId,
                 accountIdError = accountId.length !in 5..12,
-            )
+            ),
         )
         setButtonEnabledAccount()
     }
@@ -52,8 +52,8 @@ class SignUpViewModel(
         setState(
             state.value.copy(
                 password = password,
-                passwordError = !passwordRegex.matches(password)
-            )
+                passwordError = !passwordRegex.matches(password),
+            ),
         )
         setButtonEnabledAccount()
     }
@@ -64,7 +64,7 @@ class SignUpViewModel(
                 copy(
                     repeatPassword = repeatPassword,
                     repeatPasswordError = repeatPassword != password,
-                )
+                ),
             )
         }
         setButtonEnabledAccount()

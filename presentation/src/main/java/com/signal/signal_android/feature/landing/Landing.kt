@@ -50,7 +50,6 @@ internal fun Landing(
     moveToSignIn: () -> Unit,
     moveToSignUp: () -> Unit,
 ) {
-
     val pagerState = rememberPagerState {
         landingImages.size
     }
