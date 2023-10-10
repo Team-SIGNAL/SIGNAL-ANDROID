@@ -34,7 +34,7 @@ object SignalTypography {
     )
 
     @Stable
-    val h1 = TextStyle(
+    val titleLarge2 = TextStyle(
         fontFamily = pretendardFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 48.sp,
@@ -43,7 +43,7 @@ object SignalTypography {
     )
 
     @Stable
-    val h2 = TextStyle(
+    val titleLarge = TextStyle(
         fontFamily = pretendardFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 40.sp,
@@ -52,7 +52,7 @@ object SignalTypography {
     )
 
     @Stable
-    val h3 = TextStyle(
+    val title = TextStyle(
         fontFamily = pretendardFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
@@ -61,7 +61,7 @@ object SignalTypography {
     )
 
     @Stable
-    val h4 = TextStyle(
+    val subTitle = TextStyle(
         fontFamily = pretendardFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
@@ -70,7 +70,7 @@ object SignalTypography {
     )
 
     @Stable
-    val h5 = TextStyle(
+    val bodyLarge2 = TextStyle(
         fontFamily = pretendardFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
@@ -79,7 +79,7 @@ object SignalTypography {
     )
 
     @Stable
-    val h6 = TextStyle(
+    val bodyLarge = TextStyle(
         fontFamily = pretendardFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
@@ -88,7 +88,7 @@ object SignalTypography {
     )
 
     @Stable
-    val body1 = TextStyle(
+    val bodyStrong = TextStyle(
         fontFamily = pretendardFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
@@ -106,7 +106,7 @@ object SignalTypography {
     )
 
     @Stable
-    val caption = TextStyle(
+    val body = TextStyle(
         fontFamily = pretendardFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
@@ -129,7 +129,7 @@ fun TitleLarge2(
         color = color,
         text = text,
         fontFamily = pretendardFamily,
-        style = SignalTypography.h1,
+        style = SignalTypography.titleLarge2,
         textDecoration = decoration,
         overflow = overflow,
         maxLines = maxLines,
@@ -150,7 +150,7 @@ fun TitleLarge(
         color = color,
         text = text,
         fontFamily = pretendardFamily,
-        style = SignalTypography.h2,
+        style = SignalTypography.titleLarge,
         textDecoration = decoration,
         overflow = overflow,
         maxLines = maxLines,
@@ -171,7 +171,7 @@ fun Title(
         color = color,
         text = text,
         fontFamily = pretendardFamily,
-        style = SignalTypography.h3,
+        style = SignalTypography.title,
         textDecoration = decoration,
         overflow = overflow,
         maxLines = maxLines,
@@ -192,7 +192,7 @@ fun SubTitle(
         color = color,
         text = text,
         fontFamily = pretendardFamily,
-        style = SignalTypography.h4,
+        style = SignalTypography.subTitle,
         textDecoration = decoration,
         overflow = overflow,
         maxLines = maxLines,
@@ -213,7 +213,7 @@ fun BodyLarge2(
         color = color,
         text = text,
         fontFamily = pretendardFamily,
-        style = SignalTypography.h5,
+        style = SignalTypography.bodyLarge2,
         textDecoration = decoration,
         overflow = overflow,
         maxLines = maxLines,
@@ -234,7 +234,7 @@ fun BodyLarge(
         color = color,
         text = text,
         fontFamily = pretendardFamily,
-        style = SignalTypography.h6,
+        style = SignalTypography.bodyLarge,
         textDecoration = decoration,
         overflow = overflow,
         maxLines = maxLines,
@@ -255,7 +255,7 @@ fun BodyStrong(
         color = color,
         text = text,
         fontFamily = pretendardFamily,
-        style = SignalTypography.body1,
+        style = SignalTypography.bodyStrong,
         textDecoration = decoration,
         overflow = overflow,
         maxLines = maxLines,
@@ -297,7 +297,7 @@ fun Body(
         color = color,
         text = text,
         fontFamily = pretendardFamily,
-        style = SignalTypography.caption,
+        style = SignalTypography.body,
         textDecoration = decoration,
         overflow = overflow,
         maxLines = maxLines,
