@@ -24,6 +24,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,12 +49,21 @@ import com.signal.signal_android.designsystem.foundation.SubTitle
 
 @Composable
 internal fun MyPage(
-    moveToMyPage: () -> Unit,
+    moveToSignIn: () -> Unit,
+    myPageViewModel: MyPageViewModel,
 ) {
     val editImage: () -> Unit = {}
     val userName by remember { mutableStateOf("쿼카") }
     val userPhoneNumber by remember { mutableStateOf("010-2323-2323") }
     val userBirth by remember { mutableStateOf("2006-10-27") }
+    
+    LaunchedEffect(Unit) {
+        myPageViewModel.sideEffect.collect {
+            when (it) {
+                is MyPageSideEffect.Success -> moveToSignIn()
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -76,36 +86,35 @@ internal fun MyPage(
         )
         Achievement()
         Spacer(modifier = Modifier.height(30.dp))
-        UserTools()
-    }
-}
 
-@Composable
-private fun UserTools() {
-    Column(
-        modifier = Modifier.fillMaxHeight(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        CardUserTool(
-            text = stringResource(id = R.string.my_page_bug_report),
-            textColor = SignalColor.Black,
-            icon = painterResource(id = R.drawable.ic_bug),
-            tint = SignalColor.Black,
-        ) {}
-        Spacer(modifier = Modifier.height(16.dp))
-        CardUserTool(
-            text = stringResource(id = R.string.my_page_logout),
-            textColor = SignalColor.Black,
-            icon = painterResource(id = R.drawable.ic_logout),
-            tint = SignalColor.Black,
-        ) {}
-        Spacer(modifier = Modifier.height(16.dp))
-        CardUserTool(
-            text = stringResource(id = R.string.my_page_delete_account),
-            textColor = SignalColor.Error,
-            icon = painterResource(id = R.drawable.ic_delete_account),
-            tint = SignalColor.Error,
+        Column(
+            modifier = Modifier.fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            CardUserTool(
+                text = stringResource(id = R.string.my_page_bug_report),
+                textColor = SignalColor.Black,
+                icon = painterResource(id = R.drawable.ic_bug),
+                tint = SignalColor.Black,
+            ) {
+
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            CardUserTool(
+                text = stringResource(id = R.string.my_page_logout),
+                textColor = SignalColor.Black,
+                icon = painterResource(id = R.drawable.ic_logout),
+                tint = SignalColor.Black,
+                onClick = myPageViewModel::signOut,
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            CardUserTool(
+                text = stringResource(id = R.string.my_page_delete_account),
+                textColor = SignalColor.Error,
+                icon = painterResource(id = R.drawable.ic_delete_account),
+                tint = SignalColor.Error,
+            ) {
+            }
         }
     }
 }
