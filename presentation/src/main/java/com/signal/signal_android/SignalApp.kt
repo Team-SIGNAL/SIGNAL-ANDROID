@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.signal.signal_android.navigation.NavigationRoute
 import com.signal.signal_android.navigation.authNavigation
+import com.signal.signal_android.navigation.mainNavigation
 import com.signal.signal_android.navigation.userNavigation
 
 @Composable
@@ -13,7 +14,7 @@ internal fun SignalApp() {
 
     NavHost(
         navController = navController,
-        startDestination = NavigationRoute.User.route,
+        startDestination = NavigationRoute.Main.route,
     ) {
         userNavigation(
             moveToLanding = {
@@ -32,5 +33,6 @@ internal fun SignalApp() {
             moveToSignIn = { navController.navigate(NavigationRoute.Auth.SignIn) },
             moveToSignUpAccount = { navController.navigate(NavigationRoute.Auth.SignUpAccount) },
         )
+        mainNavigation()
     }
 }

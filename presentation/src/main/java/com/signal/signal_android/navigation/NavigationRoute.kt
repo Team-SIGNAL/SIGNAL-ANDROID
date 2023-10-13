@@ -12,4 +12,13 @@ sealed class NavigationRoute(val route: String) {
         const val Landing = "landing"
         const val MyPage = "myPage"
     }
+
+    object Main : NavigationRoute(route = "Main"){
+        const val Main = "main"
+        const val Home = "home"
+        const val Diary = "diary"
+        const val Feed = "feed"
+        const val Recommend = "recommend"
+        const val MyPage = "myPage"
+    }
 }
