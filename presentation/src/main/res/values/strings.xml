@@ -6,7 +6,7 @@
     <string name="diary">일기</string>
     <string name="feed">커뮤니티</string>
     <string name="recommend">추천</string>
-    <string name="my_page">마이</string>
+    <string name="my_page">내 정보</string>
 
     <!--global-->
     <string name="id">아이디</string>

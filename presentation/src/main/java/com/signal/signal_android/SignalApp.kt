@@ -14,7 +14,7 @@ internal fun SignalApp() {
 
     NavHost(
         navController = navController,
-        startDestination = NavigationRoute.Main.route,
+        startDestination = NavigationRoute.User.route,
     ) {
         userNavigation(
             moveToLanding = {
