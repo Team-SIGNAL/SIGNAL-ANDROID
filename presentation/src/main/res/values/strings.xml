@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Signal-Android</string>
 
+    <!--navigation-->
+    <string name="home">홈</string>
+    <string name="diary">일기</string>
+    <string name="feed">커뮤니티</string>
+    <string name="recommend">추천</string>
+    <string name="my_page">내 정보</string>
+
     <!--global-->
     <string name="id">아이디</string>
     <string name="password">비밀번호</string>
@@ -70,7 +77,6 @@
     <string name="next">다음</string>
 
     <!--my page-->
-    <string name="my_page">마이페이지</string>
     <string name="my_page_profile_image">프로필 사진</string>
     <string name="my_page_received_achievement">받은 업적</string>
     <string name="edit_information">수정하기</string>
