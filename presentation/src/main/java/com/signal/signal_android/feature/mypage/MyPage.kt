@@ -69,7 +69,7 @@ internal fun MyPage(
     LaunchedEffect(Unit) {
         myPageViewModel.sideEffect.collect {
             when (it) {
-                is MyPageSideEffect.Success -> moveToSignIn()
+                is MyPageSideEffect.SecessionSuccess -> moveToSignIn()
                 else -> {}
             }
         }

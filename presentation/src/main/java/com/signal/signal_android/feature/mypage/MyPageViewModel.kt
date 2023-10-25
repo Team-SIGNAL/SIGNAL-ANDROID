@@ -23,7 +23,7 @@ class MyPageViewModel(
     internal fun secession() {
         viewModelScope.launch(Dispatchers.IO) {
             secessionUseCase().onSuccess {
-                postSideEffect(MyPageSideEffect.Success)
+                postSideEffect(MyPageSideEffect.SecessionSuccess)
             }
         }
     }
