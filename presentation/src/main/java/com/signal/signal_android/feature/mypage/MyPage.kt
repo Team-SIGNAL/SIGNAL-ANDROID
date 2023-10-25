@@ -51,6 +51,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun MyPage(
     moveToSignIn: () -> Unit,
+    moveToLanding: () -> Unit,
     myPageViewModel: MyPageViewModel = koinViewModel(),
 ) {
     var showSecessionDialog by remember { mutableStateOf(false) }
@@ -69,8 +70,8 @@ internal fun MyPage(
     LaunchedEffect(Unit) {
         myPageViewModel.sideEffect.collect {
             when (it) {
-                is MyPageSideEffect.SecessionSuccess -> moveToSignIn()
-                else -> {}
+                is MyPageSideEffect.SecessionSuccess -> moveToLanding()
+                is MyPageSideEffect.SignOutSuccess -> moveToSignIn()
             }
         }
     }

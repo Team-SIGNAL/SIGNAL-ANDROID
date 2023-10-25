@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -23,6 +22,7 @@ import com.signal.signal_android.navigation.NavigationRoute
 @Composable
 internal fun Main(
     moveToSignIn: () -> Unit,
+    moveToLanding: () -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -63,8 +63,11 @@ internal fun Main(
                 Recommend()
             }
 
-            composable(NavigationRoute.Main.MyPage){
-                MyPage(moveToSignIn = moveToSignIn)
+            composable(NavigationRoute.Main.MyPage) {
+                MyPage(
+                    moveToSignIn = moveToSignIn,
+                    moveToLanding = moveToLanding,
+                )
             }
         }
     }

@@ -14,7 +14,7 @@ internal fun SignalApp() {
 
     NavHost(
         navController = navController,
-        startDestination = NavigationRoute.User.route,
+        startDestination = NavigationRoute.Main.route,
     ) {
         userNavigation(
             moveToLanding = {
@@ -35,6 +35,13 @@ internal fun SignalApp() {
         mainNavigation(
             moveToSignIn = {
                 navController.navigate(NavigationRoute.Auth.SignIn) {
+                    popUpTo(NavigationRoute.Main.MyPage) {
+                        inclusive = true
+                    }
+                }
+            },
+            moveToLanding = {
+                navController.navigate(NavigationRoute.User.Landing) {
                     popUpTo(NavigationRoute.Main.MyPage) {
                         inclusive = true
                     }

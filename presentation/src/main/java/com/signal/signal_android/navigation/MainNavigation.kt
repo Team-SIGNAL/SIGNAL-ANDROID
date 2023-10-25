@@ -7,6 +7,7 @@ import com.signal.signal_android.feature.main.Main
 
 internal fun NavGraphBuilder.mainNavigation(
     moveToSignIn: () -> Unit,
+    moveToLanding: () -> Unit,
 ){
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -15,6 +16,7 @@ internal fun NavGraphBuilder.mainNavigation(
         composable(NavigationRoute.Main.Main){
             Main(
                 moveToSignIn = moveToSignIn,
+                moveToLanding = moveToLanding,
             )
         }
     }
