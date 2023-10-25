@@ -46,4 +46,12 @@ class UserRepositoryImpl(
             ),
         )
     }
+
+    override suspend fun secession() {
+        remoteUserDataSource.secession()
+    }
+
+    override suspend fun signOut() {
+        localUserDataSource.clearToken()
+    }
 }

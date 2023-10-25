@@ -1,7 +1,9 @@
 package com.signal.data.datasource.user.local
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import java.security.Key
 import java.time.LocalDateTime
 
 class LocalUserDataSourceImpl(
@@ -30,6 +32,10 @@ class LocalUserDataSourceImpl(
 
     override fun getExpireAt(): String {
         return getSharedPreference().getString(Keys.EXPIRE_AT, "") ?: ""
+    }
+
+    override fun clearToken() {
+        getSharedPreference().edit().clear().apply()
     }
 
     private fun getSharedPreference(): SharedPreferences {
