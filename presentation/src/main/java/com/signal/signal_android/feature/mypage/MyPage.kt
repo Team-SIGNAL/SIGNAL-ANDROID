@@ -24,6 +24,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,26 +45,37 @@ import com.signal.signal_android.designsystem.foundation.BodyLarge
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
+import com.signal.signal_android.designsystem.util.signalClickable
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun MyPage(
-    moveToSignIn: () -> Unit, myPageViewModel: MyPageViewModel = koinViewModel()
+    moveToSignIn: () -> Unit,
+    myPageViewModel: MyPageViewModel = koinViewModel(),
 ) {
-    val editImage: () -> Unit = {}
     var showSecessionDialog by remember { mutableStateOf(false) }
-    val onSecessionCheckBtnClick: () -> Unit = { myPageViewModel.secession() }
-    val onSecessionCancelBtnClick: () -> Unit = { showSecessionDialog = false }
+    val onSecessionCancelClick: () -> Unit = { showSecessionDialog = false }
 
+    if (showSecessionDialog) {
+        Dialog(onDismissRequest = { showSecessionDialog = false }) {
+            SecessionDialog(
+                title = stringResource(id = R.string.my_page_confirm_secession),
+                onCancelBtnClick = onSecessionCancelClick,
+                onCheckBtnClick = myPageViewModel::secession,
+            )
+        }
+    }
 
-    /*LaunchedEffect(Unit) {
+    LaunchedEffect(Unit) {
         myPageViewModel.sideEffect.collect {
             when (it) {
                 is MyPageSideEffect.Success -> moveToSignIn()
+                else -> {}
             }
         }
-    }*/
+    }
 
+    // TODO 더미 제거
     var name = ""
     var phoneNumber = ""
     var birth = ""
@@ -93,16 +105,15 @@ internal fun MyPage(
         Column(
             modifier = Modifier.fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CardUserTool(
                 text = stringResource(id = R.string.my_page_bug_report),
                 textColor = SignalColor.Black,
                 icon = painterResource(id = R.drawable.ic_bug),
                 tint = SignalColor.Black,
-            ) {
-
-            }
-            Spacer(modifier = Modifier.height(16.dp))
+                onClick = {  /* TODO */ },
+            )
             CardUserTool(
                 text = stringResource(id = R.string.my_page_logout),
                 textColor = SignalColor.Black,
@@ -110,23 +121,13 @@ internal fun MyPage(
                 tint = SignalColor.Black,
                 onClick = myPageViewModel::signOut,
             )
-            Spacer(modifier = Modifier.height(16.dp))
             CardUserTool(
                 text = stringResource(id = R.string.my_page_delete_account),
                 textColor = SignalColor.Error,
                 icon = painterResource(id = R.drawable.ic_delete_account),
                 tint = SignalColor.Error,
-            ) {
-                if (showSecessionDialog) {
-                    Dialog(onDismissRequest = { showSecessionDialog = false }) {
-                        SecessionDialog(
-                            title = stringResource(id = R.string.my_page_confirm_secession),
-                            onCancelBtnClick = onSecessionCancelBtnClick,
-                            onCheckBtnClick = onSecessionCheckBtnClick,
-                        )
-                    }
-                }
-            }
+                onClick = { showSecessionDialog = true }
+            )
         }
     }
 }
@@ -244,7 +245,8 @@ private fun CardUserTool(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp),
+            .height(60.dp)
+            .signalClickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp,
         ),
@@ -292,7 +294,7 @@ private fun SecessionDialog(
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(2.dp)
+                .height(0.4.dp)
                 .padding(horizontal = 12.dp),
             color = SignalColor.Gray500,
         )
@@ -316,7 +318,7 @@ private fun SecessionDialog(
             }
             Divider(
                 modifier = Modifier
-                    .width(2.dp)
+                    .width(0.4.dp)
                     .height(40.dp)
                     .padding(vertical = 4.dp),
             )
