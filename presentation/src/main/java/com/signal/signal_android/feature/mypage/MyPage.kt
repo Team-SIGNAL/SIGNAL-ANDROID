@@ -1,6 +1,5 @@
 package com.signal.signal_android.feature.mypage
 
-import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,19 +14,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,10 +35,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
@@ -46,24 +44,29 @@ import com.signal.signal_android.designsystem.foundation.BodyLarge
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun MyPage(
-    moveToSignIn: () -> Unit,
-    myPageViewModel: MyPageViewModel,
+    moveToSignIn: () -> Unit, myPageViewModel: MyPageViewModel = koinViewModel()
 ) {
     val editImage: () -> Unit = {}
-    val userName by remember { mutableStateOf("쿼카") }
-    val userPhoneNumber by remember { mutableStateOf("010-2323-2323") }
-    val userBirth by remember { mutableStateOf("2006-10-27") }
-    
-    LaunchedEffect(Unit) {
+    var showSecessionDialog by remember { mutableStateOf(false) }
+    val onSecessionCheckBtnClick: () -> Unit = { myPageViewModel.secession() }
+    val onSecessionCancelBtnClick: () -> Unit = { showSecessionDialog = false }
+
+
+    /*LaunchedEffect(Unit) {
         myPageViewModel.sideEffect.collect {
             when (it) {
                 is MyPageSideEffect.Success -> moveToSignIn()
             }
         }
-    }
+    }*/
+
+    var name = ""
+    var phoneNumber = ""
+    var birth = ""
 
     Column(
         modifier = Modifier
@@ -80,9 +83,9 @@ internal fun MyPage(
         )
         Spacer(modifier = Modifier.height(24.dp))
         ProfileCard(
-            name = userName,
-            phoneNumber = userPhoneNumber,
-            birth = userBirth,
+            name = name,
+            phoneNumber = phoneNumber,
+            birth = birth,
         )
         Achievement()
         Spacer(modifier = Modifier.height(30.dp))
@@ -114,6 +117,15 @@ internal fun MyPage(
                 icon = painterResource(id = R.drawable.ic_delete_account),
                 tint = SignalColor.Error,
             ) {
+                if (showSecessionDialog) {
+                    Dialog(onDismissRequest = { showSecessionDialog = false }) {
+                        SecessionDialog(
+                            title = stringResource(id = R.string.my_page_confirm_secession),
+                            onCancelBtnClick = onSecessionCancelBtnClick,
+                            onCheckBtnClick = onSecessionCheckBtnClick,
+                        )
+                    }
+                }
             }
         }
     }
@@ -172,7 +184,7 @@ private fun ProfileCard(
                     .fillMaxSize()
                     .background(color = SignalColor.White),
             ) {
-                ProfileImage()
+                ProfileImage(onClick = {})
                 Column(
                     modifier = Modifier.fillMaxHeight(),
                     verticalArrangement = Arrangement.Center,
@@ -198,7 +210,9 @@ private fun ProfileCard(
 }
 
 @Composable
-private fun ProfileImage() {
+private fun ProfileImage(
+    onClick: () -> Unit,
+) {
     Box(
         modifier = Modifier.padding(19.dp),
     ) {
@@ -253,6 +267,73 @@ private fun CardUserTool(
                 text = text,
                 color = textColor,
             )
+        }
+    }
+}
+
+@Composable
+private fun SecessionDialog(
+    title: String,
+    onCancelBtnClick: () -> Unit,
+    onCheckBtnClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .wrapContentSize()
+            .clip(RoundedCornerShape(6.dp))
+            .background(SignalColor.White), horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(40.dp))
+        Body2(
+            text = title,
+            color = SignalColor.Black,
+        )
+        Spacer(modifier = Modifier.height(26.dp))
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp)
+                .padding(horizontal = 12.dp),
+            color = SignalColor.Gray500,
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .height(40.dp)
+                    .clickable(
+                        onClick = onCancelBtnClick,
+                    ), contentAlignment = Alignment.Center
+            ) {
+                Body2(
+                    text = stringResource(id = R.string.my_page_secession_cancel),
+                    color = SignalColor.Gray500
+                )
+            }
+            Divider(
+                modifier = Modifier
+                    .width(2.dp)
+                    .height(40.dp)
+                    .padding(vertical = 4.dp),
+            )
+            Box(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .height(40.dp)
+                    .clickable(
+                        onClick = onCheckBtnClick,
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                Body2(
+                    text = stringResource(id = R.string.my_page_secession_check),
+                    color = SignalColor.Error,
+                )
+            }
         }
     }
 }
