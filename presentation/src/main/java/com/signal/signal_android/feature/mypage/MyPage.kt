@@ -283,7 +283,8 @@ private fun SecessionDialog(
         modifier = Modifier
             .wrapContentSize()
             .clip(RoundedCornerShape(6.dp))
-            .background(SignalColor.White), horizontalAlignment = Alignment.CenterHorizontally
+            .background(SignalColor.White),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(40.dp))
         Body2(
