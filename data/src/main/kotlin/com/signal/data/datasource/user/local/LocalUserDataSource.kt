@@ -12,4 +12,5 @@ interface LocalUserDataSource {
     fun getAccessToken(): String
     fun getRefreshToken(): String
     fun getExpireAt(): String
+    fun clearToken()
 }
