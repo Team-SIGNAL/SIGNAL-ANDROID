@@ -8,12 +8,12 @@ import retrofit2.http.POST
 
 interface UserApi {
     @POST(SignalUrl.Users.SignIn)
-    fun signIn(
+    suspend fun signIn(
         @Body signInRequest: SignInRequest,
     ): SignInResponse
 
     @POST(SignalUrl.Users.SignUp)
-    fun signUp(
+    suspend fun signUp(
         @Body signUpRequest: SignUpRequest,
     )
 }
