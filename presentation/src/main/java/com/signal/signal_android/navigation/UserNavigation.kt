@@ -18,7 +18,6 @@ internal fun NavGraphBuilder.userNavigation(
     moveToLanding: () -> Unit,
     moveToSignIn: () -> Unit,
     moveToSignUp: () -> Unit,
-    moveToMyPage: () -> Unit,
 ) {
     navigation(
         route = NavigationRoute.User.route,
@@ -32,13 +31,6 @@ internal fun NavGraphBuilder.userNavigation(
             Landing(
                 moveToSignIn = moveToSignIn,
                 moveToSignUp = moveToSignUp,
-            )
-        }
-
-        composable(NavigationRoute.User.MyPage) {
-            MyPage(
-                moveToSignIn = moveToSignIn,
-                myPageViewModel = myPageViewModel,
             )
         }
     }
