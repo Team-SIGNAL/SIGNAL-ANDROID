@@ -35,11 +35,7 @@ class LocalUserDataSourceImpl(
     }
 
     override fun clearToken() {
-        run {
-            context.getSharedPreferences(Keys.ACCESS_TOKEN, Context.MODE_PRIVATE)
-            context.getSharedPreferences(Keys.REFRESH_TOKEN, Context.MODE_PRIVATE)
-            context.getSharedPreferences(Keys.EXPIRE_AT, Context.MODE_PRIVATE)
-        }.edit().clear().apply()
+        getSharedPreference().edit().clear().apply()
     }
 
     private fun getSharedPreference(): SharedPreferences {
