@@ -15,4 +15,7 @@ interface UserRepository {
         accountId: String,
         password: String,
     )
+
+    suspend fun secession()
+    suspend fun signOut()
 }
