@@ -6,5 +6,6 @@ object SignalUrl {
     object Users {
         const val SignIn = "$users/signin"
         const val SignUp = "$users/signup"
+        const val Secession = "$users/secession"
     }
 }
