@@ -22,4 +22,8 @@ class RemoteUserDataSourceImpl(
     override suspend fun signUp(request: SignUpRequest) = ExceptionHandler<Unit>().httpRequest {
         userApi.signUp(signUpRequest = request)
     }.sendRequest()
+
+    override suspend fun secession() = ExceptionHandler<Unit>().httpRequest {
+        userApi.secession()
+    }.sendRequest()
 }

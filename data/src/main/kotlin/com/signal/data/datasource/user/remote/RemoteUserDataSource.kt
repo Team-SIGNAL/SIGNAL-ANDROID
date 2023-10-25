@@ -7,4 +7,5 @@ import com.signal.data.model.signup.SignUpRequest
 interface RemoteUserDataSource {
     suspend fun signIn(request: SignInRequest): SignInResponse
     suspend fun signUp(request: SignUpRequest)
+    suspend fun secession()
 }
