@@ -105,7 +105,7 @@ internal fun MyPage(
         Column(
             modifier = Modifier.fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             CardUserTool(
                 text = stringResource(id = R.string.my_page_bug_report),
@@ -309,7 +309,8 @@ private fun SecessionDialog(
                     .height(40.dp)
                     .clickable(
                         onClick = onCancelBtnClick,
-                    ), contentAlignment = Alignment.Center
+                    ),
+                contentAlignment = Alignment.Center,
             ) {
                 Body2(
                     text = stringResource(id = R.string.my_page_secession_cancel),
