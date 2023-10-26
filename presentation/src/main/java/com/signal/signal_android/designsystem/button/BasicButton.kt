@@ -29,6 +29,7 @@ private val ButtonShape = RoundedCornerShape(8.dp)
 
 @Composable
 private fun BasicButton(
+    modifier: Modifier,
     text: String,
     onClick: () -> Unit,
     color: ButtonColor,
@@ -63,7 +64,7 @@ private fun BasicButton(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .border(
                 width = 1.dp,
@@ -94,12 +95,14 @@ private fun BasicButton(
 
 @Composable
 internal fun SignalFilledButton(
+    modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
     color: ButtonColor = SignalButtonColor.Filled,
     enabled: Boolean = true,
 ) {
     BasicButton(
+        modifier = modifier,
         text = text,
         onClick = onClick,
         color = color,
@@ -109,12 +112,14 @@ internal fun SignalFilledButton(
 
 @Composable
 internal fun SignalOutlinedButton(
+    modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
     color: ButtonColor = SignalButtonColor.Outlined,
     enabled: Boolean = true,
 ) {
     BasicButton(
+        modifier = modifier,
         text = text,
         onClick = onClick,
         color = color,

@@ -2,6 +2,7 @@ package com.signal.signal_android.feature.main
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,22 +45,23 @@ internal fun Main(
         }
     ) {
         NavHost(
+            modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
             navController = navController,
             startDestination = NavigationRoute.Main.Home,
         ) {
-            composable(NavigationRoute.Main.Home){
+            composable(NavigationRoute.Main.Home) {
                 Home()
             }
 
-            composable(NavigationRoute.Main.Diary){
+            composable(NavigationRoute.Main.Diary) {
                 Diary()
             }
 
-            composable(NavigationRoute.Main.Feed){
+            composable(NavigationRoute.Main.Feed) {
                 Feed()
             }
 
-            composable(NavigationRoute.Main.Recommend){
+            composable(NavigationRoute.Main.Recommend) {
                 Recommend()
             }
 
