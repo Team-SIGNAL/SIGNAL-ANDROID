@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Signal-Android</string>
 
+    <!--content description-->
+    <string name="edit">edit</string>
+
     <!--navigation-->
     <string name="home">홈</string>
     <string name="diary">일기</string>
@@ -92,5 +95,10 @@
 
 
     <string name="my_page_confirm_secession">정말 탈퇴 하시겠습니까?</string>
-    
+
+    <!--feed-->
+    <string name="feed_image">feed image</string>
+    <string name="feed_all">전체</string>
+    <string name="feed_notice">공지</string>
+    <string name="feed_recommend">추천</string>
 </resources>
