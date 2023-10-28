@@ -1,6 +1,5 @@
 package com.signal.signal_android.navigation
 
-import android.util.Log
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -13,6 +12,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
     moveToFeedDetails: (feedId: Long) -> Unit,
+    moveToBack: () -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -32,7 +32,11 @@ internal fun NavGraphBuilder.mainNavigation(
                 navArgument("feedId") { type = NavType.LongType },
             )
         ) {
-            FeedDetails(feedId = it.arguments?.getLong("feedId") ?: 0L)
+            FeedDetails(
+                feedId = it.arguments?.getLong("feedId") ?: 0L,
+                moveToFeedDetails = moveToFeedDetails,
+                moveToBack = moveToBack,
+            )
         }
     }
 }

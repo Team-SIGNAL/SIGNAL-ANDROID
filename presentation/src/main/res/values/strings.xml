@@ -1,10 +1,5 @@
 <resources>
     <string name="app_name">Signal-Android</string>
-
-    <!--content description-->
-    <string name="edit">edit</string>
-    <string name="more">more</string>
-
     <!--navigation-->
     <string name="home">홈</string>
     <string name="diary">일기</string>
@@ -102,4 +97,14 @@
     <string name="feed_all">전체</string>
     <string name="feed_notice">공지</string>
     <string name="feed_recommend">추천</string>
+    <string name="feed_post">작성하기</string>
+    <string name="feed_more">더보기</string>
+
+    <!--feed details-->
+    <string name="feed_details_image">게시글 이미지</string>
+    <string name="feed_details_check_comments">댓글 확인하기</string>
+    <string name="feed_details_feed_list">게시글 목록</string>
+
+    <!--header-->
+    <string name="header_back">뒤로가기</string>
 </resources>

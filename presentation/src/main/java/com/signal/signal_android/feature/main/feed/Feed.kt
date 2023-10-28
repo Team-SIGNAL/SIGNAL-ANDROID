@@ -49,9 +49,23 @@ internal data class _Post(
 )
 
 // TODO 더미
-private val posts = listOf(
+internal val posts = listOf(
     _Post(
         feedId = 1,
+        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
+        title = "인스타그램",
+        date = "2023-10-28",
+        writer = "정승훈",
+    ),
+    _Post(
+        feedId = 2,
+        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
+        title = "인스타그램",
+        date = "2023-10-28",
+        writer = "정승훈",
+    ),
+    _Post(
+        feedId = 3,
         imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
         title = "인스타그램",
         date = "2023-10-28",
@@ -119,7 +133,7 @@ internal fun Feed(
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_edit),
-                contentDescription = stringResource(id = R.string.edit),
+                contentDescription = stringResource(id = R.string.feed_post),
                 tint = SignalColor.White,
             )
         }
@@ -147,7 +161,7 @@ private fun Posts(
 }
 
 @Composable
-private fun Post(
+internal fun Post(
     onClick: () -> Unit,
     imageUrl: String,
     title: String,
@@ -159,7 +173,7 @@ private fun Post(
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
-                elevation = 8.dp,
+                elevation = 4.dp,
                 shape = RoundedCornerShape(8.dp),
             )
             .clip(RoundedCornerShape(8.dp))
@@ -193,7 +207,7 @@ private fun Post(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_more),
-                        contentDescription = stringResource(id = R.string.more),
+                        contentDescription = stringResource(id = R.string.header_back),
                     )
                 }
             }

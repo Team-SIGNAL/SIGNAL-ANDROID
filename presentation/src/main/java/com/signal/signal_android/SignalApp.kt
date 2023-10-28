@@ -12,6 +12,10 @@ import com.signal.signal_android.navigation.userNavigation
 internal fun SignalApp() {
     val navController = rememberNavController()
 
+    val moveToBack: () -> Unit = {
+        navController.popBackStack()
+    }
+
     NavHost(
         navController = navController,
         startDestination = NavigationRoute.Main.route,
@@ -50,6 +54,7 @@ internal fun SignalApp() {
             moveToFeedDetails = {
                 navController.navigate("${NavigationRoute.Main.FeedDetails}/".plus(it))
             },
+            moveToBack = moveToBack,
         )
     }
 }
