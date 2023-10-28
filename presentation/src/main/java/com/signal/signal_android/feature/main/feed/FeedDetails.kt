@@ -22,9 +22,11 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -68,6 +70,10 @@ internal fun FeedDetails(
         skipHalfExpanded = true,
     )
 
+    var expanded by remember {
+        mutableLongStateOf(-1)
+    }
+
     ModalBottomSheetLayout(
         sheetContent = {
             CommentDialog()
@@ -93,7 +99,9 @@ internal fun FeedDetails(
                     profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
                     name = "승훈티비",
                     date = "2023-10-10",
-                    onClick = {},
+                    onClick = { expanded = feedId },
+                    expanded = expanded == feedId,
+                    onDismissRequest = { expanded = -1 },
                 )
                 if (feedImageUrl != null) {
                     Spacer(modifier = Modifier.height(22.dp))
@@ -136,11 +144,14 @@ internal fun FeedDetails(
                 )
                 posts.forEach {
                     Post(
-                        onClick = { moveToFeedDetails(it.feedId) },
+                        moveToFeedDetails = { moveToFeedDetails(it.feedId) },
                         imageUrl = it.imageUrl,
                         title = it.title,
                         date = it.date,
                         writer = it.writer,
+                        onClick = { expanded = it.feedId },
+                        expanded = expanded == it.feedId,
+                        onDismissRequest = { expanded = -1 },
                     )
                 }
             }
@@ -154,6 +165,9 @@ private fun User(
     name: String,
     date: String,
     onClick: () -> Unit,
+    expanded: Boolean,
+    onDismissRequest: () -> Unit,
+
 ) {
     Row(
         modifier = Modifier
@@ -186,6 +200,13 @@ private fun User(
                 painter = painterResource(id = R.drawable.ic_more),
                 contentDescription = stringResource(id = R.string.feed_more),
             )
+            FeedDropDownMenu(
+                expanded = expanded,
+                onDismissRequest = onDismissRequest,
+                onEdit = { /*TODO*/ },
+                onDelete = { /*TODO*/ },
+            ) {
+            }
         }
     }
 }

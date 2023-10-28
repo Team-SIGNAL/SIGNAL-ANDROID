@@ -15,11 +15,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenu
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -93,6 +96,8 @@ internal fun Feed(
         }
     }
 
+    var expanded by remember { mutableLongStateOf(-1) }
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
@@ -124,10 +129,13 @@ internal fun Feed(
             Posts(
                 moveToFeedDetails = moveToFeedDetails,
                 posts = posts,
+                showDropDown = { expanded = it },
+                expanded = expanded,
+                onDismissRequest = { expanded = -1 },
             )
         }
         FloatingActionButton(
-            modifier = Modifier.padding(32.dp),
+            modifier = Modifier.padding(16.dp),
             onClick = { /*TODO*/ },
             backgroundColor = SignalColor.Primary100,
         ) {
@@ -143,18 +151,24 @@ internal fun Feed(
 @Composable
 private fun Posts(
     moveToFeedDetails: (feedId: Long) -> Unit,
+    showDropDown: (feedId: Long) -> Unit,
     posts: List<_Post>,
+    onDismissRequest: () -> Unit,
+    expanded: Long,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
     ) {
         items(posts) {
             Post(
-                onClick = { moveToFeedDetails(it.feedId) },
+                moveToFeedDetails = { moveToFeedDetails(it.feedId) },
                 imageUrl = it.imageUrl,
                 title = it.title,
                 date = it.date,
                 writer = it.writer,
+                onClick = { showDropDown(it.feedId) },
+                expanded = expanded == it.feedId,
+                onDismissRequest = onDismissRequest,
             )
         }
     }
@@ -162,11 +176,14 @@ private fun Posts(
 
 @Composable
 internal fun Post(
-    onClick: () -> Unit,
+    moveToFeedDetails: () -> Unit,
     imageUrl: String,
     title: String,
     date: String,
     writer: String,
+    onClick: () -> Unit,
+    expanded: Boolean,
+    onDismissRequest: () -> Unit,
 ) {
     Spacer(modifier = Modifier.height(8.dp))
     Row(
@@ -179,7 +196,7 @@ internal fun Post(
             .clip(RoundedCornerShape(8.dp))
             .signalClickable(
                 rippleEnabled = true,
-                onClick = onClick,
+                onClick = moveToFeedDetails,
             )
             .background(
                 color = SignalColor.White,
@@ -203,11 +220,19 @@ internal fun Post(
                 BodyStrong(text = title)
                 IconButton(
                     modifier = Modifier.size(16.dp),
-                    onClick = {},
+                    onClick = onClick,
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_more),
                         contentDescription = stringResource(id = R.string.header_back),
+                    )
+                    FeedDropDownMenu(
+                        expanded = expanded,
+                        onDismissRequest = onDismissRequest,
+                        isMine = true,
+                        onDelete = {},
+                        onEdit = {},
+                        onReport = {},
                     )
                 }
             }
@@ -228,4 +253,50 @@ internal fun Post(
         }
     }
     Spacer(modifier = Modifier.height(8.dp))
+}
+
+@Composable
+internal fun FeedDropDownMenu(
+    expanded: Boolean,
+    isMine: Boolean = false,
+    onDismissRequest: () -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
+    onReport: () -> Unit,
+) {
+    DropdownMenu(
+        expanded = expanded,
+        onDismissRequest = onDismissRequest,
+    ) {
+        DropdownMenuItem(
+            text = {
+                Body(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = stringResource(id = R.string.feed_edit),
+                )
+            },
+            onClick = onEdit,
+        )
+        DropdownMenuItem(
+            modifier = Modifier.fillMaxWidth(),
+            text = {
+                Body(
+                    modifier = Modifier.align(Alignment.End),
+                    text = stringResource(id = R.string.feed_delete),
+                    color = SignalColor.Error,
+                )
+            },
+            onClick = onDelete,
+        )
+        DropdownMenuItem(
+            text = {
+                Body(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = stringResource(id = R.string.feed_report),
+                    color = SignalColor.Error,
+                )
+            },
+            onClick = onReport,
+        )
+    }
 }

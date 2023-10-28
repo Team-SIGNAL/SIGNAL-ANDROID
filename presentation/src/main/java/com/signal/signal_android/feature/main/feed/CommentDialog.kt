@@ -212,16 +212,19 @@ private fun Input(
     onCommentChange: (String) -> Unit,
     onClick: () -> Unit,
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier.padding(bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         SignalTextField(
-            modifier = Modifier.fillMaxWidth(0.7f),
+            modifier = Modifier.fillMaxWidth(0.8f),
             value = "",
             onValueChange = onCommentChange,
             hint = stringResource(id = R.string.comment_dialog_input_comment),
         )
         Spacer(modifier = Modifier.width(8.dp))
         SignalFilledButton(
-            modifier = Modifier.weight(0.3f),
+            modifier = Modifier.weight(0.2f),
             text = stringResource(id = R.string.my_page_secession_check),
             onClick = onClick,
         )
