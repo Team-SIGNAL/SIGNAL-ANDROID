@@ -24,6 +24,7 @@ import com.signal.signal_android.navigation.NavigationRoute
 internal fun Main(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
+    moveToFeedDetails: (feedId: Long) -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -58,7 +59,7 @@ internal fun Main(
             }
 
             composable(NavigationRoute.Main.Feed) {
-                Feed()
+                Feed(moveToFeedDetails = moveToFeedDetails)
             }
 
             composable(NavigationRoute.Main.Recommend) {

@@ -46,7 +46,10 @@ internal fun SignalApp() {
                         inclusive = true
                     }
                 }
-            }
+            },
+            moveToFeedDetails = {
+                navController.navigate("${NavigationRoute.Main.FeedDetails}/".plus(it))
+            },
         )
     }
 }

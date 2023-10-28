@@ -41,6 +41,7 @@ import com.signal.signal_android.designsystem.util.signalClickable
 
 // TODO 더미
 internal data class _Post(
+    val feedId: Long,
     val imageUrl: String,
     val title: String,
     val date: String,
@@ -50,6 +51,7 @@ internal data class _Post(
 // TODO 더미
 private val posts = listOf(
     _Post(
+        feedId = 1,
         imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
         title = "인스타그램",
         date = "2023-10-28",
@@ -63,7 +65,9 @@ private enum class Type {
 }
 
 @Composable
-internal fun Feed() {
+internal fun Feed(
+    moveToFeedDetails: (feedId: Long) -> Unit,
+) {
     // TODO 뷰모델에서 구현
     var type by remember { mutableStateOf(Type.ALL) }
 
@@ -103,7 +107,10 @@ internal fun Feed() {
                 onClick = onClick,
             )
             Spacer(modifier = Modifier.height(18.dp))
-            Posts(posts = posts)
+            Posts(
+                moveToFeedDetails = moveToFeedDetails,
+                posts = posts,
+            )
         }
         FloatingActionButton(
             modifier = Modifier.padding(32.dp),
@@ -120,12 +127,16 @@ internal fun Feed() {
 }
 
 @Composable
-private fun Posts(posts: List<_Post>) {
+private fun Posts(
+    moveToFeedDetails: (feedId: Long) -> Unit,
+    posts: List<_Post>,
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
     ) {
         items(posts) {
             Post(
+                onClick = { moveToFeedDetails(it.feedId) },
                 imageUrl = it.imageUrl,
                 title = it.title,
                 date = it.date,
@@ -137,6 +148,7 @@ private fun Posts(posts: List<_Post>) {
 
 @Composable
 private fun Post(
+    onClick: () -> Unit,
     imageUrl: String,
     title: String,
     date: String,
@@ -153,7 +165,7 @@ private fun Post(
             .clip(RoundedCornerShape(8.dp))
             .signalClickable(
                 rippleEnabled = true,
-                onClick = {},
+                onClick = onClick,
             )
             .background(
                 color = SignalColor.White,
