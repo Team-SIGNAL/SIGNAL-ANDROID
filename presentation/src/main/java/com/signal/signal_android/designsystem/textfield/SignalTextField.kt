@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -47,6 +46,7 @@ private val TextFieldShape = RoundedCornerShape(8.dp)
 
 @Composable
 internal fun SignalTextField(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     title: String? = null,
@@ -113,7 +113,6 @@ internal fun SignalTextField(
         }
         BasicTextField(
             modifier = Modifier
-                .fillMaxWidth()
                 .height(48.dp)
                 .clip(TextFieldShape)
                 .border(
@@ -145,7 +144,7 @@ internal fun SignalTextField(
             ),
         ) { innerTextField ->
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = modifier,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(
