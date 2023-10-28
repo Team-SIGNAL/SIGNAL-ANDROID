@@ -1,6 +1,9 @@
 package com.signal.signal_android
 
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.signal.signal_android.navigation.NavigationRoute
@@ -17,8 +20,11 @@ internal fun SignalApp() {
     }
 
     NavHost(
+        modifier = Modifier
+            .statusBarsPadding()
+            .navigationBarsPadding(),
         navController = navController,
-        startDestination = NavigationRoute.Main.route,
+        startDestination = NavigationRoute.Auth.route,
     ) {
         userNavigation(
             moveToLanding = {
