@@ -1,6 +1,7 @@
 package com.signal.signal_android.feature.main.feed
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +37,7 @@ import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
+import com.signal.signal_android.designsystem.util.signalClickable
 
 // TODO 더미
 internal data class _Post(
@@ -47,10 +50,10 @@ internal data class _Post(
 // TODO 더미
 private val posts = listOf(
     _Post(
-        imageUrl = "",
-        title = "title",
-        date = "date",
-        writer = "writer",
+        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
+        title = "인스타그램",
+        date = "2023-10-28",
+        writer = "정승훈",
     ),
 )
 
@@ -148,33 +151,54 @@ private fun Post(
                 shape = RoundedCornerShape(8.dp),
             )
             .clip(RoundedCornerShape(8.dp))
+            .signalClickable(
+                rippleEnabled = true,
+                onClick = {},
+            )
             .background(
                 color = SignalColor.White,
                 shape = RoundedCornerShape(8.dp),
             )
-            .padding(
-                horizontal = 16.dp,
-                vertical = 14.dp,
-            ),
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
-            modifier = Modifier.clip(RoundedCornerShape(4.dp)),
+            modifier = Modifier.size(48.dp),
             model = imageUrl,
             contentDescription = stringResource(id = R.string.feed_image),
         )
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.fillMaxWidth()) {
-            BodyStrong(text = title)
-            Body(
-                text = writer,
-                color = SignalColor.Gray500,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Body(
-                modifier = Modifier.align(Alignment.End),
-                text = date,
-                color = SignalColor.Gray500,
-            )
+        Spacer(modifier = Modifier.width(8.dp))
+        Column(verticalArrangement = Arrangement.Center) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                BodyStrong(text = title)
+                IconButton(
+                    modifier = Modifier.size(16.dp),
+                    onClick = {},
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_more),
+                        contentDescription = stringResource(id = R.string.more),
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Body(
+                    text = writer,
+                    color = SignalColor.Gray500,
+                )
+                Body(
+                    text = date,
+                    color = SignalColor.Gray500,
+                )
+            }
         }
     }
     Spacer(modifier = Modifier.height(8.dp))

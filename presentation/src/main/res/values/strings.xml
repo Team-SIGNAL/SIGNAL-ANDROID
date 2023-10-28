@@ -3,6 +3,7 @@
 
     <!--content description-->
     <string name="edit">edit</string>
+    <string name="more">more</string>
 
     <!--navigation-->
     <string name="home">홈</string>
