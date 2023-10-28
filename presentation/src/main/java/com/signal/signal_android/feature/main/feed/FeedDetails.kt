@@ -33,9 +33,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
+import com.signal.signal_android.designsystem.component.SignalDialog
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
@@ -72,6 +74,18 @@ internal fun FeedDetails(
 
     var expanded by remember {
         mutableLongStateOf(-1)
+    }
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        Dialog(onDismissRequest = { showDialog = false }) {
+            SignalDialog(
+                title = stringResource(id = R.string.feed_delete_dialog_title),
+                onCancelBtnClick = { showDialog = false },
+                onCheckBtnClick = {},
+            )
+        }
     }
 
     ModalBottomSheetLayout(
@@ -152,6 +166,9 @@ internal fun FeedDetails(
                         onClick = { expanded = it.feedId },
                         expanded = expanded == it.feedId,
                         onDismissRequest = { expanded = -1 },
+                        onEdit = {},
+                        onDelete = { showDialog = true },
+                        onReport = {},
                     )
                 }
             }

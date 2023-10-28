@@ -103,6 +103,8 @@
     <string name="feed_delete">삭제하기</string>
     <string name="feed_report">신고하기</string>
 
+    <string name="feed_delete_dialog_title">정말 삭제하시겠습니까?</string>
+
     <!--feed details-->
     <string name="feed_details_image">게시글 이미지</string>
     <string name="feed_details_check_comments">댓글 확인하기</string>

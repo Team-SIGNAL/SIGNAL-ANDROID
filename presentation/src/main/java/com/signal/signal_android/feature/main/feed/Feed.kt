@@ -33,9 +33,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalOutlinedButton
+import com.signal.signal_android.designsystem.component.SignalDialog
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
@@ -98,6 +100,18 @@ internal fun Feed(
 
     var expanded by remember { mutableLongStateOf(-1) }
 
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        Dialog(onDismissRequest = { showDialog = false }) {
+            SignalDialog(
+                title = stringResource(id = R.string.feed_delete_dialog_title),
+                onCancelBtnClick = { showDialog = false },
+                onCheckBtnClick = {},
+            )
+        }
+    }
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
@@ -132,6 +146,7 @@ internal fun Feed(
                 showDropDown = { expanded = it },
                 expanded = expanded,
                 onDismissRequest = { expanded = -1 },
+                onDelete = { showDialog = true },
             )
         }
         FloatingActionButton(
@@ -155,6 +170,7 @@ private fun Posts(
     posts: List<_Post>,
     onDismissRequest: () -> Unit,
     expanded: Long,
+    onDelete: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -169,6 +185,9 @@ private fun Posts(
                 onClick = { showDropDown(it.feedId) },
                 expanded = expanded == it.feedId,
                 onDismissRequest = onDismissRequest,
+                onEdit = {},
+                onDelete = onDelete,
+                onReport = {},
             )
         }
     }
@@ -184,6 +203,9 @@ internal fun Post(
     onClick: () -> Unit,
     expanded: Boolean,
     onDismissRequest: () -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
+    onReport: () -> Unit,
 ) {
     Spacer(modifier = Modifier.height(8.dp))
     Row(
@@ -229,10 +251,10 @@ internal fun Post(
                     FeedDropDownMenu(
                         expanded = expanded,
                         onDismissRequest = onDismissRequest,
-                        isMine = true,
-                        onDelete = {},
-                        onEdit = {},
-                        onReport = {},
+                        isMine = false,
+                        onEdit = onEdit,
+                        onDelete = onDelete,
+                        onReport = onReport,
                     )
                 }
             }
@@ -268,26 +290,30 @@ internal fun FeedDropDownMenu(
         expanded = expanded,
         onDismissRequest = onDismissRequest,
     ) {
-        DropdownMenuItem(
-            text = {
-                Body(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = stringResource(id = R.string.feed_edit),
-                )
-            },
-            onClick = onEdit,
-        )
-        DropdownMenuItem(
-            modifier = Modifier.fillMaxWidth(),
-            text = {
-                Body(
-                    modifier = Modifier.align(Alignment.End),
-                    text = stringResource(id = R.string.feed_delete),
-                    color = SignalColor.Error,
-                )
-            },
-            onClick = onDelete,
-        )
+        if (isMine) {
+            DropdownMenuItem(
+                text = {
+                    Body(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        text = stringResource(id = R.string.feed_edit),
+                    )
+                },
+                onClick = onEdit,
+            )
+        }
+        if (isMine) {
+            DropdownMenuItem(
+                modifier = Modifier.fillMaxWidth(),
+                text = {
+                    Body(
+                        modifier = Modifier.align(Alignment.End),
+                        text = stringResource(id = R.string.feed_delete),
+                        color = SignalColor.Error,
+                    )
+                },
+                onClick = onDelete,
+            )
+        }
         DropdownMenuItem(
             text = {
                 Body(
