@@ -2,7 +2,6 @@ package com.signal.signal_android.feature.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,14 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.signal.signal_android.R
+import com.signal.signal_android.designsystem.component.SignalDialog
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge
@@ -59,7 +55,7 @@ internal fun MyPage(
 
     if (showSecessionDialog) {
         Dialog(onDismissRequest = { showSecessionDialog = false }) {
-            SecessionDialog(
+            SignalDialog(
                 title = stringResource(id = R.string.my_page_confirm_secession),
                 onCancelBtnClick = onSecessionCancelClick,
                 onCheckBtnClick = myPageViewModel::secession,
@@ -113,7 +109,7 @@ internal fun MyPage(
                 textColor = SignalColor.Black,
                 icon = painterResource(id = R.drawable.ic_bug),
                 tint = SignalColor.Black,
-                onClick = {  /* TODO */ },
+                onClick = { /* TODO */ },
             )
             CardUserTool(
                 text = stringResource(id = R.string.my_page_logout),
@@ -127,7 +123,7 @@ internal fun MyPage(
                 textColor = SignalColor.Error,
                 icon = painterResource(id = R.drawable.ic_delete_account),
                 tint = SignalColor.Error,
-                onClick = { showSecessionDialog = true }
+                onClick = { showSecessionDialog = true },
             )
         }
     }
@@ -270,75 +266,6 @@ private fun CardUserTool(
                 text = text,
                 color = textColor,
             )
-        }
-    }
-}
-
-@Composable
-private fun SecessionDialog(
-    title: String,
-    onCancelBtnClick: () -> Unit,
-    onCheckBtnClick: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .wrapContentSize()
-            .clip(RoundedCornerShape(6.dp))
-            .background(SignalColor.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Spacer(modifier = Modifier.height(40.dp))
-        Body2(
-            text = title,
-            color = SignalColor.Black,
-        )
-        Spacer(modifier = Modifier.height(26.dp))
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(0.4.dp)
-                .padding(horizontal = 12.dp),
-            color = SignalColor.Gray500,
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .height(40.dp)
-                    .clickable(
-                        onClick = onCancelBtnClick,
-                    ),
-                contentAlignment = Alignment.Center,
-            ) {
-                Body2(
-                    text = stringResource(id = R.string.my_page_secession_cancel),
-                    color = SignalColor.Gray500
-                )
-            }
-            Divider(
-                modifier = Modifier
-                    .width(0.4.dp)
-                    .height(40.dp)
-                    .padding(vertical = 4.dp),
-            )
-            Box(
-                modifier = Modifier
-                    .weight(0.5f)
-                    .height(40.dp)
-                    .clickable(
-                        onClick = onCheckBtnClick,
-                    ),
-                contentAlignment = Alignment.Center,
-            ) {
-                Body2(
-                    text = stringResource(id = R.string.my_page_secession_check),
-                    color = SignalColor.Error,
-                )
-            }
         }
     }
 }
