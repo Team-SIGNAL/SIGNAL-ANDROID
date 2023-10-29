@@ -15,7 +15,7 @@ import com.signal.domain.usecase.users.SignOutUseCase
 import com.signal.domain.usecase.users.SignUpUseCase
 import com.signal.signal_android.feature.mypage.MyPageViewModel
 import com.signal.signal_android.feature.signup.SignUpViewModel
-import com.signal.signal_android.viewmodel.SignInViewModel
+import com.signal.signal_android.feature.signin.SignInViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin

@@ -3,7 +3,7 @@ package com.signal.signal_android.feature.mypage
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.usecase.users.SecessionUseCase
 import com.signal.domain.usecase.users.SignOutUseCase
-import com.signal.signal_android.viewmodel.BaseViewModel
+import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

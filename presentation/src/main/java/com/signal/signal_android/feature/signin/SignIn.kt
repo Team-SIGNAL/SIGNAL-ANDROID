@@ -25,7 +25,6 @@ import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
-import com.signal.signal_android.viewmodel.SignInViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
