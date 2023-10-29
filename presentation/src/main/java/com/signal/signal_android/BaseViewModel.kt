@@ -1,4 +1,4 @@
-package com.signal.signal_android.viewmodel
+package com.signal.signal_android
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

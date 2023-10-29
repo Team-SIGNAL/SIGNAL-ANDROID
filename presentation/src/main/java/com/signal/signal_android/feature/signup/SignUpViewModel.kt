@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.signal.domain.enums.Gender
 import com.signal.domain.usecase.users.SignUpUseCase
 import com.signal.signal_android.domain.regex.Regexs
-import com.signal.signal_android.viewmodel.BaseViewModel
+import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
