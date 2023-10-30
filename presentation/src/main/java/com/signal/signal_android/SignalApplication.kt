@@ -13,6 +13,7 @@ import com.signal.domain.usecase.users.SecessionUseCase
 import com.signal.domain.usecase.users.SignInUseCase
 import com.signal.domain.usecase.users.SignOutUseCase
 import com.signal.domain.usecase.users.SignUpUseCase
+import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.signal_android.feature.mypage.MyPageViewModel
 import com.signal.signal_android.feature.signup.SignUpViewModel
 import com.signal.signal_android.feature.signin.SignInViewModel
@@ -72,6 +73,7 @@ val useCaseModule: Module
         single { SignUpUseCase(get()) }
         single { SignOutUseCase(get()) }
         single { SecessionUseCase(get()) }
+        single { FetchUserInformationUseCase(get()) }
     }
 
 val viewModelModule: Module
@@ -79,6 +81,6 @@ val viewModelModule: Module
         viewModel { SignInViewModel(get()) }
         viewModel { SignUpViewModel(get()) }
         viewModel {
-            MyPageViewModel(get(), get())
+            MyPageViewModel(get(), get(), get())
         }
     }
