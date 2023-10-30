@@ -113,7 +113,16 @@
     <!--comment dialog-->
     <string name="comment_dialog_comment">댓글</string>
     <string name="comment_dialog_input_comment">댓글을 입력하세요</string>
-기
+
     <!--header-->
     <string name="header_back">뒤로가기</string>
+
+    <!--create post-->
+    <string name="create_post_header_title">게시글 작성하기</string>
+    <string name="create_post_title_hint">제목을 입력해주세요</string>
+    <string name="create_post_content_hint">내용을 입력해주세요</string>
+    <string name="create_post_title">제목</string>
+    <string name="create_post_content">내용</string>
+
+    <string name="create_post_image">게시글 이미지</string>
 </resources>

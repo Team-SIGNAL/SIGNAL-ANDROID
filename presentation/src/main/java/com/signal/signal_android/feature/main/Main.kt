@@ -25,6 +25,7 @@ internal fun Main(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
     moveToFeedDetails: (feedId: Long) -> Unit,
+    moveToCreatePost: () -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -59,7 +60,10 @@ internal fun Main(
             }
 
             composable(NavigationRoute.Main.Feed) {
-                Feed(moveToFeedDetails = moveToFeedDetails)
+                Feed(
+                    moveToFeedDetails = moveToFeedDetails,
+                    moveToCreatePost = moveToCreatePost,
+                )
             }
 
             composable(NavigationRoute.Main.Recommend) {

@@ -25,10 +25,7 @@ internal fun Header(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(
-                horizontal = 16.dp,
-                vertical = 27.dp,
-            ),
+            .padding(vertical = 27.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(

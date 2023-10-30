@@ -24,7 +24,7 @@ internal fun SignalApp() {
             .statusBarsPadding()
             .navigationBarsPadding(),
         navController = navController,
-        startDestination = NavigationRoute.Main.route,
+        startDestination = NavigationRoute.User.route,
     ) {
         userNavigation(
             moveToLanding = {
@@ -61,6 +61,9 @@ internal fun SignalApp() {
                 navController.navigate("${NavigationRoute.Main.FeedDetails}/".plus(it))
             },
             moveToBack = moveToBack,
+            moveToCreatePost = {
+                navController.navigate(NavigationRoute.Main.CreatePost)
+            }
         )
     }
 }
