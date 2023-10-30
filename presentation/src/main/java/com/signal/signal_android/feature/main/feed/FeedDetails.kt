@@ -98,7 +98,11 @@ internal fun FeedDetails(
             topEnd = 16.dp,
         ),
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+        ) {
             Header(
                 title = title,
                 onClick = moveToBack,
@@ -106,8 +110,7 @@ internal fun FeedDetails(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp),
+                    .verticalScroll(rememberScrollState()),
             ) {
                 User(
                     profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
@@ -185,7 +188,7 @@ private fun User(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
 
-) {
+    ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
