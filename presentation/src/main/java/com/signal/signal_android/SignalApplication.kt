@@ -9,14 +9,14 @@ import com.signal.data.datasource.user.remote.RemoteUserDataSourceImpl
 import com.signal.data.repository.UserRepositoryImpl
 import com.signal.data.util.TokenInterceptor
 import com.signal.domain.repository.UserRepository
+import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
 import com.signal.domain.usecase.users.SignInUseCase
 import com.signal.domain.usecase.users.SignOutUseCase
 import com.signal.domain.usecase.users.SignUpUseCase
-import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.signal_android.feature.mypage.MyPageViewModel
-import com.signal.signal_android.feature.signup.SignUpViewModel
 import com.signal.signal_android.feature.signin.SignInViewModel
+import com.signal.signal_android.feature.signup.SignUpViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -47,14 +47,14 @@ val signalModule: Module
 
 val apiModule: Module
     get() = module {
-        single { TokenInterceptor(get()) }
-        single { ApiProvider.getUserApi(get()) }
+        single { TokenInterceptor(localUserDataSource = get()) }
+        single { ApiProvider.getUserApi(tokenInterceptor = get()) }
     }
 
 val dataSourceModule: Module
     get() = module {
-        single<RemoteUserDataSource> { RemoteUserDataSourceImpl(get()) }
-        single<LocalUserDataSource> { LocalUserDataSourceImpl(androidContext()) }
+        single<RemoteUserDataSource> { RemoteUserDataSourceImpl(userApi = get()) }
+        single<LocalUserDataSource> { LocalUserDataSourceImpl(context = androidContext()) }
     }
 
 val repositoryModule: Module
@@ -69,17 +69,17 @@ val repositoryModule: Module
 
 val useCaseModule: Module
     get() = module {
-        single { SignInUseCase(get()) }
-        single { SignUpUseCase(get()) }
-        single { SignOutUseCase(get()) }
-        single { SecessionUseCase(get()) }
-        single { FetchUserInformationUseCase(get()) }
+        single { SignInUseCase(userRepository = get()) }
+        single { SignUpUseCase(userRepository = get()) }
+        single { SignOutUseCase(userRepository = get()) }
+        single { SecessionUseCase(userRepository = get()) }
+        single { FetchUserInformationUseCase(userRepository = get()) }
     }
 
 val viewModelModule: Module
     get() = module {
-        viewModel { SignInViewModel(get()) }
-        viewModel { SignUpViewModel(get()) }
+        viewModel { SignInViewModel(signInUseCase = get()) }
+        viewModel { SignUpViewModel(signUpUseCase = get()) }
         viewModel {
             MyPageViewModel(
                 signOutUseCase = get(),
