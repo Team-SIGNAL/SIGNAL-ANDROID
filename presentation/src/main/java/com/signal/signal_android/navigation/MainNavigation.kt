@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.signal.signal_android.feature.main.Main
+import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 
 internal fun NavGraphBuilder.mainNavigation(
@@ -13,6 +14,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToLanding: () -> Unit,
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToBack: () -> Unit,
+    moveToCreatePost: () -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -23,6 +25,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToSignIn = moveToSignIn,
                 moveToLanding = moveToLanding,
                 moveToFeedDetails = moveToFeedDetails,
+                moveToCreatePost = moveToCreatePost,
             )
         }
 
@@ -37,6 +40,10 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToFeedDetails = moveToFeedDetails,
                 moveToBack = moveToBack,
             )
+        }
+
+        composable(NavigationRoute.Main.CreatePost) {
+            CreatePost(moveToBack = moveToBack)
         }
     }
 }

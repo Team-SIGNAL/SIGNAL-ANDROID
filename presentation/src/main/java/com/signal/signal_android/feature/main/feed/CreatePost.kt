@@ -30,7 +30,9 @@ import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
 
 @Composable
-internal fun CreatePost() {
+internal fun CreatePost(
+    moveToBack: () -> Unit,
+) {
     var title by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
 
@@ -41,7 +43,7 @@ internal fun CreatePost() {
     ) {
         Header(
             title = stringResource(id = R.string.create_post_header_title),
-            onClick = {},
+            onClick = moveToBack,
         )
         Spacer(modifier = Modifier.height(4.dp))
         SignalTextField(

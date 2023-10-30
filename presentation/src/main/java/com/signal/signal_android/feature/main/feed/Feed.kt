@@ -86,6 +86,7 @@ private enum class Type {
 @Composable
 internal fun Feed(
     moveToFeedDetails: (feedId: Long) -> Unit,
+    moveToCreatePost: () -> Unit,
 ) {
     // TODO 뷰모델에서 구현
     var type by remember { mutableStateOf(Type.ALL) }
@@ -151,7 +152,7 @@ internal fun Feed(
         }
         FloatingActionButton(
             modifier = Modifier.padding(16.dp),
-            onClick = { /*TODO*/ },
+            onClick = moveToCreatePost,
             backgroundColor = SignalColor.Primary100,
         ) {
             Icon(
