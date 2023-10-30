@@ -13,7 +13,7 @@ data class MyPageState(
             name = "",
             phoneNumber = "",
             birth = LocalDate.now(),
-            profile = ""
+            profile = "https://github.com/Team-SIGNAL/SIGNAL-ANDROID/blob/develop/presentation/src/main/res/drawable/ic_profile_image.png?raw=true"
         )
     }
 }

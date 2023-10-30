@@ -20,6 +20,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import coil.compose.AsyncImage
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.SignalDialog
 import com.signal.signal_android.designsystem.foundation.Body
@@ -52,6 +54,7 @@ internal fun MyPage(
 ) {
     var showSecessionDialog by remember { mutableStateOf(false) }
     val onSecessionCancelClick: () -> Unit = { showSecessionDialog = false }
+    val state by myPageViewModel.state.collectAsState()
 
     if (showSecessionDialog) {
         Dialog(onDismissRequest = { showSecessionDialog = false }) {
@@ -72,11 +75,6 @@ internal fun MyPage(
         }
     }
 
-    // TODO 더미 제거
-    var name = ""
-    var phoneNumber = ""
-    var birth = ""
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,9 +90,11 @@ internal fun MyPage(
         )
         Spacer(modifier = Modifier.height(24.dp))
         ProfileCard(
-            name = name,
-            phoneNumber = phoneNumber,
-            birth = birth,
+            modifier = Modifier,
+            name = state.name,
+            phoneNumber = state.phoneNumber,
+            birth = state.birth.toString(),
+            profileImageUrl = state.profile
         )
         Achievement()
         Spacer(modifier = Modifier.height(30.dp))
@@ -162,15 +162,17 @@ private fun Achievement() {
 
 @Composable
 private fun ProfileCard(
+    modifier: Modifier,
     name: String,
     phoneNumber: String,
     birth: String,
+    profileImageUrl: String,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card(
-            modifier = Modifier
+            modifier = modifier
                 .height(118.dp)
                 .fillMaxSize(),
             elevation = CardDefaults.cardElevation(
@@ -178,13 +180,15 @@ private fun ProfileCard(
             ),
         ) {
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxSize()
                     .background(color = SignalColor.White),
             ) {
-                ProfileImage(onClick = {})
+                ProfileImage(
+                    profileImageUrl = profileImageUrl,
+                )
                 Column(
-                    modifier = Modifier.fillMaxHeight(),
+                    modifier = modifier.fillMaxHeight(),
                     verticalArrangement = Arrangement.Center,
                 ) {
                     BodyStrong(
@@ -209,24 +213,24 @@ private fun ProfileCard(
 
 @Composable
 private fun ProfileImage(
-    onClick: () -> Unit,
+    profileImageUrl: String,
 ) {
     Box(
         modifier = Modifier.padding(19.dp),
     ) {
-        Image(
+        AsyncImage(
             modifier = Modifier
                 .size(80.dp)
                 .clip(CircleShape),
-            painter = painterResource(id = R.drawable.ic_profile_image),
-            contentDescription = stringResource(R.string.my_page_profile_image),
+            model = profileImageUrl,
+            contentDescription = stringResource(id = R.string.my_page_profile_image),
         )
         Image(
             modifier = Modifier
                 .size(18.dp)
                 .align(Alignment.BottomEnd),
             painter = painterResource(id = R.drawable.ic_add_image),
-            contentDescription = null,
+            contentDescription = stringResource(id = R.string.my_page_image_edit_icon),
         )
     }
 }
@@ -259,7 +263,7 @@ private fun CardUserTool(
                 modifier = Modifier.size(24.dp),
                 tint = tint,
                 painter = icon,
-                contentDescription = null,
+                contentDescription = stringResource(id = R.string.card_user_tool_icon),
             )
             BodyLarge(
                 modifier = Modifier.padding(start = 8.dp),
