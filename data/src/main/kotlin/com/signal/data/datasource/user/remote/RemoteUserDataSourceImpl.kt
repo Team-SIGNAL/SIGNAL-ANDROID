@@ -1,6 +1,7 @@
 package com.signal.data.datasource.user.remote
 
 import com.signal.data.api.UserApi
+import com.signal.data.model.mypage.FetchUserInformationResponse
 import com.signal.data.model.signin.SignInRequest
 import com.signal.data.model.signin.SignInResponse
 import com.signal.data.model.signup.SignUpRequest
@@ -25,5 +26,9 @@ class RemoteUserDataSourceImpl(
 
     override suspend fun secession() = ExceptionHandler<Unit>().httpRequest {
         userApi.secession()
+    }.sendRequest()
+
+    override suspend fun fetchUserInformation() = ExceptionHandler<FetchUserInformationResponse>().httpRequest {
+        userApi.fetchUserInformation()
     }.sendRequest()
 }
