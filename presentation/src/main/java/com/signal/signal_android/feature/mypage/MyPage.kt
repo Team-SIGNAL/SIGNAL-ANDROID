@@ -90,7 +90,6 @@ internal fun MyPage(
         )
         Spacer(modifier = Modifier.height(24.dp))
         ProfileCard(
-            modifier = Modifier,
             name = state.name,
             phoneNumber = state.phoneNumber,
             birth = state.birth.toString(),
@@ -162,7 +161,6 @@ private fun Achievement() {
 
 @Composable
 private fun ProfileCard(
-    modifier: Modifier,
     name: String,
     phoneNumber: String,
     birth: String,
@@ -172,7 +170,7 @@ private fun ProfileCard(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card(
-            modifier = modifier
+            modifier = Modifier
                 .height(118.dp)
                 .fillMaxSize(),
             elevation = CardDefaults.cardElevation(
@@ -180,7 +178,7 @@ private fun ProfileCard(
             ),
         ) {
             Row(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .background(color = SignalColor.White),
             ) {
@@ -188,7 +186,7 @@ private fun ProfileCard(
                     profileImageUrl = profileImageUrl,
                 )
                 Column(
-                    modifier = modifier.fillMaxHeight(),
+                    modifier = Modifier.fillMaxHeight(),
                     verticalArrangement = Arrangement.Center,
                 ) {
                     BodyStrong(
@@ -212,9 +210,7 @@ private fun ProfileCard(
 }
 
 @Composable
-private fun ProfileImage(
-    profileImageUrl: String,
-) {
+private fun ProfileImage(profileImageUrl: String) {
     Box(
         modifier = Modifier.padding(19.dp),
     ) {

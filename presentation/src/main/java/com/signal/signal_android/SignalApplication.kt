@@ -81,6 +81,10 @@ val viewModelModule: Module
         viewModel { SignInViewModel(get()) }
         viewModel { SignUpViewModel(get()) }
         viewModel {
-            MyPageViewModel(get(), get(), get())
+            MyPageViewModel(
+                signOutUseCase = get(),
+                secessionUseCase = get(),
+                fetchUserInformationUseCase = get(),
+            )
         }
     }
