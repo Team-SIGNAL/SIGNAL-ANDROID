@@ -18,4 +18,5 @@ interface UserRepository {
 
     suspend fun secession()
     suspend fun signOut()
+    suspend fun fetchUserInformation()
 }
