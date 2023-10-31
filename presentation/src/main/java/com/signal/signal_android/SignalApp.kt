@@ -63,7 +63,10 @@ internal fun SignalApp() {
             moveToBack = moveToBack,
             moveToCreatePost = {
                 navController.navigate(NavigationRoute.Main.CreatePost)
-            }
+            },
+            moveToReport = {
+                navController.navigate(NavigationRoute.Main.Report)
+            },
         )
     }
 }

@@ -26,6 +26,7 @@ internal fun Main(
     moveToLanding: () -> Unit,
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToCreatePost: () -> Unit,
+    moveToReport: () -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -42,9 +43,9 @@ internal fun Main(
                             inclusive = true
                         }
                     }
-                }
+                },
             )
-        }
+        },
     ) {
         NavHost(
             modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
@@ -63,6 +64,7 @@ internal fun Main(
                 Feed(
                     moveToFeedDetails = moveToFeedDetails,
                     moveToCreatePost = moveToCreatePost,
+                    moveToReport = moveToReport,
                 )
             }
 
