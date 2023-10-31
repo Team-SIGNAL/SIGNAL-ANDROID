@@ -87,6 +87,7 @@ private enum class Type {
 internal fun Feed(
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToCreatePost: () -> Unit,
+    moveToReport: () -> Unit,
 ) {
     // TODO 뷰모델에서 구현
     var type by remember { mutableStateOf(Type.ALL) }
@@ -143,6 +144,7 @@ internal fun Feed(
             Spacer(modifier = Modifier.height(18.dp))
             Posts(
                 moveToFeedDetails = moveToFeedDetails,
+                moveToReport = moveToReport,
                 posts = posts,
                 showDropDown = { expanded = it },
                 expanded = expanded,
@@ -167,6 +169,7 @@ internal fun Feed(
 @Composable
 private fun Posts(
     moveToFeedDetails: (feedId: Long) -> Unit,
+    moveToReport: () -> Unit,
     showDropDown: (feedId: Long) -> Unit,
     posts: List<_Post>,
     onDismissRequest: () -> Unit,
@@ -188,7 +191,7 @@ private fun Posts(
                 onDismissRequest = onDismissRequest,
                 onEdit = {},
                 onDelete = onDelete,
-                onReport = {},
+                onReport = moveToReport,
             )
         }
     }
