@@ -143,4 +143,9 @@
     <string name="dropdown_icon">드롭다운</string>
     <string name="report_content">(선택)기타 사항을 입력해주세요</string>
     <string name="report_content_title">(선택)기타 사항</string>
+    
+    <!--diary-->
+    <string name="diary_all_diary">전체보기</string>
+
+    
 </resources>
