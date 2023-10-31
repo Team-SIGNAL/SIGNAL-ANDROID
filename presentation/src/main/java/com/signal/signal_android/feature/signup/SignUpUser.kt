@@ -144,8 +144,9 @@ private fun SignUpInputs(
             onDismissRequest = showDialog,
             confirmButton = {
                 SignalFilledButton(
-                    text = "text",
-                    onClick = {},
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = stringResource(id = R.string.my_page_secession_check),
+                    onClick = showDialog,
                 )
             },
         ) {
@@ -156,6 +157,7 @@ private fun SignUpInputs(
                     selectedDayContainerColor = SignalColor.Primary100,
                     todayDateBorderColor = SignalColor.Primary100,
                     currentYearContentColor = SignalColor.Primary100,
+                    containerColor = SignalColor.Gray100,
                 ),
             )
         }
