@@ -6,10 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.signal.signal_android.feature.signup.SignUpViewModel
 import com.signal.signal_android.navigation.NavigationRoute
 import com.signal.signal_android.navigation.authNavigation
 import com.signal.signal_android.navigation.mainNavigation
 import com.signal.signal_android.navigation.userNavigation
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun SignalApp() {
@@ -19,12 +21,14 @@ internal fun SignalApp() {
         navController.popBackStack()
     }
 
+    val signUpViewModel: SignUpViewModel = koinViewModel()
+
     NavHost(
         modifier = Modifier
             .statusBarsPadding()
             .navigationBarsPadding(),
         navController = navController,
-        startDestination = NavigationRoute.Main.route,
+        startDestination = NavigationRoute.User.route,
     ) {
         userNavigation(
             moveToLanding = {
@@ -38,9 +42,12 @@ internal fun SignalApp() {
             moveToSignUp = { navController.navigate(NavigationRoute.Auth.SignUpUser) },
         )
         authNavigation(
+            signUpViewModel = signUpViewModel,
             moveToSignUp = { navController.navigate(NavigationRoute.Auth.SignUpUser) },
             moveToSignIn = { navController.navigate(NavigationRoute.Auth.SignIn) },
             moveToSignUpAccount = { navController.navigate(NavigationRoute.Auth.SignUpAccount) },
+            moveToBack = { navController.popBackStack() },
+            moveToMain = { navController.navigate(NavigationRoute.Main.Main) },
         )
         mainNavigation(
             moveToSignIn = {

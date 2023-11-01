@@ -54,8 +54,8 @@ class SignInViewModel(
                 postSideEffect(SignInSideEffect.Success)
             }.onFailure {
                 when (it) {
-                    is UnAuthorizationException -> setAccountIdError(true)
-                    is NotFoundException -> setPasswordError(true)
+                    is UnAuthorizationException -> setPasswordError(true)
+                    is NotFoundException -> setAccountIdError(true)
                     is OfflineException -> postSideEffect(SignInSideEffect.CheckInternetConnection)
                     else -> postSideEffect(SignInSideEffect.ServerError)
                 }

@@ -4,8 +4,8 @@ import com.signal.data.datasource.user.local.LocalUserDataSource
 import com.signal.data.datasource.user.remote.RemoteUserDataSource
 import com.signal.data.model.signin.SignInRequest
 import com.signal.data.model.signup.SignUpRequest
+import com.signal.domain.enums.Gender
 import com.signal.domain.repository.UserRepository
-import java.time.LocalDate
 
 class UserRepositoryImpl(
     private val remoteUserDataSource: RemoteUserDataSource,
@@ -24,17 +24,19 @@ class UserRepositoryImpl(
             localUserDataSource.saveTokens(
                 accessToken = it.accessToken,
                 refreshToken = it.refreshToken,
-                expireAt = it.expireAt,
+                accessExpiredAt = it.accessExpiredAt,
+                refreshExpiredAt = it.refreshExpiredAt,
             )
         }
     }
 
     override suspend fun signUp(
         name: String,
-        birth: LocalDate,
+        birth: String,
         phone: String,
         accountId: String,
         password: String,
+        gender: Gender,
     ) {
         remoteUserDataSource.signUp(
             SignUpRequest(
@@ -43,6 +45,7 @@ class UserRepositoryImpl(
                 phone = phone,
                 accountId = accountId,
                 password = password,
+                gender = gender,
             ),
         )
     }

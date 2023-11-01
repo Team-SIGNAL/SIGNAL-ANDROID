@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -17,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalFilledButton
@@ -30,6 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun SignIn(
     moveToSignUp: () -> Unit,
+    moveToMain: () -> Unit,
     signInViewModel: SignInViewModel = koinViewModel(),
 ) {
     val state by signInViewModel.state.collectAsState()
@@ -40,6 +41,22 @@ internal fun SignIn(
 
     val onPasswordChange = { password: String ->
         signInViewModel.setPassword(password)
+    }
+
+    LaunchedEffect(Unit) {
+        signInViewModel.sideEffect.collect {
+            when (it) {
+                is SignInSideEffect.Success -> {
+                    moveToMain()
+                }
+
+                is SignInSideEffect.CheckInternetConnection -> {
+                }
+
+                is SignInSideEffect.ServerError -> {
+                }
+            }
+        }
     }
 
     Column(
@@ -60,8 +77,10 @@ internal fun SignIn(
         Spacer(modifier = Modifier.height(46.dp))
         SignInInputs(
             id = { state.accountId },
+            idError = { state.accountIdError },
             onIdChange = onIdChange,
             password = { state.password },
+            passwordError = { state.passwordError },
             onPasswordChange = onPasswordChange,
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -87,8 +106,10 @@ internal fun SignIn(
 @Composable
 private fun SignInInputs(
     id: () -> String,
+    idError: () -> Boolean,
     onIdChange: (String) -> Unit,
     password: () -> String,
+    passwordError: () -> Boolean,
     onPasswordChange: (String) -> Unit,
 ) {
     SignalTextField(
@@ -97,6 +118,7 @@ private fun SignInInputs(
         hint = stringResource(id = R.string.sign_in_hint_id),
         title = stringResource(id = R.string.id),
         description = stringResource(id = R.string.sign_in_description_id),
+        error = idError(),
     )
     Spacer(modifier = Modifier.height(20.dp))
     SignalTextField(
@@ -106,11 +128,6 @@ private fun SignInInputs(
         title = stringResource(id = R.string.password),
         description = stringResource(id = R.string.sign_in_description_password),
         isPassword = true,
+        error = passwordError(),
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun SignInPreview() {
-    SignIn(moveToSignUp = { /*TODO*/ })
 }

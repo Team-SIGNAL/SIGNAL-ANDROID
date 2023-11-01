@@ -22,6 +22,7 @@ import com.signal.signal_android.designsystem.textfield.SignalTextField
 @Composable
 internal fun SignUpAccount(
     moveToSignIn: () -> Unit,
+    moveToBack: () -> Unit,
     signUpViewModel: SignUpViewModel,
 ) {
     val state by signUpViewModel.state.collectAsState()

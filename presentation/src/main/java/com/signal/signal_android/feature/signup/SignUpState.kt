@@ -1,12 +1,11 @@
 package com.signal.signal_android.feature.signup
 
 import com.signal.domain.enums.Gender
-import java.time.LocalDate
 
 data class SignUpState(
     val name: String,
     val nameError: Boolean,
-    val birth: LocalDate,
+    val birth: String,
     val phone: String,
     val gender: Gender,
     val accountId: String,
@@ -21,11 +20,11 @@ data class SignUpState(
         fun getDefaultState() = SignUpState(
             name = "",
             nameError = false,
-            birth = LocalDate.now(),
+            birth = "",
             phone = "",
             accountId = "",
             accountIdError = false,
-            gender = Gender.MALE,
+            gender = Gender.MAN,
             password = "",
             passwordError = false,
             repeatPassword = "",

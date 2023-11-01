@@ -3,11 +3,10 @@ package com.signal.signal_android.feature.signup
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.enums.Gender
 import com.signal.domain.usecase.users.SignUpUseCase
-import com.signal.signal_android.domain.regex.Regexs
 import com.signal.signal_android.BaseViewModel
+import com.signal.signal_android.domain.regex.Regexs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 
 class SignUpViewModel(
     private val signUpUseCase: SignUpUseCase,
@@ -25,7 +24,7 @@ class SignUpViewModel(
         setButtonEnabledUser()
     }
 
-    fun setBirth(birth: LocalDate) {
+    fun setBirth(birth: String) {
         setState(state.value.copy(birth = birth))
     }
 
@@ -71,12 +70,8 @@ class SignUpViewModel(
     }
 
     fun checkValidate() {
-        viewModelScope.launch(Dispatchers.IO) {
-            with(state.value) {
-                postSideEffect(SignUpSideEffect.Success)
-                setState(copy(buttonEnabled = false))
-            }
-        }
+        postSideEffect(SignUpSideEffect.Success)
+        setState(state.value.copy(buttonEnabled = false))
     }
 
     private fun setButtonEnabledUser() {
@@ -103,6 +98,7 @@ class SignUpViewModel(
                     phone = phone,
                     accountId = accountId,
                     password = password,
+                    gender = gender,
                 ).onSuccess {
                     postSideEffect(SignUpSideEffect.Success)
                 }
