@@ -65,12 +65,14 @@ internal fun SignUpUser(
         val localDateTime = Instant.ofEpochMilli(selectedMillis)
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
-        signUpViewModel.setBirth(localDateTime)
+        signUpViewModel.setBirth(localDateTime.toString())
     }
 
     LaunchedEffect(Unit) {
         signUpViewModel.sideEffect.collect {
-            if (it is SignUpSideEffect.Success) moveToSignUpAccount()
+            if (it is SignUpSideEffect.Success) {
+                moveToSignUpAccount()
+            }
         }
     }
 
@@ -223,15 +225,15 @@ private fun SignUpInputs(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SignalRadioButton(
-                value = (gender() == Gender.MALE),
-                onValueChange = { onGenderChange(Gender.MALE) },
+                value = (gender() == Gender.MAN),
+                onValueChange = { onGenderChange(Gender.MAN) },
             )
             Spacer(modifier = Modifier.width(6.dp))
             BodyLarge(text = stringResource(id = R.string.male))
             Spacer(modifier = Modifier.width(22.dp))
             SignalRadioButton(
-                value = (gender() == Gender.FEMALE),
-                onValueChange = { onGenderChange(Gender.FEMALE) },
+                value = (gender() == Gender.WOMAN),
+                onValueChange = { onGenderChange(Gender.WOMAN) },
             )
             Spacer(modifier = Modifier.width(6.dp))
             BodyLarge(text = stringResource(id = R.string.female))
