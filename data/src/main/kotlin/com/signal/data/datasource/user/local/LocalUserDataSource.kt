@@ -1,12 +1,11 @@
 package com.signal.data.datasource.user.local
 
-import java.time.LocalDateTime
-
 interface LocalUserDataSource {
     fun saveTokens(
         accessToken: String,
         refreshToken: String,
-        expireAt: LocalDateTime,
+        accessExpiredAt: String,
+        refreshExpiredAt: String,
     )
 
     fun getAccessToken(): String

@@ -1,24 +1,22 @@
 package com.signal.data.datasource.user.local
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import java.security.Key
-import java.time.LocalDateTime
 
 class LocalUserDataSourceImpl(
     private val context: Context,
 ) : LocalUserDataSource {
-
     override fun saveTokens(
         accessToken: String,
         refreshToken: String,
-        expireAt: LocalDateTime,
+        accessExpiredAt: String,
+        refreshExpiredAt: String,
     ) {
         getSharedPreferenceEditor().also {
             it.putString(Keys.ACCESS_TOKEN, accessToken)
             it.putString(Keys.REFRESH_TOKEN, refreshToken)
-            it.putString(Keys.EXPIRE_AT, expireAt.toString())
+            it.putString(Keys.ACCESS_EXPIRED_AT, accessExpiredAt)
+            it.putString(Keys.REFRESH_EXPIRED_AT, refreshExpiredAt)
         }.apply()
     }
 
@@ -31,7 +29,7 @@ class LocalUserDataSourceImpl(
     }
 
     override fun getExpireAt(): String {
-        return getSharedPreference().getString(Keys.EXPIRE_AT, "") ?: ""
+        return getSharedPreference().getString(Keys.ACCESS_EXPIRED_AT, "") ?: ""
     }
 
     override fun clearToken() {
@@ -51,5 +49,6 @@ object Keys {
     const val NAME = "signal"
     const val ACCESS_TOKEN = "access_token"
     const val REFRESH_TOKEN = "refresh_token"
-    const val EXPIRE_AT = "expire_at"
+    const val ACCESS_EXPIRED_AT = "access_expired_at"
+    const val REFRESH_EXPIRED_AT = "refresh_expired_at"
 }

@@ -1,6 +1,6 @@
 package com.signal.domain.repository
 
-import java.time.LocalDate
+import com.signal.domain.enums.Gender
 
 interface UserRepository {
     suspend fun signIn(
@@ -10,10 +10,11 @@ interface UserRepository {
 
     suspend fun signUp(
         name: String,
-        birth: LocalDate,
+        birth: String,
         phone: String,
         accountId: String,
         password: String,
+        gender: Gender,
     )
 
     suspend fun secession()
