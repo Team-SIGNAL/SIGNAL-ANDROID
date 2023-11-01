@@ -16,7 +16,7 @@ object ApiProvider {
     private fun getRetrofit(
         tokenInterceptor: TokenInterceptor,
     ): Retrofit {
-        return retrofit ?: Retrofit.Builder().baseUrl("http://44.202.99.157:8080").client(
+        return retrofit ?: Retrofit.Builder().baseUrl("http://54.152.35.68:8080/").client(
             OkHttpClient.Builder().addInterceptor(tokenInterceptor)
                 .addInterceptor(getLoggingInterceptor()).build()
         ).addConverterFactory(GsonConverterFactory.create()).build()
