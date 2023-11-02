@@ -75,6 +75,12 @@
 
     <string name="next">다음</string>
 
+    <!--home-->
+    <string name="home_chart">우울감 수치 그래프</string>
+    <string name="home_previous">이전</string>
+    <string name="home_activity">활동</string>
+    <string name="home_activity_ongoing">진행중인 활동</string>
+
     <!--my page-->
     <string name="my_page_profile_image">프로필 사진</string>
     <string name="my_page_received_achievement">받은 업적</string>
