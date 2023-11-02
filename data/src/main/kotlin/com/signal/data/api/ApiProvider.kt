@@ -18,11 +18,15 @@ object ApiProvider {
     ): Retrofit {
         return retrofit ?: Retrofit.Builder().baseUrl("http://54.152.35.68:8080/").client(
             OkHttpClient.Builder().addInterceptor(tokenInterceptor)
-                .addInterceptor(getLoggingInterceptor()).build()
+                .addInterceptor(getLoggingInterceptor()).build(),
         ).addConverterFactory(GsonConverterFactory.create()).build()
     }
 
-    fun getUserApi(
-        tokenInterceptor: TokenInterceptor,
-    ): UserApi = getRetrofit(tokenInterceptor).create(UserApi::class.java)
+    fun getUserApi(tokenInterceptor: TokenInterceptor): UserApi {
+        return getRetrofit(tokenInterceptor).create(UserApi::class.java)
+    }
+
+    fun getFeedApi(tokenInterceptor: TokenInterceptor): FeedApi {
+        return getRetrofit(tokenInterceptor).create(FeedApi::class.java)
+    }
 }
