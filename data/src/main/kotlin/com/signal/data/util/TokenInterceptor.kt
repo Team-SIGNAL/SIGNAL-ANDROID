@@ -23,7 +23,7 @@ class TokenInterceptor(
         return chain.proceed(
             request
                 .newBuilder()
-                .header("Authorization", localUserDataSource.getAccessToken())
+                .header("Authorization", "Bearer ${localUserDataSource.getAccessToken()}")
                 .build(),
         )
     }
