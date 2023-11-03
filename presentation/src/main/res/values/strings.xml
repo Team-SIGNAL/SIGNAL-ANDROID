@@ -11,6 +11,8 @@
     <string name="id">아이디</string>
     <string name="password">비밀번호</string>
 
+    <string name="back_handler_message">뒤로가기를 한 번 더 누르면 앱이 종료됩니다</string>
+
     <!--content description-->
     <string name="app_logo">app logo</string>
     <string name="landing_image">landing image</string>
