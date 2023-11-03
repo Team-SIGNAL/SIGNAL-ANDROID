@@ -15,13 +15,13 @@ class SignInViewModel(
 
     internal fun setAccountId(accountId: String) {
         setState(state.value.copy(accountId = accountId))
-        setAccountIdError(accountId.isBlank())
+        setAccountIdError(false)
         setButtonEnabled()
     }
 
     internal fun setPassword(password: String) {
         setState(state.value.copy(password = password))
-        setPasswordError(password.isBlank())
+        setPasswordError(false)
         setButtonEnabled()
     }
 
