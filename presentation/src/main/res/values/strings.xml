@@ -146,6 +146,7 @@
     
     <!--diary-->
     <string name="diary_all_diary">전체보기</string>
-
+    <string name="diary_image">diary image</string>
+    <string name="diary_emotion_image">diary emotion image</string>
     
 </resources>
