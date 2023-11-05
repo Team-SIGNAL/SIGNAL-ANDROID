@@ -38,7 +38,13 @@ internal fun SignalApp() {
                     }
                 }
             },
-            moveToSignIn = { navController.navigate(NavigationRoute.Auth.SignIn) },
+            moveToSignIn = {
+                navController.navigate(NavigationRoute.Auth.SignIn) {
+                    popUpTo(NavigationRoute.User.Landing) {
+                        inclusive = true
+                    }
+                }
+            },
             moveToSignUp = { navController.navigate(NavigationRoute.Auth.SignUpUser) },
         )
         authNavigation(
@@ -47,7 +53,13 @@ internal fun SignalApp() {
             moveToSignIn = { navController.navigate(NavigationRoute.Auth.SignIn) },
             moveToSignUpAccount = { navController.navigate(NavigationRoute.Auth.SignUpAccount) },
             moveToBack = { navController.popBackStack() },
-            moveToMain = { navController.navigate(NavigationRoute.Main.Main) },
+            moveToMain = {
+                navController.navigate(NavigationRoute.Main.Main) {
+                    popUpTo(NavigationRoute.Auth.SignIn) {
+                        inclusive = true
+                    }
+                }
+            },
         )
         mainNavigation(
             moveToSignIn = {
