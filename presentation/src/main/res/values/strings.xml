@@ -115,6 +115,20 @@
 
     <string name="feed_delete_dialog_title">정말 삭제하시겠습니까?</string>
 
+    <!--recommend-->
+    <string name="recommend_search">추천 검색</string>
+    <string name="recommend_trend">지금 뜨는 컨텐츠</string>
+    <string name="recommend_image">추천 컨텐츠 이미지</string>
+
+    <string name="recommend_music">음악 감상하기</string>
+    <string name="recommend_exercise">운동하기</string>
+    <string name="recommend_video">영상 시청하기</string>
+    <string name="recommend_hospital">병원 내원하기</string>
+
+    <string name="recommend_categories">카테고리별 컨텐츠</string>
+
+    <string name="recommend_my">내가 추천한 컨텐츠 보러가기</string>
+
     <!--feed details-->
     <string name="feed_details_image">게시글 이미지</string>
     <string name="feed_details_check_comments">댓글 확인하기</string>
