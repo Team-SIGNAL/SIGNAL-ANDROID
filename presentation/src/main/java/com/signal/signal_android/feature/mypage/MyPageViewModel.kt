@@ -26,12 +26,14 @@ class MyPageViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             secessionUseCase().onSuccess {
                 postSideEffect(MyPageSideEffect.SecessionSuccess)
+            }.onFailure {
+                postSideEffect(MyPageSideEffect.SecessionSuccess)
             }
         }
     }
 
-    internal fun fetchUserInformation(){
-        viewModelScope.launch(Dispatchers.IO){
+    internal fun fetchUserInformation() {
+        viewModelScope.launch(Dispatchers.IO) {
             fetchUserInformationUseCase().onSuccess {
                 setState(state.value.copy())
             }.onFailure {
