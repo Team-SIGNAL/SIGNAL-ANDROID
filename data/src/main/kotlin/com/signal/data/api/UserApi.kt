@@ -21,8 +21,8 @@ interface UserApi {
     )
 
     @DELETE(SignalUrl.Users.Secession)
-    fun secession()
+    suspend fun secession()
 
     @GET(SignalUrl.Users.FetchUserInformation)
-    fun fetchUserInformation(): FetchUserInformationResponse
+    suspend fun fetchUserInformation(): FetchUserInformationResponse
 }
