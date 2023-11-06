@@ -23,6 +23,7 @@ sealed class NavigationRoute(val route: String) {
         const val CreatePost = "createPosts"
         const val Recommend = "recommend"
         const val MyPage = "myPage"
+        const val CreateDiary = "createDiary"
     }
 }
 

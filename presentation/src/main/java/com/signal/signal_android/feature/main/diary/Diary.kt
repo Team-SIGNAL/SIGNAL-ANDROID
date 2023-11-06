@@ -72,7 +72,9 @@ internal val diaries = listOf(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun Diary() {
+internal fun Diary(
+    moveToCreateDiary: () -> Unit,
+) {
     val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
     val date = Date()
 
@@ -129,7 +131,7 @@ internal fun Diary() {
         }
         FloatingActionButton(
             modifier = Modifier.padding(16.dp),
-            onClick = { /* TODO create diary 페이지로 이동 */ },
+            onClick = { moveToCreateDiary() },
             backgroundColor = SignalColor.Primary100,
         ) {
             Icon(

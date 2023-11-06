@@ -27,6 +27,7 @@ internal fun Main(
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToCreatePost: () -> Unit,
     moveToReport: () -> Unit,
+    moveToCreateDiary: () -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -57,7 +58,7 @@ internal fun Main(
             }
 
             composable(NavigationRoute.Main.Diary) {
-                Diary()
+                Diary(moveToCreateDiary = moveToCreateDiary)
             }
 
             composable(NavigationRoute.Main.Feed) {

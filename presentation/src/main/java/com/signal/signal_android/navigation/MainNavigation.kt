@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.signal.signal_android.feature.main.Main
+import com.signal.signal_android.feature.main.diary.CreateDiary
 import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 import com.signal.signal_android.feature.main.feed.Report
@@ -17,6 +18,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToBack: () -> Unit,
     moveToCreatePost: () -> Unit,
     moveToReport: () -> Unit,
+    moveToCreateDiary: () -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -29,6 +31,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToFeedDetails = moveToFeedDetails,
                 moveToCreatePost = moveToCreatePost,
                 moveToReport = moveToReport,
+                moveToCreateDiary = moveToCreateDiary,
             )
         }
 
@@ -51,6 +54,10 @@ internal fun NavGraphBuilder.mainNavigation(
 
         composable(NavigationRoute.Main.Report) {
             Report(moveToBack = moveToBack)
+        }
+
+        composable(NavigationRoute.Main.CreateDiary) {
+            CreateDiary()
         }
     }
 }
