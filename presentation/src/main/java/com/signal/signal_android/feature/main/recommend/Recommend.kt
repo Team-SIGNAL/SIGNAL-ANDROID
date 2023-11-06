@@ -195,7 +195,7 @@ private fun Header() {
 private fun ColumnScope.Trends() {
     val coroutineScope = rememberCoroutineScope()
 
-    val pagerState = rememberPagerState { 4 }
+    val pagerState = rememberPagerState { images.size }
 
     LaunchedEffect(Unit) {
         coroutineScope.launch {
