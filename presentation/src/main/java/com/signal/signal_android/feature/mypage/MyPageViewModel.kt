@@ -1,5 +1,6 @@
 package com.signal.signal_android.feature.mypage
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
@@ -24,10 +25,12 @@ class MyPageViewModel(
 
     internal fun secession() {
         viewModelScope.launch(Dispatchers.IO) {
-            secessionUseCase().onSuccess {
-                postSideEffect(MyPageSideEffect.SecessionSuccess)
-            }.onFailure {
-                postSideEffect(MyPageSideEffect.SecessionSuccess)
+            secessionUseCase().onFailure {
+                when (it) {
+                    is KotlinNullPointerException -> {
+                        postSideEffect(MyPageSideEffect.SecessionSuccess)
+                    }
+                }
             }
         }
     }
