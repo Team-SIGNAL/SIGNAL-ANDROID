@@ -12,10 +12,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,13 +26,14 @@ import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun CreatePost(
     moveToBack: () -> Unit,
+    feedViewModel: FeedViewModel = koinViewModel(),
 ) {
-    var title by remember { mutableStateOf("") }
-    var content by remember { mutableStateOf("") }
+    val state by feedViewModel.state.collectAsState()
 
     Column(
         modifier = Modifier
@@ -47,10 +46,8 @@ internal fun CreatePost(
         )
         Spacer(modifier = Modifier.height(4.dp))
         SignalTextField(
-            value = title,
-            onValueChange = {
-                title = it
-            },
+            value = state.title,
+            onValueChange = feedViewModel::setTitle,
             hint = stringResource(id = R.string.create_post_title_hint),
             title = stringResource(id = R.string.create_post_title),
             showLength = true,
@@ -59,10 +56,8 @@ internal fun CreatePost(
         Spacer(modifier = Modifier.height(8.dp))
         SignalTextField(
             modifier = Modifier.fillMaxHeight(0.5f),
-            value = content,
-            onValueChange = {
-                content = it
-            },
+            value = state.content,
+            onValueChange = feedViewModel::setContent,
             hint = stringResource(id = R.string.create_post_content_hint),
             title = stringResource(id = R.string.create_post_content),
             alignment = Alignment.Top,
@@ -74,7 +69,7 @@ internal fun CreatePost(
         Spacer(modifier = Modifier.weight(1f))
         SignalFilledButton(
             text = stringResource(id = R.string.my_page_secession_check),
-            onClick = { /*TODO*/ },
+            onClick = feedViewModel::post,
         )
         Spacer(modifier = Modifier.height(26.dp))
     }

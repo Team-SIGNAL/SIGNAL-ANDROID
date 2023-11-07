@@ -34,6 +34,29 @@ internal class FeedViewModel(
         }
     }
 
+    internal fun post() {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                feedRepository.post(
+                    title = title,
+                    content = content,
+                ).onSuccess {
+                    postSideEffect(FeedSideEffect.PostSuccess)
+                }.onFailure {
+
+                }
+            }
+        }
+    }
+
+    internal fun setTitle(title: String) {
+        setState(state.value.copy(title = title))
+    }
+
+    internal fun setContent(content: String) {
+        setState(state.value.copy(content = content))
+    }
+
     internal fun setTag() {
         with(state.value) {
             setState(
