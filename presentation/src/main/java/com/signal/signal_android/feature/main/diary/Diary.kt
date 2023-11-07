@@ -190,7 +190,7 @@ private fun Diaries(
                 imageUrl = it.imageUrl,
                 emotion = it.emotion,
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
@@ -209,7 +209,7 @@ internal fun DiaryItems(
             .fillMaxWidth()
             .height(70.dp)
             .shadow(
-                elevation = 4.dp,
+                elevation = 2.dp,
                 shape = RoundedCornerShape(8.dp),
             )
             .background(
