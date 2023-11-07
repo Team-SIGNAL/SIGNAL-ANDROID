@@ -2,6 +2,7 @@ package com.signal.data.datasource.feed
 
 import com.signal.data.api.FeedApi
 import com.signal.data.model.feed.request.PostRequest
+import com.signal.data.model.feed.response.FetchPostDetailsResponse
 import com.signal.data.model.feed.response.FetchPostsResponse
 import com.signal.data.util.ExceptionHandler
 import com.signal.domain.enums.Tag
@@ -22,4 +23,9 @@ class FeedDataSourceImpl(
     override suspend fun post(postRequest: PostRequest) = ExceptionHandler<Unit>().httpRequest {
         feedApi.post(postRequest)
     }.sendRequest()
+
+    override suspend fun fetchPostDetails(feedId: Long) =
+        ExceptionHandler<FetchPostDetailsResponse>().httpRequest {
+            feedApi.fetchPostDetails(feedId = feedId)
+        }.sendRequest()
 }
