@@ -212,36 +212,20 @@ private fun ProfileCard(
 @Composable
 private fun ProfileImage(profileImageUrl: String?) {
     Box(modifier = Modifier.padding(19.dp)) {
-        if (profileImageUrl != null) {
-            AsyncImage(
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape),
-                model = profileImageUrl,
-                contentDescription = stringResource(id = R.string.my_page_profile_image),
-            )
-            Image(
-                modifier = Modifier
-                    .size(18.dp)
-                    .align(Alignment.BottomEnd),
-                painter = painterResource(id = R.drawable.ic_add_image),
-                contentDescription = stringResource(id = R.string.my_page_image_edit_icon),
-            )
-        } else {
-            Image(
-                painter = painterResource(id = R.drawable.ic_profile_image),
-                contentDescription = stringResource(
-                    id = R.string.my_page_profile_image
-                )
-            )
-            Image(
-                modifier = Modifier
-                    .size(18.dp)
-                    .align(Alignment.BottomEnd),
-                painter = painterResource(id = R.drawable.ic_add_image),
-                contentDescription = stringResource(id = R.string.my_page_image_edit_icon),
-            )
-        }
+        AsyncImage(
+            modifier = Modifier
+                .size(80.dp)
+                .clip(CircleShape),
+            model = profileImageUrl ?: R.drawable.ic_profile_image,
+            contentDescription = stringResource(id = R.string.my_page_profile_image),
+        )
+        Image(
+            modifier = Modifier
+                .size(18.dp)
+                .align(Alignment.BottomEnd),
+            painter = painterResource(id = R.drawable.ic_add_image),
+            contentDescription = stringResource(id = R.string.my_page_image_edit_icon),
+        )
     }
 }
 
