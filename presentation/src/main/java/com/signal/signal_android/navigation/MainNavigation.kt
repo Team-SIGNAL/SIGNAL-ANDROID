@@ -6,7 +6,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.signal.signal_android.feature.main.Main
+import com.signal.signal_android.feature.main.diary.AllDiary
 import com.signal.signal_android.feature.main.diary.CreateDiary
+import com.signal.signal_android.feature.main.diary.DiaryDetail
 import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 import com.signal.signal_android.feature.main.feed.Report
@@ -19,7 +21,9 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToCreatePost: () -> Unit,
     moveToReport: () -> Unit,
     moveToCreateDiary: () -> Unit,
-) {
+    moveToDiaryDetails: (diaryId: Long) -> Unit,
+    moveToAllDiary: () -> Unit,
+    ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
         route = NavigationRoute.Main.route,
@@ -32,6 +36,8 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToCreatePost = moveToCreatePost,
                 moveToReport = moveToReport,
                 moveToCreateDiary = moveToCreateDiary,
+                moveToDiaryDetails = moveToDiaryDetails,
+                moveToAllDiary = moveToAllDiary,
             )
         }
 
@@ -46,6 +52,22 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToFeedDetails = moveToFeedDetails,
                 moveToBack = moveToBack,
             )
+        }
+
+        composable(
+            route = "${NavigationRoute.Main.DiaryDetails}/${NavArgument.DiaryId}",
+            arguments = listOf(
+                navArgument("diaryId") { type = NavType.LongType },
+            ),
+        ) {
+            DiaryDetail(
+                diaryId = it.arguments?.getLong("diaryId") ?: 0L,
+                moveToBack = moveToBack,
+            )
+        }
+
+        composable(NavigationRoute.Main.AllDiary) {
+            AllDiary()
         }
 
         composable(NavigationRoute.Main.CreatePost) {

@@ -89,6 +89,12 @@ internal fun SignalApp() {
             moveToCreateDiary = {
                 navController.navigate(NavigationRoute.Main.CreateDiary)
             },
+            moveToDiaryDetails = {
+                navController.navigate("${NavigationRoute.Main.DiaryDetails}/".plus(it))
+            },
+            moveToAllDiary = {
+                navController.navigate(NavigationRoute.Main.AllDiary)
+            },
         )
     }
 }

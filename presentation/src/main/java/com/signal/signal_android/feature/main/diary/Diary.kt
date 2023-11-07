@@ -48,6 +48,7 @@ import java.util.Locale
 
 // TODO 기능 구현 시 삭제
 internal data class _Diaries(
+    val diaryId: Long,
     val title: String,
     val content: String,
     val imageUrl: String?,
@@ -57,11 +58,13 @@ internal data class _Diaries(
 // TODO 더미
 internal val diaries = listOf(
     _Diaries(
+        diaryId = 1,
         title = "안녕하세요",
         content = "sdfafsaf",
         imageUrl = "https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg",
         emotion = Emotion.HAPPY.emotionImage,
     ), _Diaries(
+        diaryId = 2,
         title = "안녕하세요",
         content = "sdfafsaf",
         imageUrl = "https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg",
@@ -74,6 +77,8 @@ internal val diaries = listOf(
 @Composable
 internal fun Diary(
     moveToCreateDiary: () -> Unit,
+    moveToDiaryDetails: (diaryId: Long) -> Unit,
+    moveToAllDiary: () -> Unit,
 ) {
     val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
     val date = Date()
@@ -124,10 +129,14 @@ internal fun Diary(
                     DiaryHeader(
                         month = monthState,
                         day = dayState,
+                        moveToAllDiary = moveToAllDiary,
                     )
                 }
             }
-            Diaries(diaries = diaries)
+            Diaries(
+                diaries = diaries,
+                moveToDiaryDetails = moveToDiaryDetails,
+            )
         }
         FloatingActionButton(
             modifier = Modifier.padding(16.dp),
@@ -147,6 +156,7 @@ internal fun Diary(
 private fun DiaryHeader(
     month: String,
     day: String,
+    moveToAllDiary: () -> Unit,
 ) {
     Spacer(modifier = Modifier.height(26.dp))
     Row(
@@ -157,12 +167,16 @@ private fun DiaryHeader(
             text = month + "월 " + day + "일",
             color = SignalColor.Black,
         )
-        Body2(text = stringResource(id = R.string.diary_all_diary))
+        Body2(
+            modifier = Modifier.signalClickable { moveToAllDiary() },
+            text = stringResource(id = R.string.diary_all_diary),
+        )
     }
 }
 
 @Composable
 private fun Diaries(
+    moveToDiaryDetails: (diaryId: Long) -> Unit,
     diaries: List<_Diaries>,
 ) {
     LazyColumn(
@@ -170,6 +184,7 @@ private fun Diaries(
     ) {
         items(diaries) {
             DiaryItems(
+                moveToDiaryDetails = { moveToDiaryDetails(it.diaryId) },
                 title = it.title,
                 content = it.content,
                 imageUrl = it.imageUrl,
@@ -178,11 +193,11 @@ private fun Diaries(
             Spacer(modifier = Modifier.height(12.dp))
         }
     }
-
 }
 
 @Composable
-private fun DiaryItems(
+internal fun DiaryItems(
+    moveToDiaryDetails: () -> Unit,
     title: String,
     content: String,
     imageUrl: String?,
@@ -204,7 +219,7 @@ private fun DiaryItems(
             .clip(shape = RoundedCornerShape(8.dp))
             .signalClickable(
                 rippleEnabled = true,
-                onClick = { /* TODO 일기 상세 페이지로 이동 */ },
+                onClick = moveToDiaryDetails,
             )
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -241,5 +256,4 @@ private fun DiaryItems(
             }
         }
     }
-
 }

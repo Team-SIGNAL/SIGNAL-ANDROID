@@ -24,9 +24,12 @@ sealed class NavigationRoute(val route: String) {
         const val Recommend = "recommend"
         const val MyPage = "myPage"
         const val CreateDiary = "createDiary"
+        const val DiaryDetails = "diaryDetails"
+        const val AllDiary = "AllDiary"
     }
 }
 
 object NavArgument {
     const val FeedId = "{feedId}"
+    const val DiaryId = "{DiaryId}"
 }
