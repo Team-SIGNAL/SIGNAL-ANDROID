@@ -27,17 +27,16 @@ internal fun DiagnosisLanding(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(
-                top = 76.dp,
-                bottom = 32.dp,
-            ),
+            .padding(top = 76.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Introduce()
         Spacer(modifier = Modifier.weight(1f))
-        Interactions(
+        Buttons(
             onMainButtonClicked = moveToDiagnosis,
             onSubButtonClicked = {},
+            mainText = stringResource(id = R.string.diagnosis_do_diagnosis),
+            subText = stringResource(id = R.string.diagnosis_check_histories),
         )
     }
 }
@@ -65,21 +64,31 @@ private fun Introduce() {
 }
 
 @Composable
-private fun Interactions(
+internal fun Buttons(
     onMainButtonClicked: () -> Unit,
     onSubButtonClicked: () -> Unit,
+    mainText: String,
+    subText: String,
+    mainEnabled: () -> Boolean? = { null },
+    subEnabled: () -> Boolean? = { null },
 ) {
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp),
+        modifier = Modifier.padding(
+            start = 16.dp,
+            end = 16.dp,
+            bottom = 32.dp,
+        ),
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
         SignalFilledButton(
-            text = stringResource(id = R.string.diagnosis_do_diagnosis),
+            text = mainText,
             onClick = onMainButtonClicked,
+            enabled = mainEnabled() ?: true,
         )
         SignalOutlinedButton(
-            text = stringResource(id = R.string.diagnosis_check_histories),
+            text = subText,
             onClick = onSubButtonClicked,
+            enabled = subEnabled() ?: true,
         )
     }
 }

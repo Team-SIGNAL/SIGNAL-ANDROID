@@ -30,8 +30,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.signal.signal_android.R
-import com.signal.signal_android.designsystem.button.SignalFilledButton
-import com.signal.signal_android.designsystem.button.SignalOutlinedButton
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.BodyStrong
@@ -42,6 +40,7 @@ import com.signal.signal_android.designsystem.util.signalClickable
 @Composable
 internal fun Diagnosis(
     moveToBack: () -> Unit,
+    moveToDiagnosisComplete: () -> Unit,
 ) {
     // TODO: 더미
     var count by remember { mutableIntStateOf(1) }
@@ -50,73 +49,49 @@ internal fun Diagnosis(
 
     var selected: Int? by remember { mutableStateOf(null) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-    ) {
-        Header(
-            title = stringResource(id = R.string.diagnosis_title),
-            onClick = moveToBack,
-        )
-        Question(
-            count = { count },
-            question = { question },
-        )
-        Options(
-            onSelect = { selected = it + 1 },
-            selected = { selected },
-        )
+    Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            Header(
+                title = stringResource(id = R.string.diagnosis_title),
+                onClick = moveToBack,
+            )
+            Question(
+                count = { count },
+                question = { question },
+            )
+            Options(
+                onSelect = { selected = it + 1 },
+                selected = { selected },
+            )
+        }
         Spacer(modifier = Modifier.weight(1f))
         Progress(
             count = { count },
             max = max,
         )
         Buttons(
-            mainButtonText = stringResource(
+            mainText = stringResource(
                 id = if (count != max) {
                     R.string.next
                 } else {
                     R.string.diagnosis_complete
                 },
             ),
-            onMainClicked = {
+            subText = stringResource(id = R.string.home_previous),
+            onMainButtonClicked = {
                 if (count == max) {
+                    moveToDiagnosisComplete()
+                } else {
+                    count += 1
+                    selected = null
                 }
-                count += 1
-                selected = null
             },
-            onSubClicked = {
+            onSubButtonClicked = {
                 count -= 1
                 selected = null
             },
-            mainEnabled = { count != max && selected != null },
+            mainEnabled = { selected != null },
             subEnabled = { count != 1 },
-        )
-    }
-}
-
-@Composable
-private fun Buttons(
-    mainButtonText: String,
-    onMainClicked: () -> Unit,
-    onSubClicked: () -> Unit,
-    mainEnabled: () -> Boolean,
-    subEnabled: () -> Boolean,
-) {
-    Column(
-        modifier = Modifier.padding(bottom = 32.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
-    ) {
-        SignalFilledButton(
-            text = mainButtonText,
-            onClick = onMainClicked,
-            enabled = mainEnabled(),
-        )
-        SignalOutlinedButton(
-            text = stringResource(id = R.string.home_previous),
-            onClick = onSubClicked,
-            enabled = subEnabled(),
         )
     }
 }
@@ -129,6 +104,7 @@ private fun ColumnScope.Progress(
     LinearProgressIndicator(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(horizontal = 16.dp)
             .height(6.dp)
             .clip(CircleShape),
         progress = (count() / max.toFloat()),
@@ -140,6 +116,7 @@ private fun ColumnScope.Progress(
             .padding(
                 top = 4.dp,
                 bottom = 6.dp,
+                start = 16.dp,
             ),
         text = "${count()}/$max",
         color = SignalColor.Primary100,
