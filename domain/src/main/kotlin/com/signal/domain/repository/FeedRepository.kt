@@ -8,4 +8,9 @@ interface FeedRepository {
         tag: Tag,
         pageNum: Long,
     ): PostsEntity
+
+    suspend fun post(
+        title: String,
+        content: String,
+    ): Result<Unit>
 }
