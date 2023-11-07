@@ -57,7 +57,6 @@ internal fun SignalApp() {
             },
             moveToMain = {
                 navController.navigate(NavigationRoute.Main.Main) {
-                    launchSingleTop = true
                     popUpTo(NavigationRoute.User.DiagnosisComplete) {
                         inclusive = true
                     }
