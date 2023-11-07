@@ -225,8 +225,8 @@ private fun User(
                 onDismissRequest = onDismissRequest,
                 onEdit = { /*TODO*/ },
                 onDelete = { /*TODO*/ },
-            ) {
-            }
+                onReport = { /*TODO*/ }
+            )
         }
     }
 }

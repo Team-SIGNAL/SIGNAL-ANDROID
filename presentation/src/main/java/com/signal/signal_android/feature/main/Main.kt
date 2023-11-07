@@ -28,6 +28,9 @@ internal fun Main(
     moveToCreatePost: () -> Unit,
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
+    moveToCreateDiary: () -> Unit,
+    moveToDiaryDetails: (diaryId: Long) -> Unit,
+    moveToAllDiary: () -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -58,7 +61,11 @@ internal fun Main(
             }
 
             composable(NavigationRoute.Main.Diary) {
-                Diary()
+                Diary(
+                    moveToCreateDiary = moveToCreateDiary,
+                    moveToDiaryDetails = moveToDiaryDetails,
+                    moveToAllDiary = moveToAllDiary,
+                )
             }
 
             composable(NavigationRoute.Main.Feed) {
