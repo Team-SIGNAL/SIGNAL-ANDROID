@@ -101,7 +101,7 @@ private fun DiaryItemList(
             .clip(shape = RoundedCornerShape(8.dp))
             .signalClickable(
                 rippleEnabled = true,
-                onClick = { moveToDiaryDetails() },
+                onClick = moveToDiaryDetails,
             )
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
