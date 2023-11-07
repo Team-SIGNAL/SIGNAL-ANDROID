@@ -1,5 +1,6 @@
 package com.signal.domain.repository
 
+import com.signal.domain.entity.UserInformationEntity
 import com.signal.domain.enums.Gender
 
 interface UserRepository {
@@ -19,5 +20,5 @@ interface UserRepository {
 
     suspend fun secession()
     suspend fun signOut()
-    suspend fun fetchUserInformation()
+    suspend fun fetchUserInformation(): UserInformationEntity
 }

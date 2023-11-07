@@ -38,10 +38,17 @@ class MyPageViewModel(
         }
     }
 
-    internal fun fetchUserInformation() {
+    private fun fetchUserInformation() {
         viewModelScope.launch(Dispatchers.IO) {
             fetchUserInformationUseCase().onSuccess {
-                setState(state.value.copy())
+                setState(
+                    state = state.value.copy(
+                        name = it.name,
+                        phone = it.phone,
+                        birth = it.birth,
+                        profile = it.imageUrl,
+                    )
+                )
             }.onFailure {
 
             }
