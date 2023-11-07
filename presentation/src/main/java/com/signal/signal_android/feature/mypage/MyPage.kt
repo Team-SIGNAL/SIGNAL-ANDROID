@@ -211,9 +211,7 @@ private fun ProfileCard(
 
 @Composable
 private fun ProfileImage(profileImageUrl: String?) {
-    Box(
-        modifier = Modifier.padding(19.dp),
-    ) {
+    Box(modifier = Modifier.padding(19.dp)) {
         if (profileImageUrl != null) {
             AsyncImage(
                 modifier = Modifier
