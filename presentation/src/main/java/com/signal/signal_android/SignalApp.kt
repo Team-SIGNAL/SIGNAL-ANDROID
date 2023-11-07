@@ -77,7 +77,7 @@ internal fun SignalApp() {
                 }
             },
             moveToFeedDetails = {
-                navController.navigate("${NavigationRoute.Main.FeedDetails}/".plus(it))
+                navController.navigate("${NavigationRoute.Main.FeedDetails}/${it}")
             },
             moveToBack = moveToBack,
             moveToCreatePost = {
@@ -85,6 +85,15 @@ internal fun SignalApp() {
             },
             moveToReport = {
                 navController.navigate(NavigationRoute.Main.Report)
+            },
+            moveToCreateDiary = {
+                navController.navigate(NavigationRoute.Main.CreateDiary)
+            },
+            moveToDiaryDetails = {
+                navController.navigate("${NavigationRoute.Main.DiaryDetails}/${it}")
+            },
+            moveToAllDiary = {
+                navController.navigate(NavigationRoute.Main.AllDiary)
             },
         )
     }
