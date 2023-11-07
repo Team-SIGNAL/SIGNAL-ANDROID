@@ -157,6 +157,31 @@
     <string name="dropdown_icon">드롭다운</string>
     <string name="report_content">(선택)기타 사항을 입력해주세요</string>
     <string name="report_content_title">(선택)기타 사항</string>
+
+    <!--diagnosis-->
+    <string name="diagnosis_title">우울증 자가진단</string>
+    <string name="diagnosis_image">우울증 자가진단 이미지</string>
+    <string name="diagnosis_description">우울증 정도를 확인해보세요!</string>
+    <string name="diagnosis_time">소요시간 : 10 ~ 15분</string>
+
+    <string name="diagnosis_do_diagnosis">자가진단 하러가기</string>
+    <string name="diagnosis_check_histories">내역 확인하기</string>
+
+    <string name="diagnosis_not_very_much">매우 그렇지 않다</string>
+    <string name="diagnosis_not_good">그렇지 않다</string>
+    <string name="diagnosis_good">그렇다</string>
+    <string name="diagnosis_very_much">매우 그렇다</string>
+
+    <string name="diagnosis_label_color_text_animation_option">버튼 텍스트 색상</string>
+    <string name="diagnosis_label_color_outline_animation_option">버튼 테두리 색상</string>
+
+    <string name="diagnosis_complete">완료</string>
+
+    <string name="diagnosis_complete_image">자가진단 완료 이미지</string>
+    <string name="diagnosis_complete_title">자가진단을 완료했어요!</string>
+
+    <string name="diagnosis_complete_check_result">결과 확인하기</string>
+    <string name="diagnosis_complete_move_to_main">메인으로 가기</string>
     
     <!--diary-->
     <string name="diary_all_diary">전체보기</string>
@@ -168,7 +193,6 @@
     <string name="create_diary_content">내용</string>
     
     <string name="create_diary_select_emotion">감정을 선택해보세요</string>
-
 
     <!--diary details-->
     <string name="diary_details_image">일기 상세보기 이미지</string>
@@ -186,5 +210,4 @@
     <string name="emotion_sobbing">sobbing image</string>
     <string name="emotion_annoying">annoying image</string>
     <string name="emotion_boredom">boredom image</string>
-    
 </resources>

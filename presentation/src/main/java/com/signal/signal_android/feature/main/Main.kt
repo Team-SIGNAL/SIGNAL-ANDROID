@@ -27,6 +27,7 @@ internal fun Main(
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToCreatePost: () -> Unit,
     moveToReport: () -> Unit,
+    moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToAllDiary: () -> Unit,
@@ -56,7 +57,7 @@ internal fun Main(
             startDestination = NavigationRoute.Main.Home,
         ) {
             composable(NavigationRoute.Main.Home) {
-                Home()
+                Home(moveToDiagnosisLanding = moveToDiagnosisLanding)
             }
 
             composable(NavigationRoute.Main.Diary) {
