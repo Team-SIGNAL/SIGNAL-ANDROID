@@ -1,4 +1,4 @@
-package com.signal.data.model.feed
+package com.signal.data.model.feed.response
 
 import com.google.gson.annotations.SerializedName
 import com.signal.domain.PostsEntity
