@@ -65,14 +65,15 @@ internal fun CreateDiary() {
         }
     }
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 30.dp),
+            .padding(
+                horizontal = 16.dp,
+                vertical = 30.dp,
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // AsyncImage(model = "", contentDescription = "")
         Spacer(modifier = Modifier.height(60.dp))
         Image(
             modifier = Modifier.signalClickable { showBottomSheet = true },
@@ -100,9 +101,7 @@ private fun DiaryField(
     title: String,
     content: String,
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-    ) {
+    Column(modifier = Modifier.fillMaxSize()) {
         Body(
             text = stringResource(id = R.string.create_diary_title),
             color = SignalColor.Gray600,
@@ -135,7 +134,7 @@ private fun DiaryField(
         Spacer(modifier = Modifier.weight(1f))
         SignalFilledButton(
             text = stringResource(id = R.string.my_page_secession_check),
-            onClick = { /*TODO*/ },
+            onClick = { /* TODO */ },
         )
         Spacer(modifier = Modifier.height(26.dp))
     }

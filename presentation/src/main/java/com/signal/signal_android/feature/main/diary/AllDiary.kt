@@ -128,9 +128,7 @@ private fun DiaryItemList(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End,
         ) {
-            Box(
-                modifier = Modifier.size(40.dp),
-            ) {
+            Box(modifier = Modifier.size(40.dp)) {
                 Image(
                     painterResource(id = emotion),
                     contentDescription = stringResource(id = R.string.diary_emotion_image),
