@@ -1,6 +1,5 @@
 package com.signal.signal_android.feature.mypage
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
@@ -14,6 +13,10 @@ class MyPageViewModel(
     val secessionUseCase: SecessionUseCase,
     val fetchUserInformationUseCase: FetchUserInformationUseCase,
 ) : BaseViewModel<MyPageState, MyPageSideEffect>(MyPageState.getDefaultState()) {
+
+    init {
+        fetchUserInformation()
+    }
 
     internal fun signOut() {
         viewModelScope.launch(Dispatchers.IO) {

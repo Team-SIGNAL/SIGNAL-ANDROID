@@ -75,6 +75,7 @@ internal fun MyPage(
         }
     }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -91,7 +92,7 @@ internal fun MyPage(
         Spacer(modifier = Modifier.height(24.dp))
         ProfileCard(
             name = state.name,
-            phoneNumber = state.phoneNumber,
+            phoneNumber = state.phone,
             birth = state.birth.toString(),
             profileImageUrl = state.profile
         )
