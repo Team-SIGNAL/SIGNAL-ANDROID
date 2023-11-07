@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.signal.signal_android.feature.diagnosis.Diagnosis
+import com.signal.signal_android.feature.diagnosis.DiagnosisComplete
 import com.signal.signal_android.feature.diagnosis.DiagnosisLanding
 import com.signal.signal_android.feature.landing.Landing
 import com.signal.signal_android.feature.splash.Splash
@@ -14,6 +15,7 @@ internal fun NavGraphBuilder.userNavigation(
     moveToSignUp: () -> Unit,
     moveToDiagnosis: () -> Unit,
     moveToBack: () -> Unit,
+    moveToDiagnosisComplete: () -> Unit,
 ) {
     navigation(
         route = NavigationRoute.User.route,
@@ -35,7 +37,14 @@ internal fun NavGraphBuilder.userNavigation(
         }
 
         composable(NavigationRoute.User.Diagnosis) {
-            Diagnosis(moveToBack = moveToBack)
+            Diagnosis(
+                moveToBack = moveToBack,
+                moveToDiagnosisComplete = moveToDiagnosisComplete,
+            )
+        }
+
+        composable(NavigationRoute.User.DiagnosisComplete) {
+            DiagnosisComplete()
         }
     }
 }
