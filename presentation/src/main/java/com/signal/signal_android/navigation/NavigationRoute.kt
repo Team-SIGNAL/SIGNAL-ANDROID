@@ -31,5 +31,5 @@ sealed class NavigationRoute(val route: String) {
 
 object NavArgument {
     const val FeedId = "{feedId}"
-    const val DiaryId = "{DiaryId}"
+    const val DiaryId = "{diaryId}"
 }
