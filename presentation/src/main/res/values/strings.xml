@@ -148,5 +148,29 @@
     <string name="diary_all_diary">전체보기</string>
     <string name="diary_image">diary image</string>
     <string name="diary_emotion_image">diary emotion image</string>
+    <string name="create_diary_emotion_image">diary emotion image</string>
+
+    <string name="create_diary_title">제목</string>
+    <string name="create_diary_content">내용</string>
+    
+    <string name="create_diary_select_emotion">감정을 선택해보세요</string>
+
+
+    <!--diary details-->
+    <string name="diary_details_image">일기 상세보기 이미지</string>
+
+    <!--emotion-->
+    <string name="emotion_happy">happy image</string>
+    <string name="emotion_soso">soso image</string>
+    <string name="emotion_depression">depression image</string>
+    <string name="emotion_sadness">sadness image</string>
+    <string name="emotion_surprised">surprised image</string>
+    <string name="emotion_discomfort">discomfort image</string>
+    <string name="emotion_pleased">pleased image</string>
+    <string name="emotion_engry">engry image</string>
+    <string name="emotion_awkwardness">awkwardness image</string>
+    <string name="emotion_sobbing">sobbing image</string>
+    <string name="emotion_annoying">annoying image</string>
+    <string name="emotion_boredom">boredom image</string>
     
 </resources>
