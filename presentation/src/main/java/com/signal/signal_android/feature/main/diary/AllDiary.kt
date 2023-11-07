@@ -37,7 +37,6 @@ internal fun AllDiary(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToBack: () -> Unit,
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,7 +62,8 @@ private fun Diaries(
     diaries: List<_Diaries>,
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(diaries) {
             DiaryItemList(
@@ -73,7 +73,6 @@ private fun Diaries(
                 imageUrl = it.imageUrl,
                 emotion = it.emotion,
             )
-            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
