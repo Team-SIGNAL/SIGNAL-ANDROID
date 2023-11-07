@@ -8,12 +8,12 @@ import com.signal.signal_android.feature.diagnosis.DiagnosisLanding
 import com.signal.signal_android.feature.landing.Landing
 import com.signal.signal_android.feature.splash.Splash
 
-
 internal fun NavGraphBuilder.userNavigation(
     moveToLanding: () -> Unit,
     moveToSignIn: () -> Unit,
     moveToSignUp: () -> Unit,
     moveToDiagnosis: () -> Unit,
+    moveToBack: () -> Unit,
 ) {
     navigation(
         route = NavigationRoute.User.route,
@@ -35,7 +35,7 @@ internal fun NavGraphBuilder.userNavigation(
         }
 
         composable(NavigationRoute.User.Diagnosis) {
-            Diagnosis()
+            Diagnosis(moveToBack = moveToBack)
         }
     }
 }

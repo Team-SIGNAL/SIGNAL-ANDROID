@@ -136,7 +136,7 @@
 
     <!--comment dialog-->
     <string name="comment_dialog_comment">댓글</string>
-    <string name="comment_dialog_input_comment">댓글을 입력하세요</string>
+    <string name="comment_dialog_input_comment">댓글을 입력하세요료</string>
 
     <!--header-->
     <string name="header_back">뒤로가기</string>
@@ -166,4 +166,14 @@
 
     <string name="diagnosis_do_diagnosis">자가진단 하러가기</string>
     <string name="diagnosis_check_histories">내역 확인하기</string>
+
+    <string name="diagnosis_not_very_much">매우 그렇지 않다</string>
+    <string name="diagnosis_not_good">그렇지 않다</string>
+    <string name="diagnosis_good">그렇다</string>
+    <string name="diagnosis_very_much">매우 그렇다</string>
+
+    <string name="diagnosis_label_color_text_animation_option">버튼 텍스트 색상</string>
+    <string name="diagnosis_label_color_outline_animation_option">버튼 테두리 색상</string>
+
+    <string name="diagnosis_complete">완료</string>
 </resources>
