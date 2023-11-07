@@ -91,9 +91,9 @@ internal fun MyPage(
         Spacer(modifier = Modifier.height(24.dp))
         ProfileCard(
             name = state.name,
-            phoneNumber = state.phoneNumber,
-            birth = state.birth.toString(),
-            profileImageUrl = state.profile
+            phoneNumber = state.phone,
+            birth = state.birth,
+            profileImageUrl = state.profile,
         )
         Achievement()
         Spacer(modifier = Modifier.height(30.dp))
@@ -164,7 +164,7 @@ private fun ProfileCard(
     name: String,
     phoneNumber: String,
     birth: String,
-    profileImageUrl: String,
+    profileImageUrl: String?,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -210,15 +210,13 @@ private fun ProfileCard(
 }
 
 @Composable
-private fun ProfileImage(profileImageUrl: String) {
-    Box(
-        modifier = Modifier.padding(19.dp),
-    ) {
+private fun ProfileImage(profileImageUrl: String?) {
+    Box(modifier = Modifier.padding(19.dp)) {
         AsyncImage(
             modifier = Modifier
                 .size(80.dp)
                 .clip(CircleShape),
-            model = profileImageUrl,
+            model = profileImageUrl ?: R.drawable.ic_profile_image,
             contentDescription = stringResource(id = R.string.my_page_profile_image),
         )
         Image(
