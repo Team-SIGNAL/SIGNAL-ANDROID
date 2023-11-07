@@ -1,5 +1,7 @@
 package com.signal.signal_android.feature.main.diary
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
@@ -18,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,9 +31,11 @@ import coil.compose.AsyncImage
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.component.SignalDialog
+import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -42,12 +48,14 @@ internal fun DiaryDetail(
         mutableStateOf("제목제목제목")
     }
 
+    val date by remember { mutableStateOf(LocalDate.now()) }
+
     val diaryImageUrl: String? by remember {
         mutableStateOf("https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png")
     }
 
     val content by remember {
-        mutableStateOf("몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n")
+        mutableStateOf("몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ")
     }
 
     var showDialog by remember { mutableStateOf(false) }
@@ -62,6 +70,7 @@ internal fun DiaryDetail(
         }
     }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,13 +80,30 @@ internal fun DiaryDetail(
             title = stringResource(id = R.string.header_back),
             onClick = moveToBack,
         )
-        Row {
-            BodyLarge2(text = title)
-            DiaryDropDown(
-                onEdit = { /*TODO*/ },
-                onDelete = {/*TODO*/ },
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column {
+                BodyLarge2(text = title)
+                Body(
+                    text = date.toString(),
+                    color = SignalColor.Gray500,
+                )
+            }
+            Image(
+                modifier = Modifier.size(40.dp),
+                painter = painterResource(id = Emotion.HAPPY.emotionImage),
+                contentDescription = stringResource(id = R.string.diary_emotion_image),
             )
+            /*DiaryDropDown(
+                onEdit = { *//*TODO*//* },
+                onDelete = { showDialog = true },
+            )*/
         }
+        Spacer(modifier = Modifier.height(18.dp))
         if (diaryImageUrl != null) {
             AsyncImage(
                 modifier = Modifier
@@ -86,8 +112,8 @@ internal fun DiaryDetail(
                 model = diaryImageUrl,
                 contentDescription = stringResource(id = R.string.diary_details_image),
             )
+            Spacer(modifier = Modifier.height(20.dp))
         }
-        Spacer(modifier = Modifier.height(12.dp))
         Body2(
             text = content,
             color = SignalColor.Gray700,
@@ -104,22 +130,25 @@ private fun DiaryDropDown(
 
     IconButton(onClick = { isDropDownMenuExpanded = true }) {
         Icon(
+            modifier = Modifier.size(18.dp),
             painter = painterResource(id = R.drawable.ic_more),
             contentDescription = stringResource(
                 id = R.string.feed_more
             ),
         )
-    }
-
-    DropdownMenu(
-        expanded = isDropDownMenuExpanded,
-        onDismissRequest = { isDropDownMenuExpanded = false },
-    ) {
-        DropdownMenuItem(onClick = onEdit) {
-            Text(text = stringResource(id = R.string.feed_edit))
-        }
-        DropdownMenuItem(onClick = onDelete) {
-            Text(text = stringResource(id = R.string.feed_delete))
+        DropdownMenu(
+            expanded = isDropDownMenuExpanded,
+            onDismissRequest = { isDropDownMenuExpanded = false },
+        ) {
+            DropdownMenuItem(onClick = onEdit) {
+                Text(text = stringResource(id = R.string.feed_edit))
+            }
+            DropdownMenuItem(onClick = onDelete) {
+                Text(
+                    text = stringResource(id = R.string.feed_delete),
+                    color = SignalColor.Error,
+                )
+            }
         }
     }
 }
