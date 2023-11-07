@@ -21,7 +21,9 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.Title
 
 @Composable
-internal fun DiagnosisLanding() {
+internal fun DiagnosisLanding(
+    moveToDiagnosis: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,7 +36,7 @@ internal fun DiagnosisLanding() {
         Introduce()
         Spacer(modifier = Modifier.weight(1f))
         Interactions(
-            onMainButtonClicked = { /*TODO*/ },
+            onMainButtonClicked = moveToDiagnosis,
             onSubButtonClicked = {},
         )
     }
