@@ -21,7 +21,9 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.Title
 
 @Composable
-internal fun DiagnosisComplete() {
+internal fun DiagnosisComplete(
+    moveToMain: () -> Unit,
+) {
     val requiredTime = "13분"
 
     Column(
@@ -40,7 +42,7 @@ internal fun DiagnosisComplete() {
         Spacer(modifier = Modifier.weight(1f))
         Buttons(
             onMainButtonClicked = {},
-            onSubButtonClicked = {},
+            onSubButtonClicked = moveToMain,
             mainText = stringResource(id = R.string.diagnosis_complete_check_result),
             subText = stringResource(id = R.string.diagnosis_complete_move_to_main),
         )

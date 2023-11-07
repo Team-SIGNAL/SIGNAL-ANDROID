@@ -48,7 +48,21 @@ internal fun SignalApp() {
             moveToSignUp = { navController.navigate(NavigationRoute.Auth.SignUpUser) },
             moveToDiagnosis = { navController.navigate(NavigationRoute.User.Diagnosis) },
             moveToBack = { navController.popBackStack() },
-            moveToDiagnosisComplete = { navController.navigate(NavigationRoute.User.DiagnosisComplete) },
+            moveToDiagnosisComplete = {
+                navController.navigate(NavigationRoute.User.DiagnosisComplete) {
+                    popUpTo(NavigationRoute.User.DiagnosisLanding) {
+                        inclusive = true
+                    }
+                }
+            },
+            moveToMain = {
+                navController.navigate(NavigationRoute.Main.Main) {
+                    launchSingleTop = true
+                    popUpTo(NavigationRoute.User.DiagnosisComplete) {
+                        inclusive = true
+                    }
+                }
+            }
         )
         authNavigation(
             signUpViewModel = signUpViewModel,

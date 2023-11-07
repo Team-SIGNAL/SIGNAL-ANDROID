@@ -16,6 +16,7 @@ internal fun NavGraphBuilder.userNavigation(
     moveToDiagnosis: () -> Unit,
     moveToBack: () -> Unit,
     moveToDiagnosisComplete: () -> Unit,
+    moveToMain: () -> Unit,
 ) {
     navigation(
         route = NavigationRoute.User.route,
@@ -44,7 +45,7 @@ internal fun NavGraphBuilder.userNavigation(
         }
 
         composable(NavigationRoute.User.DiagnosisComplete) {
-            DiagnosisComplete()
+            DiagnosisComplete(moveToMain = moveToMain)
         }
     }
 }
