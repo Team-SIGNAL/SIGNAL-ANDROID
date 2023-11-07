@@ -17,6 +17,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToBack: () -> Unit,
     moveToCreatePost: () -> Unit,
     moveToReport: () -> Unit,
+    moveToDiagnosisLanding: () -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -29,6 +30,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToFeedDetails = moveToFeedDetails,
                 moveToCreatePost = moveToCreatePost,
                 moveToReport = moveToReport,
+                moveToDiagnosisLanding = moveToDiagnosisLanding,
             )
         }
 

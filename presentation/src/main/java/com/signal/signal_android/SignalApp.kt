@@ -86,6 +86,9 @@ internal fun SignalApp() {
             moveToReport = {
                 navController.navigate(NavigationRoute.Main.Report)
             },
+            moveToDiagnosisLanding = {
+                navController.navigate(NavigationRoute.User.DiagnosisLanding)
+            }
         )
     }
 }

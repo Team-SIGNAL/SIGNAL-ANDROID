@@ -157,4 +157,13 @@
     <string name="dropdown_icon">드롭다운</string>
     <string name="report_content">(선택)기타 사항을 입력해주세요</string>
     <string name="report_content_title">(선택)기타 사항</string>
+
+    <!--diagnosis-->
+    <string name="diagnosis_title">우울증 자가진단</string>
+    <string name="diagnosis_image">우울증 자가진단 이미지</string>
+    <string name="diagnosis_description">우울증 정도를 확인해보세요!</string>
+    <string name="diagnosis_time">소요시간 : 10 ~ 15분</string>
+
+    <string name="diagnosis_do_diagnosis">자가진단 하러가기</string>
+    <string name="diagnosis_check_histories">내역 확인하기</string>
 </resources>
