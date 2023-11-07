@@ -23,7 +23,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToCreateDiary: () -> Unit,
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToAllDiary: () -> Unit,
-    ) {
+) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
         route = NavigationRoute.Main.route,
@@ -67,7 +67,10 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(NavigationRoute.Main.AllDiary) {
-            AllDiary()
+            AllDiary(
+                moveToDiaryDetails = moveToDiaryDetails,
+                moveToBack = moveToBack,
+            )
         }
 
         composable(NavigationRoute.Main.CreatePost) {
