@@ -75,7 +75,6 @@ internal fun MyPage(
         }
     }
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -93,8 +92,8 @@ internal fun MyPage(
         ProfileCard(
             name = state.name,
             phoneNumber = state.phone,
-            birth = state.birth.toString(),
-            profileImageUrl = state.profile
+            birth = state.birth,
+            profileImageUrl = state.profile,
         )
         Achievement()
         Spacer(modifier = Modifier.height(30.dp))
@@ -165,7 +164,7 @@ private fun ProfileCard(
     name: String,
     phoneNumber: String,
     birth: String,
-    profileImageUrl: String,
+    profileImageUrl: String?,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -211,24 +210,40 @@ private fun ProfileCard(
 }
 
 @Composable
-private fun ProfileImage(profileImageUrl: String) {
+private fun ProfileImage(profileImageUrl: String?) {
     Box(
         modifier = Modifier.padding(19.dp),
     ) {
-        AsyncImage(
-            modifier = Modifier
-                .size(80.dp)
-                .clip(CircleShape),
-            model = profileImageUrl,
-            contentDescription = stringResource(id = R.string.my_page_profile_image),
-        )
-        Image(
-            modifier = Modifier
-                .size(18.dp)
-                .align(Alignment.BottomEnd),
-            painter = painterResource(id = R.drawable.ic_add_image),
-            contentDescription = stringResource(id = R.string.my_page_image_edit_icon),
-        )
+        if (profileImageUrl != null) {
+            AsyncImage(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape),
+                model = profileImageUrl,
+                contentDescription = stringResource(id = R.string.my_page_profile_image),
+            )
+            Image(
+                modifier = Modifier
+                    .size(18.dp)
+                    .align(Alignment.BottomEnd),
+                painter = painterResource(id = R.drawable.ic_add_image),
+                contentDescription = stringResource(id = R.string.my_page_image_edit_icon),
+            )
+        } else {
+            Image(
+                painter = painterResource(id = R.drawable.ic_profile_image),
+                contentDescription = stringResource(
+                    id = R.string.my_page_profile_image
+                )
+            )
+            Image(
+                modifier = Modifier
+                    .size(18.dp)
+                    .align(Alignment.BottomEnd),
+                painter = painterResource(id = R.drawable.ic_add_image),
+                contentDescription = stringResource(id = R.string.my_page_image_edit_icon),
+            )
+        }
     }
 }
 
