@@ -47,6 +47,7 @@ internal class FeedViewModel(
                 feedRepository.post(
                     title = title,
                     content = content,
+                    image = image,
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.PostSuccess)
                 }

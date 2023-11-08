@@ -13,6 +13,7 @@ data class FeedState(
     val content: String,
     val postDetailsEntity: PostDetailsEntity,
     val feedId: Long,
+    val image: String,
 ) {
     companion object {
         fun getDefaultState() = FeedState(
@@ -32,6 +33,7 @@ data class FeedState(
                 isMine = false,
             ),
             feedId = 0L,
+            image = "",
         )
     }
 }

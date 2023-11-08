@@ -21,11 +21,13 @@ class FeedRepositoryImpl(
     override suspend fun post(
         title: String,
         content: String,
+        image: String,
     ) = runCatching {
         feedDataSource.post(
             PostRequest(
                 title = title,
                 content = content,
+                image = image,
             ),
         )
     }
