@@ -29,8 +29,7 @@ internal class FeedViewModel(
                 }.onSuccess {
                     _posts.addAll(it.postEntities)
                     setState(copy(posts = _posts))
-                }.onFailure {
-                }
+                }.onFailure {}
             }
         }
     }
@@ -43,7 +42,6 @@ internal class FeedViewModel(
                     content = content,
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.PostSuccess)
-                }.onFailure {
                 }
             }
         }
@@ -61,6 +59,7 @@ internal class FeedViewModel(
                                 date = it.date,
                                 writer = it.writer,
                                 content = it.content,
+                                profile = it.profile,
                                 isMine = it.isMine,
                             ),
                         ),

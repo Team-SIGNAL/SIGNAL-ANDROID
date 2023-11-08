@@ -9,6 +9,7 @@ data class FetchPostDetailsResponse(
     @SerializedName("date") val date: String,
     @SerializedName("writer") val writer: String,
     @SerializedName("content") val content: String,
+    @SerializedName("profile") val profile: String?,
     @SerializedName("isMine") val isMine: Boolean,
 )
 
@@ -18,5 +19,6 @@ fun FetchPostDetailsResponse.toEntity() = PostDetailsEntity(
     date = this.date,
     writer = this.writer,
     content = this.content,
+    profile = this.profile,
     isMine = this.isMine,
 )

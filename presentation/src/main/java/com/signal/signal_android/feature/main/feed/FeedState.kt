@@ -28,6 +28,7 @@ data class FeedState(
                 date = "",
                 writer = "",
                 content = "",
+                profile = "https://github.com/Team-SIGNAL/SIGNAL-ANDROID/blob/develop/presentation/src/main/res/drawable/ic_profile_image.png?raw=true",
                 isMine = false,
             ),
             feedId = 0L,

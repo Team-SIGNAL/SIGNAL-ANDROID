@@ -114,9 +114,9 @@ internal fun FeedDetails(
                     .verticalScroll(rememberScrollState()),
             ) {
                 User(
-                    profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-                    name = "승훈티비",
-                    date = "2023-10-10",
+                    profileImageUrl = details.profile!!,
+                    name = details.writer,
+                    date = details.date,
                     onClick = { expanded = feedId },
                     expanded = expanded == feedId,
                     onDismissRequest = { expanded = -1 },
@@ -189,7 +189,7 @@ private fun User(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
 
-) {
+    ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
