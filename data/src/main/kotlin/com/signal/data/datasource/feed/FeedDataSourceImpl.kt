@@ -20,8 +20,8 @@ class FeedDataSourceImpl(
         )
     }.sendRequest()
 
-    override suspend fun post(postRequest: PostRequest) = ExceptionHandler<Unit>().httpRequest {
-        feedApi.post(postRequest)
+    override suspend fun createPost(postRequest: PostRequest) = ExceptionHandler<Unit>().httpRequest {
+        feedApi.createPost(postRequest)
     }.sendRequest()
 
     override suspend fun fetchPostDetails(feedId: Long) =

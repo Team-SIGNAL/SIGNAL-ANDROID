@@ -18,7 +18,7 @@ interface FeedApi {
     ): FetchPostsResponse
 
     @POST(SignalUrl.Feed.Post)
-    suspend fun post(
+    suspend fun createPost(
         @Body postRequest: PostRequest,
     )
 

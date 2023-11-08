@@ -69,7 +69,7 @@ internal fun CreatePost(
         Spacer(modifier = Modifier.weight(1f))
         SignalFilledButton(
             text = stringResource(id = R.string.my_page_secession_check),
-            onClick = feedViewModel::post,
+            onClick = feedViewModel::createPost,
         )
         Spacer(modifier = Modifier.height(26.dp))
     }

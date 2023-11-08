@@ -10,7 +10,7 @@ interface FeedRepository {
         pageNum: Long,
     ): PostsEntity
 
-    suspend fun post(
+    suspend fun createPost(
         title: String,
         content: String,
         image: String,

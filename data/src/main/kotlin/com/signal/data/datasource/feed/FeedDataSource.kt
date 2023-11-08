@@ -11,7 +11,7 @@ interface FeedDataSource {
         pageNum: Long,
     ): FetchPostsResponse
 
-    suspend fun post(postRequest: PostRequest)
+    suspend fun createPost(postRequest: PostRequest)
 
     suspend fun fetchPostDetails(feedId: Long): FetchPostDetailsResponse
 }

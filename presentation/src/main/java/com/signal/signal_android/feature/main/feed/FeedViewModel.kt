@@ -41,10 +41,10 @@ internal class FeedViewModel(
         }
     }
 
-    internal fun post() {
+    internal fun createPost() {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
-                feedRepository.post(
+                feedRepository.createPost(
                     title = title,
                     content = content,
                     image = image,
