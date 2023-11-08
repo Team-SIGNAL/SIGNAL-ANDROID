@@ -25,4 +25,8 @@ object ApiProvider {
     fun getUserApi(
         tokenInterceptor: TokenInterceptor,
     ): UserApi = getRetrofit(tokenInterceptor).create(UserApi::class.java)
+
+    fun getFileApi(
+        tokenInterceptor: TokenInterceptor,
+    ): FileApi = getRetrofit(tokenInterceptor).create(FileApi::class.java)
 }
