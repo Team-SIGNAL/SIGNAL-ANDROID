@@ -14,6 +14,7 @@ class TokenInterceptor(
 
         val ignorePaths = listOf(
             SignalUrl.Users.SignIn,
+            SignalUrl.Users.SignUp,
         )
 
         if (ignorePaths.contains(path)) {

@@ -1,11 +1,14 @@
 package com.signal.signal_android.feature.main.feed
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +24,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
@@ -35,6 +40,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
+import com.signal.domain.PostsEntity
+import com.signal.domain.enums.Tag
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalOutlinedButton
 import com.signal.signal_android.designsystem.component.SignalDialog
@@ -43,66 +50,25 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
-
-// TODO 더미
-internal data class _Post(
-    val feedId: Long,
-    val imageUrl: String,
-    val title: String,
-    val date: String,
-    val writer: String,
-)
-
-// TODO 더미
-internal val posts = listOf(
-    _Post(
-        feedId = 1,
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        title = "인스타그램",
-        date = "2023-10-28",
-        writer = "정승훈",
-    ),
-    _Post(
-        feedId = 2,
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        title = "인스타그램",
-        date = "2023-10-28",
-        writer = "정승훈",
-    ),
-    _Post(
-        feedId = 3,
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        title = "인스타그램",
-        date = "2023-10-28",
-        writer = "정승훈",
-    ),
-)
-
-// TODO 더미
-private enum class Type {
-    ALL, NOTICE, RECOMMEND,
-}
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun Feed(
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToCreatePost: () -> Unit,
     moveToReport: () -> Unit,
+    feedViewModel: FeedViewModel = koinViewModel(),
 ) {
-    // TODO 뷰모델에서 구현
-    var type by remember { mutableStateOf(Type.ALL) }
-
-    val onClick: () -> Unit = {
-        type = when (type) {
-            Type.ALL -> Type.NOTICE
-            Type.NOTICE -> Type.RECOMMEND
-            else -> Type.ALL
-        }
-    }
+    val state by feedViewModel.state.collectAsState()
 
     var expanded by remember { mutableLongStateOf(-1) }
 
     var showDialog by remember { mutableStateOf(false) }
+
+    val alpha by animateFloatAsState(
+        targetValue = if (state.isPostsEmpty) 1f else 0f,
+        label = "",
+    )
 
     if (showDialog) {
         Dialog(onDismissRequest = { showDialog = false }) {
@@ -133,24 +99,50 @@ internal fun Feed(
                     height = 48.dp,
                 ),
                 text = stringResource(
-                    id = when (type) {
-                        Type.ALL -> R.string.feed_all
-                        Type.NOTICE -> R.string.feed_notice
-                        else -> R.string.feed_recommend
+                    id = when (state.tag) {
+                        Tag.GENERAL -> R.string.feed_all
+                        Tag.NOTIFICATION -> R.string.feed_notice
                     },
                 ),
-                onClick = onClick,
+                onClick = feedViewModel::setTag,
             )
             Spacer(modifier = Modifier.height(18.dp))
-            Posts(
-                moveToFeedDetails = moveToFeedDetails,
-                moveToReport = moveToReport,
-                posts = posts,
-                showDropDown = { expanded = it },
-                expanded = expanded,
-                onDismissRequest = { expanded = -1 },
-                onDelete = { showDialog = true },
-            )
+            Box {
+                Posts(
+                    moveToFeedDetails = moveToFeedDetails,
+                    moveToReport = moveToReport,
+                    posts = state.posts,
+                    showDropDown = { expanded = it },
+                    expanded = expanded,
+                    onDismissRequest = { expanded = -1 },
+                    onDelete = { showDialog = true },
+                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.7f)
+                        .alpha(alpha),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize(0.3f)
+                            .padding(bottom = 8.dp),
+                        painter = painterResource(id = R.drawable.ic_surprised),
+                        contentDescription = stringResource(id = R.string.emotion_surprised),
+                    )
+                    SubTitle(
+                        modifier = Modifier.padding(bottom = 4.dp),
+                        text = stringResource(id = R.string.feed_posts_is_empty),
+                    )
+                    Body(
+                        modifier = Modifier.signalClickable(onClick = moveToCreatePost),
+                        text = stringResource(id = R.string.feed_posts_add),
+                        color = SignalColor.Primary100,
+                    )
+                }
+            }
         }
         FloatingActionButton(
             modifier = Modifier.padding(16.dp),
@@ -171,23 +163,21 @@ private fun Posts(
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToReport: () -> Unit,
     showDropDown: (feedId: Long) -> Unit,
-    posts: List<_Post>,
+    posts: List<PostsEntity.PostEntity>,
     onDismissRequest: () -> Unit,
     expanded: Long,
     onDelete: () -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-    ) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(posts) {
             Post(
-                moveToFeedDetails = { moveToFeedDetails(it.feedId) },
-                imageUrl = it.imageUrl,
+                moveToFeedDetails = { moveToFeedDetails(it.id) },
+                imageUrl = it.img,
                 title = it.title,
                 date = it.date,
-                writer = it.writer,
-                onClick = { showDropDown(it.feedId) },
-                expanded = expanded == it.feedId,
+                writer = it.user,
+                onClick = { showDropDown(it.id) },
+                expanded = expanded == it.id,
                 onDismissRequest = onDismissRequest,
                 onEdit = {},
                 onDelete = onDelete,
