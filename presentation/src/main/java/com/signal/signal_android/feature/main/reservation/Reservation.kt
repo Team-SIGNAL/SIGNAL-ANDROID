@@ -43,24 +43,24 @@ import java.util.Locale
 
 internal data class _Reservations(
     val hospital: String,
-    val isReservation: String,
+    val reservationStatus: ReservationStatus,
 )
 
 // TODO 더미
 internal val reservations = listOf(
     _Reservations(
         hospital = "ㅁㄹㅁㄹㅁㄹㅁㄹㅁㄹ병원",
-        isReservation = "APPROVE",
+        reservationStatus = ReservationStatus.APPROVE,
     ), _Reservations(
         hospital = "ㅁㄴㅇㄹㅁㄴㅇㄹㄹㄹ병원",
-        isReservation = "STAND_BY",
+        reservationStatus = ReservationStatus.REFUSE,
     ), _Reservations(
         hospital = "ㅁㄴㅇㅂㅈㄷㄱㅂㅈㄷㄱㄹ병원",
-        isReservation = "REFUSE",
+        reservationStatus = ReservationStatus.STAND_BY,
     )
 )
 
-private enum class IsReservation {
+internal enum class ReservationStatus {
     APPROVE, STAND_BY, REFUSE
 }
 
@@ -123,12 +123,6 @@ internal fun Reservation(
                     )
                 }
             }
-            // Item List
-
-            /*Diaries(
-                diaries = diaries,
-                moveToDiaryDetails = moveToDiaryDetails,
-            )*/
             Spacer(modifier = Modifier.height(8.dp))
             Reservations(reservations = reservations)
         }
@@ -172,7 +166,7 @@ private fun Reservations(reservations: List<_Reservations>) {
         items(reservations) {
             ReservationItems(
                 hospital = it.hospital,
-                isReservation = it.isReservation,
+                reservationStatus = it.reservationStatus,
             )
         }
 
@@ -183,7 +177,7 @@ private fun Reservations(reservations: List<_Reservations>) {
 @Composable
 private fun ReservationItems(
     hospital: String,
-    isReservation: String,
+    reservationStatus: ReservationStatus,
 ) {
     Row(
         modifier = Modifier
@@ -210,18 +204,18 @@ private fun ReservationItems(
                 text = hospital,
                 color = SignalColor.Black,
             )
-            when (isReservation) {
-                IsReservation.APPROVE.toString() -> Body(
+            when (reservationStatus) {
+                ReservationStatus.APPROVE -> Body(
                     text = stringResource(id = R.string.reservation_approve),
                     color = SignalColor.Primary100,
                 )
 
-                IsReservation.STAND_BY.toString() -> Body(
+                ReservationStatus.STAND_BY -> Body(
                     text = stringResource(id = R.string.reservation_stand_by),
                     color = SignalColor.Gray500,
                 )
 
-                IsReservation.REFUSE.toString() -> Body(
+                ReservationStatus.REFUSE -> Body(
                     text = stringResource(id = R.string.reservation_refuse),
                     color = SignalColor.Error,
                 )
