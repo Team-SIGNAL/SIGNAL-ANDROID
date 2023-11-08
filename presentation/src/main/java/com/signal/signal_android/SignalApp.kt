@@ -95,6 +95,15 @@ internal fun SignalApp() {
             moveToAllDiary = {
                 navController.navigate(NavigationRoute.Main.AllDiary)
             },
+            moveToReservation = {
+                navController.navigate(NavigationRoute.Main.Reservation)
+            },
+            moveToHospital = {
+                navController.navigate(NavigationRoute.Main.Hospital)
+            },
+            moveToCreateReservation = {
+                navController.navigate(NavigationRoute.Main.CreateReservation)
+            }
         )
     }
 }

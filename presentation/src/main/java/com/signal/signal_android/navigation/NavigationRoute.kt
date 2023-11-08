@@ -25,7 +25,10 @@ sealed class NavigationRoute(val route: String) {
         const val MyPage = "myPage"
         const val CreateDiary = "createDiary"
         const val DiaryDetails = "diaryDetails"
-        const val AllDiary = "AllDiary"
+        const val AllDiary = "allDiary"
+        const val Reservation = "reservation"
+        const val Hospital = "hospital"
+        const val CreateReservation = "createReservation"
     }
 }
 
