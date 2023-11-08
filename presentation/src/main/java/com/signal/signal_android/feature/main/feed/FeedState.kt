@@ -1,6 +1,7 @@
 package com.signal.signal_android.feature.main.feed
 
 import com.signal.domain.PostsEntity
+import com.signal.domain.entity.PostDetailsEntity
 import com.signal.domain.enums.Tag
 
 data class FeedState(
@@ -10,6 +11,8 @@ data class FeedState(
     val isPostsEmpty: Boolean,
     val title: String,
     val content: String,
+    val postDetailsEntity: PostDetailsEntity,
+    val feedId: Long,
 ) {
     companion object {
         fun getDefaultState() = FeedState(
@@ -19,6 +22,15 @@ data class FeedState(
             isPostsEmpty = false,
             title = "",
             content = "",
+            postDetailsEntity = PostDetailsEntity(
+                imageUrl = null,
+                title = "",
+                date = "",
+                writer = "",
+                content = "",
+                isMine = false,
+            ),
+            feedId = 0L,
         )
     }
 }

@@ -21,6 +21,8 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +46,7 @@ import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -51,21 +54,19 @@ internal fun FeedDetails(
     feedId: Long,
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToBack: () -> Unit,
+    feedViewModel: FeedViewModel = koinViewModel(),
 ) {
+    LaunchedEffect(Unit) {
+        with(feedViewModel) {
+            setFeedId(feedId)
+            fetchPostDetails()
+        }
+    }
+
+    val state by feedViewModel.state.collectAsState()
+    val details = state.postDetailsEntity
+
     val coroutineScope = rememberCoroutineScope()
-
-    // TODO: 더미
-    val title by remember {
-        mutableStateOf("제목제목제목")
-    }
-
-    val feedImageUrl: String? by remember {
-        mutableStateOf("https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png")
-    }
-
-    val content by remember {
-        mutableStateOf("몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ\n")
-    }
 
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -101,10 +102,10 @@ internal fun FeedDetails(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp),
         ) {
             Header(
-                title = title,
+                title = state.title,
                 onClick = moveToBack,
             )
             Column(
@@ -120,19 +121,19 @@ internal fun FeedDetails(
                     expanded = expanded == feedId,
                     onDismissRequest = { expanded = -1 },
                 )
-                if (feedImageUrl != null) {
+                if (details.imageUrl != null) {
                     Spacer(modifier = Modifier.height(22.dp))
                     AsyncImage(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp),
-                        model = feedImageUrl,
+                        model = details.imageUrl,
                         contentDescription = stringResource(id = R.string.feed_details_image),
                     )
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Body2(
-                    text = content,
+                    text = details.content,
                     color = SignalColor.Gray700,
                 )
                 Body(
@@ -159,15 +160,15 @@ internal fun FeedDetails(
                     modifier = Modifier.padding(5.dp),
                     text = stringResource(id = R.string.feed_details_feed_list),
                 )
-                posts.forEach {
+                state.posts.forEach {
                     Post(
-                        moveToFeedDetails = { moveToFeedDetails(it.feedId) },
-                        imageUrl = it.imageUrl,
+                        moveToFeedDetails = { moveToFeedDetails(it.id) },
+                        imageUrl = it.img,
                         title = it.title,
                         date = it.date,
-                        writer = it.writer,
-                        onClick = { expanded = it.feedId },
-                        expanded = expanded == it.feedId,
+                        writer = it.user,
+                        onClick = { expanded = it.id },
+                        expanded = expanded == it.id,
                         onDismissRequest = { expanded = -1 },
                         onEdit = {},
                         onDelete = { showDialog = true },
@@ -188,7 +189,7 @@ private fun User(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
 
-    ) {
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -225,7 +226,7 @@ private fun User(
                 onDismissRequest = onDismissRequest,
                 onEdit = { /*TODO*/ },
                 onDelete = { /*TODO*/ },
-                onReport = { /*TODO*/ }
+                onReport = { /*TODO*/ },
             )
         }
     }

@@ -2,6 +2,7 @@ package com.signal.signal_android.feature.main.feed
 
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.PostsEntity
+import com.signal.domain.entity.PostDetailsEntity
 import com.signal.domain.enums.Tag
 import com.signal.domain.repository.FeedRepository
 import com.signal.signal_android.BaseViewModel
@@ -43,7 +44,27 @@ internal class FeedViewModel(
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.PostSuccess)
                 }.onFailure {
+                }
+            }
+        }
+    }
 
+    internal fun fetchPostDetails() {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                feedRepository.fetchPostDetails(feedId = feedId).onSuccess {
+                    setState(
+                        copy(
+                            postDetailsEntity = PostDetailsEntity(
+                                imageUrl = it.imageUrl,
+                                title = it.title,
+                                date = it.date,
+                                writer = it.writer,
+                                content = it.content,
+                                isMine = it.isMine,
+                            ),
+                        ),
+                    )
                 }
             }
         }
@@ -55,6 +76,10 @@ internal class FeedViewModel(
 
     internal fun setContent(content: String) {
         setState(state.value.copy(content = content))
+    }
+
+    internal fun setFeedId(feedId: Long) {
+        setState(state.value.copy(feedId = feedId))
     }
 
     internal fun setTag() {
