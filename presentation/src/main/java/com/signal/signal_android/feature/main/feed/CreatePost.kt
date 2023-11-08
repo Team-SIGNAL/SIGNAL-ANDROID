@@ -1,5 +1,9 @@
 package com.signal.signal_android.feature.main.feed
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,26 +18,52 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.signal.data.util.FileUtil
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
+import com.signal.signal_android.feature.file.FileViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun CreatePost(
     moveToBack: () -> Unit,
     feedViewModel: FeedViewModel = koinViewModel(),
+    fileViewModel: FileViewModel = koinViewModel(),
 ) {
     val state by feedViewModel.state.collectAsState()
+    val fileState by fileViewModel.state.collectAsState()
+
+    var imagePreview by remember { mutableStateOf(Uri.EMPTY) }
+
+    val context = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+        it?.run {
+            imagePreview = it
+            fileViewModel.setFile(
+                FileUtil.toFile(
+                    context = context,
+                    uri = this,
+                )
+            )
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -65,7 +95,9 @@ internal fun CreatePost(
             singleLine = false,
             maxLength = 100,
         )
-        PostImage(onClick = {})
+        PostImage(uri = { imagePreview }) {
+            launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
         Spacer(modifier = Modifier.weight(1f))
         SignalFilledButton(
             text = stringResource(id = R.string.my_page_secession_check),
@@ -77,6 +109,7 @@ internal fun CreatePost(
 
 @Composable
 private fun PostImage(
+    uri: () -> Uri,
     onClick: () -> Unit,
 ) {
     Box(
@@ -96,6 +129,12 @@ private fun PostImage(
             painter = painterResource(id = R.drawable.ic_gallery),
             contentDescription = stringResource(id = R.string.create_post_image),
             tint = SignalColor.Gray500,
+        )
+        AsyncImage(
+            modifier = Modifier.fillMaxSize(),
+            model = uri(),
+            contentDescription = stringResource(id = R.string.feed_image),
+            contentScale = ContentScale.Crop,
         )
     }
 }

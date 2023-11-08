@@ -2,6 +2,7 @@ package com.signal.data.api
 
 object SignalUrl {
     private const val users = "/users"
+    private const val feed = "/feed"
     private const val attachment = "/attachment"
 
     object Users {

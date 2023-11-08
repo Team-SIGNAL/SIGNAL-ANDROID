@@ -1,10 +1,12 @@
 package com.signal.signal_android.feature.file
 
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.repository.FileRepository
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 
 class FileViewModel(
     private val fileRepository: FileRepository,
@@ -19,5 +21,9 @@ class FileViewModel(
                 }
             }
         }
+    }
+
+    internal fun setFile(file: File) {
+        setState(state.value.copy(files = listOf(file)))
     }
 }
