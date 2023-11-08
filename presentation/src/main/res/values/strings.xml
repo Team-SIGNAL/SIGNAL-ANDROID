@@ -187,4 +187,14 @@
     <string name="emotion_annoying">annoying image</string>
     <string name="emotion_boredom">boredom image</string>
     
+    
+    <!--reservation-->
+    <string name="reservation">진료 예약하기</string>
+    <string name="reservation_approve">승인 완료</string>
+    <string name="reservation_stand_by">승인 대기 중</string>
+    <string name="reservation_refuse">승인 거절됨</string>
+    
+    <!--hospital-->
+    <string name="hospital_get_hospital_list">병원 조회</string>
+    
 </resources>
