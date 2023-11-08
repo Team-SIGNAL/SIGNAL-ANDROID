@@ -114,7 +114,7 @@ internal fun FeedDetails(
                     .verticalScroll(rememberScrollState()),
             ) {
                 User(
-                    profileImageUrl = details.profile!!,
+                    profileImageUrl = details.profile,
                     name = details.writer,
                     date = details.date,
                     onClick = { expanded = feedId },
@@ -182,7 +182,7 @@ internal fun FeedDetails(
 
 @Composable
 private fun User(
-    profileImageUrl: String,
+    profileImageUrl: String?,
     name: String,
     date: String,
     onClick: () -> Unit,
