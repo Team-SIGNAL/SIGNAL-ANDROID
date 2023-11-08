@@ -38,7 +38,9 @@ import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
 
 @Composable
-internal fun Home() {
+internal fun Home(
+    moveToReservation: () -> Unit,
+) {
     Column {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Spacer(modifier = Modifier.height(30.dp))
@@ -86,6 +88,11 @@ internal fun Home() {
                 title = "우울증 자가진단",
                 description = "최근 진행 : 2023년 10월 21일",
                 onClick = {},
+            )
+            Spacer(modifier = Modifier.height(14.dp))
+            ReservationCard(
+                title = stringResource(id = R.string.reservation),
+                onClick = moveToReservation,
             )
             Spacer(modifier = Modifier.height(14.dp))
             ActivityCard(
@@ -178,9 +185,50 @@ private fun HomeChart(
 }
 
 @Composable
+private fun ReservationCard(
+    title: String,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(8.dp),
+            )
+            .clip(RoundedCornerShape(8.dp))
+            .signalClickable(
+                rippleEnabled = true,
+                onClick = onClick,
+            )
+            .background(
+                color = SignalColor.White,
+                shape = RoundedCornerShape(8.dp),
+            )
+            .padding(
+                top = 11.dp,
+                bottom = 11.dp,
+                start = 14.dp,
+                end = 14.dp,
+            ),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            BodyStrong(modifier = Modifier.weight(1f), text = title)
+            Icon(
+                modifier = Modifier.rotate(270f),
+                painter = painterResource(id = R.drawable.ic_down),
+                contentDescription = stringResource(id = R.string.next),
+            )
+        }
+    }
+}
+
+
+@Composable
 private fun ActivityCard(
     title: String,
-    description: String,
+    description: String?,
     onClick: () -> Unit,
     content: @Composable (() -> Unit)? = null,
 ) {
@@ -188,7 +236,7 @@ private fun ActivityCard(
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
-                elevation = 4.dp,
+                elevation = 2.dp,
                 shape = RoundedCornerShape(8.dp),
             )
             .clip(RoundedCornerShape(8.dp))
@@ -213,10 +261,12 @@ private fun ActivityCard(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 BodyStrong(text = title)
-                Body(
-                    text = description,
-                    color = SignalColor.Gray500,
-                )
+                if (description != null) {
+                    Body(
+                        text = description,
+                        color = SignalColor.Gray500,
+                    )
+                }
             }
             Icon(
                 modifier = Modifier.rotate(270f),

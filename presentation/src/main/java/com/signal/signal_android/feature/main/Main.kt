@@ -30,6 +30,7 @@ internal fun Main(
     moveToCreateDiary: () -> Unit,
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToAllDiary: () -> Unit,
+    moveToReservation: () -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -56,7 +57,7 @@ internal fun Main(
             startDestination = NavigationRoute.Main.Home,
         ) {
             composable(NavigationRoute.Main.Home) {
-                Home()
+                Home(moveToReservation = moveToReservation)
             }
 
             composable(NavigationRoute.Main.Diary) {
