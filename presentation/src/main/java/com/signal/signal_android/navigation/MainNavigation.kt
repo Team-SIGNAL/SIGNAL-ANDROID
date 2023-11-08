@@ -104,7 +104,7 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(NavigationRoute.Main.CreateReservation) {
-            CreateReservation()
+            CreateReservation(moveToBack = moveToBack)
         }
     }
 }
