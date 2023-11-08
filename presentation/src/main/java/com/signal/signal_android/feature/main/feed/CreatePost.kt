@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -37,6 +39,7 @@ import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
+import com.signal.signal_android.feature.file.FileSideEffect
 import com.signal.signal_android.feature.file.FileViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -53,6 +56,8 @@ internal fun CreatePost(
 
     val context = LocalContext.current
 
+    val focusManager = LocalFocusManager.current
+
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         it?.run {
             imagePreview = it
@@ -62,6 +67,20 @@ internal fun CreatePost(
                     uri = this,
                 )
             )
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        fileViewModel.sideEffect.collect {
+            when (it) {
+                is FileSideEffect.Success -> {
+                    feedViewModel.createPost(imageUrl = fileState.imageUrl)
+                }
+
+                is FileSideEffect.Failure -> {
+
+                }
+            }
         }
     }
 
@@ -101,7 +120,10 @@ internal fun CreatePost(
         Spacer(modifier = Modifier.weight(1f))
         SignalFilledButton(
             text = stringResource(id = R.string.my_page_secession_check),
-            onClick = feedViewModel::createPost,
+            onClick = {
+                fileViewModel.uploadFile()
+                focusManager.clearFocus()
+            },
         )
         Spacer(modifier = Modifier.height(26.dp))
     }

@@ -1,6 +1,5 @@
 package com.signal.signal_android.feature.file
 
-import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.repository.FileRepository
 import com.signal.signal_android.BaseViewModel
@@ -16,6 +15,7 @@ class FileViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 fileRepository.uploadFile(files = files).onSuccess {
                     setState(copy(imageUrl = it.image))
+                    postSideEffect(FileSideEffect.Success)
                 }.onFailure {
                     postSideEffect(FileSideEffect.Failure)
                 }

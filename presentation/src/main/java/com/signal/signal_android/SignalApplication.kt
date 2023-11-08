@@ -4,20 +4,25 @@ import android.app.Application
 import com.signal.data.api.ApiProvider
 import com.signal.data.datasource.feed.FeedDataSource
 import com.signal.data.datasource.feed.FeedDataSourceImpl
+import com.signal.data.datasource.file.FileDataSourceImpl
+import com.signal.data.datasource.file.FileDatasource
 import com.signal.data.datasource.user.local.LocalUserDataSource
 import com.signal.data.datasource.user.local.LocalUserDataSourceImpl
 import com.signal.data.datasource.user.remote.RemoteUserDataSource
 import com.signal.data.datasource.user.remote.RemoteUserDataSourceImpl
 import com.signal.data.repository.FeedRepositoryImpl
+import com.signal.data.repository.FileRepositoryImpl
 import com.signal.data.repository.UserRepositoryImpl
 import com.signal.data.util.TokenInterceptor
 import com.signal.domain.repository.FeedRepository
+import com.signal.domain.repository.FileRepository
 import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
 import com.signal.domain.usecase.users.SignInUseCase
 import com.signal.domain.usecase.users.SignOutUseCase
 import com.signal.domain.usecase.users.SignUpUseCase
+import com.signal.signal_android.feature.file.FileViewModel
 import com.signal.signal_android.feature.main.feed.FeedViewModel
 import com.signal.signal_android.feature.mypage.MyPageViewModel
 import com.signal.signal_android.feature.signin.SignInViewModel
@@ -55,6 +60,7 @@ val apiModule: Module
         single { TokenInterceptor(localUserDataSource = get()) }
         single { ApiProvider.getUserApi(tokenInterceptor = get()) }
         single { ApiProvider.getFeedApi(tokenInterceptor = get()) }
+        single { ApiProvider.getFileApi(tokenInterceptor = get()) }
     }
 
 val dataSourceModule: Module
@@ -62,6 +68,7 @@ val dataSourceModule: Module
         single<RemoteUserDataSource> { RemoteUserDataSourceImpl(userApi = get()) }
         single<LocalUserDataSource> { LocalUserDataSourceImpl(context = androidContext()) }
         single<FeedDataSource> { FeedDataSourceImpl(feedApi = get()) }
+        single<FileDatasource> { FileDataSourceImpl(fileApi = get()) }
     }
 
 val repositoryModule: Module
@@ -74,6 +81,9 @@ val repositoryModule: Module
         }
         single<FeedRepository> {
             FeedRepositoryImpl(feedDataSource = get())
+        }
+        single<FileRepository> {
+            FileRepositoryImpl(fileDatasource = get())
         }
     }
 
@@ -98,4 +108,5 @@ val viewModelModule: Module
             )
         }
         viewModel { FeedViewModel(feedRepository = get()) }
+        viewModel { FileViewModel(fileRepository = get()) }
     }

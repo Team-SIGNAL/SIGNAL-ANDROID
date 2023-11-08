@@ -41,13 +41,13 @@ internal class FeedViewModel(
         }
     }
 
-    internal fun createPost() {
+    internal fun createPost(imageUrl: String) {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.createPost(
                     title = title,
                     content = content,
-                    image = image,
+                    image = imageUrl,
                     tag = tag,
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.PostSuccess)
