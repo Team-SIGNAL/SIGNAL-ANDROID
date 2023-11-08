@@ -182,7 +182,7 @@
 
     <string name="diagnosis_complete_check_result">결과 확인하기</string>
     <string name="diagnosis_complete_move_to_main">메인으로 가기</string>
-    
+
     <!--diary-->
     <string name="diary_all_diary">전체보기</string>
     <string name="diary_image">diary image</string>
@@ -191,7 +191,7 @@
 
     <string name="create_diary_title">제목</string>
     <string name="create_diary_content">내용</string>
-    
+
     <string name="create_diary_select_emotion">감정을 선택해보세요</string>
 
     <!--diary details-->
@@ -210,4 +210,21 @@
     <string name="emotion_sobbing">sobbing image</string>
     <string name="emotion_annoying">annoying image</string>
     <string name="emotion_boredom">boredom image</string>
+
+    <!--diagnosis questions-->
+    <string name="diagnosis_1">나는 매사에 의욕이 없고 우울하거나 슬플 때가 있다</string>
+    <string name="diagnosis_2">나는 갑자기 얼마동안 울음을 터뜨리거나 울고 싶을 때가 있다</string>
+    <string name="diagnosis_3">나는 밤에 잠을 설칠 때가 있다</string>
+    <string name="diagnosis_4">나는 전과 같이 밥맛이 있다 (식욕이 좋다)</string>
+    <string name="diagnosis_5">나는 이성과 이야기하고 함께 있기를 좋아한다</string>
+    <string name="diagnosis_6">나는 요즘 평상시보다 가슴이 빨리 뛰거나 두근거린다</string>
+    <string name="diagnosis_7">나는 요즘 별 이유 없이 몸이 피곤하고 나른하다</string>
+    <string name="diagnosis_8">나는 전처럼 어려움 없이 일을 해낸다</string>
+    <string name="diagnosis_9">나는 안절부절못해서 진정할 수가 없다</string>
+    <string name="diagnosis_10">나는 장래는 희망적이라고 생각한다</string>
+    <string name="diagnosis_11">나는 전보다도 짜증이 많아졌다</string>
+    <string name="diagnosis_12">나는 매사에 결단력이 있다고 생각한다</string>
+    <string name="diagnosis_13">나는 사회에 유용하고 필요한 사람이라고 생각한다</string>
+    <string name="diagnosis_14">나는 전과 다름없이 일하는 것이 즐겁다</string>
+    <string name="diagnosis_15">내가 죽어야 다른 사람들, 특히 가족들이 편할 것 같다</string>
 </resources>
