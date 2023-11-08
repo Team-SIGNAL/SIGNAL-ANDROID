@@ -12,8 +12,11 @@ class MainActivity : ComponentActivity() {
 
     private var delay = 0L
 
+    private lateinit var dbInitializer: DBInitializer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        dbInitializer = DBInitializer(context = this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             BackHandler(onBack = this::setBackHandler)

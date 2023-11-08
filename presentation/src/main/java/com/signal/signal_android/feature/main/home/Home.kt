@@ -40,6 +40,7 @@ import com.signal.signal_android.designsystem.util.signalClickable
 @Composable
 internal fun Home(
     moveToReservation: () -> Unit,
+    moveToDiagnosisLanding: () -> Unit,
 ) {
     Column {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -85,9 +86,9 @@ internal fun Home(
             BodyLarge2(text = stringResource(id = R.string.home_activity))
             Spacer(modifier = Modifier.height(8.dp))
             ActivityCard(
-                title = "우울증 자가진단",
+                title = stringResource(id = R.string.diagnosis_title),
                 description = "최근 진행 : 2023년 10월 21일",
-                onClick = {},
+                onClick = moveToDiagnosisLanding,
             )
             Spacer(modifier = Modifier.height(14.dp))
             ReservationCard(

@@ -10,7 +10,9 @@ sealed class NavigationRoute(val route: String) {
     object User : NavigationRoute(route = "User") {
         const val Splash = "splash"
         const val Landing = "landing"
-        const val MyPage = "myPage"
+        const val DiagnosisLanding = "diagnosisLanding"
+        const val Diagnosis = "diagnosis"
+        const val DiagnosisComplete = "diagnosisComplete"
     }
 
     object Main : NavigationRoute(route = "Main") {

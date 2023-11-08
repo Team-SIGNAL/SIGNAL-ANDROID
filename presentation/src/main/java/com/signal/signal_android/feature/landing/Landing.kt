@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -21,10 +20,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.signal.signal_android.R
-import com.signal.signal_android.designsystem.button.SignalFilledButton
-import com.signal.signal_android.designsystem.button.SignalOutlinedButton
 import com.signal.signal_android.designsystem.component.Indicator
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
+import com.signal.signal_android.feature.diagnosis.Buttons
 
 private const val PAGE_COUNT = 5
 
@@ -65,18 +63,12 @@ internal fun Landing(
         Spacer(modifier = Modifier.height(20.dp))
         BodyLarge2(text = stringResource(id = landingDescriptions[pagerState.currentPage]))
         Spacer(modifier = Modifier.weight(1f))
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-            SignalFilledButton(
-                text = stringResource(id = R.string.landing_sign_in),
-                onClick = moveToSignIn,
-            )
-            Spacer(modifier = Modifier.height(14.dp))
-            SignalOutlinedButton(
-                text = stringResource(id = R.string.landing_sign_up),
-                onClick = moveToSignUp,
-            )
-        }
-        Spacer(modifier = Modifier.height(44.dp))
+        Buttons(
+            onMainButtonClicked = moveToSignIn,
+            onSubButtonClicked = moveToSignUp,
+            mainText = stringResource(id = R.string.landing_sign_in),
+            subText = stringResource(id = R.string.landing_sign_up),
+        )
     }
 }
 
