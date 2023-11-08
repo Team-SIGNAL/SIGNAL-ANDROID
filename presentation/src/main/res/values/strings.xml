@@ -196,5 +196,11 @@
     
     <!--hospital-->
     <string name="hospital_get_hospital_list">병원 조회</string>
+
+    <!--create reservation-->
+    <string name="create_reservation_date">일자</string>
+    <string name="create_reservation_time">시간</string>
+    <string name="create_reservation_reason">사유</string>
+    <string name="create_reservation_reason_hint">사유를 입력해주세요</string>
     
 </resources>
