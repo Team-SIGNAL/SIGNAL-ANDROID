@@ -1,12 +1,14 @@
 package com.signal.signal_android.feature.main.feed
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -116,11 +118,24 @@ internal fun Feed(
                     onDelete = { showDialog = true },
                 )
                 Column(
-                    modifier = Modifier.alpha(alpha),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.7f)
+                        .alpha(alpha),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.Center,
                 ) {
-                    SubTitle(text = stringResource(id = R.string.feed_posts_is_empty))
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize(0.3f)
+                            .padding(bottom = 8.dp),
+                        painter = painterResource(id = R.drawable.ic_surprised),
+                        contentDescription = stringResource(id = R.string.emotion_surprised),
+                    )
+                    SubTitle(
+                        modifier = Modifier.padding(bottom = 4.dp),
+                        text = stringResource(id = R.string.feed_posts_is_empty),
+                    )
                     Body(
                         modifier = Modifier.signalClickable(onClick = moveToCreatePost),
                         text = stringResource(id = R.string.feed_posts_add),

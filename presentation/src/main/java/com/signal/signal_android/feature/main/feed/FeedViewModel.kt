@@ -28,8 +28,15 @@ internal class FeedViewModel(
                     )
                 }.onSuccess {
                     _posts.addAll(it.postEntities)
-                    setState(copy(posts = _posts))
-                }.onFailure {}
+                    setState(
+                        copy(
+                            posts = _posts,
+                            isPostsEmpty = _posts.isEmpty(),
+                        )
+                    )
+                }.onFailure {
+                    setState(copy(isPostsEmpty = _posts.isEmpty()))
+                }
             }
         }
     }

@@ -19,7 +19,7 @@ data class FeedState(
             posts = listOf(),
             tag = Tag.GENERAL,
             pageNum = 1,
-            isPostsEmpty = false,
+            isPostsEmpty = true,
             title = "",
             content = "",
             postDetailsEntity = PostDetailsEntity(
