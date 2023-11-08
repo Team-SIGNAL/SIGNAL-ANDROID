@@ -12,7 +12,7 @@ object SignalUrl {
     }
 
     object Feed {
-        const val Post = feed
+        const val CreatePost = "$feed/user"
         const val List = "$feed/list"
     }
 }

@@ -17,12 +17,12 @@ interface FeedApi {
         @Query("pagenum") pageNum: Long,
     ): FetchPostsResponse
 
-    @POST(SignalUrl.Feed.Post)
+    @POST(SignalUrl.Feed.CreatePost)
     suspend fun createPost(
         @Body postRequest: PostRequest,
     )
 
-    @GET(SignalUrl.Feed.Post)
+    @GET(SignalUrl.Feed.CreatePost)
     suspend fun fetchPostDetails(
         @Path("feed_id") feedId: Long,
     ): FetchPostDetailsResponse
