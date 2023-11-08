@@ -215,7 +215,10 @@ private fun ReservationCard(
             ),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            BodyStrong(modifier = Modifier.weight(1f), text = title)
+            BodyStrong(
+                modifier = Modifier.weight(1f),
+                text = title,
+            )
             Icon(
                 modifier = Modifier.rotate(270f),
                 painter = painterResource(id = R.drawable.ic_down),
