@@ -1,31 +1,21 @@
 package com.signal.signal_android
 
 import android.content.Context
-import androidx.room.Room
 import com.signal.data.database.SignalDatabase
-import com.signal.data.model.diagnosis.DiagnosisEntity
+import com.signal.data.model.diagnosis.DiagnosisModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DBInitializer(private val context: Context) {
-    private val database: SignalDatabase by lazy {
-        Room.databaseBuilder(
-            context = context,
-            klass = SignalDatabase::class.java,
-            name = "signal-database",
-        ).build()
-    }
-
+class DBInitializer(
+    private val context: Context,
+    private val database: SignalDatabase,
+) {
     private val diagnosisDao by lazy {
         database.getDiagnosisDao()
     }
 
-    init {
-        initQuestions()
-    }
-
-    private val diagnosisQuestions = mutableListOf<DiagnosisEntity>()
+    private val diagnosisQuestions = mutableListOf<DiagnosisModel>()
 
     private val diagnosisResources = listOf(
         R.string.diagnosis_1,
@@ -45,15 +35,15 @@ class DBInitializer(private val context: Context) {
         R.string.diagnosis_15,
     )
 
-    private fun initQuestions() {
+    internal fun initQuestions() {
         CoroutineScope(Dispatchers.IO).launch {
             if (diagnosisDao.getDiagnosis().isEmpty()) {
                 diagnosisResources.forEachIndexed { index, i ->
                     diagnosisQuestions.add(
-                        DiagnosisEntity(
+                        DiagnosisModel(
                             id = index.toLong(),
                             question = context.getString(i),
-                            score = 0,
+                            score = null,
                         ),
                     )
                 }
