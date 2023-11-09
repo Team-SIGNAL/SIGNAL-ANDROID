@@ -21,7 +21,7 @@ internal class FeedViewModel(
                     feedRepository.fetchPosts(
                         tag = tag,
                         pageNum = pageNum,
-                        num = num,
+                        size = size,
                     )
                 }.onSuccess {
                     _posts.addAll(it.postEntities)
