@@ -152,9 +152,7 @@ private fun ReservationDialog(
         ) {
             Column(
                 modifier = Modifier
-                    .background(
-                        color = SignalColor.White
-                    )
+                    .background(color = SignalColor.White)
                     .padding(
                         top = 28.dp,
                         start = 20.dp,
