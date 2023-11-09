@@ -12,6 +12,9 @@ import com.signal.signal_android.feature.main.diary.DiaryDetail
 import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 import com.signal.signal_android.feature.main.feed.Report
+import com.signal.signal_android.feature.main.reservation.CreateReservation
+import com.signal.signal_android.feature.main.reservation.Hospital
+import com.signal.signal_android.feature.main.reservation.Reservation
 
 internal fun NavGraphBuilder.mainNavigation(
     moveToSignIn: () -> Unit,
@@ -24,6 +27,9 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToCreateDiary: () -> Unit,
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToAllDiary: () -> Unit,
+    moveToReservation: () -> Unit,
+    moveToHospital: () -> Unit,
+    moveToCreateReservation: () -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -40,6 +46,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToCreateDiary = moveToCreateDiary,
                 moveToDiaryDetails = moveToDiaryDetails,
                 moveToAllDiary = moveToAllDiary,
+                moveToReservation = moveToReservation,
             )
         }
 
@@ -85,6 +92,21 @@ internal fun NavGraphBuilder.mainNavigation(
 
         composable(NavigationRoute.Main.CreateDiary) {
             CreateDiary()
+        }
+
+        composable(NavigationRoute.Main.Reservation) {
+            Reservation(moveToCreateReservation = moveToHospital)
+        }
+
+        composable(NavigationRoute.Main.Hospital) {
+            Hospital(
+                moveToBack = moveToBack,
+                moveToCreateReservation = moveToCreateReservation,
+            )
+        }
+
+        composable(NavigationRoute.Main.CreateReservation) {
+            CreateReservation(moveToBack = moveToBack)
         }
     }
 }
