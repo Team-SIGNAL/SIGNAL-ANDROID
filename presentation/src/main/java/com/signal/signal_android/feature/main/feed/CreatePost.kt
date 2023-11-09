@@ -52,7 +52,7 @@ internal fun CreatePost(
     val state by feedViewModel.state.collectAsState()
     val fileState by fileViewModel.state.collectAsState()
 
-    var imagePreview by remember { mutableStateOf(Uri.EMPTY) }
+    var imagePreview: Uri? by remember { mutableStateOf(null) }
 
     val context = LocalContext.current
 
@@ -121,7 +121,11 @@ internal fun CreatePost(
         SignalFilledButton(
             text = stringResource(id = R.string.my_page_secession_check),
             onClick = {
-                fileViewModel.uploadFile()
+                if (imagePreview == null) {
+                    feedViewModel.createPost()
+                } else {
+                    fileViewModel.uploadFile()
+                }
                 focusManager.clearFocus()
             },
         )
@@ -131,7 +135,7 @@ internal fun CreatePost(
 
 @Composable
 private fun PostImage(
-    uri: () -> Uri,
+    uri: () -> Uri?,
     onClick: () -> Unit,
 ) {
     Box(
