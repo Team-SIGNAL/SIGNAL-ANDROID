@@ -4,5 +4,5 @@ import com.signal.data.model.attachment.UploadFileResponse
 import okhttp3.MultipartBody
 
 interface AttachmentDataSource {
-    suspend fun uploadFile(file: List<MultipartBody.Part>): UploadFileResponse
+    suspend fun uploadFile(image: MultipartBody.Part): UploadFileResponse
 }

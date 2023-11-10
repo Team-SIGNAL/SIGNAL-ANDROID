@@ -8,9 +8,10 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class AttachmentRepositoryImpl(private val attachmentDataSource: AttachmentDataSource) : AttachmentRepository {
-    override suspend fun uploadFile(files: List<File>) = kotlin.runCatching {
-        attachmentDataSource.uploadFile(file = files.map { it.getImageMultipart(key = "file") })
+class AttachmentRepositoryImpl(private val attachmentDataSource: AttachmentDataSource) :
+    AttachmentRepository {
+    override suspend fun uploadFile(image: File) = kotlin.runCatching {
+        attachmentDataSource.uploadFile(image = image.getImageMultipart(key = "image"))
             .toEntity()
     }
 }

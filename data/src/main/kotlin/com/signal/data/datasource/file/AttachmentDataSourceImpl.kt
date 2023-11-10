@@ -6,8 +6,8 @@ import com.signal.data.util.ExceptionHandler
 import okhttp3.MultipartBody
 
 class AttachmentDataSourceImpl(private val attachmentApi: AttachmentApi) : AttachmentDataSource {
-    override suspend fun uploadFile(file: List<MultipartBody.Part>) =
+    override suspend fun uploadFile(image: MultipartBody.Part) =
         ExceptionHandler<UploadFileResponse>().httpRequest {
-            attachmentApi.fileUpload(file = file)
+            attachmentApi.fileUpload(image = image)
         }.sendRequest()
 }

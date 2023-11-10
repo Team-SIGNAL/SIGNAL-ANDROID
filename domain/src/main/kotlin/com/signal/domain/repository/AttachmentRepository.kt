@@ -4,5 +4,5 @@ import com.signal.domain.entity.UploadFileEntity
 import java.io.File
 
 interface AttachmentRepository {
-    suspend fun uploadFile(files: List<File>): Result<UploadFileEntity>
+    suspend fun uploadFile(image: File): Result<UploadFileEntity>
 }

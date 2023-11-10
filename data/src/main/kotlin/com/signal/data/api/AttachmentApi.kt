@@ -10,6 +10,6 @@ interface AttachmentApi {
     @Multipart
     @POST(SignalUrl.Attachment.Upload)
     suspend fun fileUpload(
-        @Part file: List<MultipartBody.Part>,
+        @Part image: MultipartBody.Part,
     ): UploadFileResponse
 }

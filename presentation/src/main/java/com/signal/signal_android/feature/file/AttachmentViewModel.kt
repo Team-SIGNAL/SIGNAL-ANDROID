@@ -13,7 +13,7 @@ class AttachmentViewModel(
     internal fun uploadFile() {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
-                attachmentRepository.uploadFile(files = files).onSuccess {
+                attachmentRepository.uploadFile(image = image).onSuccess {
                     setState(copy(imageUrl = it.image))
                     postSideEffect(AttachmentSideEffect.Success)
                 }.onFailure {
@@ -24,6 +24,6 @@ class AttachmentViewModel(
     }
 
     internal fun setFile(file: File) {
-        setState(state.value.copy(files = listOf(file)))
+        setState(state.value.copy(image = file))
     }
 }
