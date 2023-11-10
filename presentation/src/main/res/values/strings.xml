@@ -99,6 +99,7 @@
     <string name="my_page_image_edit_icon">프로필 사진 수정</string>
 
     <string name="my_page_confirm_secession">정말 탈퇴 하시겠습니까?</string>
+    <string name="my_page_confirm_sign_out">정말 로그아웃 하시겠습니까?</string>
 
     <string name="card_user_tool_icon">user tool icon</string>
 
