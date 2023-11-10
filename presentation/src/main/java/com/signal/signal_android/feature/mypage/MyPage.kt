@@ -55,15 +55,13 @@ internal fun MyPage(
 ) {
     var showSecessionDialog by remember { mutableStateOf(false) }
     var showSignOutDialog by remember { mutableStateOf(false) }
-    val onSecessionCancelClick: () -> Unit = { showSecessionDialog = false }
-    val onSignOutCancelClick: () -> Unit = { showSignOutDialog = false }
     val state by myPageViewModel.state.collectAsState()
 
     if (showSecessionDialog) {
         Dialog(onDismissRequest = { showSecessionDialog = false }) {
             SignalDialog(
                 title = stringResource(id = R.string.my_page_confirm_secession),
-                onCancelBtnClick = onSecessionCancelClick,
+                onCancelBtnClick = { showSecessionDialog = false },
                 onCheckBtnClick = myPageViewModel::secession,
             )
         }
@@ -73,7 +71,7 @@ internal fun MyPage(
         Dialog(onDismissRequest = { showSignOutDialog = false }) {
             SignalDialog(
                 title = stringResource(id = R.string.my_page_confirm_sign_out),
-                onCancelBtnClick = onSignOutCancelClick,
+                onCancelBtnClick = { showSignOutDialog = false },
                 onCheckBtnClick = myPageViewModel::signOut,
             )
         }
