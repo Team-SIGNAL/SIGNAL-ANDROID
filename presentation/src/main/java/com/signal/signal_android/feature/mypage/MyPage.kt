@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -53,18 +54,30 @@ internal fun MyPage(
     myPageViewModel: MyPageViewModel = koinViewModel(),
 ) {
     var showSecessionDialog by remember { mutableStateOf(false) }
-    val onSecessionCancelClick: () -> Unit = { showSecessionDialog = false }
+    var showSignOutDialog by remember { mutableStateOf(false) }
     val state by myPageViewModel.state.collectAsState()
 
     if (showSecessionDialog) {
         Dialog(onDismissRequest = { showSecessionDialog = false }) {
             SignalDialog(
                 title = stringResource(id = R.string.my_page_confirm_secession),
-                onCancelBtnClick = onSecessionCancelClick,
+                onCancelBtnClick = { showSecessionDialog = false },
                 onCheckBtnClick = myPageViewModel::secession,
             )
         }
     }
+
+    if (showSignOutDialog) {
+        Dialog(onDismissRequest = { showSignOutDialog = false }) {
+            SignalDialog(
+                title = stringResource(id = R.string.my_page_confirm_sign_out),
+                onCancelBtnClick = { showSignOutDialog = false },
+                onCheckBtnClick = myPageViewModel::signOut,
+            )
+        }
+    }
+
+
 
     LaunchedEffect(Unit) {
         myPageViewModel.sideEffect.collect {
@@ -115,7 +128,7 @@ internal fun MyPage(
                 textColor = SignalColor.Black,
                 icon = painterResource(id = R.drawable.ic_logout),
                 tint = SignalColor.Black,
-                onClick = myPageViewModel::signOut,
+                onClick = { showSignOutDialog = true },
             )
             CardUserTool(
                 text = stringResource(id = R.string.my_page_delete_account),
@@ -241,9 +254,12 @@ private fun CardUserTool(
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)
-            .signalClickable(onClick = onClick),
+            .signalClickable(
+                rippleEnabled = true,
+                onClick = onClick,
+            ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp,
+            defaultElevation = 2.dp,
         ),
     ) {
         Row(
