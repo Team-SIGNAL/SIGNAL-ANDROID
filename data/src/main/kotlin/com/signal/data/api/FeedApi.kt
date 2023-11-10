@@ -22,7 +22,7 @@ interface FeedApi {
         @Body postRequest: PostRequest,
     )
 
-    @GET(SignalUrl.Feed.CreatePost)
+    @GET(SignalUrl.Feed.Details)
     suspend fun fetchPostDetails(
         @Path("feed_id") feedId: Long,
     ): FetchPostDetailsResponse
