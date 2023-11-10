@@ -35,6 +35,10 @@ class FeedRepositoryImpl(
     }
 
     override suspend fun fetchPostDetails(feedId: Long) = runCatching {
-        feedDataSource.fetchPostDetails(feedId = feedId).toEntity()
+        feedDataSource.fetchPostDetails(feedId).toEntity()
+    }
+
+    override suspend fun fetchPostComments(feedId: Long) = runCatching {
+        feedDataSource.fetchPostComments(feedId).toEntity()
     }
 }
