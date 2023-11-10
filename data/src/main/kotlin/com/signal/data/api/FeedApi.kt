@@ -1,6 +1,7 @@
 package com.signal.data.api
 
 import com.signal.data.model.feed.request.PostRequest
+import com.signal.data.model.feed.response.FetchPostCommentsResponse
 import com.signal.data.model.feed.response.FetchPostDetailsResponse
 import com.signal.data.model.feed.response.FetchPostsResponse
 import com.signal.domain.enums.Tag
@@ -26,4 +27,9 @@ interface FeedApi {
     suspend fun fetchPostDetails(
         @Path("feed_id") feedId: Long,
     ): FetchPostDetailsResponse
+
+    @GET(SignalUrl.Feed.Comment)
+    suspend fun fetchPostComments(
+        @Path("feed_id") feedId: Long,
+    ): FetchPostCommentsResponse
 }
