@@ -39,18 +39,18 @@ import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
-import com.signal.signal_android.feature.file.FileSideEffect
-import com.signal.signal_android.feature.file.FileViewModel
+import com.signal.signal_android.feature.file.AttachmentSideEffect
+import com.signal.signal_android.feature.file.AttachmentViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun CreatePost(
     moveToBack: () -> Unit,
     feedViewModel: FeedViewModel = koinViewModel(),
-    fileViewModel: FileViewModel = koinViewModel(),
+    attachmentViewModel: AttachmentViewModel = koinViewModel(),
 ) {
     val state by feedViewModel.state.collectAsState()
-    val fileState by fileViewModel.state.collectAsState()
+    val fileState by attachmentViewModel.state.collectAsState()
 
     var imagePreview: Uri? by remember { mutableStateOf(null) }
 
@@ -61,7 +61,7 @@ internal fun CreatePost(
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         it?.run {
             imagePreview = it
-            fileViewModel.setFile(
+            attachmentViewModel.setFile(
                 FileUtil.toFile(
                     context = context,
                     uri = this,
@@ -71,13 +71,13 @@ internal fun CreatePost(
     }
 
     LaunchedEffect(Unit) {
-        fileViewModel.sideEffect.collect {
+        attachmentViewModel.sideEffect.collect {
             when (it) {
-                is FileSideEffect.Success -> {
+                is AttachmentSideEffect.Success -> {
                     feedViewModel.createPost(imageUrl = fileState.imageUrl)
                 }
 
-                is FileSideEffect.Failure -> {
+                is AttachmentSideEffect.Failure -> {
 
                 }
             }
@@ -124,7 +124,7 @@ internal fun CreatePost(
                 if (imagePreview == null) {
                     feedViewModel.createPost()
                 } else {
-                    fileViewModel.uploadFile()
+                    attachmentViewModel.uploadFile()
                 }
                 focusManager.clearFocus()
             },

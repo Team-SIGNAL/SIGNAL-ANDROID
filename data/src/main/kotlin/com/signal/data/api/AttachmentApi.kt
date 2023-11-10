@@ -6,7 +6,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 
-interface FileApi {
+interface AttachmentApi {
     @Multipart
     @POST(SignalUrl.Attachment.Upload)
     suspend fun fileUpload(

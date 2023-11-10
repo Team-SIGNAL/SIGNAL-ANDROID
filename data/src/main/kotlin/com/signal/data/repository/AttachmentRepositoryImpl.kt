@@ -1,16 +1,16 @@
 package com.signal.data.repository
 
-import com.signal.data.datasource.file.FileDatasource
+import com.signal.data.datasource.file.AttachmentDataSource
 import com.signal.data.model.attachment.toEntity
-import com.signal.domain.repository.FileRepository
+import com.signal.domain.repository.AttachmentRepository
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class FileRepositoryImpl(private val fileDatasource: FileDatasource) : FileRepository {
+class AttachmentRepositoryImpl(private val attachmentDataSource: AttachmentDataSource) : AttachmentRepository {
     override suspend fun uploadFile(files: List<File>) = kotlin.runCatching {
-        fileDatasource.uploadFile(file = files.map { it.getImageMultipart(key = "file") })
+        attachmentDataSource.uploadFile(file = files.map { it.getImageMultipart(key = "file") })
             .toEntity()
     }
 }

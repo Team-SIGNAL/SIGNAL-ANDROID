@@ -32,5 +32,5 @@ object ApiProvider {
 
     fun getFileApi(
         tokenInterceptor: TokenInterceptor,
-    ): FileApi = getRetrofit(tokenInterceptor).create(FileApi::class.java)
+    ): AttachmentApi = getRetrofit(tokenInterceptor).create(AttachmentApi::class.java)
 }

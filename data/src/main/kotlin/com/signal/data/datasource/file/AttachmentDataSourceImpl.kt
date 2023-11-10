@@ -1,13 +1,13 @@
 package com.signal.data.datasource.file
 
-import com.signal.data.api.FileApi
+import com.signal.data.api.AttachmentApi
 import com.signal.data.model.attachment.UploadFileResponse
 import com.signal.data.util.ExceptionHandler
 import okhttp3.MultipartBody
 
-class FileDataSourceImpl(private val fileApi: FileApi) : FileDatasource {
+class AttachmentDataSourceImpl(private val attachmentApi: AttachmentApi) : AttachmentDataSource {
     override suspend fun uploadFile(file: List<MultipartBody.Part>) =
         ExceptionHandler<UploadFileResponse>().httpRequest {
-            fileApi.fileUpload(file = file)
+            attachmentApi.fileUpload(file = file)
         }.sendRequest()
 }
