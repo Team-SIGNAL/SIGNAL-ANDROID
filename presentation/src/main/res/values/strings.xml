@@ -238,12 +238,12 @@
     <string name="diagnosis_5">나는 이성과 이야기하고 함께 있기를 좋아한다</string>
     <string name="diagnosis_6">나는 요즘 평상시보다 가슴이 빨리 뛰거나 두근거린다</string>
     <string name="diagnosis_7">나는 요즘 별 이유 없이 몸이 피곤하고 나른하다</string>
-    <string name="diagnosis_8">나는 전처럼 어려움 없이 일을 해낸다</string>
+    <string name="diagnosis_8">나는 전보다 쉽게 일을 해내지 못한다</string>
     <string name="diagnosis_9">나는 안절부절못해서 진정할 수가 없다</string>
-    <string name="diagnosis_10">나는 장래는 희망적이라고 생각한다</string>
+    <string name="diagnosis_10">나는 장래는 절망적이라고 생각한다</string>
     <string name="diagnosis_11">나는 전보다도 짜증이 많아졌다</string>
-    <string name="diagnosis_12">나는 매사에 결단력이 있다고 생각한다</string>
-    <string name="diagnosis_13">나는 사회에 유용하고 필요한 사람이라고 생각한다</string>
-    <string name="diagnosis_14">나는 전과 다름없이 일하는 것이 즐겁다</string>
+    <string name="diagnosis_12">나는 매사에 결단력이 없다고 생각한다</string>
+    <string name="diagnosis_13">나는 사회에 적응하지 못하고 뒤처진 사람이라고 생각한다</string>
+    <string name="diagnosis_14">나는 전보다 일하는 것이 지루하다</string>
     <string name="diagnosis_15">내가 죽어야 다른 사람들, 특히 가족들이 편할 것 같다</string>
 </resources>
