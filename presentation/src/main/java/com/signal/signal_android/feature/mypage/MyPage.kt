@@ -74,7 +74,7 @@ internal fun MyPage(
             SignalDialog(
                 title = stringResource(id = R.string.my_page_confirm_sign_out),
                 onCancelBtnClick = onSignOutCancelClick,
-                onCheckBtnClick = myPageViewModel::signOut
+                onCheckBtnClick = myPageViewModel::signOut,
             )
         }
     }
