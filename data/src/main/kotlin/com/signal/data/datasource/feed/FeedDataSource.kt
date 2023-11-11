@@ -10,6 +10,7 @@ interface FeedDataSource {
     suspend fun fetchPosts(
         tag: Tag,
         pageNum: Long,
+        size: Long,
     ): FetchPostsResponse
 
     suspend fun createPost(postRequest: PostRequest)

@@ -24,6 +24,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
@@ -69,6 +70,10 @@ internal fun Feed(
         targetValue = if (state.isPostsEmpty) 1f else 0f,
         label = "",
     )
+
+    LaunchedEffect(Unit) {
+        feedViewModel.fetchPosts()
+    }
 
     if (showDialog) {
         Dialog(onDismissRequest = { showDialog = false }) {

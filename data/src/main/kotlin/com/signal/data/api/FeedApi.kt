@@ -16,6 +16,7 @@ interface FeedApi {
     suspend fun fetchPosts(
         @Query("tag") tag: Tag,
         @Query("pagenum") pageNum: Long,
+        @Query("size") size: Long,
     ): FetchPostsResponse
 
     @POST(SignalUrl.Feed.CreatePost)

@@ -9,12 +9,13 @@ interface FeedRepository {
     suspend fun fetchPosts(
         tag: Tag,
         pageNum: Long,
+        size: Long,
     ): PostsEntity
 
     suspend fun createPost(
         title: String,
         content: String,
-        image: String,
+        image: String?,
         tag: Tag,
     ): Result<Unit>
 

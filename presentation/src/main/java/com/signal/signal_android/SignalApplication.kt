@@ -8,22 +8,27 @@ import com.signal.data.datasource.diagnosis.LocalDiagnosisDataSource
 import com.signal.data.datasource.diagnosis.LocalDiagnosisDataSourceImpl
 import com.signal.data.datasource.feed.FeedDataSource
 import com.signal.data.datasource.feed.FeedDataSourceImpl
+import com.signal.data.datasource.file.AttachmentDataSourceImpl
+import com.signal.data.datasource.file.AttachmentDataSource
 import com.signal.data.datasource.user.local.LocalUserDataSource
 import com.signal.data.datasource.user.local.LocalUserDataSourceImpl
 import com.signal.data.datasource.user.remote.RemoteUserDataSource
 import com.signal.data.datasource.user.remote.RemoteUserDataSourceImpl
 import com.signal.data.repository.DiagnosisRepositoryImpl
 import com.signal.data.repository.FeedRepositoryImpl
+import com.signal.data.repository.AttachmentRepositoryImpl
 import com.signal.data.repository.UserRepositoryImpl
 import com.signal.data.util.TokenInterceptor
 import com.signal.domain.repository.DiagnosisRepository
 import com.signal.domain.repository.FeedRepository
+import com.signal.domain.repository.AttachmentRepository
 import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
 import com.signal.domain.usecase.users.SignInUseCase
 import com.signal.domain.usecase.users.SignOutUseCase
 import com.signal.domain.usecase.users.SignUpUseCase
+import com.signal.signal_android.feature.file.AttachmentViewModel
 import com.signal.signal_android.feature.diagnosis.DiagnosisViewModel
 import com.signal.signal_android.feature.main.feed.FeedViewModel
 import com.signal.signal_android.feature.mypage.MyPageViewModel
@@ -63,6 +68,7 @@ val apiModule: Module
         single { TokenInterceptor(localUserDataSource = get()) }
         single { ApiProvider.getUserApi(tokenInterceptor = get()) }
         single { ApiProvider.getFeedApi(tokenInterceptor = get()) }
+        single { ApiProvider.getFileApi(tokenInterceptor = get()) }
     }
 
 val daoModule: Module
@@ -87,6 +93,7 @@ val dataSourceModule: Module
         single<RemoteUserDataSource> { RemoteUserDataSourceImpl(userApi = get()) }
         single<LocalUserDataSource> { LocalUserDataSourceImpl(context = androidContext()) }
         single<FeedDataSource> { FeedDataSourceImpl(feedApi = get()) }
+        single<AttachmentDataSource> { AttachmentDataSourceImpl(attachmentApi = get()) }
         single<LocalDiagnosisDataSource> { LocalDiagnosisDataSourceImpl(database = get()) }
     }
 
@@ -101,6 +108,8 @@ val repositoryModule: Module
         single<FeedRepository> {
             FeedRepositoryImpl(feedDataSource = get())
         }
+        single<AttachmentRepository> {
+            AttachmentRepositoryImpl(attachmentDataSource = get())
         single<DiagnosisRepository> {
             DiagnosisRepositoryImpl(localDiagnosisDataSource = get())
         }
@@ -127,5 +136,6 @@ val viewModelModule: Module
             )
         }
         viewModel { FeedViewModel(feedRepository = get()) }
+        viewModel { AttachmentViewModel(attachmentRepository = get()) }
         viewModel { DiagnosisViewModel(diagnosisRepository = get()) }
     }
