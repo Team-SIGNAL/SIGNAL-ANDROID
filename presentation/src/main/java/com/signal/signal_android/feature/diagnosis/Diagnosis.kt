@@ -19,8 +19,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,18 +36,19 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.Title
 import com.signal.signal_android.designsystem.util.signalClickable
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun Diagnosis(
     moveToBack: () -> Unit,
     moveToDiagnosisComplete: () -> Unit,
+    diagnosisViewModel: DiagnosisViewModel = koinViewModel(),
 ) {
+    val state by diagnosisViewModel.state.collectAsState()
     // TODO: 더미
-    var count by remember { mutableIntStateOf(1) }
-    val max = 5
-    var question by remember { mutableStateOf("더미더미더미더미더미?") }
-
-    var selected: Int? by remember { mutableStateOf(null) }
+    val count = state.count
+    val max = state.size
+    var score: Long? by remember { mutableStateOf(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -56,22 +57,24 @@ internal fun Diagnosis(
                 onClick = moveToBack,
             )
             Question(
-                count = { count },
-                question = { question },
+                count = { count + 1 },
+                question = { state.diagnosis[count].question },
             )
             Options(
-                onSelect = { selected = it + 1 },
-                selected = { selected },
+                onSelect = {
+                    score = it + 1
+                },
+                selected = { score?.minus(1) },
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         Progress(
-            count = { count },
+            count = { count + 1 },
             max = max,
         )
         Buttons(
             mainText = stringResource(
-                id = if (count != max) {
+                id = if (count + 1 != max) {
                     R.string.next
                 } else {
                     R.string.diagnosis_complete
@@ -79,19 +82,23 @@ internal fun Diagnosis(
             ),
             subText = stringResource(id = R.string.home_previous),
             onMainButtonClicked = {
-                if (count == max) {
+                if (count + 1 == max) {
+                    diagnosisViewModel.setScore(score = score)
                     moveToDiagnosisComplete()
                 } else {
-                    count += 1
-                    selected = null
+                    with(diagnosisViewModel) {
+                        setScore(score = score)
+                        setCount(count + 1)
+                    }
+                    score = null
                 }
             },
             onSubButtonClicked = {
-                count -= 1
-                selected = null
+                diagnosisViewModel.setCount(count - 1)
+                score = state.diagnosis[count - 1].score
             },
-            mainEnabled = { selected != null },
-            subEnabled = { count != 1 },
+            mainEnabled = { score != null },
+            subEnabled = { count != 0 },
         )
     }
 }
@@ -145,11 +152,9 @@ val options = listOf(
 
 @Composable
 private fun Options(
-    onSelect: (Int) -> Unit,
-    selected: () -> Int?,
+    onSelect: (score: Long) -> Unit,
+    selected: () -> Long?,
 ) {
-    val selected = selected()
-
     LazyColumn(
         modifier = Modifier.padding(bottom = 32.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -158,12 +163,12 @@ private fun Options(
         itemsIndexed(options) { index, option ->
             Option(
                 text = stringResource(id = option),
-                onClick = { onSelect(index) },
+                onClick = { onSelect(index.toLong()) },
                 isSelected = {
-                    if (selected == null) {
+                    if (selected() == null) {
                         null
                     } else {
-                        selected == index + 1
+                        selected() == index.toLong()
                     }
                 },
             )

@@ -7,16 +7,18 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import com.signal.signal_android.designsystem.foundation.SignalAndroidTheme
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
 
     private var delay = 0L
 
-    private lateinit var dbInitializer: DBInitializer
+    private val dbInitializer: DBInitializer by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dbInitializer = DBInitializer(context = this)
+
+        dbInitializer.initQuestions()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             BackHandler(onBack = this::setBackHandler)

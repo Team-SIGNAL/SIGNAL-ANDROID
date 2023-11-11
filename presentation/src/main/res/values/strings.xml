@@ -99,6 +99,7 @@
     <string name="my_page_image_edit_icon">프로필 사진 수정</string>
 
     <string name="my_page_confirm_secession">정말 탈퇴 하시겠습니까?</string>
+    <string name="my_page_confirm_sign_out">정말 로그아웃 하시겠습니까?</string>
 
     <string name="card_user_tool_icon">user tool icon</string>
 
@@ -212,6 +213,22 @@
     <string name="emotion_sobbing">sobbing image</string>
     <string name="emotion_annoying">annoying image</string>
     <string name="emotion_boredom">boredom image</string>
+    
+    <!--reservation-->
+    <string name="reservation">진료 예약하기</string>
+    <string name="reservation_approve">승인 완료</string>
+    <string name="reservation_stand_by">승인 대기 중</string>
+    <string name="reservation_refuse">승인 거절됨</string>
+    <string name="reservation_clinic">진료 예약</string>
+    
+    <!--hospital-->
+    <string name="hospital_get_hospital_list">병원 조회</string>
+
+    <!--create reservation-->
+    <string name="create_reservation_date">일자</string>
+    <string name="create_reservation_time">시간</string>
+    <string name="create_reservation_reason">사유</string>
+    <string name="create_reservation_reason_hint">사유를 입력해주세요</string>
 
     <!--diagnosis questions-->
     <string name="diagnosis_1">나는 매사에 의욕이 없고 우울하거나 슬플 때가 있다</string>
