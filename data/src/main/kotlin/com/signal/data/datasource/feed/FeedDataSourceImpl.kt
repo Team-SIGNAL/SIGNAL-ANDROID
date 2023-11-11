@@ -25,16 +25,16 @@ class FeedDataSourceImpl(
 
     override suspend fun createPost(postRequest: PostRequest) =
         ExceptionHandler<Unit>().httpRequest {
-            feedApi.createPost(postRequest)
+            feedApi.createPost(postRequest = postRequest)
         }.sendRequest()
 
     override suspend fun fetchPostDetails(feedId: Long) =
         ExceptionHandler<FetchPostDetailsResponse>().httpRequest {
-            feedApi.fetchPostDetails(feedId)
+            feedApi.fetchPostDetails(feedId = feedId)
         }.sendRequest()
 
     override suspend fun fetchPostComments(feedId: Long) =
         ExceptionHandler<FetchPostCommentsResponse>().httpRequest {
-            feedApi.fetchPostComments(feedId)
+            feedApi.fetchPostComments(feedId = feedId)
         }.sendRequest()
 }
