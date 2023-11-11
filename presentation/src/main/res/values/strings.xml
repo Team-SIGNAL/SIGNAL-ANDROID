@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Signal-Android</string>
+    <string name="app_name">Signal</string>
     <!--navigation-->
     <string name="home">홈</string>
     <string name="diary">일기</string>
