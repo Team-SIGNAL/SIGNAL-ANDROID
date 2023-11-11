@@ -15,7 +15,7 @@
 
     <!--content description-->
     <string name="app_logo">app logo</string>
-    <string name="landing_image">landing image</string>
+    <string name="landing_image">landing image</string>료
     <string name="text_field_icon">text field icon</string>
 
     <!--animation label-->
@@ -246,4 +246,6 @@
     <string name="diagnosis_13">나는 사회에 적응하지 못하고 뒤처진 사람이라고 생각한다</string>
     <string name="diagnosis_14">나는 전보다 일하는 것이 지루하다</string>
     <string name="diagnosis_15">내가 죽어야 다른 사람들, 특히 가족들이 편할 것 같다</string>
+
+    <string name="diagnosis_exit">자가진단을 중단하시겠습니까?</string>
 </resources>

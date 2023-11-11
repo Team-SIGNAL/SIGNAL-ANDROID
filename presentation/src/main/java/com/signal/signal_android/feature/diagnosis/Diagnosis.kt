@@ -29,8 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
+import com.signal.signal_android.designsystem.component.SignalDialog
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
@@ -45,16 +47,28 @@ internal fun Diagnosis(
     diagnosisViewModel: DiagnosisViewModel = koinViewModel(),
 ) {
     val state by diagnosisViewModel.state.collectAsState()
-    // TODO: 더미
+
     val count = state.count
     val max = state.size
     var score: Long? by remember { mutableStateOf(null) }
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    if(showDialog) {
+        Dialog(onDismissRequest = { showDialog = false }) {
+            SignalDialog(
+                title = stringResource(id = R.string.diagnosis_exit),
+                onCheckBtnClick = moveToBack,
+                onCancelBtnClick = { showDialog = false }
+            )
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Header(
                 title = stringResource(id = R.string.diagnosis_title),
-                onClick = moveToBack,
+                onClick = { showDialog = true },
             )
             Question(
                 count = { count + 1 },
