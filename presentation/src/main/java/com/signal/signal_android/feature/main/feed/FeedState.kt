@@ -8,18 +8,19 @@ data class FeedState(
     val posts: List<PostsEntity.PostEntity>,
     val tag: Tag,
     val pageNum: Long,
+    val size: Long,
     val isPostsEmpty: Boolean,
     val title: String,
     val content: String,
     val postDetailsEntity: PostDetailsEntity,
     val feedId: Long,
-    val image: String,
 ) {
     companion object {
         fun getDefaultState() = FeedState(
             posts = listOf(),
             tag = Tag.GENERAL,
             pageNum = 1,
+            size = 0,
             isPostsEmpty = true,
             title = "",
             content = "",
@@ -33,7 +34,6 @@ data class FeedState(
                 isMine = false,
             ),
             feedId = 0L,
-            image = "",
         )
     }
 }

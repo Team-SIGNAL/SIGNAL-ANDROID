@@ -13,15 +13,17 @@ class FeedRepositoryImpl(
     override suspend fun fetchPosts(
         tag: Tag,
         pageNum: Long,
+        size: Long,
     ): PostsEntity = feedDataSource.fetchPosts(
         tag = tag,
         pageNum = pageNum,
+        size = size,
     ).toEntity()
 
     override suspend fun createPost(
         title: String,
         content: String,
-        image: String,
+        image: String?,
         tag: Tag,
     ) = runCatching {
         feedDataSource.createPost(

@@ -14,17 +14,14 @@ internal class FeedViewModel(
 ) : BaseViewModel<FeedState, FeedSideEffect>(FeedState.getDefaultState()) {
     private val _posts: MutableList<PostsEntity.PostEntity> = mutableListOf()
 
-    init {
-        fetchPosts()
-    }
-
-    private fun fetchPosts() {
+    internal fun fetchPosts() {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 kotlin.runCatching {
                     feedRepository.fetchPosts(
                         tag = tag,
                         pageNum = pageNum,
+                        size = size,
                     )
                 }.onSuccess {
                     _posts.addAll(it.postEntities)
@@ -41,13 +38,13 @@ internal class FeedViewModel(
         }
     }
 
-    internal fun createPost() {
+    internal fun createPost(imageUrl: String? = null) {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.createPost(
                     title = title,
                     content = content,
-                    image = image,
+                    image = imageUrl,
                     tag = tag,
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.PostSuccess)
