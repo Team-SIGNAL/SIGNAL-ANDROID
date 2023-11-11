@@ -2,6 +2,7 @@ package com.signal.signal_android.feature.main.feed
 
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.PostsEntity
+import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
 import com.signal.domain.enums.Tag
 import com.signal.domain.repository.FeedRepository
@@ -13,6 +14,7 @@ internal class FeedViewModel(
     private val feedRepository: FeedRepository,
 ) : BaseViewModel<FeedState, FeedSideEffect>(FeedState.getDefaultState()) {
     private val _posts: MutableList<PostsEntity.PostEntity> = mutableListOf()
+    private val _comments: MutableList<PostCommentsEntity.CommentEntity> = mutableListOf()
 
     init {
         fetchPosts()
@@ -73,6 +75,17 @@ internal class FeedViewModel(
                             ),
                         ),
                     )
+                }
+            }
+        }
+    }
+
+    internal fun fetchPostComments() {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                feedRepository.fetchPostComments(feedId).onSuccess {
+                    _comments.addAll(it.comments)
+                    setState(copy(comments = _comments))
                 }
             }
         }
