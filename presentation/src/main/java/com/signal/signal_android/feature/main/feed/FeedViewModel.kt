@@ -90,6 +90,7 @@ internal class FeedViewModel(
     internal fun setTag(tag: Tag) {
         with(state.value) {
             setState(copy(tag = tag))
+            _posts.clear()
             fetchPosts()
         }
     }
