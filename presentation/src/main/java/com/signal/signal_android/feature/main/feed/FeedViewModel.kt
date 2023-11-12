@@ -87,17 +87,9 @@ internal class FeedViewModel(
         setState(state.value.copy(feedId = feedId))
     }
 
-    internal fun setTag() {
+    internal fun setTag(tag: Tag) {
         with(state.value) {
-            setState(
-                copy(
-                    tag = if (tag == Tag.GENERAL) {
-                        Tag.NOTIFICATION
-                    } else {
-                        Tag.GENERAL
-                    },
-                ),
-            )
+            setState(copy(tag = tag))
             fetchPosts()
         }
     }

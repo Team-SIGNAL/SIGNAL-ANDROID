@@ -45,7 +45,7 @@ internal fun AllDiary(
         Spacer(modifier = Modifier.height(30.dp))
         Header(
             title = stringResource(id = R.string.diary_all_diary),
-            onClick = moveToBack,
+            onLeadingClicked = moveToBack,
         )
         Row(modifier = Modifier.fillMaxSize()) {
             Diaries(

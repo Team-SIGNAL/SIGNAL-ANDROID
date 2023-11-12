@@ -91,7 +91,7 @@ internal fun CreatePost(
     ) {
         Header(
             title = stringResource(id = R.string.create_post_header_title),
-            onClick = moveToBack,
+            onLeadingClicked = moveToBack,
         )
         Spacer(modifier = Modifier.height(4.dp))
         SignalTextField(

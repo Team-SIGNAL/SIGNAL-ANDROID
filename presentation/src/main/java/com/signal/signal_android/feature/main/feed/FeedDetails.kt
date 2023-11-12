@@ -106,7 +106,7 @@ internal fun FeedDetails(
         ) {
             Header(
                 title = state.title,
-                onClick = moveToBack,
+                onLeadingClicked = moveToBack,
             )
             Column(
                 modifier = Modifier

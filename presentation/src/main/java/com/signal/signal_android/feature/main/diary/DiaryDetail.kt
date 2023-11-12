@@ -78,7 +78,7 @@ internal fun DiaryDetail(
     ) {
         Header(
             title = stringResource(id = R.string.header_back),
-            onClick = moveToBack,
+            onLeadingClicked = moveToBack,
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row(

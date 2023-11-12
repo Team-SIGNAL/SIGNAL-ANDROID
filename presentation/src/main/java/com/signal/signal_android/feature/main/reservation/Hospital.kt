@@ -69,7 +69,7 @@ internal fun Hospital(
     ) {
         Header(
             title = stringResource(id = R.string.hospital_get_hospital_list),
-            onClick = moveToBack,
+            onLeadingClicked = moveToBack,
         )
         Body(text = "조회 결과 ${hospitals.size}건")
         Spacer(modifier = Modifier.height(8.dp))
