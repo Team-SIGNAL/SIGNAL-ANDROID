@@ -6,4 +6,6 @@ interface LocalDiagnosisDataSource {
     suspend fun getDiagnosis(): List<DiagnosisModel>
 
     suspend fun setDiagnosis(diagnosisModel: DiagnosisModel)
+
+    fun saveLastDiagnosisDate(date: String)
 }
