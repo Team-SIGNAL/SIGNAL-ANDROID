@@ -15,6 +15,7 @@ object SignalUrl {
     object Feed {
         const val CreatePost = "$feed/user"
         const val List = "$feed/list"
+        const val Details = "$feed/{feed_id}"
     }
 
     object Attachment {
