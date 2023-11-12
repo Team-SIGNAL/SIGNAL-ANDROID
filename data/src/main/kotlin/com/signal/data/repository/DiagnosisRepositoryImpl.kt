@@ -20,4 +20,8 @@ class DiagnosisRepositoryImpl(
     override fun saveLastDiagnosisDate(date: String) {
         localDiagnosisDataSource.saveLastDiagnosisDate(date = date)
     }
+
+    override fun getLastDiagnosisDate() = runCatching {
+        localDiagnosisDataSource.getLastDiagnosisDate()
+    }
 }

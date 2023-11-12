@@ -45,8 +45,8 @@ internal fun DiagnosisComplete(
         Buttons(
             onMainButtonClicked = {},
             onSubButtonClicked = {
-                moveToMain()
                 diagnosisViewModel.saveLastDiagnosisDate()
+                moveToMain()
             },
             mainText = stringResource(id = R.string.diagnosis_complete_check_result),
             subText = stringResource(id = R.string.diagnosis_complete_move_to_main),
