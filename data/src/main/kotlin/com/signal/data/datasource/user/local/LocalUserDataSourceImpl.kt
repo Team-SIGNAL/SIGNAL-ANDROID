@@ -1,18 +1,18 @@
 package com.signal.data.datasource.user.local
 
-import android.content.Context
-import android.content.SharedPreferences
+import com.signal.data.util.PreferenceManager
 
 class LocalUserDataSourceImpl(
-    private val context: Context,
+    private val preferenceManager: PreferenceManager,
 ) : LocalUserDataSource {
+
     override fun saveTokens(
         accessToken: String,
         refreshToken: String,
         accessExpiredAt: String,
         refreshExpiredAt: String,
     ) {
-        getSharedPreferenceEditor().also {
+        preferenceManager.getSharedPreferenceEditor().also {
             it.putString(Keys.ACCESS_TOKEN, accessToken)
             it.putString(Keys.REFRESH_TOKEN, refreshToken)
             it.putString(Keys.ACCESS_EXPIRED_AT, accessExpiredAt)
@@ -21,27 +21,19 @@ class LocalUserDataSourceImpl(
     }
 
     override fun getAccessToken(): String {
-        return getSharedPreference().getString(Keys.ACCESS_TOKEN, "") ?: ""
+        return preferenceManager.getSharedPreference().getString(Keys.ACCESS_TOKEN, "") ?: ""
     }
 
     override fun getRefreshToken(): String {
-        return getSharedPreference().getString(Keys.REFRESH_TOKEN, "") ?: ""
+        return preferenceManager.getSharedPreference().getString(Keys.REFRESH_TOKEN, "") ?: ""
     }
 
     override fun getExpireAt(): String {
-        return getSharedPreference().getString(Keys.ACCESS_EXPIRED_AT, "") ?: ""
+        return preferenceManager.getSharedPreference().getString(Keys.ACCESS_EXPIRED_AT, "") ?: ""
     }
 
     override fun clearToken() {
-        getSharedPreference().edit().clear().apply()
-    }
-
-    private fun getSharedPreference(): SharedPreferences {
-        return context.getSharedPreferences(Keys.NAME, Context.MODE_PRIVATE)
-    }
-
-    private fun getSharedPreferenceEditor(): SharedPreferences.Editor {
-        return getSharedPreference().edit()
+        preferenceManager.getSharedPreferenceEditor().clear().apply()
     }
 }
 
@@ -51,4 +43,5 @@ object Keys {
     const val REFRESH_TOKEN = "refresh_token"
     const val ACCESS_EXPIRED_AT = "access_expired_at"
     const val REFRESH_EXPIRED_AT = "refresh_expired_at"
+    const val LAST_DIAGNOSIS_DATE = "last_diagnosis_date"
 }
