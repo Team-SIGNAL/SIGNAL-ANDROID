@@ -14,6 +14,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,12 +38,16 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun Home(
     moveToReservation: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
+    homeViewModel: HomeViewModel = koinViewModel(),
 ) {
+    val state by homeViewModel.state.collectAsState()
+
     Column {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Spacer(modifier = Modifier.height(30.dp))
@@ -85,11 +91,17 @@ internal fun Home(
             Spacer(modifier = Modifier.height(12.dp))
             BodyLarge2(text = stringResource(id = R.string.home_activity))
             Spacer(modifier = Modifier.height(8.dp))
-            ActivityCard(
-                title = stringResource(id = R.string.diagnosis_title),
-                description = "최근 진행 : 2023년 10월 21일",
-                onClick = moveToDiagnosisLanding,
-            )
+            state.lastDiagnosisDate.run {
+                ActivityCard(
+                    title = stringResource(id = R.string.diagnosis_title),
+                    description = if (this.isBlank()) {
+                        null
+                    } else {
+                        "최근 진행 : ${state.lastDiagnosisDate}"
+                    },
+                    onClick = moveToDiagnosisLanding,
+                )
+            }
             Spacer(modifier = Modifier.height(14.dp))
             ReservationCard(
                 title = stringResource(id = R.string.reservation),
@@ -227,7 +239,6 @@ private fun ReservationCard(
         }
     }
 }
-
 
 @Composable
 private fun ActivityCard(
