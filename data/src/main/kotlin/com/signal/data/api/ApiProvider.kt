@@ -33,4 +33,8 @@ object ApiProvider {
     fun getFileApi(
         tokenInterceptor: TokenInterceptor,
     ): AttachmentApi = getRetrofit(tokenInterceptor).create(AttachmentApi::class.java)
+
+    fun getDiaryApi(tokenInterceptor: TokenInterceptor): DiaryApi {
+        return getRetrofit(tokenInterceptor).create(DiaryApi::class.java)
+    }
 }
