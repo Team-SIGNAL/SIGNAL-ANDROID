@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +27,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.signal.domain.entity.FetchAllDiaryEntity
+import com.signal.domain.enums.Emotion
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.Body
@@ -36,7 +40,10 @@ import com.signal.signal_android.designsystem.util.signalClickable
 internal fun AllDiary(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToBack: () -> Unit,
+    diaryViewModel: DiaryViewModel,
 ) {
+    val state by diaryViewModel.state.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,7 +57,7 @@ internal fun AllDiary(
         Row(modifier = Modifier.fillMaxSize()) {
             Diaries(
                 moveToDiaryDetails = moveToDiaryDetails,
-                diaries = diaries,
+                diaries = state.allDiaries,
             )
         }
     }
@@ -59,7 +66,7 @@ internal fun AllDiary(
 @Composable
 private fun Diaries(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
-    diaries: List<_Diaries>,
+    diaries: List<FetchAllDiaryEntity.AllDiaryEntity>,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -67,10 +74,10 @@ private fun Diaries(
     ) {
         items(diaries) {
             DiaryItemList(
-                moveToDiaryDetails = { moveToDiaryDetails(it.diaryId) },
+                moveToDiaryDetails = { moveToDiaryDetails(it.id) },
                 title = it.title,
                 content = it.content,
-                imageUrl = it.imageUrl,
+                imageUrl = it.image,
                 emotion = it.emotion,
             )
         }
@@ -83,7 +90,7 @@ private fun DiaryItemList(
     title: String,
     content: String,
     imageUrl: String?,
-    emotion: Int,
+    emotion: Emotion,
 ) {
     Spacer(modifier = Modifier.height(8.dp))
     Row(
@@ -130,7 +137,22 @@ private fun DiaryItemList(
         ) {
             Box(modifier = Modifier.size(40.dp)) {
                 Image(
-                    painterResource(id = emotion),
+                    painterResource(
+                        id = when (emotion) {
+                            Emotion.HAPPY -> R.drawable.ic_happy
+                            Emotion.ANGRY -> R.drawable.ic_angry
+                            Emotion.ANNOYING -> R.drawable.ic_annoying
+                            Emotion.AWKWARDNESS -> R.drawable.ic_awkwardness
+                            Emotion.BOREDOM -> R.drawable.ic_boredom
+                            Emotion.SOBBING -> R.drawable.ic_sobbing
+                            Emotion.DEPRESSION -> R.drawable.ic_depression
+                            Emotion.PLEASED -> R.drawable.ic_pleased
+                            Emotion.DISCOMFORT -> R.drawable.ic_discomfort
+                            Emotion.SOSO -> R.drawable.ic_soso
+                            Emotion.SADNESS -> R.drawable.ic_sadness
+                            Emotion.SURPRISED -> R.drawable.ic_surprised
+                        }
+                    ),
                     contentDescription = stringResource(id = R.string.diary_emotion_image),
                 )
             }
