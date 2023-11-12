@@ -1,6 +1,6 @@
 package com.signal.signal_android.feature.main.feed
 
-import com.signal.domain.PostsEntity
+import com.signal.domain.entity.PostsEntity
 import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
 import com.signal.domain.enums.Tag

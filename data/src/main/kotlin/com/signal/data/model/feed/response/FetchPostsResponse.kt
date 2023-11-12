@@ -1,7 +1,7 @@
 package com.signal.data.model.feed.response
 
 import com.google.gson.annotations.SerializedName
-import com.signal.domain.PostsEntity
+import com.signal.domain.entity.PostsEntity
 
 data class FetchPostsResponse(
     @SerializedName("feed_list") val posts: List<Post>,
