@@ -1,4 +1,5 @@
 package com.signal.signal_android.feature.main.diary
 
-class DiarySideEffect {
+sealed interface DiarySideEffect {
+    object CreateDiarySuccess: DiarySideEffect
 }
