@@ -6,6 +6,8 @@ import com.signal.domain.repository.DiagnosisRepository
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 internal class DiagnosisViewModel(
     private val diagnosisRepository: DiagnosisRepository,
@@ -29,6 +31,14 @@ internal class DiagnosisViewModel(
                 )
             }.onFailure {
             }
+        }
+    }
+
+    internal fun saveLastDiagnosisDate() {
+        LocalDate.now().apply {
+            diagnosisRepository.saveLastDiagnosisDate(
+                "${year}년 ${monthValue}월 ${dayOfMonth}일"
+            )
         }
     }
 

@@ -19,10 +19,12 @@ import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.Title
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun DiagnosisComplete(
     moveToMain: () -> Unit,
+    diagnosisViewModel: DiagnosisViewModel = koinViewModel(),
 ) {
     val requiredTime = "13분"
 
@@ -42,7 +44,10 @@ internal fun DiagnosisComplete(
         Spacer(modifier = Modifier.weight(1f))
         Buttons(
             onMainButtonClicked = {},
-            onSubButtonClicked = moveToMain,
+            onSubButtonClicked = {
+                moveToMain()
+                diagnosisViewModel.saveLastDiagnosisDate()
+            },
             mainText = stringResource(id = R.string.diagnosis_complete_check_result),
             subText = stringResource(id = R.string.diagnosis_complete_move_to_main),
         )
