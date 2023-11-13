@@ -6,6 +6,7 @@ data class DiagnosisState(
     val size: Int,
     val diagnosis: List<DiagnosisEntity>,
     val count: Int,
+    val accountId: String,
 ) {
     companion object {
         fun getDefaultState() = DiagnosisState(
@@ -18,6 +19,7 @@ data class DiagnosisState(
                 ),
             ),
             count = 0,
+            accountId = "",
         )
     }
 }

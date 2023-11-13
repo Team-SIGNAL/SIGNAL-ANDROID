@@ -16,4 +16,18 @@ class DiagnosisRepositoryImpl(
     override suspend fun setDiagnosis(diagnosisEntity: DiagnosisEntity) {
         localDiagnosisDataSource.setDiagnosis(diagnosisEntity.toModel())
     }
+
+    override fun saveLastDiagnosisDate(
+        date: String,
+        accountId: String,
+    ) {
+        localDiagnosisDataSource.saveLastDiagnosisDate(
+            date = date,
+            accountId = accountId,
+        )
+    }
+
+    override fun getLastDiagnosisDate() = runCatching {
+        localDiagnosisDataSource.getLastDiagnosisDate()
+    }
 }
