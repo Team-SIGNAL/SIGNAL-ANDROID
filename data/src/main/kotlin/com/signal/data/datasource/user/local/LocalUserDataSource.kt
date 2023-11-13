@@ -14,4 +14,5 @@ interface LocalUserDataSource {
     fun clearToken()
 
     fun saveAccountId(email: String)
+    fun getAccountId(): String
 }

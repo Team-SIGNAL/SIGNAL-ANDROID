@@ -25,6 +25,7 @@ import com.signal.domain.repository.DiagnosisRepository
 import com.signal.domain.repository.FeedRepository
 import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
+import com.signal.domain.usecase.users.GetAccountIdUseCase
 import com.signal.domain.usecase.users.SaveAccountIdUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
 import com.signal.domain.usecase.users.SignInUseCase
@@ -134,6 +135,7 @@ val useCaseModule: Module
         single { SecessionUseCase(userRepository = get()) }
         single { FetchUserInformationUseCase(userRepository = get()) }
         single { SaveAccountIdUseCase(userRepository = get()) }
+        single { GetAccountIdUseCase(userRepository = get()) }
     }
 
 val viewModelModule: Module

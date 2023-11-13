@@ -22,4 +22,5 @@ interface UserRepository {
     suspend fun signOut()
     suspend fun fetchUserInformation(): UserInformationEntity
     fun saveAccountId(email: String)
+    fun getAccountId(): String
 }

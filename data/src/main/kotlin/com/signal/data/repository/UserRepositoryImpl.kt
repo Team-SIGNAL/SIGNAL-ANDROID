@@ -66,4 +66,7 @@ class UserRepositoryImpl(
     override fun saveAccountId(email: String) {
         localUserDataSource.saveAccountId(email = email)
     }
+
+    override fun getAccountId() = localUserDataSource.getAccountId()
+
 }

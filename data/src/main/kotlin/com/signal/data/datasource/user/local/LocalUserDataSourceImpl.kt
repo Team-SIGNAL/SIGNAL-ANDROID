@@ -39,6 +39,9 @@ class LocalUserDataSourceImpl(
     override fun saveAccountId(email: String) {
         preferenceManager.getSharedPreferenceEditor().putString(Keys.ACCOUNT_ID, email).apply()
     }
+
+    override fun getAccountId() =
+        preferenceManager.getSharedPreference().getString(Keys.ACCOUNT_ID, "") ?: ""
 }
 
 object Keys {
