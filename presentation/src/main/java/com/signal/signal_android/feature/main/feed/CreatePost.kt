@@ -84,6 +84,20 @@ internal fun CreatePost(
         }
     }
 
+    LaunchedEffect(Unit) {
+        feedViewModel.sideEffect.collect {
+            when (it) {
+                is FeedSideEffect.PostSuccess -> {
+                    moveToBack()
+                }
+
+                else -> {
+
+                }
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

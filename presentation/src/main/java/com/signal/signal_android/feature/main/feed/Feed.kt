@@ -73,7 +73,9 @@ internal fun Feed(
     )
 
     LaunchedEffect(Unit) {
-        feedViewModel.fetchPosts()
+        if(state.isPostsEmpty) {
+            feedViewModel.fetchPosts()
+        }
     }
 
     if (showDialog) {
@@ -174,8 +176,7 @@ private fun Filter(
 
     Row(
         modifier = Modifier.padding(
-            top = 10.dp,
-            bottom = 18.dp,
+            vertical = 10.dp,
         )
     ) {
         IconButton(onClick = onClick) {
@@ -242,10 +243,10 @@ private fun Posts(
         items(posts) {
             Post(
                 moveToFeedDetails = { moveToFeedDetails(it.id) },
-                imageUrl = it.img,
+                imageUrl = it.image,
                 title = it.title,
                 date = it.date,
-                writer = it.user,
+                name = it.name,
                 onClick = { showDropDown(it.id) },
                 expanded = expanded == it.id,
                 onDismissRequest = onDismissRequest,
@@ -260,10 +261,10 @@ private fun Posts(
 @Composable
 internal fun Post(
     moveToFeedDetails: () -> Unit,
-    imageUrl: String,
+    imageUrl: String?,
     title: String,
     date: String,
-    writer: String,
+    name: String,
     onClick: () -> Unit,
     expanded: Boolean,
     onDismissRequest: () -> Unit,
@@ -328,7 +329,7 @@ internal fun Post(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Body(
-                    text = writer,
+                    text = name,
                     color = SignalColor.Gray500,
                 )
                 Body(
