@@ -14,7 +14,7 @@ interface FeedApi {
     @GET(SignalUrl.Feed.List)
     suspend fun fetchPosts(
         @Query("tag") tag: Tag,
-        @Query("pagenum") pageNum: Long,
+        @Query("page") page: Long,
         @Query("size") size: Long,
     ): FetchPostsResponse
 

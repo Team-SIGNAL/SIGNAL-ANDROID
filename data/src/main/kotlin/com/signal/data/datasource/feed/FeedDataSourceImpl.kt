@@ -12,12 +12,12 @@ class FeedDataSourceImpl(
 ) : FeedDataSource {
     override suspend fun fetchPosts(
         tag: Tag,
-        pageNum: Long,
+        page: Long,
         size: Long,
     ): FetchPostsResponse = ExceptionHandler<FetchPostsResponse>().httpRequest {
         feedApi.fetchPosts(
             tag = tag,
-            pageNum = pageNum,
+            page = page,
             size = size,
         )
     }.sendRequest()

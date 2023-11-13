@@ -12,11 +12,11 @@ class FeedRepositoryImpl(
 ) : FeedRepository {
     override suspend fun fetchPosts(
         tag: Tag,
-        pageNum: Long,
+        page: Long,
         size: Long,
     ): PostsEntity = feedDataSource.fetchPosts(
         tag = tag,
-        pageNum = pageNum,
+        page = page,
         size = size,
     ).toEntity()
 

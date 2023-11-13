@@ -20,7 +20,7 @@ internal class FeedViewModel(
                 kotlin.runCatching {
                     feedRepository.fetchPosts(
                         tag = tag,
-                        pageNum = pageNum,
+                        page = page,
                         size = size,
                     )
                 }.onSuccess {

@@ -7,7 +7,7 @@ import com.signal.domain.enums.Tag
 data class FeedState(
     val posts: List<PostsEntity.PostEntity>,
     val tag: Tag,
-    val pageNum: Long,
+    val page: Long,
     val size: Long,
     val isPostsEmpty: Boolean,
     val title: String,
@@ -19,8 +19,8 @@ data class FeedState(
         fun getDefaultState() = FeedState(
             posts = listOf(),
             tag = Tag.GENERAL,
-            pageNum = 1,
-            size = 0,
+            page = 1,
+            size = 8,
             isPostsEmpty = true,
             title = "",
             content = "",
