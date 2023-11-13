@@ -34,11 +34,11 @@ class LocalUserDataSourceImpl(
 
     override fun clearUserInformation() {
         preferenceManager.getSharedPreferenceEditor().apply {
-            putString(Keys.ACCESS_TOKEN, "")
-            putString(Keys.REFRESH_TOKEN, "")
-            putString(Keys.ACCESS_EXPIRED_AT, "")
-            putString(Keys.REFRESH_EXPIRED_AT, "")
-            putString(Keys.ACCOUNT_ID, "")
+            remove(Keys.ACCESS_TOKEN)
+            remove(Keys.REFRESH_TOKEN)
+            remove(Keys.REFRESH_TOKEN)
+            remove(Keys.REFRESH_EXPIRED_AT)
+            remove(Keys.ACCOUNT_ID)
         }.apply()
     }
 
