@@ -35,6 +35,10 @@ class LocalUserDataSourceImpl(
     override fun clearToken() {
         preferenceManager.getSharedPreferenceEditor().clear().apply()
     }
+
+    override fun saveAccountId(email: String) {
+        preferenceManager.getSharedPreferenceEditor().putString(Keys.ACCOUNT_ID, email).apply()
+    }
 }
 
 object Keys {
@@ -44,4 +48,5 @@ object Keys {
     const val ACCESS_EXPIRED_AT = "access_expired_at"
     const val REFRESH_EXPIRED_AT = "refresh_expired_at"
     const val LAST_DIAGNOSIS_DATE = "last_diagnosis_date"
+    const val ACCOUNT_ID = "account_id"
 }

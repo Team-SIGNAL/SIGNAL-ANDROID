@@ -12,4 +12,6 @@ interface LocalUserDataSource {
     fun getRefreshToken(): String
     fun getExpireAt(): String
     fun clearToken()
+
+    fun saveAccountId(email: String)
 }

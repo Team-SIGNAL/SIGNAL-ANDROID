@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.signal.domain.exception.NotFoundException
 import com.signal.domain.exception.OfflineException
 import com.signal.domain.exception.UnAuthorizationException
+import com.signal.domain.usecase.users.SaveAccountIdUseCase
 import com.signal.domain.usecase.users.SignInUseCase
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class SignInViewModel(
     private val signInUseCase: SignInUseCase,
+    private val saveAccountIdUseCase: SaveAccountIdUseCase,
 ) : BaseViewModel<SignInState, SignInSideEffect>(SignInState.getDefaultState()) {
 
     internal fun setAccountId(accountId: String) {
@@ -51,6 +53,7 @@ class SignInViewModel(
                 accountId = state.value.accountId,
                 password = state.value.password,
             ).onSuccess {
+                saveAccountId()
                 postSideEffect(SignInSideEffect.Success)
             }.onFailure {
                 when (it) {
@@ -61,5 +64,9 @@ class SignInViewModel(
                 }
             }
         }
+    }
+
+    private fun saveAccountId(){
+        saveAccountIdUseCase(email = state.value.accountId)
     }
 }

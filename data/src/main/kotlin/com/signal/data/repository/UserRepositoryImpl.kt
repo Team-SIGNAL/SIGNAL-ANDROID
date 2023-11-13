@@ -62,4 +62,8 @@ class UserRepositoryImpl(
 
     override suspend fun fetchUserInformation(): UserInformationEntity =
         remoteUserDataSource.fetchUserInformation().toEntity()
+
+    override fun saveAccountId(email: String) {
+        localUserDataSource.saveAccountId(email = email)
+    }
 }
