@@ -8,7 +8,6 @@ import com.signal.domain.entity.FetchDayDiaryEntity
 import com.signal.domain.entity.FetchMonthDiaryEntity
 import com.signal.domain.enums.Emotion
 import com.signal.domain.repository.DiaryRepository
-import java.time.LocalDateTime
 
 class DiaryRepositoryImpl(
     private val diaryDateSource: DiaryDataSource,
@@ -17,13 +16,13 @@ class DiaryRepositoryImpl(
         diaryDateSource.fetchAllDiary().toEntity()
 
     override suspend fun fetchMonthDiary(
-        date: LocalDateTime
+        date: String
     ): FetchMonthDiaryEntity = diaryDateSource.fetchMonthDiary(
         date = date
     ).toEntity()
 
     override suspend fun fetchDayDiary(
-        date: LocalDateTime
+        date: String
     ): FetchDayDiaryEntity = diaryDateSource.fetchDayDiary(
         date = date
     ).toEntity()
@@ -32,7 +31,7 @@ class DiaryRepositoryImpl(
         title: String,
         content: String,
         emotion: Emotion,
-        date: LocalDateTime,
+        date: String,
         image: String?,
     ) = runCatching {
         diaryDateSource.createDiary(

@@ -4,17 +4,16 @@ import com.signal.domain.entity.FetchAllDiaryEntity
 import com.signal.domain.entity.FetchDayDiaryEntity
 import com.signal.domain.entity.FetchMonthDiaryEntity
 import com.signal.domain.enums.Emotion
-import java.time.LocalDateTime
 
 interface DiaryRepository {
     suspend fun fetchAllDiary(): FetchAllDiaryEntity
-    suspend fun fetchMonthDiary(date: LocalDateTime): FetchMonthDiaryEntity
-    suspend fun fetchDayDiary(date: LocalDateTime): FetchDayDiaryEntity
+    suspend fun fetchMonthDiary(date: String): FetchMonthDiaryEntity
+    suspend fun fetchDayDiary(date: String): FetchDayDiaryEntity
     suspend fun createDiary(
         title: String,
         content: String,
         emotion: Emotion,
-        date: LocalDateTime,
+        date: String,
         image: String?,
     ): Result<Unit>
 }

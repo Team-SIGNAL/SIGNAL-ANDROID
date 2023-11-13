@@ -4,7 +4,7 @@ import com.signal.domain.entity.FetchAllDiaryEntity
 import com.signal.domain.entity.FetchDayDiaryEntity
 import com.signal.domain.entity.FetchMonthDiaryEntity
 import com.signal.domain.enums.Emotion
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 data class DiaryState(
     val allDiaries: List<FetchAllDiaryEntity.AllDiaryEntity>,
@@ -16,7 +16,7 @@ data class DiaryState(
     val title: String,
     val content: String,
     val emotion: Emotion,
-    val date: LocalDateTime,
+    var date: String,
     val image: String?,
 ) {
     companion object {
@@ -30,7 +30,7 @@ data class DiaryState(
             title = "",
             content = "",
             emotion = Emotion.HAPPY,
-            date = LocalDateTime.now(),
+            date = LocalDate.now().toString(),
             image = null,
         )
     }

@@ -8,7 +8,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
-import java.time.LocalDateTime
 
 interface DiaryApi {
     @POST(SignalUrl.Diary.CreateDiary)
@@ -21,11 +20,11 @@ interface DiaryApi {
 
     @GET(SignalUrl.Diary.FetchMonthDiary)
     suspend fun fetchMonthDiary(
-        @Query("date") date: LocalDateTime,
+        @Query("date") date: String,
     ): FetchMonthDiaryResponse
 
     @GET(SignalUrl.Diary.FetchDayDiary)
     suspend fun fetchDayDiary(
-        @Query("date") date: LocalDateTime,
+        @Query("date") date: String,
     ): FetchDayDiaryResponse
 }
