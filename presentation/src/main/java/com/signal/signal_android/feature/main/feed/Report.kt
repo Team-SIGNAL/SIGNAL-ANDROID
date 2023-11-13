@@ -48,7 +48,7 @@ internal fun Report(
     ) {
         Header(
             title = stringResource(id = R.string.report_header_title),
-            onClick = moveToBack,
+            onLeadingClicked = moveToBack,
         )
         PostInformation(
             imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",

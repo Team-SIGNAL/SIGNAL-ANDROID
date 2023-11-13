@@ -71,7 +71,7 @@ internal fun CreateReservation(
     ) {
         Header(
             title = stringResource(id = R.string.reservation_clinic),
-            onClick = moveToBack,
+            onLeadingClicked = moveToBack,
         )
         ReservationDialog(
             datePickerState = { datePickerState },

@@ -44,9 +44,10 @@ import coil.compose.AsyncImage
 import com.signal.domain.PostsEntity
 import com.signal.domain.enums.Tag
 import com.signal.signal_android.R
-import com.signal.signal_android.designsystem.button.SignalOutlinedButton
+import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.component.SignalDialog
 import com.signal.signal_android.designsystem.foundation.Body
+import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
@@ -72,7 +73,9 @@ internal fun Feed(
     )
 
     LaunchedEffect(Unit) {
-        feedViewModel.fetchPosts()
+        if(state.isPostsEmpty) {
+            feedViewModel.fetchPosts()
+        }
     }
 
     if (showDialog) {
@@ -85,6 +88,8 @@ internal fun Feed(
         }
     }
 
+    var filterExpanded by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
@@ -94,24 +99,21 @@ internal fun Feed(
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
         ) {
-            Spacer(modifier = Modifier.height(30.dp))
-            SubTitle(text = stringResource(id = R.string.feed))
-            Spacer(modifier = Modifier.height(8.dp))
-            // TODO 버튼 디자인 시스템 변경
-            SignalOutlinedButton(
-                modifier = Modifier.size(
-                    width = 58.dp,
-                    height = 48.dp,
-                ),
-                text = stringResource(
-                    id = when (state.tag) {
-                        Tag.GENERAL -> R.string.feed_all
-                        Tag.NOTIFICATION -> R.string.feed_notice
-                    },
-                ),
-                onClick = feedViewModel::setTag,
+            Header(
+                title = stringResource(id = R.string.feed),
+                leadingIcon = null,
+                trailingIcon = painterResource(id = R.drawable.ic_search),
+                onTrailingClicked = {},
             )
-            Spacer(modifier = Modifier.height(18.dp))
+            Filter(
+                expanded = { filterExpanded },
+                currentTag = { state.tag },
+                onSelect = {
+                    feedViewModel.setTag(it)
+                    filterExpanded = false
+                },
+                onClick = { filterExpanded = true },
+            )
             Box {
                 Posts(
                     moveToFeedDetails = moveToFeedDetails,
@@ -164,6 +166,70 @@ internal fun Feed(
 }
 
 @Composable
+private fun Filter(
+    expanded: () -> Boolean,
+    currentTag: () -> Tag,
+    onSelect: (Tag) -> Unit,
+    onClick: () -> Unit,
+) {
+    val tag = currentTag()
+
+    Row(
+        modifier = Modifier.padding(
+            vertical = 10.dp,
+        )
+    ) {
+        IconButton(onClick = onClick) {
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_filter),
+                    contentDescription = stringResource(id = R.string.feed_filter),
+                )
+                Body2(
+                    text = tag.value,
+                    color = SignalColor.Primary100,
+                )
+            }
+            DropdownMenu(
+                expanded = expanded(),
+                onDismissRequest = { /*TODO*/ },
+            ) {
+                DropdownMenuItem(
+                    text = {
+                        Body2(
+                            text = Tag.GENERAL.value,
+                            color = if (tag == Tag.GENERAL) SignalColor.Primary100
+                            else SignalColor.Gray600,
+                        )
+                    },
+                    onClick = { onSelect(Tag.GENERAL) },
+                )
+                DropdownMenuItem(
+                    text = {
+                        Body2(
+                            text = Tag.NOTIFICATION.value,
+                            color = if (tag == Tag.NOTIFICATION) SignalColor.Primary100
+                            else SignalColor.Gray600,
+                        )
+                    },
+                    onClick = { onSelect(Tag.NOTIFICATION) },
+                )
+                DropdownMenuItem(
+                    text = {
+                        Body2(
+                            text = Tag.HOSPITAL.value,
+                            color = if (tag == Tag.HOSPITAL) SignalColor.Primary100
+                            else SignalColor.Gray600,
+                        )
+                    },
+                    onClick = { onSelect(Tag.HOSPITAL) },
+                )
+            }
+        }
+    }
+}
+
+@Composable
 private fun Posts(
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToReport: () -> Unit,
@@ -177,10 +243,10 @@ private fun Posts(
         items(posts) {
             Post(
                 moveToFeedDetails = { moveToFeedDetails(it.id) },
-                imageUrl = it.img,
+                imageUrl = it.image,
                 title = it.title,
                 date = it.date,
-                writer = it.user,
+                name = it.name,
                 onClick = { showDropDown(it.id) },
                 expanded = expanded == it.id,
                 onDismissRequest = onDismissRequest,
@@ -195,10 +261,10 @@ private fun Posts(
 @Composable
 internal fun Post(
     moveToFeedDetails: () -> Unit,
-    imageUrl: String,
+    imageUrl: String?,
     title: String,
     date: String,
-    writer: String,
+    name: String,
     onClick: () -> Unit,
     expanded: Boolean,
     onDismissRequest: () -> Unit,
@@ -263,7 +329,7 @@ internal fun Post(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Body(
-                    text = writer,
+                    text = name,
                     color = SignalColor.Gray500,
                 )
                 Body(
@@ -299,8 +365,6 @@ internal fun FeedDropDownMenu(
                 },
                 onClick = onEdit,
             )
-        }
-        if (isMine) {
             DropdownMenuItem(
                 modifier = Modifier.fillMaxWidth(),
                 text = {

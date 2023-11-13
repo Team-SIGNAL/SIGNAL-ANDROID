@@ -87,7 +87,7 @@ internal fun Reservation(
         ) {
             Header(
                 title = stringResource(id = R.string.reservation),
-                onClick = {/*TODO*/ },
+                onLeadingClicked = {/*TODO*/ },
             )
             Spacer(modifier = Modifier.height(12.dp))
             LazyColumn(

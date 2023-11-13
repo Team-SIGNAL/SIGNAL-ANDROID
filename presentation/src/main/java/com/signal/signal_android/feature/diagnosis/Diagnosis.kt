@@ -68,7 +68,7 @@ internal fun Diagnosis(
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Header(
                 title = stringResource(id = R.string.diagnosis_title),
-                onClick = { showDialog = true },
+                onLeadingClicked = { showDialog = true },
             )
             Question(
                 count = { count + 1 },

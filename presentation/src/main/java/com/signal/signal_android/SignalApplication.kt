@@ -122,6 +122,7 @@ val repositoryModule: Module
         }
         single<AttachmentRepository> {
             AttachmentRepositoryImpl(attachmentDataSource = get())
+        }
         single<DiagnosisRepository> {
             DiagnosisRepositoryImpl(localDiagnosisDataSource = get())
         }

@@ -84,6 +84,20 @@ internal fun CreatePost(
         }
     }
 
+    LaunchedEffect(Unit) {
+        feedViewModel.sideEffect.collect {
+            when (it) {
+                is FeedSideEffect.PostSuccess -> {
+                    moveToBack()
+                }
+
+                else -> {
+
+                }
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -91,7 +105,7 @@ internal fun CreatePost(
     ) {
         Header(
             title = stringResource(id = R.string.create_post_header_title),
-            onClick = moveToBack,
+            onLeadingClicked = moveToBack,
         )
         Spacer(modifier = Modifier.height(4.dp))
         SignalTextField(

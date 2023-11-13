@@ -9,7 +9,7 @@ import com.signal.domain.enums.Tag
 interface FeedDataSource {
     suspend fun fetchPosts(
         tag: Tag,
-        pageNum: Long,
+        page: Long,
         size: Long,
     ): FetchPostsResponse
 

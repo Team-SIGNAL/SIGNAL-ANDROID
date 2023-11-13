@@ -3,7 +3,7 @@
     <!--navigation-->
     <string name="home">홈</string>
     <string name="diary">일기</string>
-    <string name="feed">커뮤니티</string>
+    <string name="feed">피드</string>
     <string name="recommend">추천</string>
     <string name="my_page">내 정보</string>
 
@@ -117,6 +117,7 @@
     <string name="feed_delete_dialog_title">정말 삭제하시겠습니까?</string>
     <string name="feed_posts_is_empty">아직 게시글이 없어요!</string>
     <string name="feed_posts_add">게시글 작성하기</string>
+    <string name="feed_filter">피드 필터</string>
 
     <!--recommend-->
     <string name="recommend_search">추천 검색</string>

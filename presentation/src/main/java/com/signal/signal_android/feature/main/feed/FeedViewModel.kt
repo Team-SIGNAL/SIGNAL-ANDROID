@@ -22,7 +22,7 @@ internal class FeedViewModel(
                 kotlin.runCatching {
                     feedRepository.fetchPosts(
                         tag = tag,
-                        pageNum = pageNum,
+                        page = page,
                         size = size,
                     )
                 }.onSuccess {
@@ -100,17 +100,10 @@ internal class FeedViewModel(
         setState(state.value.copy(feedId = feedId))
     }
 
-    internal fun setTag() {
+    internal fun setTag(tag: Tag) {
         with(state.value) {
-            setState(
-                copy(
-                    tag = if (tag == Tag.GENERAL) {
-                        Tag.NOTIFICATION
-                    } else {
-                        Tag.GENERAL
-                    },
-                ),
-            )
+            setState(copy(tag = tag))
+            _posts.clear()
             fetchPosts()
         }
     }

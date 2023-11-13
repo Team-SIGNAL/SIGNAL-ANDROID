@@ -8,7 +8,7 @@ import com.signal.domain.enums.Tag
 interface FeedRepository {
     suspend fun fetchPosts(
         tag: Tag,
-        pageNum: Long,
+        page: Long,
         size: Long,
     ): PostsEntity
 

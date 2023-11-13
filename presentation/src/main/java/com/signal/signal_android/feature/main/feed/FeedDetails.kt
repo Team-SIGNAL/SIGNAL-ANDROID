@@ -109,7 +109,7 @@ internal fun FeedDetails(
         ) {
             Header(
                 title = state.title,
-                onClick = moveToBack,
+                onLeadingClicked = moveToBack,
             )
             Column(
                 modifier = Modifier
@@ -166,10 +166,10 @@ internal fun FeedDetails(
                 state.posts.forEach {
                     Post(
                         moveToFeedDetails = { moveToFeedDetails(it.id) },
-                        imageUrl = it.img,
+                        imageUrl = it.image,
                         title = it.title,
+                        name = it.name,
                         date = it.date,
-                        writer = it.user,
                         onClick = { expanded = it.id },
                         expanded = expanded == it.id,
                         onDismissRequest = { expanded = -1 },

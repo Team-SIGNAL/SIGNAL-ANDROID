@@ -4,25 +4,27 @@ import com.google.gson.annotations.SerializedName
 import com.signal.domain.PostsEntity
 
 data class FetchPostsResponse(
-    @SerializedName("feed") val posts: List<Post>,
+    @SerializedName("feed_list") val posts: List<Post>,
+    @SerializedName("page_total") val pageTotal: Long,
 ) {
     data class Post(
         @SerializedName("id") val id: Long,
-        @SerializedName("img") val img: String,
         @SerializedName("title") val title: String,
-        @SerializedName("date") val date: String,
-        @SerializedName("user") val user: String,
+        @SerializedName("image") val image: String?,
+        @SerializedName("name") val name: String,
+        @SerializedName("create_date") val date: String,
     )
 }
 
 fun FetchPostsResponse.toEntity() = PostsEntity(
     postEntities = this.posts.map { it.toEntity() },
+    pageTotal = this.pageTotal
 )
 
 private fun FetchPostsResponse.Post.toEntity() = PostsEntity.PostEntity(
     id = this.id,
-    img = this.img,
     title = this.title,
+    image = this.image,
+    name = this.name,
     date = this.date,
-    user = this.user,
 )
