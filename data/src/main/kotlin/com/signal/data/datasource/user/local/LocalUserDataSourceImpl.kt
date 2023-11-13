@@ -32,8 +32,14 @@ class LocalUserDataSourceImpl(
         return preferenceManager.getSharedPreference().getString(Keys.ACCESS_EXPIRED_AT, "") ?: ""
     }
 
-    override fun clearToken() {
-        preferenceManager.getSharedPreferenceEditor().clear().apply()
+    override fun clearUserInformation() {
+        preferenceManager.getSharedPreferenceEditor().apply {
+            putString(Keys.ACCESS_TOKEN, "")
+            putString(Keys.REFRESH_TOKEN, "")
+            putString(Keys.ACCESS_EXPIRED_AT, "")
+            putString(Keys.REFRESH_EXPIRED_AT, "")
+            putString(Keys.ACCOUNT_ID, "")
+        }.apply()
     }
 
     override fun saveAccountId(email: String) {

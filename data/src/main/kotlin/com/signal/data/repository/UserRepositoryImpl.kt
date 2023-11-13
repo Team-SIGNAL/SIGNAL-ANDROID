@@ -57,7 +57,7 @@ class UserRepositoryImpl(
     }
 
     override suspend fun signOut() {
-        localUserDataSource.clearToken()
+        localUserDataSource.clearUserInformation()
     }
 
     override suspend fun fetchUserInformation(): UserInformationEntity =
