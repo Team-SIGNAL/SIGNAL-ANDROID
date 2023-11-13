@@ -1,6 +1,7 @@
 package com.signal.signal_android.feature.main.feed
 
 import com.signal.domain.PostsEntity
+import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
 import com.signal.domain.enums.Tag
 
@@ -14,6 +15,8 @@ data class FeedState(
     val content: String,
     val postDetailsEntity: PostDetailsEntity,
     val feedId: Long,
+    val image: String,
+    val comments: List<PostCommentsEntity.CommentEntity>,
 ) {
     companion object {
         fun getDefaultState() = FeedState(
@@ -34,6 +37,8 @@ data class FeedState(
                 isMine = false,
             ),
             feedId = 0L,
+            image = "",
+            comments = listOf(),
         )
     }
 }

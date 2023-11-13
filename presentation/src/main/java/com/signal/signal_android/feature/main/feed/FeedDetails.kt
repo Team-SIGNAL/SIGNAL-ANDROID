@@ -91,7 +91,10 @@ internal fun FeedDetails(
 
     ModalBottomSheetLayout(
         sheetContent = {
-            CommentDialog()
+            CommentDialog(
+                state = state,
+                fetchPostComments = feedViewModel::fetchPostComments,
+            )
         },
         sheetState = sheetState,
         sheetShape = RoundedCornerShape(

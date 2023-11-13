@@ -19,6 +19,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.signal.domain.entity.PostCommentsEntity
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.foundation.Body
@@ -34,135 +36,16 @@ import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 
-private data class CommentEntity(
-    val commentId: Long,
-    val profileImageUrl: String,
-    val name: String,
-    val time: String,
-    val content: String,
-)
-
-// TODO: 더미
-private val _comments = listOf(
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-    CommentEntity(
-        commentId = 1,
-        profileImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
-        name = "메타",
-        time = "20시간 전",
-        content = "화성 갈끄니까~",
-    ),
-)
-
 @Composable
-internal fun CommentDialog() {
-    Box(
-        contentAlignment = Alignment.BottomCenter,
-    ) {
+internal fun CommentDialog(
+    state: FeedState,
+    fetchPostComments: suspend () -> Unit,
+) {
+    LaunchedEffect(Unit) {
+        fetchPostComments()
+    }
+
+    Box(contentAlignment = Alignment.BottomCenter) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -189,7 +72,7 @@ internal fun CommentDialog() {
                     .fillMaxWidth()
                     .padding(vertical = 10.dp),
             )
-            Comments(commentEntities = _comments)
+            Comments(commentEntities = state.comments)
         }
         Box(
             modifier = Modifier
@@ -233,7 +116,7 @@ private fun Input(
 
 @Composable
 private fun Comments(
-    commentEntities: List<CommentEntity>,
+    commentEntities: List<PostCommentsEntity.CommentEntity>,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -242,9 +125,9 @@ private fun Comments(
     ) {
         items(commentEntities) {
             Comment(
-                profileImageUrl = it.profileImageUrl,
-                name = it.name,
-                time = it.time,
+                profileImageUrl = "",
+                writer = it.writer,
+                time = it.dateTime.toString(),
                 content = it.content,
                 onClick = {},
             )
@@ -255,7 +138,7 @@ private fun Comments(
 @Composable
 private fun Comment(
     profileImageUrl: String,
-    name: String,
+    writer: String,
     time: String,
     content: String,
     onClick: () -> Unit,
@@ -272,7 +155,7 @@ private fun Comment(
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Body2(
-                    text = name,
+                    text = writer,
                     color = SignalColor.Primary300,
                 )
                 Spacer(modifier = Modifier.width(4.dp))

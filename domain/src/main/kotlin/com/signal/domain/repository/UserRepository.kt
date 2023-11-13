@@ -21,4 +21,6 @@ interface UserRepository {
     suspend fun secession()
     suspend fun signOut()
     suspend fun fetchUserInformation(): UserInformationEntity
+    fun saveAccountId(email: String)
+    fun getAccountId(): String
 }

@@ -1,18 +1,18 @@
 package com.signal.data.datasource.user.local
 
-import android.content.Context
-import android.content.SharedPreferences
+import com.signal.data.util.PreferenceManager
 
 class LocalUserDataSourceImpl(
-    private val context: Context,
+    private val preferenceManager: PreferenceManager,
 ) : LocalUserDataSource {
+
     override fun saveTokens(
         accessToken: String,
         refreshToken: String,
         accessExpiredAt: String,
         refreshExpiredAt: String,
     ) {
-        getSharedPreferenceEditor().also {
+        preferenceManager.getSharedPreferenceEditor().also {
             it.putString(Keys.ACCESS_TOKEN, accessToken)
             it.putString(Keys.REFRESH_TOKEN, refreshToken)
             it.putString(Keys.ACCESS_EXPIRED_AT, accessExpiredAt)
@@ -21,28 +21,33 @@ class LocalUserDataSourceImpl(
     }
 
     override fun getAccessToken(): String {
-        return getSharedPreference().getString(Keys.ACCESS_TOKEN, "") ?: ""
+        return preferenceManager.getSharedPreference().getString(Keys.ACCESS_TOKEN, "") ?: ""
     }
 
     override fun getRefreshToken(): String {
-        return getSharedPreference().getString(Keys.REFRESH_TOKEN, "") ?: ""
+        return preferenceManager.getSharedPreference().getString(Keys.REFRESH_TOKEN, "") ?: ""
     }
 
     override fun getExpireAt(): String {
-        return getSharedPreference().getString(Keys.ACCESS_EXPIRED_AT, "") ?: ""
+        return preferenceManager.getSharedPreference().getString(Keys.ACCESS_EXPIRED_AT, "") ?: ""
     }
 
-    override fun clearToken() {
-        getSharedPreference().edit().clear().apply()
+    override fun clearUserInformation() {
+        preferenceManager.getSharedPreferenceEditor().apply {
+            remove(Keys.ACCESS_TOKEN)
+            remove(Keys.REFRESH_TOKEN)
+            remove(Keys.REFRESH_TOKEN)
+            remove(Keys.REFRESH_EXPIRED_AT)
+            remove(Keys.ACCOUNT_ID)
+        }.apply()
     }
 
-    private fun getSharedPreference(): SharedPreferences {
-        return context.getSharedPreferences(Keys.NAME, Context.MODE_PRIVATE)
+    override fun saveAccountId(email: String) {
+        preferenceManager.getSharedPreferenceEditor().putString(Keys.ACCOUNT_ID, email).apply()
     }
 
-    private fun getSharedPreferenceEditor(): SharedPreferences.Editor {
-        return getSharedPreference().edit()
-    }
+    override fun getAccountId() =
+        preferenceManager.getSharedPreference().getString(Keys.ACCOUNT_ID, "") ?: ""
 }
 
 object Keys {
@@ -51,4 +56,6 @@ object Keys {
     const val REFRESH_TOKEN = "refresh_token"
     const val ACCESS_EXPIRED_AT = "access_expired_at"
     const val REFRESH_EXPIRED_AT = "refresh_expired_at"
+    const val LAST_DIAGNOSIS_DATE = "last_diagnosis_date"
+    const val ACCOUNT_ID = "account_id"
 }

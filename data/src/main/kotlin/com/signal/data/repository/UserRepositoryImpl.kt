@@ -57,9 +57,16 @@ class UserRepositoryImpl(
     }
 
     override suspend fun signOut() {
-        localUserDataSource.clearToken()
+        localUserDataSource.clearUserInformation()
     }
 
     override suspend fun fetchUserInformation(): UserInformationEntity =
         remoteUserDataSource.fetchUserInformation().toEntity()
+
+    override fun saveAccountId(email: String) {
+        localUserDataSource.saveAccountId(email = email)
+    }
+
+    override fun getAccountId() = localUserDataSource.getAccountId()
+
 }
