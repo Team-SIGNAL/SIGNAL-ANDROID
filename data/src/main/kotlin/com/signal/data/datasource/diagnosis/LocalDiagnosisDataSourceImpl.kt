@@ -17,8 +17,13 @@ class LocalDiagnosisDataSourceImpl(
         diagnosisDao.setDiagnosis(diagnosisModel)
     }
 
-    override fun saveLastDiagnosisDate(date: String) {
-        preferenceManager.getSharedPreferenceEditor().putString(Keys.LAST_DIAGNOSIS_DATE, date).apply()
+    override fun saveLastDiagnosisDate(
+        date: String,
+        accountId: String,
+    ) {
+        preferenceManager.getSharedPreferenceEditor()
+            .putString(Keys.LAST_DIAGNOSIS_DATE + accountId, date)
+            .apply()
     }
 
     override fun getLastDiagnosisDate() =

@@ -7,7 +7,10 @@ interface LocalDiagnosisDataSource {
 
     suspend fun setDiagnosis(diagnosisModel: DiagnosisModel)
 
-    fun saveLastDiagnosisDate(date: String)
+    fun saveLastDiagnosisDate(
+        date: String,
+        accountId: String,
+    )
 
     fun getLastDiagnosisDate(): String
 }

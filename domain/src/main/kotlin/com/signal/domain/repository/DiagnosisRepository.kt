@@ -5,6 +5,10 @@ import com.signal.domain.entity.DiagnosisEntity
 interface DiagnosisRepository {
     suspend fun getDiagnosis(): Result<List<DiagnosisEntity>>
     suspend fun setDiagnosis(diagnosisEntity: DiagnosisEntity)
-    fun saveLastDiagnosisDate(date: String)
+    fun saveLastDiagnosisDate(
+        date: String,
+        accountId: String,
+    )
+
     fun getLastDiagnosisDate(): Result<String>
 }

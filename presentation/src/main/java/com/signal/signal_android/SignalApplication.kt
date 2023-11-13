@@ -156,6 +156,11 @@ val viewModelModule: Module
         }
         viewModel { FeedViewModel(feedRepository = get()) }
         viewModel { AttachmentViewModel(attachmentRepository = get()) }
-        viewModel { DiagnosisViewModel(diagnosisRepository = get()) }
+        viewModel {
+            DiagnosisViewModel(
+                diagnosisRepository = get(),
+                getAccountIdUseCase = get(),
+            )
+        }
         viewModel { HomeViewModel(diagnosisRepository = get()) }
     }
