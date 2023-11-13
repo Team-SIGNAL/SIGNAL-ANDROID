@@ -26,6 +26,7 @@ class LocalDiagnosisDataSourceImpl(
             .apply()
     }
 
-    override fun getLastDiagnosisDate() =
-        preferenceManager.getSharedPreference().getString(Keys.LAST_DIAGNOSIS_DATE, "") ?: ""
+    override fun getLastDiagnosisDate(): String = with(preferenceManager.getSharedPreference()) {
+        return getString(Keys.LAST_DIAGNOSIS_DATE + getString(Keys.ACCOUNT_ID, ""), "") ?: ""
+    }
 }
