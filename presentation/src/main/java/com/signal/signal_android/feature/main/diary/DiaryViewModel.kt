@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.FetchAllDiaryEntity
 import com.signal.domain.entity.FetchDayDiaryEntity
 import com.signal.domain.entity.FetchMonthDiaryEntity
+import com.signal.domain.enums.Emotion
 import com.signal.domain.repository.DiaryRepository
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -77,7 +78,7 @@ class DiaryViewModel(
         }
     }
 
-    internal fun createDiary() {
+    internal fun createDiary(imageUrl: String? = null) {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 diaryRepository.createDiary(
@@ -85,7 +86,7 @@ class DiaryViewModel(
                     content = content,
                     emotion = emotion,
                     date = date,
-                    image = image,
+                    image = imageUrl,
                 ).onSuccess {
                     DiarySideEffect.CreateDiarySuccess
                 }
@@ -93,5 +94,19 @@ class DiaryViewModel(
         }
     }
 
+    internal fun setContent(content: String) {
+        setState(state.value.copy(content = content))
+    }
 
+    internal fun setTitle(title: String) {
+        setState(state.value.copy(title = title))
+    }
+
+    internal fun setDate(date: String) {
+        setState(state.value.copy(date = date))
+    }
+
+    internal fun setEmotion(emotion: Emotion) {
+        setState(state.value.copy(emotion = emotion))
+    }
 }
