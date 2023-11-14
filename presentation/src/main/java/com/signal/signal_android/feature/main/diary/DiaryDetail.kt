@@ -17,6 +17,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,6 +60,11 @@ internal fun DiaryDetail(
                 onCheckBtnClick = {},
             )
         }
+    }
+
+    LaunchedEffect(Unit) {
+        diaryViewModel.setDiaryId(diaryId = diaryId)
+        diaryViewModel.fetchDiaryDetails()
     }
 
 
