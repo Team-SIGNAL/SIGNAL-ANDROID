@@ -74,15 +74,21 @@ internal fun Diary(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 30.dp),
         contentAlignment = Alignment.BottomEnd,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 30.dp),
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            SubTitle(text = stringResource(id = R.string.diary))
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.Start,
+            ) {
+                SubTitle(text = stringResource(id = R.string.diary))
+            }
             Spacer(modifier = Modifier.height(12.dp))
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -98,9 +104,9 @@ internal fun Diary(
                             .fillMaxWidth(),
                         factory = { CalendarView(it) },
                     ) { calendarView ->
-                        /*val selectedDate = "${yearState}-${monthState}-${dayState}"
+                        val selectedDate = "${yearState}-${monthState}-${dayState}"
                         calendarView.date = formatter.parse(selectedDate)!!.time
-                        */
+
 
                         calendarView.setOnDateChangeListener { _, year, month, day ->
                             yearState = year.toString()
@@ -124,11 +130,12 @@ internal fun Diary(
                     text = stringResource(id = R.string.diary_is_empty),
                     color = SignalColor.Gray500,
                 )
+            } else {
+                Diaries(
+                    moveToDiaryDetails = moveToDiaryDetails,
+                    diaries = state.dayDiaries,
+                )
             }
-            Diaries(
-                moveToDiaryDetails = moveToDiaryDetails,
-                diaries = state.dayDiaries,
-            )
         }
         FloatingActionButton(
             modifier = Modifier.padding(16.dp),
