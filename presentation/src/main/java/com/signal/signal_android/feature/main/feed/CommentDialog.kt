@@ -122,6 +122,7 @@ private fun Input(
             modifier = Modifier.weight(0.2f),
             text = stringResource(id = R.string.my_page_secession_check),
             onClick = onClick,
+            enabled = comment().isNotBlank(),
         )
     }
 }
