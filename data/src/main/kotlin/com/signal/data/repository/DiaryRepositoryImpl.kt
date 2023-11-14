@@ -4,7 +4,6 @@ import com.signal.data.datasource.diary.DiaryDataSource
 import com.signal.data.model.diary.CreateDiaryRequest
 import com.signal.data.model.diary.toEntity
 import com.signal.domain.entity.DiariesEntity
-import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
 import com.signal.domain.repository.DiaryRepository
 
@@ -13,17 +12,11 @@ class DiaryRepositoryImpl(
 ) : DiaryRepository {
     override suspend fun fetchAllDiary(): DiariesEntity = diaryDateSource.fetchAllDiary().toEntity()
 
-    override suspend fun fetchMonthDiary(
-        date: String
-    ): MonthDiaryEntity = diaryDateSource.fetchMonthDiary(
-        date = date
-    ).toEntity()
+    override suspend fun fetchMonthDiary(date: String) =
+        diaryDateSource.fetchMonthDiary(date = date).toEntity()
 
-    override suspend fun fetchDayDiary(
-        date: String
-    ): DiariesEntity = diaryDateSource.fetchDayDiary(
-        date = date
-    ).toEntity()
+    override suspend fun fetchDayDiary(date: String) =
+        diaryDateSource.fetchDayDiary(date = date).toEntity()
 
     override suspend fun createDiary(
         title: String,
