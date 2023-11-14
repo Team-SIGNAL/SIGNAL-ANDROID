@@ -3,6 +3,7 @@ package com.signal.data.api
 import com.signal.data.model.diary.CreateDiaryRequest
 import com.signal.data.model.diary.FetchAllDiaryResponse
 import com.signal.data.model.diary.FetchDayDiaryResponse
+import com.signal.data.model.diary.FetchDiaryDetailsResponse
 import com.signal.data.model.diary.FetchMonthDiaryResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,8 +24,13 @@ interface DiaryApi {
         @Query("date") date: String,
     ): FetchMonthDiaryResponse
 
-    @GET(SignalUrl.Diary.FetchDayDiary)
+    @GET(SignalUrl.Diary.CreateDiary)
     suspend fun fetchDayDiary(
         @Query("date") date: String,
     ): FetchDayDiaryResponse
+
+    @GET(SignalUrl.Diary.CreateDiary)
+    suspend fun fetchDiaryDetails(
+        @Query("diary_id") diaryId: Long,
+    ): FetchDiaryDetailsResponse
 }

@@ -3,6 +3,7 @@ package com.signal.data.datasource.diary
 import com.signal.data.model.diary.CreateDiaryRequest
 import com.signal.data.model.diary.FetchAllDiaryResponse
 import com.signal.data.model.diary.FetchDayDiaryResponse
+import com.signal.data.model.diary.FetchDiaryDetailsResponse
 import com.signal.data.model.diary.FetchMonthDiaryResponse
 
 interface DiaryDataSource {
@@ -10,4 +11,5 @@ interface DiaryDataSource {
     suspend fun fetchAllDiary(): FetchAllDiaryResponse
     suspend fun fetchMonthDiary(date: String): FetchMonthDiaryResponse
     suspend fun fetchDayDiary(date: String): FetchDayDiaryResponse
+    suspend fun fetchDiaryDetails(diaryId: Long): FetchDiaryDetailsResponse
 }

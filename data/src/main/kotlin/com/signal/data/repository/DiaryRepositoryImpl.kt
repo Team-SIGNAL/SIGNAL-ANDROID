@@ -44,4 +44,8 @@ class DiaryRepositoryImpl(
             )
         )
     }
+
+    override suspend fun fetchDiaryDetails(diaryId: Long) = runCatching {
+        diaryDateSource.fetchDiaryDetails(diaryId = diaryId).toEntity()
+    }
 }

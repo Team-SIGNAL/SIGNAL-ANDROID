@@ -4,10 +4,11 @@ import com.signal.data.api.DiaryApi
 import com.signal.data.model.diary.CreateDiaryRequest
 import com.signal.data.model.diary.FetchAllDiaryResponse
 import com.signal.data.model.diary.FetchDayDiaryResponse
+import com.signal.data.model.diary.FetchDiaryDetailsResponse
 import com.signal.data.model.diary.FetchMonthDiaryResponse
 import com.signal.data.util.ExceptionHandler
 
-class DiaryDateSourceImpl(
+class DiaryDataSourceImpl(
     private val diaryApi: DiaryApi,
 ) : DiaryDataSource {
     override suspend fun createDiary(createDiaryRequest: CreateDiaryRequest) =
@@ -28,6 +29,11 @@ class DiaryDateSourceImpl(
     override suspend fun fetchDayDiary(date: String): FetchDayDiaryResponse =
         ExceptionHandler<FetchDayDiaryResponse>().httpRequest {
             diaryApi.fetchDayDiary(date = date)
+        }.sendRequest()
+
+    override suspend fun fetchDiaryDetails(diaryId: Long): FetchDiaryDetailsResponse =
+        ExceptionHandler<FetchDiaryDetailsResponse>().httpRequest {
+            diaryApi.fetchDiaryDetails(diaryId = diaryId)
         }.sendRequest()
 
 }

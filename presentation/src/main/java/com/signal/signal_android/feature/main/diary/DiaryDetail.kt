@@ -17,6 +17,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
-import com.signal.domain.enums.Emotion
+import com.signal.domain.enums.Emotion.*
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.component.SignalDialog
@@ -36,6 +37,7 @@ import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
+import org.koin.androidx.compose.koinViewModel
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -43,21 +45,9 @@ import java.time.LocalDate
 internal fun DiaryDetail(
     diaryId: Long,
     moveToBack: () -> Unit,
+    diaryViewModel: DiaryViewModel = koinViewModel(),
 ) {
-    // TODO: 더미
-    val title by remember {
-        mutableStateOf("제목제목제목")
-    }
-
-    val date by remember { mutableStateOf(LocalDate.now()) }
-
-    val diaryImageUrl: String? by remember {
-        mutableStateOf("https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png")
-    }
-
-    val content by remember {
-        mutableStateOf("몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ몰라몰라몰라몰라몰람로람롬람롬람롬ㄹ")
-    }
+    val state by diaryViewModel.state.collectAsState()
 
     var showDialog by remember { mutableStateOf(false) }
 
@@ -80,6 +70,8 @@ internal fun DiaryDetail(
         Header(
             title = stringResource(id = R.string.header_back),
             onLeadingClicked = moveToBack,
+            trailingIcon = painterResource(id = R.drawable.ic_delete),
+            onTrailingClicked = {/*TODO delete*/}
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row(
@@ -88,35 +80,49 @@ internal fun DiaryDetail(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column {
-                BodyLarge2(text = title)
+                BodyLarge2(text = state.title)
                 Body(
-                    text = date.toString(),
+                    text = state.date,
                     color = SignalColor.Gray500,
                 )
             }
             Image(
                 modifier = Modifier.size(40.dp),
-                painter = painterResource(id = Emotion.HAPPY.emotionImage),
+                painter = painterResource(
+                    id = when (state.emotion) {
+                        HAPPY -> R.drawable.ic_happy
+                        SOSO -> R.drawable.ic_soso
+                        DEPRESSION -> R.drawable.ic_depression
+                        SADNESS -> R.drawable.ic_sadness
+                        SURPRISED -> R.drawable.ic_surprised
+                        DISCOMFORT -> R.drawable.ic_discomfort
+                        PLEASED -> R.drawable.ic_pleased
+                        ANGRY -> R.drawable.ic_angry
+                        AWKWARDNESS -> R.drawable.ic_awkwardness
+                        SOBBING -> R.drawable.ic_sobbing
+                        ANNOYING -> R.drawable.ic_annoying
+                        BOREDOM -> R.drawable.ic_boredom
+                    }
+                ),
                 contentDescription = stringResource(id = R.string.diary_emotion_image),
-            )
-            /*DiaryDropDown(
+            )/*DiaryDropDown(
                 onEdit = { *//*TODO*//* },
                 onDelete = { showDialog = true },
             )*/
         }
         Spacer(modifier = Modifier.height(18.dp))
-        if (diaryImageUrl != null) {
+        if (state.image != null) {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                model = diaryImageUrl,
+                model = state.image,
                 contentDescription = stringResource(id = R.string.diary_details_image),
             )
             Spacer(modifier = Modifier.height(20.dp))
         }
         Body2(
-            text = content,
+            text = state.content,
             color = SignalColor.Gray700,
         )
     }

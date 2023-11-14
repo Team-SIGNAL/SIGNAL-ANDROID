@@ -3,6 +3,7 @@ package com.signal.signal_android.feature.main.diary
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.AllDiaryEntity
 import com.signal.domain.entity.DayDiaryEntity
+import com.signal.domain.entity.DiaryDetailsEntity
 import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
 import com.signal.domain.repository.DiaryRepository
@@ -94,6 +95,26 @@ class DiaryViewModel(
         }
     }
 
+    internal fun fetchDiaryDetails() {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                diaryRepository.fetchDiaryDetails(diaryId = diaryId).onSuccess {
+                    setState(
+                        copy(
+                            diaryDetailsEntity = DiaryDetailsEntity(
+                                date = it.date,
+                                title = it.title,
+                                content = it.content,
+                                emotion = it.emotion,
+                                image = it.image,
+                            )
+                        )
+                    )
+                }
+            }
+        }
+    }
+
     internal fun setContent(content: String) {
         setState(state.value.copy(content = content))
     }
@@ -108,5 +129,9 @@ class DiaryViewModel(
 
     internal fun setEmotion(emotion: Emotion) {
         setState(state.value.copy(emotion = emotion))
+    }
+
+    internal fun setDiaryId(diaryId: Long) {
+        setState(state.value.copy(diaryId = diaryId))
     }
 }
