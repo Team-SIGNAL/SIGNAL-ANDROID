@@ -125,6 +125,7 @@ internal fun Feed(
                     onDismissRequest = { expanded = -1 },
                     onDelete = { showDialog = true },
                 )
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -145,7 +146,10 @@ internal fun Feed(
                         text = stringResource(id = R.string.feed_posts_is_empty),
                     )
                     Body(
-                        modifier = Modifier.signalClickable(onClick = moveToCreatePost),
+                        modifier = Modifier.signalClickable(
+                            onClick = moveToCreatePost,
+                            enabled = state.isPostsEmpty
+                        ),
                         text = stringResource(id = R.string.feed_posts_add),
                         color = SignalColor.Primary100,
                     )

@@ -96,6 +96,7 @@ internal class FeedViewModel(
                     feedId = feedId,
                     content = comment,
                 ).onSuccess {
+                    postSideEffect(FeedSideEffect.ClearFocus)
                     fetchPostComments()
                 }.onFailure {
 
