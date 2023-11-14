@@ -94,6 +94,8 @@ internal fun FeedDetails(
             CommentDialog(
                 state = state,
                 fetchPostComments = feedViewModel::fetchPostComments,
+                createComment = feedViewModel::createComment,
+                onCommentChange = feedViewModel::setComment,
             )
         },
         sheetState = sheetState,

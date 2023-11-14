@@ -40,6 +40,8 @@ import com.signal.signal_android.designsystem.textfield.SignalTextField
 internal fun CommentDialog(
     state: FeedState,
     fetchPostComments: suspend () -> Unit,
+    createComment: () -> Unit,
+    onCommentChange: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
         fetchPostComments()
@@ -81,9 +83,9 @@ internal fun CommentDialog(
                 .imePadding(),
         ) {
             Input(
-                comment = { "comment" },
-                onCommentChange = { },
-                onClick = {},
+                comment = { state.comment },
+                onCommentChange = onCommentChange,
+                onClick = createComment,
             )
         }
     }
@@ -101,7 +103,7 @@ private fun Input(
     ) {
         SignalTextField(
             modifier = Modifier.fillMaxWidth(0.8f),
-            value = "",
+            value = comment(),
             onValueChange = onCommentChange,
             hint = stringResource(id = R.string.comment_dialog_input_comment),
         )

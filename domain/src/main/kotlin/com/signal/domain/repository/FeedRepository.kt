@@ -22,4 +22,9 @@ interface FeedRepository {
     suspend fun fetchPostDetails(feedId: Long): Result<PostDetailsEntity>
 
     suspend fun fetchPostComments(feedId: Long): Result<PostCommentsEntity>
+
+    suspend fun createComment(
+        feedId: Long,
+        content: String,
+    ): Result<Unit>
 }

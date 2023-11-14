@@ -88,6 +88,21 @@ internal class FeedViewModel(
         }
     }
 
+    internal fun createComment() {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                feedRepository.createComment(
+                    feedId = feedId,
+                    content = comment,
+                ).onSuccess {
+
+                }.onFailure {
+
+                }
+            }
+        }
+    }
+
     internal fun setTitle(title: String) {
         setState(state.value.copy(title = title))
     }
@@ -106,5 +121,9 @@ internal class FeedViewModel(
             _posts.clear()
             fetchPosts()
         }
+    }
+
+    internal fun setComment(comment: String){
+        setState(state.value.copy(comment = comment))
     }
 }
