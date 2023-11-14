@@ -146,20 +146,7 @@ internal fun CreateDiary(
         Image(
             modifier = Modifier.signalClickable { showBottomSheet = true },
             painter = painterResource(
-                id = when (state.emotion) {
-                    Emotion.HAPPY -> R.drawable.ic_happy
-                    Emotion.SOSO -> R.drawable.ic_soso
-                    Emotion.DEPRESSION -> R.drawable.ic_depression
-                    Emotion.SADNESS -> R.drawable.ic_sadness
-                    Emotion.SURPRISED -> R.drawable.ic_surprised
-                    Emotion.DISCOMFORT -> R.drawable.ic_discomfort
-                    Emotion.PLEASED -> R.drawable.ic_pleased
-                    Emotion.ANGRY -> R.drawable.ic_angry
-                    Emotion.AWKWARDNESS -> R.drawable.ic_awkwardness
-                    Emotion.SOBBING -> R.drawable.ic_sobbing
-                    Emotion.ANNOYING -> R.drawable.ic_annoying
-                    Emotion.BOREDOM -> R.drawable.ic_boredom
-                }
+                id = emotionDrawable(state.emotion)
             ),
             contentDescription = stringResource(
                 id = R.string.create_diary_emotion_image

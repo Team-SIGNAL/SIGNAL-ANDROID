@@ -250,24 +250,28 @@ internal fun DiaryItems(
             ) {
                 Image(
                     painterResource(
-                        id = when (emotion) {
-                            Emotion.HAPPY -> R.drawable.ic_happy
-                            Emotion.SOSO -> R.drawable.ic_soso
-                            Emotion.DEPRESSION -> R.drawable.ic_depression
-                            Emotion.SADNESS -> R.drawable.ic_sadness
-                            Emotion.SURPRISED -> R.drawable.ic_surprised
-                            Emotion.DISCOMFORT -> R.drawable.ic_discomfort
-                            Emotion.PLEASED -> R.drawable.ic_pleased
-                            Emotion.ANGRY -> R.drawable.ic_angry
-                            Emotion.AWKWARDNESS -> R.drawable.ic_awkwardness
-                            Emotion.SOBBING -> R.drawable.ic_sobbing
-                            Emotion.ANNOYING -> R.drawable.ic_annoying
-                            Emotion.BOREDOM -> R.drawable.ic_boredom
-                        }
+                        id = emotionDrawable(emotion)
                     ),
                     contentDescription = stringResource(id = R.string.diary_emotion_image),
                 )
             }
         }
+    }
+}
+
+fun emotionDrawable(emotion: Emotion): Int {
+    return when (emotion) {
+        Emotion.HAPPY -> R.drawable.ic_happy
+        Emotion.SOSO -> R.drawable.ic_soso
+        Emotion.DEPRESSION -> R.drawable.ic_depression
+        Emotion.SADNESS -> R.drawable.ic_sadness
+        Emotion.SURPRISED -> R.drawable.ic_surprised
+        Emotion.DISCOMFORT -> R.drawable.ic_discomfort
+        Emotion.PLEASED -> R.drawable.ic_pleased
+        Emotion.ANGRY -> R.drawable.ic_angry
+        Emotion.AWKWARDNESS -> R.drawable.ic_awkwardness
+        Emotion.SOBBING -> R.drawable.ic_sobbing
+        Emotion.ANNOYING -> R.drawable.ic_annoying
+        Emotion.BOREDOM -> R.drawable.ic_boredom
     }
 }

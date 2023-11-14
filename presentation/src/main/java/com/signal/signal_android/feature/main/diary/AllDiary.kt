@@ -143,20 +143,7 @@ private fun DiaryItemList(
             Box(modifier = Modifier.size(40.dp)) {
                 Image(
                     painterResource(
-                        id = when (emotion) {
-                            Emotion.HAPPY -> R.drawable.ic_happy
-                            Emotion.ANGRY -> R.drawable.ic_angry
-                            Emotion.ANNOYING -> R.drawable.ic_annoying
-                            Emotion.AWKWARDNESS -> R.drawable.ic_awkwardness
-                            Emotion.BOREDOM -> R.drawable.ic_boredom
-                            Emotion.SOBBING -> R.drawable.ic_sobbing
-                            Emotion.DEPRESSION -> R.drawable.ic_depression
-                            Emotion.PLEASED -> R.drawable.ic_pleased
-                            Emotion.DISCOMFORT -> R.drawable.ic_discomfort
-                            Emotion.SOSO -> R.drawable.ic_soso
-                            Emotion.SADNESS -> R.drawable.ic_sadness
-                            Emotion.SURPRISED -> R.drawable.ic_surprised
-                        }
+                        id = emotionDrawable(emotion)
                     ),
                     contentDescription = stringResource(id = R.string.diary_emotion_image),
                 )
