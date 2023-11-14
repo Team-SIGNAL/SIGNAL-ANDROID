@@ -2,6 +2,7 @@ package com.signal.domain.repository
 
 import com.signal.domain.entity.AllDiaryEntity
 import com.signal.domain.entity.DayDiaryEntity
+import com.signal.domain.entity.DiaryDetailsEntity
 import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
 
@@ -16,4 +17,6 @@ interface DiaryRepository {
         date: String,
         image: String?,
     ): Result<Unit>
+
+    suspend fun fetchDiaryDetails(diaryId: Long): Result<DiaryDetailsEntity>
 }

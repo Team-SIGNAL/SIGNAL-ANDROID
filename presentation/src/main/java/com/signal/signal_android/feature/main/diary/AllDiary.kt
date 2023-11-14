@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,21 +36,25 @@ import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun AllDiary(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToBack: () -> Unit,
-    diaryViewModel: DiaryViewModel,
+    diaryViewModel: DiaryViewModel = koinViewModel(),
 ) {
     val state by diaryViewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        diaryViewModel.fetchAllDiary()
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp),
     ) {
-        Spacer(modifier = Modifier.height(30.dp))
         Header(
             title = stringResource(id = R.string.diary_all_diary),
             onLeadingClicked = moveToBack,
