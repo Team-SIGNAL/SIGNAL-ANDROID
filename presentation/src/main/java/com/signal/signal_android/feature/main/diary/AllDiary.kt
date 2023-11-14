@@ -27,7 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.signal.domain.entity.FetchAllDiaryEntity
+import com.signal.domain.entity.AllDiaryEntity
 import com.signal.domain.enums.Emotion
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
@@ -66,7 +66,7 @@ internal fun AllDiary(
 @Composable
 private fun Diaries(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
-    diaries: List<FetchAllDiaryEntity.AllDiaryEntity>,
+    diaries: List<AllDiaryEntity.AllDiaryEntity>,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),

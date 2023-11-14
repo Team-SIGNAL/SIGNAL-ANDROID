@@ -3,27 +3,27 @@ package com.signal.data.repository
 import com.signal.data.datasource.diary.DiaryDataSource
 import com.signal.data.model.diary.CreateDiaryRequest
 import com.signal.data.model.diary.toEntity
-import com.signal.domain.entity.FetchAllDiaryEntity
-import com.signal.domain.entity.FetchDayDiaryEntity
-import com.signal.domain.entity.FetchMonthDiaryEntity
+import com.signal.domain.entity.AllDiaryEntity
+import com.signal.domain.entity.DayDiaryEntity
+import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
 import com.signal.domain.repository.DiaryRepository
 
 class DiaryRepositoryImpl(
     private val diaryDateSource: DiaryDataSource,
 ) : DiaryRepository {
-    override suspend fun fetchAllDiary(): FetchAllDiaryEntity =
+    override suspend fun fetchAllDiary(): AllDiaryEntity =
         diaryDateSource.fetchAllDiary().toEntity()
 
     override suspend fun fetchMonthDiary(
         date: String
-    ): FetchMonthDiaryEntity = diaryDateSource.fetchMonthDiary(
+    ): MonthDiaryEntity = diaryDateSource.fetchMonthDiary(
         date = date
     ).toEntity()
 
     override suspend fun fetchDayDiary(
         date: String
-    ): FetchDayDiaryEntity = diaryDateSource.fetchDayDiary(
+    ): DayDiaryEntity = diaryDateSource.fetchDayDiary(
         date = date
     ).toEntity()
 

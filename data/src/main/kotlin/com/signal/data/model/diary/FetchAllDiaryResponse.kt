@@ -1,7 +1,7 @@
 package com.signal.data.model.diary
 
 import com.google.gson.annotations.SerializedName
-import com.signal.domain.entity.FetchAllDiaryEntity
+import com.signal.domain.entity.AllDiaryEntity
 import com.signal.domain.enums.Emotion
 
 data class FetchAllDiaryResponse(
@@ -16,11 +16,11 @@ data class FetchAllDiaryResponse(
     )
 }
 
-fun FetchAllDiaryResponse.toEntity() = FetchAllDiaryEntity(
+fun FetchAllDiaryResponse.toEntity() = AllDiaryEntity(
     allDiaryEntity = this.diaryList.map { it.toEntity() },
 )
 
-private fun FetchAllDiaryResponse.Diaries.toEntity() = FetchAllDiaryEntity.AllDiaryEntity(
+private fun FetchAllDiaryResponse.Diaries.toEntity() = AllDiaryEntity.AllDiaryEntity(
     id = this.id,
     title = this.title,
     content = this.content,

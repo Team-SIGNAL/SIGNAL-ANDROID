@@ -1,15 +1,15 @@
 package com.signal.signal_android.feature.main.diary
 
-import com.signal.domain.entity.FetchAllDiaryEntity
-import com.signal.domain.entity.FetchDayDiaryEntity
-import com.signal.domain.entity.FetchMonthDiaryEntity
+import com.signal.domain.entity.AllDiaryEntity
+import com.signal.domain.entity.DayDiaryEntity
+import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
 import java.time.LocalDate
 
 data class DiaryState(
-    val allDiaries: List<FetchAllDiaryEntity.AllDiaryEntity>,
-    val monthDiaries: List<FetchMonthDiaryEntity.MonthDiaryEntity>,
-    val dayDiaries: List<FetchDayDiaryEntity.DayDiaryEntity>,
+    val allDiaries: List<AllDiaryEntity.AllDiaryEntity>,
+    val monthDiaries: List<MonthDiaryEntity.MonthDiaryEntity>,
+    val dayDiaries: List<DayDiaryEntity.DayDiaryEntity>,
     val isAllDiariesEmpty: Boolean,
     val isMonthDiariesEmpty: Boolean,
     val isDayDiariesEmpty: Boolean,

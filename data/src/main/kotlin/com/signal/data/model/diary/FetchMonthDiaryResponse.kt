@@ -1,7 +1,7 @@
 package com.signal.data.model.diary
 
 import com.google.gson.annotations.SerializedName
-import com.signal.domain.entity.FetchMonthDiaryEntity
+import com.signal.domain.entity.MonthDiaryEntity
 import java.time.LocalDateTime
 
 data class FetchMonthDiaryResponse(
@@ -13,11 +13,11 @@ data class FetchMonthDiaryResponse(
     )
 }
 
-fun FetchMonthDiaryResponse.toEntity() = FetchMonthDiaryEntity(
+fun FetchMonthDiaryResponse.toEntity() = MonthDiaryEntity(
     monthDiaryEntity = this.monthDiaryList.map { it.toEntity() },
 )
 
-private fun FetchMonthDiaryResponse.Diaries.toEntity() = FetchMonthDiaryEntity.MonthDiaryEntity(
+private fun FetchMonthDiaryResponse.Diaries.toEntity() = MonthDiaryEntity.MonthDiaryEntity(
     id = this.id,
     date = this.date,
 )

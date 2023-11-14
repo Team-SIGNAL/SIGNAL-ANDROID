@@ -1,9 +1,9 @@
 package com.signal.signal_android.feature.main.diary
 
 import androidx.lifecycle.viewModelScope
-import com.signal.domain.entity.FetchAllDiaryEntity
-import com.signal.domain.entity.FetchDayDiaryEntity
-import com.signal.domain.entity.FetchMonthDiaryEntity
+import com.signal.domain.entity.AllDiaryEntity
+import com.signal.domain.entity.DayDiaryEntity
+import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
 import com.signal.domain.repository.DiaryRepository
 import com.signal.signal_android.BaseViewModel
@@ -14,9 +14,9 @@ class DiaryViewModel(
     private val diaryRepository: DiaryRepository,
 ) : BaseViewModel<DiaryState, DiarySideEffect>(DiaryState.getDefaultState()) {
 
-    private val _allDiaries: MutableList<FetchAllDiaryEntity.AllDiaryEntity> = mutableListOf()
-    private val _monthDiaries: MutableList<FetchMonthDiaryEntity.MonthDiaryEntity> = mutableListOf()
-    private val _dayDiaries: MutableList<FetchDayDiaryEntity.DayDiaryEntity> = mutableListOf()
+    private val _allDiaries: MutableList<AllDiaryEntity.AllDiaryEntity> = mutableListOf()
+    private val _monthDiaries: MutableList<MonthDiaryEntity.MonthDiaryEntity> = mutableListOf()
+    private val _dayDiaries: MutableList<DayDiaryEntity.DayDiaryEntity> = mutableListOf()
 
     internal fun fetchAllDiary() {
         with(state.value) {
