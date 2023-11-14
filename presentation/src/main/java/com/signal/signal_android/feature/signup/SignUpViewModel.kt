@@ -1,5 +1,6 @@
 package com.signal.signal_android.feature.signup
 
+import android.telephony.PhoneNumberUtils
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.enums.Gender
 import com.signal.domain.usecase.users.SignUpUseCase
@@ -29,7 +30,12 @@ class SignUpViewModel(
     }
 
     fun setPhone(phone: String) {
-        setState(state.value.copy(phone = phone))
+        setState(
+            state.value.copy(
+                phone = phone,
+                phoneError = phone.length != 11,
+            )
+        )
         setButtonEnabledUser()
     }
 
@@ -76,8 +82,9 @@ class SignUpViewModel(
 
     private fun setButtonEnabledUser() {
         with(state.value) {
+            val isError = nameError || phoneError
             val isBlank = name.isBlank() || phone.isBlank()
-            setState(copy(buttonEnabled = !isBlank && !nameError))
+            setState(copy(buttonEnabled = !isBlank && !isError))
         }
     }
 
@@ -92,10 +99,11 @@ class SignUpViewModel(
     fun signUp() {
         viewModelScope.launch(Dispatchers.IO) {
             with(state.value) {
+                PhoneNumberUtils.formatNumber(phone, "")
                 signUpUseCase(
                     name = name,
                     birth = birth,
-                    phone = phone,
+                    phone = phone.toPhoneNumber(),
                     accountId = accountId,
                     password = password,
                     gender = gender,
@@ -106,3 +114,13 @@ class SignUpViewModel(
         }
     }
 }
+
+private fun String.toPhoneNumber() = StringBuilder().apply {
+    with(this@toPhoneNumber) {
+        append(substring(0..2))
+        append('-')
+        append(substring(3..6))
+        append('-')
+        append(substring(7..10))
+    }
+}.toString()

@@ -89,8 +89,9 @@ internal fun SignUpUser(
             showDialog = { isShowDialog = !isShowDialog },
             name = { state.name },
             nameError = { state.nameError },
-            birth = { state.birth.toString() },
+            birth = { state.birth },
             phoneNumber = { state.phone },
+            phoneError = { state.phoneError },
             gender = { state.gender },
             onNameChange = signUpViewModel::setName,
             onPhoneNumberChange = signUpViewModel::setPhone,
@@ -127,6 +128,7 @@ private fun SignUpInputs(
     nameError: () -> Boolean,
     birth: () -> String,
     phoneNumber: () -> String,
+    phoneError: () -> Boolean,
     gender: () -> Gender,
     onNameChange: (String) -> Unit,
     onPhoneNumberChange: (String) -> Unit,
@@ -208,6 +210,8 @@ private fun SignUpInputs(
         hint = stringResource(id = R.string.sign_up_hint_phone_number),
         title = stringResource(id = R.string.phone_number),
         keyboardType = KeyboardType.NumberPassword,
+        error = phoneError(),
+        description = stringResource(id = R.string.sign_up_phone_error),
     )
     Spacer(modifier = Modifier.height(14.dp))
     Column(
