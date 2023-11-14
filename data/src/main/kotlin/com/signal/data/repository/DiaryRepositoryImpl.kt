@@ -3,8 +3,7 @@ package com.signal.data.repository
 import com.signal.data.datasource.diary.DiaryDataSource
 import com.signal.data.model.diary.CreateDiaryRequest
 import com.signal.data.model.diary.toEntity
-import com.signal.domain.entity.AllDiaryEntity
-import com.signal.domain.entity.DayDiaryEntity
+import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
 import com.signal.domain.repository.DiaryRepository
@@ -12,8 +11,7 @@ import com.signal.domain.repository.DiaryRepository
 class DiaryRepositoryImpl(
     private val diaryDateSource: DiaryDataSource,
 ) : DiaryRepository {
-    override suspend fun fetchAllDiary(): AllDiaryEntity =
-        diaryDateSource.fetchAllDiary().toEntity()
+    override suspend fun fetchAllDiary(): DiariesEntity = diaryDateSource.fetchAllDiary().toEntity()
 
     override suspend fun fetchMonthDiary(
         date: String
@@ -23,7 +21,7 @@ class DiaryRepositoryImpl(
 
     override suspend fun fetchDayDiary(
         date: String
-    ): DayDiaryEntity = diaryDateSource.fetchDayDiary(
+    ): DiariesEntity = diaryDateSource.fetchDayDiary(
         date = date
     ).toEntity()
 

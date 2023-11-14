@@ -1,8 +1,7 @@
 package com.signal.signal_android.feature.main.diary
 
 import androidx.lifecycle.viewModelScope
-import com.signal.domain.entity.AllDiaryEntity
-import com.signal.domain.entity.DayDiaryEntity
+import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.entity.DiaryDetailsEntity
 import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
@@ -15,9 +14,8 @@ class DiaryViewModel(
     private val diaryRepository: DiaryRepository,
 ) : BaseViewModel<DiaryState, DiarySideEffect>(DiaryState.getDefaultState()) {
 
-    private val _allDiaries: MutableList<AllDiaryEntity.AllDiaryEntity> = mutableListOf()
+    private val _diaries: MutableList<DiariesEntity.DiaryEntity> = mutableListOf()
     private val _monthDiaries: MutableList<MonthDiaryEntity.MonthDiaryEntity> = mutableListOf()
-    private val _dayDiaries: MutableList<DayDiaryEntity.DayDiaryEntity> = mutableListOf()
 
     internal fun fetchAllDiary() {
         with(state.value) {
@@ -25,15 +23,15 @@ class DiaryViewModel(
                 kotlin.runCatching {
                     diaryRepository.fetchAllDiary()
                 }.onSuccess {
-                    _allDiaries.addAll(it.allDiaryEntity)
+                    _diaries.addAll(it.diaryEntity)
                     setState(
                         copy(
-                            allDiaries = _allDiaries,
-                            isAllDiariesEmpty = _allDiaries.isEmpty(),
+                            diaries = _diaries,
+                            isAllDiariesEmpty = _diaries.isEmpty(),
                         )
                     )
                 }.onFailure {
-                    setState(copy(isAllDiariesEmpty = _allDiaries.isEmpty()))
+                    setState(copy(isAllDiariesEmpty = _diaries.isEmpty()))
                 }
             }
         }
@@ -65,15 +63,15 @@ class DiaryViewModel(
                 kotlin.runCatching {
                     diaryRepository.fetchDayDiary(date = date)
                 }.onSuccess {
-                    _dayDiaries.addAll(it.dayDiaryEntity)
+                    _diaries.addAll(it.diaryEntity)
                     setState(
                         copy(
-                            dayDiaries = _dayDiaries,
-                            isDayDiariesEmpty = _dayDiaries.isEmpty(),
+                            diaries = _diaries,
+                            isDayDiariesEmpty = _diaries.isEmpty(),
                         )
                     )
                 }.onFailure {
-                    setState(copy(isDayDiariesEmpty = _dayDiaries.isEmpty()))
+                    setState(copy(isDayDiariesEmpty = _diaries.isEmpty()))
                 }
             }
         }

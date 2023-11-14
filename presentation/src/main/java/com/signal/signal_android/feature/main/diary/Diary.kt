@@ -37,7 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
-import com.signal.domain.entity.DayDiaryEntity
+import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.enums.Emotion
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.foundation.Body
@@ -124,7 +124,7 @@ internal fun Diary(
                     )
                 }
             }
-            if (state.dayDiaries.isEmpty()) {
+            if (state.diaries.isEmpty()) {
                 Spacer(modifier = Modifier.height(80.dp))
                 Body2(
                     text = stringResource(id = R.string.diary_is_empty),
@@ -133,7 +133,7 @@ internal fun Diary(
             } else {
                 Diaries(
                     moveToDiaryDetails = moveToDiaryDetails,
-                    diaries = state.dayDiaries,
+                    diaries = state.diaries,
                 )
             }
         }
@@ -176,7 +176,7 @@ private fun DiaryHeader(
 @Composable
 private fun Diaries(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
-    diaries: List<DayDiaryEntity.DayDiaryEntity>,
+    diaries: List<DiariesEntity.DiaryEntity>,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),

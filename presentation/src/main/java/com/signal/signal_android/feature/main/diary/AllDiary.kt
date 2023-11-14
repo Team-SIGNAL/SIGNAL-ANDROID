@@ -28,7 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.signal.domain.entity.AllDiaryEntity
+import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.enums.Emotion
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
@@ -62,7 +62,7 @@ internal fun AllDiary(
         Row(modifier = Modifier.fillMaxSize()) {
             Diaries(
                 moveToDiaryDetails = moveToDiaryDetails,
-                diaries = state.allDiaries,
+                diaries = state.diaries,
             )
         }
     }
@@ -71,7 +71,7 @@ internal fun AllDiary(
 @Composable
 private fun Diaries(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
-    diaries: List<AllDiaryEntity.AllDiaryEntity>,
+    diaries: List<DiariesEntity.DiaryEntity>,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),

@@ -1,16 +1,14 @@
 package com.signal.signal_android.feature.main.diary
 
-import com.signal.domain.entity.AllDiaryEntity
-import com.signal.domain.entity.DayDiaryEntity
+import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.entity.DiaryDetailsEntity
 import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
 import java.time.LocalDate
 
 data class DiaryState(
-    val allDiaries: List<AllDiaryEntity.AllDiaryEntity>,
+    val diaries: List<DiariesEntity.DiaryEntity>,
     val monthDiaries: List<MonthDiaryEntity.MonthDiaryEntity>,
-    val dayDiaries: List<DayDiaryEntity.DayDiaryEntity>,
     val diaryDetailsEntity: DiaryDetailsEntity,
     val isAllDiariesEmpty: Boolean,
     val isMonthDiariesEmpty: Boolean,
@@ -24,9 +22,8 @@ data class DiaryState(
 ) {
     companion object {
         fun getDefaultState() = DiaryState(
-            allDiaries = listOf(),
+            diaries = listOf(),
             monthDiaries = listOf(),
-            dayDiaries = listOf(),
             diaryDetailsEntity = DiaryDetailsEntity(
                 date = "",
                 title = "",

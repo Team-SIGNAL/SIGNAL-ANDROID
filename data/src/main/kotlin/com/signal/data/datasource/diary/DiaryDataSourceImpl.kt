@@ -2,10 +2,9 @@ package com.signal.data.datasource.diary
 
 import com.signal.data.api.DiaryApi
 import com.signal.data.model.diary.CreateDiaryRequest
-import com.signal.data.model.diary.FetchAllDiaryResponse
-import com.signal.data.model.diary.FetchDayDiaryResponse
+import com.signal.data.model.diary.FetchDiariesResponse
 import com.signal.data.model.diary.FetchDiaryDetailsResponse
-import com.signal.data.model.diary.FetchMonthDiaryResponse
+import com.signal.data.model.diary.FetchMonthDiariesResponse
 import com.signal.data.util.ExceptionHandler
 
 class DiaryDataSourceImpl(
@@ -16,24 +15,24 @@ class DiaryDataSourceImpl(
             diaryApi.createDiary(createDiaryRequest = createDiaryRequest)
         }.sendRequest()
 
-    override suspend fun fetchAllDiary(): FetchAllDiaryResponse =
-        ExceptionHandler<FetchAllDiaryResponse>().httpRequest {
-            diaryApi.fetchAllDiary()
+    override suspend fun fetchAllDiary(): FetchDiariesResponse =
+        ExceptionHandler<FetchDiariesResponse>().httpRequest {
+            diaryApi.fetchAllDiaries()
         }.sendRequest()
 
-    override suspend fun fetchMonthDiary(date: String): FetchMonthDiaryResponse =
-        ExceptionHandler<FetchMonthDiaryResponse>().httpRequest {
-            diaryApi.fetchMonthDiary(date = date)
+    override suspend fun fetchMonthDiary(date: String): FetchMonthDiariesResponse =
+        ExceptionHandler<FetchMonthDiariesResponse>().httpRequest {
+            diaryApi.fetchMonthDiaries(date = date)
         }.sendRequest()
 
-    override suspend fun fetchDayDiary(date: String): FetchDayDiaryResponse =
-        ExceptionHandler<FetchDayDiaryResponse>().httpRequest {
-            diaryApi.fetchDayDiary(date = date)
+    override suspend fun fetchDayDiary(date: String): FetchDiariesResponse =
+        ExceptionHandler<FetchDiariesResponse>().httpRequest {
+            diaryApi.fetchDayDiaries(date = date)
         }.sendRequest()
 
     override suspend fun fetchDiaryDetails(diaryId: Long): FetchDiaryDetailsResponse =
         ExceptionHandler<FetchDiaryDetailsResponse>().httpRequest {
-            diaryApi.fetchDiaryDetails(diaryId = diaryId)
+            diaryApi.fetchDiariesDetails(diaryId = diaryId)
         }.sendRequest()
 
 }
