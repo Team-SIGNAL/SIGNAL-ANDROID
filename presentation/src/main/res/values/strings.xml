@@ -65,6 +65,7 @@
     <string name="sign_up_hint_password_confirm">비밀번호를 다시 입력하세요</string>
 
     <string name="sign_up_name_error">2~20글자로 입력해주세요</string>
+    <string name="sign_up_phone_error">올바른 형식의 전화번호를 입력해주세요</string>
     <string name="sign_up_account_id_error">5~12글자로 입력해주세요</string>
     <string name="sign_up_password_error">8글자 이상 12글자 이하로 문자, 숫자, 특수문자를 포함해주세요</string>
     <string name="sign_up_repeat_password_error">비밀번호가 일치하지 않습니다</string>
