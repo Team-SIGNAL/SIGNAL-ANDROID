@@ -1,6 +1,7 @@
 package com.signal.data.datasource.feed
 
 import com.signal.data.api.FeedApi
+import com.signal.data.model.feed.request.CreatePostRequest
 import com.signal.data.model.feed.request.PostRequest
 import com.signal.data.model.feed.response.FetchPostCommentsResponse
 import com.signal.data.model.feed.response.FetchPostDetailsResponse
@@ -37,4 +38,14 @@ class FeedDataSourceImpl(
         ExceptionHandler<FetchPostCommentsResponse>().httpRequest {
             feedApi.fetchPostComments(feedId = feedId)
         }.sendRequest()
+
+    override suspend fun createComment(
+        feedId: Long,
+        createPostRequest: CreatePostRequest,
+    ) = ExceptionHandler<Unit>().httpRequest {
+        feedApi.createComment(
+            feedId = feedId,
+            createPostRequest = createPostRequest,
+        )
+    }.sendRequest()
 }
