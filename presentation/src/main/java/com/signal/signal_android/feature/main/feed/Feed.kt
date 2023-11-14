@@ -42,7 +42,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
-import com.signal.domain.PostsEntity
+import com.signal.domain.entity.PostsEntity
 import com.signal.domain.enums.Tag
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header

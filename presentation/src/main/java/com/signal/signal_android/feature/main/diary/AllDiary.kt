@@ -17,6 +17,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,24 +28,33 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.signal.domain.entity.DiariesEntity
+import com.signal.domain.enums.Emotion
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun AllDiary(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToBack: () -> Unit,
+    diaryViewModel: DiaryViewModel = koinViewModel(),
 ) {
+    val state by diaryViewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        diaryViewModel.fetchAllDiary()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp),
     ) {
-        Spacer(modifier = Modifier.height(30.dp))
         Header(
             title = stringResource(id = R.string.diary_all_diary),
             onLeadingClicked = moveToBack,
@@ -50,7 +62,7 @@ internal fun AllDiary(
         Row(modifier = Modifier.fillMaxSize()) {
             Diaries(
                 moveToDiaryDetails = moveToDiaryDetails,
-                diaries = diaries,
+                diaries = state.diaries,
             )
         }
     }
@@ -59,7 +71,7 @@ internal fun AllDiary(
 @Composable
 private fun Diaries(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
-    diaries: List<_Diaries>,
+    diaries: List<DiariesEntity.DiaryEntity>,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -67,10 +79,10 @@ private fun Diaries(
     ) {
         items(diaries) {
             DiaryItemList(
-                moveToDiaryDetails = { moveToDiaryDetails(it.diaryId) },
+                moveToDiaryDetails = { moveToDiaryDetails(it.id) },
                 title = it.title,
                 content = it.content,
-                imageUrl = it.imageUrl,
+                imageUrl = it.image,
                 emotion = it.emotion,
             )
         }
@@ -83,7 +95,7 @@ private fun DiaryItemList(
     title: String,
     content: String,
     imageUrl: String?,
-    emotion: Int,
+    emotion: Emotion,
 ) {
     Spacer(modifier = Modifier.height(8.dp))
     Row(
@@ -130,7 +142,9 @@ private fun DiaryItemList(
         ) {
             Box(modifier = Modifier.size(40.dp)) {
                 Image(
-                    painterResource(id = emotion),
+                    painterResource(
+                        id = emotionDrawable(emotion)
+                    ),
                     contentDescription = stringResource(id = R.string.diary_emotion_image),
                 )
             }

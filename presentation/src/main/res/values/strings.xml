@@ -199,6 +199,8 @@
 
     <string name="create_diary_select_emotion">감정을 선택해보세요</string>
 
+    <string name="diary_is_empty">앗 일기가 없어요!</string>
+
     <!--diary details-->
     <string name="diary_details_image">일기 상세보기 이미지</string>
 
@@ -210,7 +212,7 @@
     <string name="emotion_surprised">surprised image</string>
     <string name="emotion_discomfort">discomfort image</string>
     <string name="emotion_pleased">pleased image</string>
-    <string name="emotion_engry">engry image</string>
+    <string name="emotion_angry">angry image</string>
     <string name="emotion_awkwardness">awkwardness image</string>
     <string name="emotion_sobbing">sobbing image</string>
     <string name="emotion_annoying">annoying image</string>

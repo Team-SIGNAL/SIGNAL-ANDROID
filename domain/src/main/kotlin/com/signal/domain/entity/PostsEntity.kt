@@ -1,4 +1,4 @@
-package com.signal.domain
+package com.signal.domain.entity
 
 data class PostsEntity(
     val postEntities: List<PostEntity>,

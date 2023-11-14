@@ -22,6 +22,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +37,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
+import com.signal.domain.entity.DiariesEntity
+import com.signal.domain.enums.Emotion
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
@@ -42,35 +46,10 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
+import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-// TODO 기능 구현 시 삭제
-internal data class _Diaries(
-    val diaryId: Long,
-    val title: String,
-    val content: String,
-    val imageUrl: String?,
-    val emotion: Int,
-)
-
-// TODO 더미
-internal val diaries = listOf(
-    _Diaries(
-        diaryId = 1,
-        title = "안녕하세요",
-        content = "sdfafsaf",
-        imageUrl = "https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg",
-        emotion = Emotion.HAPPY.emotionImage,
-    ), _Diaries(
-        diaryId = 2,
-        title = "안녕하세요",
-        content = "sdfafsaf",
-        imageUrl = "https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg",
-        emotion = Emotion.HAPPY.emotionImage,
-    )
-)
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -79,25 +58,37 @@ internal fun Diary(
     moveToCreateDiary: () -> Unit,
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToAllDiary: () -> Unit,
+    diaryViewModel: DiaryViewModel = koinViewModel(),
 ) {
     val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
     val date = Date()
 
+    val state by diaryViewModel.state.collectAsState()
     var yearState by remember { mutableStateOf(formatter.format(date).split("-").first()) }
     var monthState by remember { mutableStateOf(formatter.format(date).split("-")[1]) }
     var dayState by remember { mutableStateOf(formatter.format(date).split("-").last()) }
 
+    LaunchedEffect("$yearState-$monthState-$dayState") {
+        diaryViewModel.setDate("$yearState-$monthState-$dayState")
+        diaryViewModel.fetchDayDiary()
+    }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 30.dp),
         contentAlignment = Alignment.BottomEnd,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 30.dp),
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            SubTitle(text = stringResource(id = R.string.diary))
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.Start,
+            ) {
+                SubTitle(text = stringResource(id = R.string.diary))
+            }
             Spacer(modifier = Modifier.height(12.dp))
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -133,10 +124,18 @@ internal fun Diary(
                     )
                 }
             }
-            Diaries(
-                diaries = diaries,
-                moveToDiaryDetails = moveToDiaryDetails,
-            )
+            if (state.diaries.isEmpty()) {
+                Spacer(modifier = Modifier.height(80.dp))
+                Body2(
+                    text = stringResource(id = R.string.diary_is_empty),
+                    color = SignalColor.Gray500,
+                )
+            } else {
+                Diaries(
+                    moveToDiaryDetails = moveToDiaryDetails,
+                    diaries = state.diaries,
+                )
+            }
         }
         FloatingActionButton(
             modifier = Modifier.padding(16.dp),
@@ -177,7 +176,7 @@ private fun DiaryHeader(
 @Composable
 private fun Diaries(
     moveToDiaryDetails: (diaryId: Long) -> Unit,
-    diaries: List<_Diaries>,
+    diaries: List<DiariesEntity.DiaryEntity>,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -185,10 +184,10 @@ private fun Diaries(
     ) {
         items(diaries) {
             DiaryItems(
-                moveToDiaryDetails = { moveToDiaryDetails(it.diaryId) },
+                moveToDiaryDetails = { moveToDiaryDetails(it.id) },
                 title = it.title,
                 content = it.content,
-                imageUrl = it.imageUrl,
+                imageUrl = it.image,
                 emotion = it.emotion,
             )
         }
@@ -201,7 +200,7 @@ internal fun DiaryItems(
     title: String,
     content: String,
     imageUrl: String?,
-    emotion: Int,
+    emotion: Emotion,
 ) {
     Spacer(modifier = Modifier.height(8.dp))
     Row(
@@ -250,10 +249,29 @@ internal fun DiaryItems(
                 modifier = Modifier.size(40.dp),
             ) {
                 Image(
-                    painterResource(id = emotion),
+                    painterResource(
+                        id = emotionDrawable(emotion)
+                    ),
                     contentDescription = stringResource(id = R.string.diary_emotion_image),
                 )
             }
         }
+    }
+}
+
+fun emotionDrawable(emotion: Emotion): Int {
+    return when (emotion) {
+        Emotion.HAPPY -> R.drawable.ic_happy
+        Emotion.SOSO -> R.drawable.ic_soso
+        Emotion.DEPRESSION -> R.drawable.ic_depression
+        Emotion.SADNESS -> R.drawable.ic_sadness
+        Emotion.SURPRISED -> R.drawable.ic_surprised
+        Emotion.DISCOMFORT -> R.drawable.ic_discomfort
+        Emotion.PLEASED -> R.drawable.ic_pleased
+        Emotion.ANGRY -> R.drawable.ic_angry
+        Emotion.AWKWARDNESS -> R.drawable.ic_awkwardness
+        Emotion.SOBBING -> R.drawable.ic_sobbing
+        Emotion.ANNOYING -> R.drawable.ic_annoying
+        Emotion.BOREDOM -> R.drawable.ic_boredom
     }
 }

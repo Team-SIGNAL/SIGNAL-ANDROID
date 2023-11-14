@@ -91,7 +91,7 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(NavigationRoute.Main.CreateDiary) {
-            CreateDiary()
+            CreateDiary(moveToBack = moveToBack)
         }
 
         composable(NavigationRoute.Main.Reservation) {
