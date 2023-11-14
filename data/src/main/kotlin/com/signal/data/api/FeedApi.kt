@@ -1,7 +1,7 @@
 package com.signal.data.api
 
+import com.signal.data.model.feed.request.CreateCommentRequest
 import com.signal.data.model.feed.request.CreatePostRequest
-import com.signal.data.model.feed.request.PostRequest
 import com.signal.data.model.feed.response.FetchCommentsResponse
 import com.signal.data.model.feed.response.FetchPostDetailsResponse
 import com.signal.data.model.feed.response.FetchPostsResponse
@@ -22,7 +22,7 @@ interface FeedApi {
 
     @POST(SignalUrl.Feed.CreatePost)
     suspend fun createPost(
-        @Body postRequest: PostRequest,
+        @Body createPostRequest: CreatePostRequest,
     )
 
     @GET(SignalUrl.Feed.Details)
@@ -38,6 +38,6 @@ interface FeedApi {
     @POST(SignalUrl.Feed.CreateComment)
     suspend fun createComment(
         @Path("feed_id") feedId: Long,
-        @Body createPostRequest: CreatePostRequest,
+        @Body createCommentRequest: CreateCommentRequest,
     )
 }
