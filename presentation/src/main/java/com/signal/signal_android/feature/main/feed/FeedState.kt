@@ -23,7 +23,7 @@ data class FeedState(
         fun getDefaultState() = FeedState(
             posts = listOf(),
             tag = Tag.GENERAL,
-            page = 1,
+            page = 0,
             size = 8,
             isPostsEmpty = true,
             title = "",

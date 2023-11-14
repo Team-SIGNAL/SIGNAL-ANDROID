@@ -81,6 +81,7 @@ internal class FeedViewModel(
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.fetchPostComments(feedId).onSuccess {
+                    _comments.clear()
                     _comments.addAll(it.comments)
                     setState(copy(comments = _comments))
                 }
@@ -95,7 +96,7 @@ internal class FeedViewModel(
                     feedId = feedId,
                     content = comment,
                 ).onSuccess {
-
+                    fetchPostComments()
                 }.onFailure {
 
                 }
@@ -123,7 +124,7 @@ internal class FeedViewModel(
         }
     }
 
-    internal fun setComment(comment: String){
+    internal fun setComment(comment: String) {
         setState(state.value.copy(comment = comment))
     }
 }

@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -73,7 +74,7 @@ internal fun Feed(
     )
 
     LaunchedEffect(Unit) {
-        if(state.isPostsEmpty) {
+        if (state.isPostsEmpty) {
             feedViewModel.fetchPosts()
         }
     }
@@ -292,11 +293,16 @@ internal fun Post(
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        AsyncImage(
-            modifier = Modifier.size(48.dp),
-            model = imageUrl,
-            contentDescription = stringResource(id = R.string.feed_image),
-        )
+        imageUrl?.run {
+            AsyncImage(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(RoundedCornerShape(4.dp)),
+                model = this,
+                contentDescription = stringResource(id = R.string.feed_image),
+                contentScale = ContentScale.Crop,
+            )
+        }
         Spacer(modifier = Modifier.width(8.dp))
         Column(verticalArrangement = Arrangement.Center) {
             Row(
@@ -316,7 +322,7 @@ internal fun Post(
                     FeedDropDownMenu(
                         expanded = expanded,
                         onDismissRequest = onDismissRequest,
-                        isMine = false,
+                        isMine = true,
                         onEdit = onEdit,
                         onDelete = onDelete,
                         onReport = onReport,

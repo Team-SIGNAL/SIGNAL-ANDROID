@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.signal.domain.entity.PostCommentsEntity
 import java.time.LocalDateTime
 
-data class FetchPostCommentsResponse(
+data class FetchCommentsResponse(
     @SerializedName("comment") val comments: List<Comment>,
 ) {
     data class Comment(
@@ -12,16 +12,18 @@ data class FetchPostCommentsResponse(
         @SerializedName("content") val content: String,
         @SerializedName("is_mine") val isMine: Boolean,
         @SerializedName("date_time") val dateTime: LocalDateTime,
+        @SerializedName("profile") val profile: String,
     )
 }
 
-fun FetchPostCommentsResponse.toEntity() = PostCommentsEntity(
+fun FetchCommentsResponse.toEntity() = PostCommentsEntity(
     comments = this.comments.map { it.toEntity() },
 )
 
-fun FetchPostCommentsResponse.Comment.toEntity() = PostCommentsEntity.CommentEntity(
+fun FetchCommentsResponse.Comment.toEntity() = PostCommentsEntity.CommentEntity(
     writer = this.writer,
     content = this.content,
     isMine = this.isMine,
     dateTime = this.dateTime,
+    profile = this.profile,
 )

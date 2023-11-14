@@ -10,5 +10,6 @@ data class PostCommentsEntity(
         val content: String,
         val isMine: Boolean,
         val dateTime: LocalDateTime,
+        val profile: String,
     )
 }

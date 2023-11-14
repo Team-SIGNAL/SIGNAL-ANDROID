@@ -2,7 +2,7 @@ package com.signal.data.api
 
 import com.signal.data.model.feed.request.CreatePostRequest
 import com.signal.data.model.feed.request.PostRequest
-import com.signal.data.model.feed.response.FetchPostCommentsResponse
+import com.signal.data.model.feed.response.FetchCommentsResponse
 import com.signal.data.model.feed.response.FetchPostDetailsResponse
 import com.signal.data.model.feed.response.FetchPostsResponse
 import com.signal.domain.enums.Tag
@@ -33,7 +33,7 @@ interface FeedApi {
     @GET(SignalUrl.Feed.Comments)
     suspend fun fetchPostComments(
         @Path("feed_id") feedId: Long,
-    ): FetchPostCommentsResponse
+    ): FetchCommentsResponse
 
     @POST(SignalUrl.Feed.CreateComment)
     suspend fun createComment(
