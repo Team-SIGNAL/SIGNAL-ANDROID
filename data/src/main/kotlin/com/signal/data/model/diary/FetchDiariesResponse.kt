@@ -5,7 +5,7 @@ import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.enums.Emotion
 
 data class FetchDiariesResponse(
-    @SerializedName("diary_list") val diaryList: List<Diaries>
+    @SerializedName("diary_list") val diaries: List<Diaries>
 ) {
     data class Diaries(
         @SerializedName("id") val id: Long,
@@ -17,7 +17,7 @@ data class FetchDiariesResponse(
 }
 
 fun FetchDiariesResponse.toEntity() = DiariesEntity(
-    diaryEntity = this.diaryList.map { it.toEntity() },
+    diaryEntity = this.diaries.map { it.toEntity() },
 )
 
 private fun FetchDiariesResponse.Diaries.toEntity() = DiariesEntity.DiaryEntity(

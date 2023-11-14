@@ -7,8 +7,8 @@ import com.signal.data.model.diary.FetchMonthDiariesResponse
 
 interface DiaryDataSource {
     suspend fun createDiary(createDiaryRequest: CreateDiaryRequest)
-    suspend fun fetchAllDiary(): FetchDiariesResponse
-    suspend fun fetchMonthDiary(date: String): FetchMonthDiariesResponse
-    suspend fun fetchDayDiary(date: String): FetchDiariesResponse
+    suspend fun fetchAllDiaries(): FetchDiariesResponse
+    suspend fun fetchMonthDiaries(date: String): FetchMonthDiariesResponse
+    suspend fun fetchDayDiaries(date: String): FetchDiariesResponse
     suspend fun fetchDiaryDetails(diaryId: Long): FetchDiaryDetailsResponse
 }

@@ -7,6 +7,7 @@ import com.signal.data.model.diary.FetchMonthDiariesResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface DiaryApi {
@@ -28,8 +29,8 @@ interface DiaryApi {
         @Query("date") date: String,
     ): FetchDiariesResponse
 
-    @GET(SignalUrl.Diary.CreateDiary)
+    @GET(SignalUrl.Diary.FetchDiaryDetail)
     suspend fun fetchDiaryDetails(
-        @Query("diary_id") diaryId: Long,
+        @Path("diary_id") diaryId: Long,
     ): FetchDiaryDetailsResponse
 }

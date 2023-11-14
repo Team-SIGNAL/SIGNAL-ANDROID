@@ -10,13 +10,13 @@ import com.signal.domain.repository.DiaryRepository
 class DiaryRepositoryImpl(
     private val diaryDateSource: DiaryDataSource,
 ) : DiaryRepository {
-    override suspend fun fetchAllDiary(): DiariesEntity = diaryDateSource.fetchAllDiary().toEntity()
+    override suspend fun fetchAllDiary(): DiariesEntity = diaryDateSource.fetchAllDiaries().toEntity()
 
     override suspend fun fetchMonthDiary(date: String) =
-        diaryDateSource.fetchMonthDiary(date = date).toEntity()
+        diaryDateSource.fetchMonthDiaries(date = date).toEntity()
 
     override suspend fun fetchDayDiary(date: String) =
-        diaryDateSource.fetchDayDiary(date = date).toEntity()
+        diaryDateSource.fetchDayDiaries(date = date).toEntity()
 
     override suspend fun createDiary(
         title: String,
