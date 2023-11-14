@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.signal.domain.entity.MonthDiaryEntity
 import java.time.LocalDateTime
 
-data class FetchMonthDiaryResponse(
+data class FetchMonthDiariesResponse(
     @SerializedName("month_diary_list") val monthDiaryList: List<Diaries>,
 ) {
     data class Diaries(
@@ -13,11 +13,11 @@ data class FetchMonthDiaryResponse(
     )
 }
 
-fun FetchMonthDiaryResponse.toEntity() = MonthDiaryEntity(
+fun FetchMonthDiariesResponse.toEntity() = MonthDiaryEntity(
     monthDiaryEntity = this.monthDiaryList.map { it.toEntity() },
 )
 
-private fun FetchMonthDiaryResponse.Diaries.toEntity() = MonthDiaryEntity.MonthDiaryEntity(
+private fun FetchMonthDiariesResponse.Diaries.toEntity() = MonthDiaryEntity.MonthDiaryEntity(
     id = this.id,
     date = this.date,
 )

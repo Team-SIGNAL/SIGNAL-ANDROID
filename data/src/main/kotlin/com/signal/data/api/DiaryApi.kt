@@ -1,10 +1,9 @@
 package com.signal.data.api
 
 import com.signal.data.model.diary.CreateDiaryRequest
-import com.signal.data.model.diary.FetchAllDiaryResponse
-import com.signal.data.model.diary.FetchDayDiaryResponse
+import com.signal.data.model.diary.FetchDiariesResponse
 import com.signal.data.model.diary.FetchDiaryDetailsResponse
-import com.signal.data.model.diary.FetchMonthDiaryResponse
+import com.signal.data.model.diary.FetchMonthDiariesResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,20 +16,20 @@ interface DiaryApi {
     )
 
     @GET(SignalUrl.Diary.FetchAllDiary)
-    suspend fun fetchAllDiary(): FetchAllDiaryResponse
+    suspend fun fetchAllDiaries(): FetchDiariesResponse
 
     @GET(SignalUrl.Diary.FetchMonthDiary)
-    suspend fun fetchMonthDiary(
+    suspend fun fetchMonthDiaries(
         @Query("date") date: String,
-    ): FetchMonthDiaryResponse
+    ): FetchMonthDiariesResponse
 
     @GET(SignalUrl.Diary.CreateDiary)
-    suspend fun fetchDayDiary(
+    suspend fun fetchDayDiaries(
         @Query("date") date: String,
-    ): FetchDayDiaryResponse
+    ): FetchDiariesResponse
 
     @GET(SignalUrl.Diary.CreateDiary)
-    suspend fun fetchDiaryDetails(
+    suspend fun fetchDiariesDetails(
         @Query("diary_id") diaryId: Long,
     ): FetchDiaryDetailsResponse
 }
