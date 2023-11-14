@@ -32,7 +32,7 @@ class DiaryDataSourceImpl(
 
     override suspend fun fetchDiaryDetails(diaryId: Long): FetchDiaryDetailsResponse =
         ExceptionHandler<FetchDiaryDetailsResponse>().httpRequest {
-            diaryApi.fetchDiariesDetails(diaryId = diaryId)
+            diaryApi.fetchDiaryDetails(diaryId = diaryId)
         }.sendRequest()
 
 }

@@ -26,7 +26,7 @@ object SignalUrl {
 
     object Diary {
         const val CreateDiary = diary
-        const val FetchAllDiary = "$diary/list"
-        const val FetchMonthDiary = "$diary/month"
+        const val FetchAllDiaries = "$diary/list"
+        const val FetchMonthDiaries = "$diary/month"
     }
 }

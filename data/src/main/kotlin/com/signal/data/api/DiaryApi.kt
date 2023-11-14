@@ -15,10 +15,10 @@ interface DiaryApi {
         @Body createDiaryRequest: CreateDiaryRequest,
     )
 
-    @GET(SignalUrl.Diary.FetchAllDiary)
+    @GET(SignalUrl.Diary.FetchAllDiaries)
     suspend fun fetchAllDiaries(): FetchDiariesResponse
 
-    @GET(SignalUrl.Diary.FetchMonthDiary)
+    @GET(SignalUrl.Diary.FetchMonthDiaries)
     suspend fun fetchMonthDiaries(
         @Query("date") date: String,
     ): FetchMonthDiariesResponse
@@ -29,7 +29,7 @@ interface DiaryApi {
     ): FetchDiariesResponse
 
     @GET(SignalUrl.Diary.CreateDiary)
-    suspend fun fetchDiariesDetails(
+    suspend fun fetchDiaryDetails(
         @Query("diary_id") diaryId: Long,
     ): FetchDiaryDetailsResponse
 }
