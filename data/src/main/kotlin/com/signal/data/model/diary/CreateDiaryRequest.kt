@@ -9,5 +9,4 @@ data class CreateDiaryRequest(
     @SerializedName("emotion") val emotion: Emotion,
     @SerializedName("date") val date: String,
     @SerializedName("image") val image: String?,
-) {
-}
+)
