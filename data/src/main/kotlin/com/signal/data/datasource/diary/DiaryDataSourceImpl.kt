@@ -15,22 +15,21 @@ class DiaryDataSourceImpl(
             diaryApi.createDiary(createDiaryRequest = createDiaryRequest)
         }.sendRequest()
 
-    override suspend fun fetchAllDiaries(): FetchDiariesResponse =
-        ExceptionHandler<FetchDiariesResponse>().httpRequest {
-            diaryApi.fetchAllDiaries()
-        }.sendRequest()
+    override suspend fun fetchAllDiaries() = ExceptionHandler<FetchDiariesResponse>().httpRequest {
+        diaryApi.fetchAllDiaries()
+    }.sendRequest()
 
-    override suspend fun fetchMonthDiaries(date: String): FetchMonthDiariesResponse =
+    override suspend fun fetchMonthDiaries(date: String) =
         ExceptionHandler<FetchMonthDiariesResponse>().httpRequest {
             diaryApi.fetchMonthDiaries(date = date)
         }.sendRequest()
 
-    override suspend fun fetchDayDiaries(date: String): FetchDiariesResponse =
+    override suspend fun fetchDayDiaries(date: String) =
         ExceptionHandler<FetchDiariesResponse>().httpRequest {
             diaryApi.fetchDayDiaries(date = date)
         }.sendRequest()
 
-    override suspend fun fetchDiaryDetails(diaryId: Long): FetchDiaryDetailsResponse =
+    override suspend fun fetchDiaryDetails(diaryId: Long) =
         ExceptionHandler<FetchDiaryDetailsResponse>().httpRequest {
             diaryApi.fetchDiaryDetails(diaryId = diaryId)
         }.sendRequest()
