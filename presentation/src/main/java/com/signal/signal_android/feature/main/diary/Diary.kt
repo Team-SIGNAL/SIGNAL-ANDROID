@@ -46,6 +46,7 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
+import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -57,7 +58,7 @@ internal fun Diary(
     moveToCreateDiary: () -> Unit,
     moveToDiaryDetails: (diaryId: Long) -> Unit,
     moveToAllDiary: () -> Unit,
-    diaryViewModel: DiaryViewModel,
+    diaryViewModel: DiaryViewModel = koinViewModel(),
 ) {
     val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
     val date = Date()
@@ -67,7 +68,8 @@ internal fun Diary(
     var monthState by remember { mutableStateOf(formatter.format(date).split("-")[1]) }
     var dayState by remember { mutableStateOf(formatter.format(date).split("-").last()) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect("$yearState-$monthState-$dayState") {
+        diaryViewModel.setDate("$yearState-$monthState-$dayState")
         diaryViewModel.fetchDayDiary()
     }
 
@@ -96,9 +98,9 @@ internal fun Diary(
                             .fillMaxWidth(),
                         factory = { CalendarView(it) },
                     ) { calendarView ->
-                        val selectedDate = "${yearState}-${monthState}-${dayState}"
+                        /*val selectedDate = "${yearState}-${monthState}-${dayState}"
                         calendarView.date = formatter.parse(selectedDate)!!.time
-
+                        */
 
                         calendarView.setOnDateChangeListener { _, year, month, day ->
                             yearState = year.toString()
@@ -115,6 +117,13 @@ internal fun Diary(
                         moveToAllDiary = moveToAllDiary,
                     )
                 }
+            }
+            if (state.dayDiaries.isEmpty()) {
+                Spacer(modifier = Modifier.height(80.dp))
+                Body2(
+                    text = stringResource(id = R.string.diary_is_empty),
+                    color = SignalColor.Gray500,
+                )
             }
             Diaries(
                 moveToDiaryDetails = moveToDiaryDetails,
