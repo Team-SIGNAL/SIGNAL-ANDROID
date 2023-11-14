@@ -1,7 +1,8 @@
 package com.signal.data.repository
 
 import com.signal.data.datasource.feed.FeedDataSource
-import com.signal.data.model.feed.request.PostRequest
+import com.signal.data.model.feed.request.CreateCommentRequest
+import com.signal.data.model.feed.request.CreatePostRequest
 import com.signal.data.model.feed.response.toEntity
 import com.signal.domain.PostsEntity
 import com.signal.domain.enums.Tag
@@ -27,7 +28,7 @@ class FeedRepositoryImpl(
         tag: Tag,
     ) = runCatching {
         feedDataSource.createPost(
-            PostRequest(
+            CreatePostRequest(
                 title = title,
                 content = content,
                 image = image,
@@ -42,5 +43,15 @@ class FeedRepositoryImpl(
 
     override suspend fun fetchPostComments(feedId: Long) = runCatching {
         feedDataSource.fetchPostComments(feedId = feedId).toEntity()
+    }
+
+    override suspend fun createComment(
+        feedId: Long,
+        content: String,
+    ) = kotlin.runCatching {
+        feedDataSource.createComment(
+            feedId = feedId,
+            createCommentRequest = CreateCommentRequest(content = content),
+        )
     }
 }

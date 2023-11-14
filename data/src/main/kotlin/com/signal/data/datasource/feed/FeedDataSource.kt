@@ -1,7 +1,8 @@
 package com.signal.data.datasource.feed
 
-import com.signal.data.model.feed.request.PostRequest
-import com.signal.data.model.feed.response.FetchPostCommentsResponse
+import com.signal.data.model.feed.request.CreateCommentRequest
+import com.signal.data.model.feed.request.CreatePostRequest
+import com.signal.data.model.feed.response.FetchCommentsResponse
 import com.signal.data.model.feed.response.FetchPostDetailsResponse
 import com.signal.data.model.feed.response.FetchPostsResponse
 import com.signal.domain.enums.Tag
@@ -13,9 +14,14 @@ interface FeedDataSource {
         size: Long,
     ): FetchPostsResponse
 
-    suspend fun createPost(postRequest: PostRequest)
+    suspend fun createPost(createPostRequest: CreatePostRequest)
 
     suspend fun fetchPostDetails(feedId: Long): FetchPostDetailsResponse
 
-    suspend fun fetchPostComments(feedId: Long): FetchPostCommentsResponse
+    suspend fun fetchPostComments(feedId: Long): FetchCommentsResponse
+
+    suspend fun createComment(
+        feedId: Long,
+        createCommentRequest: CreateCommentRequest,
+    )
 }

@@ -81,8 +81,25 @@ internal class FeedViewModel(
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.fetchPostComments(feedId).onSuccess {
+                    _comments.clear()
                     _comments.addAll(it.comments)
                     setState(copy(comments = _comments))
+                }
+            }
+        }
+    }
+
+    internal fun createComment() {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                feedRepository.createComment(
+                    feedId = feedId,
+                    content = comment,
+                ).onSuccess {
+                    postSideEffect(FeedSideEffect.ClearFocus)
+                    fetchPostComments()
+                }.onFailure {
+
                 }
             }
         }
@@ -106,5 +123,9 @@ internal class FeedViewModel(
             _posts.clear()
             fetchPosts()
         }
+    }
+
+    internal fun setComment(comment: String) {
+        setState(state.value.copy(comment = comment))
     }
 }

@@ -91,10 +91,7 @@ internal fun FeedDetails(
 
     ModalBottomSheetLayout(
         sheetContent = {
-            CommentDialog(
-                state = state,
-                fetchPostComments = feedViewModel::fetchPostComments,
-            )
+            CommentDialog(feedViewModel = feedViewModel)
         },
         sheetState = sheetState,
         sheetShape = RoundedCornerShape(
@@ -146,6 +143,7 @@ internal fun FeedDetails(
                         .signalClickable(
                             onClick = {
                                 coroutineScope.launch {
+                                    feedViewModel.fetchPostComments()
                                     sheetState.show()
                                 }
                             },

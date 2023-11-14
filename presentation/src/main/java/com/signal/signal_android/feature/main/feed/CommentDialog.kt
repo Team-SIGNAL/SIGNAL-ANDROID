@@ -20,9 +20,12 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -35,14 +38,23 @@ import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
+import kotlinx.coroutines.flow.SharedFlow
 
 @Composable
 internal fun CommentDialog(
-    state: FeedState,
-    fetchPostComments: suspend () -> Unit,
+    feedViewModel: FeedViewModel,
 ) {
+    val state by feedViewModel.state.collectAsState()
+
+    val focusManager = LocalFocusManager.current
+
     LaunchedEffect(Unit) {
-        fetchPostComments()
+        feedViewModel.sideEffect.collect {
+            when (it) {
+                is FeedSideEffect.ClearFocus -> focusManager.clearFocus()
+                else -> {}
+            }
+        }
     }
 
     Box(contentAlignment = Alignment.BottomCenter) {
@@ -81,9 +93,9 @@ internal fun CommentDialog(
                 .imePadding(),
         ) {
             Input(
-                comment = { "comment" },
-                onCommentChange = { },
-                onClick = {},
+                comment = { state.comment },
+                onCommentChange = feedViewModel::setComment,
+                onClick = feedViewModel::createComment,
             )
         }
     }
@@ -101,7 +113,7 @@ private fun Input(
     ) {
         SignalTextField(
             modifier = Modifier.fillMaxWidth(0.8f),
-            value = "",
+            value = comment(),
             onValueChange = onCommentChange,
             hint = stringResource(id = R.string.comment_dialog_input_comment),
         )
@@ -110,6 +122,7 @@ private fun Input(
             modifier = Modifier.weight(0.2f),
             text = stringResource(id = R.string.my_page_secession_check),
             onClick = onClick,
+            enabled = comment().isNotBlank(),
         )
     }
 }
@@ -125,7 +138,7 @@ private fun Comments(
     ) {
         items(commentEntities) {
             Comment(
-                profileImageUrl = "",
+                profileImageUrl = it.profile,
                 writer = it.writer,
                 time = it.dateTime.toString(),
                 content = it.content,
