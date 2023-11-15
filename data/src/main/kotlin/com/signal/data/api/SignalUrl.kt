@@ -15,7 +15,7 @@ object SignalUrl {
 
     object Feed {
         const val CreatePost = "$feed/user"
-        const val List = "$feed/list"
+        const val List = "$feed/user/list"
         const val Details = "$feed/{feed_id}"
         const val Comments = "$feed/comment/{feed_id}"
         const val FeedId = "$feed/{feed_id}"

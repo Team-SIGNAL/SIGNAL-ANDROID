@@ -105,9 +105,10 @@ internal fun FeedDetails(
                 .padding(horizontal = 16.dp),
         ) {
             Header(
-                title = state.title,
+                title = details.title,
                 onLeadingClicked = moveToBack,
             )
+            Spacer(modifier = Modifier.height(30.dp))
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -120,14 +121,15 @@ internal fun FeedDetails(
                     onClick = { expanded = feedId },
                     expanded = expanded == feedId,
                     onDismissRequest = { expanded = -1 },
+                    isMine = details.isMine,
                 )
-                if (details.imageUrl != null) {
+                if (details.image != null) {
                     Spacer(modifier = Modifier.height(22.dp))
                     AsyncImage(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp),
-                        model = details.imageUrl,
+                        model = details.image,
                         contentDescription = stringResource(id = R.string.feed_details_image),
                     )
                 }
@@ -190,8 +192,8 @@ private fun User(
     onClick: () -> Unit,
     expanded: Boolean,
     onDismissRequest: () -> Unit,
-
-    ) {
+    isMine: Boolean,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -226,6 +228,7 @@ private fun User(
             FeedDropDownMenu(
                 expanded = expanded,
                 onDismissRequest = onDismissRequest,
+                isMine = isMine,
                 onEdit = { /*TODO*/ },
                 onDelete = { /*TODO*/ },
                 onReport = { /*TODO*/ },

@@ -62,7 +62,8 @@ internal class FeedViewModel(
                     setState(
                         copy(
                             postDetailsEntity = PostDetailsEntity(
-                                imageUrl = it.imageUrl,
+                                id = it.id,
+                                image = it.image,
                                 title = it.title,
                                 date = it.date,
                                 writer = it.writer,

@@ -360,7 +360,7 @@ internal fun Post(
 @Composable
 internal fun FeedDropDownMenu(
     expanded: Boolean,
-    isMine: Boolean = false,
+    isMine: Boolean,
     onDismissRequest: () -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
