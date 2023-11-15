@@ -174,6 +174,7 @@ internal fun FeedDetails(
                         onEdit = {},
                         onDelete = { showDialog = true },
                         onReport = {},
+                        isMine = it.isMine,
                     )
                 }
             }
