@@ -20,7 +20,7 @@ internal class DiagnosisViewModel(
 
     init {
         getDiagnosis()
-        //getDiagnosisHistories()
+        getDiagnosisHistories()
     }
 
     private fun getDiagnosisHistories() {
@@ -77,17 +77,25 @@ internal class DiagnosisViewModel(
     internal fun addDiagnosisHistory() {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
-                diagnosisRepository.addDiagnosisHistory(
-                    DiagnosisHistoryEntity(
-                        id = if (diagnosis.isEmpty()) 0L
-                        else diagnosis.last().id + 1L,
-                        score = diagnosis.sumOf {
-                            it.score ?: 0L
-                        },
-                        userId = accountId,
-                        date = LocalDate.now().toString(),
+                val date = LocalDate.now().toString()
+                val score = diagnosis.sumOf { it.score ?: 0L }
+                if (diagnosisHistories.none { it.date == date }) {
+                    diagnosisRepository.addDiagnosisHistory(
+                        DiagnosisHistoryEntity(
+                            id = if (diagnosisHistories.isEmpty()) 0L
+                            else diagnosisHistories.last().id + 1L,
+                            score = score,
+                            userId = accountId,
+                            date = date,
+                        )
                     )
-                )
+                } else {
+                    diagnosisRepository.setDiagnosisHistory(
+                        diagnosisHistories.first { it.date == date }.copy(
+                            score = score,
+                        )
+                    )
+                }
             }
         }
     }
