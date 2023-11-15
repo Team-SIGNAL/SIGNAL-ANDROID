@@ -1,6 +1,7 @@
 package com.signal.domain.repository
 
 import com.signal.domain.entity.DiagnosisEntity
+import com.signal.domain.entity.DiagnosisHistoryEntity
 
 interface DiagnosisRepository {
     suspend fun getDiagnosis(): Result<List<DiagnosisEntity>>
@@ -11,4 +12,10 @@ interface DiagnosisRepository {
     )
 
     fun getLastDiagnosisDate(): Result<String>
+
+    suspend fun getDiagnosisHistories(): Result<List<DiagnosisHistoryEntity>>
+
+    suspend fun setDiagnosisHistory(diagnosisHistoryEntity: DiagnosisHistoryEntity)
+
+    suspend fun addDiagnosisHistory(diagnosisHistoryEntity: DiagnosisHistoryEntity)
 }
