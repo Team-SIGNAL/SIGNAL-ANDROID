@@ -122,7 +122,10 @@ internal fun SignalApp() {
             },
             moveToCreateReservation = {
                 navController.navigate(NavigationRoute.Main.CreateReservation)
-            }
+            },
+            moveToMoreAchievement = {
+                navController.navigate(NavigationRoute.Main.MoreAchievement)
+            },
         )
     }
 }

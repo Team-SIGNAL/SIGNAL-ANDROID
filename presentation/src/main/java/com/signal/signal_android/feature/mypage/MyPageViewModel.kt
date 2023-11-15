@@ -1,4 +1,4 @@
-package com.signal.signal_android.feature.mypage
+package com.signal.signal_android.feature.main.mypage
 
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.usecase.users.FetchUserInformationUseCase

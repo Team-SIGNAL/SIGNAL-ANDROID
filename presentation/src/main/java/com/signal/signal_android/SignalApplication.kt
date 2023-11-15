@@ -40,7 +40,7 @@ import com.signal.signal_android.feature.file.AttachmentViewModel
 import com.signal.signal_android.feature.main.diary.DiaryViewModel
 import com.signal.signal_android.feature.main.feed.FeedViewModel
 import com.signal.signal_android.feature.main.home.HomeViewModel
-import com.signal.signal_android.feature.mypage.MyPageViewModel
+import com.signal.signal_android.feature.main.mypage.MyPageViewModel
 import com.signal.signal_android.feature.signin.SignInViewModel
 import com.signal.signal_android.feature.signup.SignUpViewModel
 import org.koin.android.ext.koin.androidContext
