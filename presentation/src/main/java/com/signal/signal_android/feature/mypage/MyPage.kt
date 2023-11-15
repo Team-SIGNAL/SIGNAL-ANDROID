@@ -1,10 +1,11 @@
-package com.signal.signal_android.feature.mypage
+package com.signal.signal_android.feature.main.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -13,8 +14,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -51,6 +55,7 @@ import org.koin.androidx.compose.koinViewModel
 internal fun MyPage(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
+    moveToMoreAchievement: () -> Unit,
     myPageViewModel: MyPageViewModel = koinViewModel(),
 ) {
     var showSecessionDialog by remember { mutableStateOf(false) }
@@ -84,6 +89,7 @@ internal fun MyPage(
             when (it) {
                 is MyPageSideEffect.SecessionSuccess -> moveToLanding()
                 is MyPageSideEffect.SignOutSuccess -> moveToSignIn()
+                else -> {}
             }
         }
     }
@@ -108,7 +114,7 @@ internal fun MyPage(
             birth = state.birth,
             profileImageUrl = state.profile,
         )
-        Achievement()
+        Achievement(moveToMoreAchievement = moveToMoreAchievement)
         Spacer(modifier = Modifier.height(30.dp))
 
         Column(
@@ -142,32 +148,82 @@ internal fun MyPage(
 }
 
 @Composable
-private fun Achievement() {
+private fun Achievement(
+    moveToMoreAchievement: () -> Unit,
+) {
+    val itemsList = (0..2).toList()
+    val itemsIndexedList = listOf("10 코인 획득!")
+
     Spacer(modifier = Modifier.height(20.dp))
-    Column {
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Body2(
+            text = stringResource(id = R.string.my_page_received_achievement),
+            color = SignalColor.Black,
+        )
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Body2(
-                text = stringResource(id = R.string.my_page_received_achievement),
-                color = SignalColor.Black,
+            Body(
+                modifier = Modifier.signalClickable { moveToMoreAchievement() },
+                text = stringResource(id = R.string.more_achievement),
+                color = SignalColor.Gray500,
             )
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Body(
-                    text = stringResource(id = R.string.more_achievement),
-                    color = SignalColor.Gray500,
-                )
-                Image(
-                    modifier = Modifier.size(20.dp),
-                    painter = painterResource(id = R.drawable.ic_next_gray),
-                    contentDescription = null,
-                )
-            }
+            Image(
+                modifier = Modifier.size(20.dp),
+                painter = painterResource(id = R.drawable.ic_next_gray),
+                contentDescription = null,
+            )
         }
-        LazyRow(modifier = Modifier.height(66.dp)) {
-            // Add a single item
-            // TODO 업적 구현
+    }
+    Spacer(modifier = Modifier.height(6.dp))
+    LazyRow(
+        modifier = Modifier
+            .height(80.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(horizontal = 4.dp),
+    ) {
+        items(itemsList) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .shadow(
+                        spotColor = SignalColor.Primary100,
+                        elevation = 4.dp,
+                        shape = RoundedCornerShape(10.dp),
+                    )
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(
+                        color = SignalColor.Gray100,
+                        shape = RoundedCornerShape(10.dp),
+                    )
+                    .padding(
+                        vertical = 23.dp,
+                        horizontal = 21.dp,
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(SignalColor.White),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    BodyLarge(text = itemsIndexedList[0])
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Image(
+                        modifier = Modifier.size(60.dp),
+                        painter = painterResource(id = R.drawable.ic_coin_1k),
+                        contentDescription = stringResource(
+                            id = R.string.achievement_image
+                        ),
+                    )
+                }
+            }
         }
     }
 }
