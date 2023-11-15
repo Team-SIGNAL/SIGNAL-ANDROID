@@ -1,4 +1,4 @@
-package com.signal.signal_android.feature.mypage
+package com.signal.signal_android.feature.main.mypage
 
 sealed class MyPageSideEffect {
     object SecessionSuccess : MyPageSideEffect()

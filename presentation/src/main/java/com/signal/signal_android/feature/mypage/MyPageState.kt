@@ -1,4 +1,4 @@
-package com.signal.signal_android.feature.mypage
+package com.signal.signal_android.feature.main.mypage
 
 data class MyPageState(
     val name: String,
