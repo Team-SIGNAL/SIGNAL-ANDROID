@@ -2,6 +2,7 @@ package com.signal.signal_android.feature.diagnosis
 
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.DiagnosisEntity
+import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.domain.repository.DiagnosisRepository
 import com.signal.domain.usecase.users.GetAccountIdUseCase
 import com.signal.signal_android.BaseViewModel
@@ -15,9 +16,19 @@ internal class DiagnosisViewModel(
 ) : BaseViewModel<DiagnosisState, DiagnosisSideEffect>(DiagnosisState.getDefaultState()) {
 
     private val diagnosis: MutableList<DiagnosisEntity> = mutableListOf()
+    private val diagnosisHistories: MutableList<DiagnosisHistoryEntity> = mutableListOf()
 
     init {
         getDiagnosis()
+        //getDiagnosisHistories()
+    }
+
+    private fun getDiagnosisHistories() {
+        viewModelScope.launch(Dispatchers.IO) {
+            diagnosisRepository.getDiagnosisHistories().onSuccess {
+                diagnosisHistories.addAll(it)
+            }
+        }
     }
 
     private fun getDiagnosis() {
@@ -30,7 +41,6 @@ internal class DiagnosisViewModel(
                         diagnosis = diagnosis,
                     ),
                 )
-            }.onFailure {
             }
         }
     }
@@ -61,6 +71,24 @@ internal class DiagnosisViewModel(
                 diagnosisRepository.setDiagnosis(diagnosisEntity = diagnosis[count].copy(score = score))
             }
             this@DiagnosisViewModel.diagnosis.set(count, diagnosis[count].copy(score = score))
+        }
+    }
+
+    internal fun addDiagnosisHistory() {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                diagnosisRepository.addDiagnosisHistory(
+                    DiagnosisHistoryEntity(
+                        id = if (diagnosis.isEmpty()) 0L
+                        else diagnosis.last().id + 1L,
+                        score = diagnosis.sumOf {
+                            it.score ?: 0L
+                        },
+                        userId = accountId,
+                        date = LocalDate.now().toString(),
+                    )
+                )
+            }
         }
     }
 }

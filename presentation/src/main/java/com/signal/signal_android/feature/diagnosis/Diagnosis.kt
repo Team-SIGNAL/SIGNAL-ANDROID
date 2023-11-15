@@ -54,7 +54,7 @@ internal fun Diagnosis(
 
     var showDialog by remember { mutableStateOf(false) }
 
-    if(showDialog) {
+    if (showDialog) {
         Dialog(onDismissRequest = { showDialog = false }) {
             SignalDialog(
                 title = stringResource(id = R.string.diagnosis_exit),
