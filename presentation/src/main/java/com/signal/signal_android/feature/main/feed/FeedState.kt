@@ -29,7 +29,8 @@ data class FeedState(
             title = "",
             content = "",
             postDetailsEntity = PostDetailsEntity(
-                imageUrl = null,
+                id = 0L,
+                image = null,
                 title = "",
                 date = "",
                 writer = "",
@@ -40,7 +41,7 @@ data class FeedState(
             feedId = 0L,
             image = "",
             comments = listOf(),
-            comment = ""
+            comment = "",
         )
     }
 }
