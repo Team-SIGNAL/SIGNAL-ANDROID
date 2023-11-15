@@ -5,6 +5,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.signal.signal_android.feature.achievement.MoreAchievements
 import com.signal.signal_android.feature.main.Main
 import com.signal.signal_android.feature.main.diary.AllDiary
 import com.signal.signal_android.feature.main.diary.CreateDiary
@@ -30,6 +31,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToReservation: () -> Unit,
     moveToHospital: () -> Unit,
     moveToCreateReservation: () -> Unit,
+    moveToMoreAchievement: () -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -47,6 +49,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToDiaryDetails = moveToDiaryDetails,
                 moveToAllDiary = moveToAllDiary,
                 moveToReservation = moveToReservation,
+                moveToMoreAchievement = moveToMoreAchievement,
             )
         }
 
@@ -107,6 +110,10 @@ internal fun NavGraphBuilder.mainNavigation(
 
         composable(NavigationRoute.Main.CreateReservation) {
             CreateReservation(moveToBack = moveToBack)
+        }
+
+        composable(NavigationRoute.Main.MoreAchievement) {
+            MoreAchievements(moveToBack = moveToBack)
         }
     }
 }

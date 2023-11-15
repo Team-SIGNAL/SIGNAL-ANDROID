@@ -31,6 +31,7 @@ sealed class NavigationRoute(val route: String) {
         const val Reservation = "reservation"
         const val Hospital = "hospital"
         const val CreateReservation = "createReservation"
+        const val MoreAchievement = "moreAchievement"
     }
 }
 
