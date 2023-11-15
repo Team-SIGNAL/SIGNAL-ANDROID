@@ -252,4 +252,8 @@
     <string name="diagnosis_15">내가 죽어야 다른 사람들, 특히 가족들이 편할 것 같다</string>
 
     <string name="diagnosis_exit">자가진단을 중단하시겠습니까?</string>
+
+    <!--achievement-->
+    <string name="achievement">업적</string>
+    <string name="achievement_image">업적 이미지</string>
 </resources>
