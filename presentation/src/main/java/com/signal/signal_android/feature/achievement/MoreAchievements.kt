@@ -49,19 +49,11 @@ internal fun MoreAchievements(
             title = stringResource(id = R.string.achievement),
             onLeadingClicked = { moveToBack() },
         )
-        Achievements()
-    }
-}
-
-@Composable
-private fun Achievements() {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        items(achievements) {
-            Achievement(message = it.message)
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(achievements) {
+                Achievement(message = it.message)
+            }
         }
-
     }
 }
 
@@ -70,11 +62,10 @@ private fun Achievement(
     message: String,
 ) {
     Row(
-        modifier = Modifier
-            .padding(
-                horizontal = 16.dp,
-                vertical = 10.dp,
-            ),
+        modifier = Modifier.padding(
+            horizontal = 16.dp,
+            vertical = 10.dp,
+        ),
     ) {
         Box(
             modifier = Modifier
