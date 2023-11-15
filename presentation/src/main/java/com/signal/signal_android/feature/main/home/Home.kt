@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,6 +30,8 @@ import coil.compose.AsyncImage
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
+import com.patrykandpatrick.vico.compose.component.lineComponent
+import com.patrykandpatrick.vico.compose.style.LocalChartStyle
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.views.chart.line.lineChart
 import com.signal.signal_android.R
@@ -157,6 +160,25 @@ private fun HomeChart(
     val chartEntryModel = entryModelOf(1, 2, 3, 4, 5, 6, 7)
     val context = LocalContext.current
 
+    val chartStyle = LocalChartStyle.current.copy(
+        axis = LocalChartStyle.current.axis.copy(
+            axisLabelColor = SignalColor.Gray600,
+            axisLineColor = SignalColor.Gray600.copy(alpha = 0.5f),
+            axisGuidelineColor = SignalColor.Gray600.copy(alpha = 0.2f),
+        ),
+        columnChart = LocalChartStyle.current.columnChart.copy(
+            columns = LocalChartStyle.current.columnChart.columns.map {
+                lineComponent(
+                    color = SignalColor.Primary100,
+                    thickness = it.thicknessDp.dp,
+                    shape = it.shape,
+                    dynamicShader = it.dynamicShader,
+                    margins = it.margins,
+                )
+            },
+        ),
+    )
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -189,12 +211,14 @@ private fun HomeChart(
         }
     }
     Spacer(modifier = Modifier.height(8.dp))
-    Chart(
-        chart = lineChart(context = context),
-        model = chartEntryModel,
-        startAxis = rememberStartAxis(),
-        bottomAxis = rememberBottomAxis(),
-    )
+    CompositionLocalProvider(LocalChartStyle provides chartStyle) {
+        Chart(
+            chart = lineChart(context = context),
+            model = chartEntryModel,
+            startAxis = rememberStartAxis(),
+            bottomAxis = rememberBottomAxis(),
+        )
+    }
 }
 
 @Composable
