@@ -71,9 +71,9 @@ internal fun Home(
             }
             Spacer(modifier = Modifier.height(34.dp))
             HomeChart(
-                onNext = {},
-                currentView = "월별",
-                onPrevious = {},
+                onNext = homeViewModel::nextChartViewType,
+                currentView = state.chartViewType.value,
+                onPrevious = homeViewModel::previousChartViewType,
             )
             Spacer(modifier = Modifier.height(34.dp))
         }
