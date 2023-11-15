@@ -1,7 +1,8 @@
 package com.signal.domain.entity
 
 data class PostDetailsEntity(
-    val imageUrl: String?,
+    val id: Long,
+    val image: String?,
     val title: String,
     val date: String,
     val writer: String,
