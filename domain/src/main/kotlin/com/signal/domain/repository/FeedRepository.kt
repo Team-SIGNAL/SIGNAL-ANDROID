@@ -27,4 +27,6 @@ interface FeedRepository {
         feedId: Long,
         content: String,
     ): Result<Unit>
+
+    suspend fun deletePost(feedId: Long): Result<Unit>
 }

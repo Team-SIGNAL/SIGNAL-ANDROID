@@ -120,10 +120,13 @@ internal fun Feed(
                     moveToFeedDetails = moveToFeedDetails,
                     moveToReport = moveToReport,
                     posts = state.posts,
-                    showDropDown = { expanded = it },
+                    showDropDown = {
+                        feedViewModel.setFeedId(it)
+                        expanded = it
+                    },
                     expanded = expanded,
                     onDismissRequest = { expanded = -1 },
-                    onDelete = { showDialog = true },
+                    onDelete = feedViewModel::deletePost,
                 )
 
                 Column(
@@ -252,6 +255,7 @@ private fun Posts(
                 title = it.title,
                 date = it.date,
                 name = it.name,
+                isMine = it.isMine,
                 onClick = { showDropDown(it.id) },
                 expanded = expanded == it.id,
                 onDismissRequest = onDismissRequest,
@@ -270,6 +274,7 @@ internal fun Post(
     title: String,
     date: String,
     name: String,
+    isMine: Boolean,
     onClick: () -> Unit,
     expanded: Boolean,
     onDismissRequest: () -> Unit,
@@ -326,7 +331,7 @@ internal fun Post(
                     FeedDropDownMenu(
                         expanded = expanded,
                         onDismissRequest = onDismissRequest,
-                        isMine = true,
+                        isMine = isMine,
                         onEdit = onEdit,
                         onDelete = onDelete,
                         onReport = onReport,

@@ -13,6 +13,7 @@ data class FetchPostsResponse(
         @SerializedName("image") val image: String?,
         @SerializedName("name") val name: String,
         @SerializedName("create_date") val date: String,
+        @SerializedName("is_mine") val isMine: Boolean,
     )
 }
 
@@ -27,4 +28,5 @@ private fun FetchPostsResponse.Post.toEntity() = PostsEntity.PostEntity(
     image = this.image,
     name = this.name,
     date = this.date,
+    isMine = this.isMine,
 )

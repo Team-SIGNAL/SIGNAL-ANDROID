@@ -10,5 +10,6 @@ data class PostsEntity(
         val image: String?,
         val name: String,
         val date: String,
+        val isMine: Boolean,
     )
 }

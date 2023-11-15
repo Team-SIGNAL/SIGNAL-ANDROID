@@ -7,6 +7,7 @@ import com.signal.data.model.feed.response.FetchPostDetailsResponse
 import com.signal.data.model.feed.response.FetchPostsResponse
 import com.signal.domain.enums.Tag
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -35,9 +36,14 @@ interface FeedApi {
         @Path("feed_id") feedId: Long,
     ): FetchCommentsResponse
 
-    @POST(SignalUrl.Feed.CreateComment)
+    @POST(SignalUrl.Feed.FeedId)
     suspend fun createComment(
         @Path("feed_id") feedId: Long,
         @Body createCommentRequest: CreateCommentRequest,
+    )
+
+    @DELETE(SignalUrl.Feed.FeedId)
+    suspend fun deletePost(
+        @Path("feed_id") feedId: Long,
     )
 }

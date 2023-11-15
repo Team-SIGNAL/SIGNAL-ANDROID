@@ -54,4 +54,8 @@ class FeedRepositoryImpl(
             createCommentRequest = CreateCommentRequest(content = content),
         )
     }
+
+    override suspend fun deletePost(feedId: Long) = kotlin.runCatching {
+        feedDataSource.deletePost(feedId = feedId)
+    }
 }

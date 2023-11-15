@@ -1,9 +1,9 @@
 package com.signal.signal_android.feature.main.feed
 
 import androidx.lifecycle.viewModelScope
-import com.signal.domain.entity.PostsEntity
 import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
+import com.signal.domain.entity.PostsEntity
 import com.signal.domain.enums.Tag
 import com.signal.domain.repository.FeedRepository
 import com.signal.signal_android.BaseViewModel
@@ -98,6 +98,18 @@ internal class FeedViewModel(
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.ClearFocus)
                     fetchPostComments()
+                }.onFailure {
+
+                }
+            }
+        }
+    }
+
+    internal fun deletePost() {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                feedRepository.deletePost(feedId = feedId).onSuccess {
+
                 }.onFailure {
 
                 }
