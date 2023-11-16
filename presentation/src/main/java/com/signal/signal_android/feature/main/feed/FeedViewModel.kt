@@ -1,5 +1,6 @@
 package com.signal.signal_android.feature.main.feed
 
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
@@ -29,7 +30,7 @@ internal class FeedViewModel(
                     _posts.addAll(it.postEntities)
                     setState(
                         copy(
-                            posts = _posts,
+                            posts = _posts.toMutableStateList(),
                             isPostsEmpty = _posts.isEmpty(),
                         )
                     )
