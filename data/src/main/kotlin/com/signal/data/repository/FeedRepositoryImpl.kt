@@ -70,7 +70,6 @@ class FeedRepositoryImpl(
                 title = title,
                 content = content,
                 image = image,
-                tag = tag,
             )
         )
     }

@@ -151,7 +151,7 @@ internal fun Feed(
                     Body(
                         modifier = Modifier.signalClickable(
                             onClick = { moveToCreatePost(-1) },
-                            enabled = state.isPostsEmpty
+                            enabled = state.posts.isEmpty(),
                         ),
                         text = stringResource(id = R.string.feed_posts_add),
                         color = SignalColor.Primary100,

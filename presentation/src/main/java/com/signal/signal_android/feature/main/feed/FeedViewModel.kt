@@ -135,22 +135,6 @@ internal class FeedViewModel(
         }
     }
 
-    internal fun editPost() {
-        with(state.value) {
-            viewModelScope.launch(Dispatchers.IO) {
-                feedRepository.editPost(
-                    feedId = feedId,
-                    title = title,
-                    image = image,
-                    content = content,
-                    tag = tag,
-                ).onSuccess {
-
-                }
-            }
-        }
-    }
-
     internal fun setTitle(title: String) {
         setState(state.value.copy(title = title))
     }
