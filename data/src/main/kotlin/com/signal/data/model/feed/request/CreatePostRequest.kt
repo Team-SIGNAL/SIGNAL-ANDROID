@@ -7,5 +7,4 @@ data class CreatePostRequest(
     @SerializedName("title") val title: String,
     @SerializedName("content") val content: String,
     @SerializedName("image") val image: String?,
-    @SerializedName("tag") val tag: Tag,
 )
