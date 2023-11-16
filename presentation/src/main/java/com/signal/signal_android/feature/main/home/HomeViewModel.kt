@@ -3,7 +3,6 @@ package com.signal.signal_android.feature.main.home
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.domain.enums.ChartViewType
-import com.signal.domain.repository.DiagnosisRepository
 import com.signal.domain.usecase.users.GetAccountIdUseCase
 import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
 import com.signal.signal_android.BaseViewModel
@@ -35,7 +34,8 @@ internal class HomeViewModel(
                 setState(
                     state.value.copy(
                         diagnosisHistories = diagnosisHistories.map { it.copy(date = it.date.split("-")[2]) },
-                        lastDiagnosisDate = diagnosisHistories.last().date.toLastDiagnosisDate(),
+                        lastDiagnosisDate = diagnosisHistories.lastOrNull()?.date?.toLastDiagnosisDate()
+                            ?: "",
                     )
                 )
             }
