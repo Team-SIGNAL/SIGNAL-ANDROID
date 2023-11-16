@@ -1,5 +1,6 @@
 package com.signal.signal_android.feature.main.feed
 
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
@@ -26,15 +27,9 @@ internal class FeedViewModel(
                         size = size,
                     )
                 }.onSuccess {
+                    _posts.clear()
                     _posts.addAll(it.postEntities)
-                    setState(
-                        copy(
-                            posts = _posts,
-                            isPostsEmpty = _posts.isEmpty(),
-                        )
-                    )
-                }.onFailure {
-                    setState(copy(isPostsEmpty = _posts.isEmpty()))
+                    setState(copy(posts = _posts.toMutableStateList()))
                 }
             }
         }
@@ -47,9 +42,9 @@ internal class FeedViewModel(
                     title = title,
                     content = content,
                     image = imageUrl,
-                    tag = tag,
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.PostSuccess)
+                    fetchPosts()
                 }
             }
         }
@@ -108,11 +103,17 @@ internal class FeedViewModel(
 
     internal fun deletePost() {
         with(state.value) {
+            val remove = {
+                _posts.remove(_posts.find { it.id == feedId })
+                setState(copy(posts = _posts.toMutableStateList()))
+            }
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.deletePost(feedId = feedId).onSuccess {
-
+                    remove()
                 }.onFailure {
-
+                    if (it is KotlinNullPointerException) {
+                        remove()
+                    }
                 }
             }
         }

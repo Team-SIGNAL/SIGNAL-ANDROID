@@ -16,7 +16,6 @@ interface FeedRepository {
         title: String,
         content: String,
         image: String?,
-        tag: Tag,
     ): Result<Unit>
 
     suspend fun fetchPostDetails(feedId: Long): Result<PostDetailsEntity>

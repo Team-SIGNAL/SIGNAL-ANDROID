@@ -25,14 +25,12 @@ class FeedRepositoryImpl(
         title: String,
         content: String,
         image: String?,
-        tag: Tag,
     ) = runCatching {
         feedDataSource.createPost(
             CreatePostRequest(
                 title = title,
                 content = content,
                 image = image,
-                tag = tag,
             ),
         )
     }
