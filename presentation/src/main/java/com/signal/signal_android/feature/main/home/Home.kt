@@ -29,8 +29,10 @@ import coil.compose.AsyncImage
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
+import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.views.chart.line.lineChart
+import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
@@ -71,9 +73,10 @@ internal fun Home(
             }
             Spacer(modifier = Modifier.height(34.dp))
             HomeChart(
-                onNext = {},
-                currentView = "월별",
-                onPrevious = {},
+                onNext = homeViewModel::nextChartViewType,
+                currentView = state.chartViewType.value,
+                onPrevious = homeViewModel::previousChartViewType,
+                diagnosisHistories = state.diagnosisHistories,
             )
             Spacer(modifier = Modifier.height(34.dp))
         }
@@ -150,11 +153,11 @@ private fun OngoingActivity(
 
 @Composable
 private fun HomeChart(
+    diagnosisHistories: List<DiagnosisHistoryEntity>,
     onPrevious: () -> Unit,
     onNext: () -> Unit,
     currentView: String,
 ) {
-    val chartEntryModel = entryModelOf(1, 2, 3, 4, 5, 6, 7)
     val context = LocalContext.current
 
     Row(
@@ -191,11 +194,14 @@ private fun HomeChart(
     Spacer(modifier = Modifier.height(8.dp))
     Chart(
         chart = lineChart(context = context),
-        model = chartEntryModel,
+        model = diagnosisHistories.toChartModel(),
         startAxis = rememberStartAxis(),
         bottomAxis = rememberBottomAxis(),
     )
 }
+
+private fun List<DiagnosisHistoryEntity>.toChartModel() =
+    entryModelOf(this.map { FloatEntry(it.date.toFloat(), it.score.toFloat()) })
 
 @Composable
 private fun ReservationCard(

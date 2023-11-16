@@ -4,6 +4,7 @@ import com.signal.data.datasource.diagnosis.LocalDiagnosisDataSource
 import com.signal.data.model.diagnosis.toEntity
 import com.signal.data.model.diagnosis.toModel
 import com.signal.domain.entity.DiagnosisEntity
+import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.domain.repository.DiagnosisRepository
 
 class DiagnosisRepositoryImpl(
@@ -29,5 +30,17 @@ class DiagnosisRepositoryImpl(
 
     override fun getLastDiagnosisDate() = runCatching {
         localDiagnosisDataSource.getLastDiagnosisDate()
+    }
+
+    override suspend fun getDiagnosisHistories(userId: String) =
+        localDiagnosisDataSource.getDiagnosisHistories(userId = userId).map { it.toEntity() }
+
+
+    override suspend fun setDiagnosisHistory(diagnosisHistoryEntity: DiagnosisHistoryEntity) {
+        localDiagnosisDataSource.setDiagnosisHistory(diagnosisHistoryEntity.toModel())
+    }
+
+    override suspend fun addDiagnosisHistory(diagnosisHistoryEntity: DiagnosisHistoryEntity) {
+        localDiagnosisDataSource.addDiagnosisHistory(diagnosisHistoryEntity.toModel())
     }
 }

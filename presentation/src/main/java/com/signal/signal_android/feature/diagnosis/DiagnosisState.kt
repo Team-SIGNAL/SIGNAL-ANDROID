@@ -15,8 +15,8 @@ data class DiagnosisState(
                 DiagnosisEntity(
                     id = 0L,
                     question = "",
-                    score = 0L,
-                ),
+                    score = null,
+                )
             ),
             count = 0,
             accountId = "",
