@@ -32,9 +32,9 @@ class DiagnosisRepositoryImpl(
         localDiagnosisDataSource.getLastDiagnosisDate()
     }
 
-    override suspend fun getDiagnosisHistories() = kotlin.runCatching {
-        localDiagnosisDataSource.getDiagnosisHistories().map { it.toEntity() }
-    }
+    override suspend fun getDiagnosisHistories(userId: String) =
+        localDiagnosisDataSource.getDiagnosisHistories(userId = userId).map { it.toEntity() }
+
 
     override suspend fun setDiagnosisHistory(diagnosisHistoryEntity: DiagnosisHistoryEntity) {
         localDiagnosisDataSource.setDiagnosisHistory(diagnosisHistoryEntity.toModel())

@@ -13,7 +13,7 @@ interface DiagnosisRepository {
 
     fun getLastDiagnosisDate(): Result<String>
 
-    suspend fun getDiagnosisHistories(): Result<List<DiagnosisHistoryEntity>>
+    suspend fun getDiagnosisHistories(userId: String): List<DiagnosisHistoryEntity>
 
     suspend fun setDiagnosisHistory(diagnosisHistoryEntity: DiagnosisHistoryEntity)
 

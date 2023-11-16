@@ -12,8 +12,8 @@ interface DiagnosisDao {
     @Query("select * from diagnosis")
     fun getDiagnosis(): List<DiagnosisModel>
 
-    @Query("select * from diagnosisHistory")
-    fun getDiagnosisHistories(): List<DiagnosisHistoryModel>
+    @Query("select * from diagnosisHistory where userId = :userId")
+    fun getDiagnosisHistories(userId: String): List<DiagnosisHistoryModel>
 
     @Update
     fun setDiagnosis(diagnosisModel: DiagnosisModel)

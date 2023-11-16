@@ -6,7 +6,7 @@ import com.signal.data.model.diagnosis.DiagnosisModel
 interface LocalDiagnosisDataSource {
     suspend fun getDiagnosis(): List<DiagnosisModel>
 
-    suspend fun getDiagnosisHistories(): List<DiagnosisHistoryModel>
+    suspend fun getDiagnosisHistories(userId: String): List<DiagnosisHistoryModel>
 
     suspend fun setDiagnosis(diagnosisModel: DiagnosisModel)
 

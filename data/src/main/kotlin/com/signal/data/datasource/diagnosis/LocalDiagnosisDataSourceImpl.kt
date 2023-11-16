@@ -14,7 +14,8 @@ class LocalDiagnosisDataSourceImpl(
 
     override suspend fun getDiagnosis() = diagnosisDao.getDiagnosis()
 
-    override suspend fun getDiagnosisHistories() = diagnosisDao.getDiagnosisHistories()
+    override suspend fun getDiagnosisHistories(userId: String) =
+        diagnosisDao.getDiagnosisHistories(userId = userId)
 
     override suspend fun setDiagnosis(diagnosisModel: DiagnosisModel) {
         diagnosisDao.setDiagnosis(diagnosisModel)
