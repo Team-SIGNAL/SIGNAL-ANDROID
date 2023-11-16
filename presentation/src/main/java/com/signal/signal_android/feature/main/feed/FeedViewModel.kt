@@ -1,5 +1,6 @@
 package com.signal.signal_android.feature.main.feed
 
+import android.util.Log
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.PostCommentsEntity
@@ -66,6 +67,8 @@ internal class FeedViewModel(
                                 profile = it.profile,
                                 isMine = it.isMine,
                             ),
+                            title = it.title,
+                            content = it.content,
                         ),
                     )
                 }
@@ -119,17 +122,22 @@ internal class FeedViewModel(
         }
     }
 
-    internal fun editPost() {
+    internal fun editPost(imageUrl: String? = null) {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.editPost(
                     feedId = feedId,
                     title = title,
-                    image = image,
+                    image = imageUrl ?: image.ifEmpty { postDetailsEntity.image },
                     content = content,
                     tag = tag,
                 ).onSuccess {
-
+                    postSideEffect(FeedSideEffect.PostSuccess)
+                    fetchPosts()
+                }.onFailure {
+                    if (it is KotlinNullPointerException) {
+                        postSideEffect(FeedSideEffect.PostSuccess)
+                    }
                 }
             }
         }

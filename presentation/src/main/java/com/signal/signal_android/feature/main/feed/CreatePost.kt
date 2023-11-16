@@ -55,11 +55,13 @@ internal fun CreatePost(
     val details = state.postDetailsEntity
 
     var imagePreview: Uri? by remember { mutableStateOf(null) }
-    
+
     LaunchedEffect(Unit) {
         if (feedId != -1L) {
-            feedViewModel.setFeedId(feedId)
-            feedViewModel.fetchPostDetails()
+            with(feedViewModel) {
+                setFeedId(feedId)
+                fetchPostDetails()
+            }
         }
     }
 
@@ -83,7 +85,11 @@ internal fun CreatePost(
         attachmentViewModel.sideEffect.collect {
             when (it) {
                 is AttachmentSideEffect.Success -> {
-                    feedViewModel.createPost(imageUrl = fileState.imageUrl)
+                    if (feedId == -1L) {
+                        feedViewModel.createPost(imageUrl = fileState.imageUrl)
+                    } else {
+                        feedViewModel.editPost(imageUrl = fileState.imageUrl)
+                    }
                 }
 
                 is AttachmentSideEffect.Failure -> {
@@ -113,14 +119,20 @@ internal fun CreatePost(
             .padding(horizontal = 16.dp),
     ) {
         Header(
-            title = stringResource(id = R.string.create_post_header_title),
+            title = stringResource(
+                id = if (feedId == -1L) {
+                    R.string.create_post_header_title
+                } else {
+                    R.string.edit_post_header_title
+                },
+            ),
             onLeadingClicked = moveToBack,
         )
         Spacer(modifier = Modifier.height(4.dp))
         SignalTextField(
             value = state.title,
             onValueChange = feedViewModel::setTitle,
-            hint = details.title.ifEmpty { stringResource(id = R.string.create_post_title_hint) },
+            hint = stringResource(id = R.string.create_post_title_hint),
             title = stringResource(id = R.string.create_post_title),
             showLength = true,
             maxLength = 20,
@@ -130,7 +142,7 @@ internal fun CreatePost(
             modifier = Modifier.fillMaxHeight(0.5f),
             value = state.content,
             onValueChange = feedViewModel::setContent,
-            hint = details.content.ifEmpty { stringResource(id = R.string.create_post_content_hint) },
+            hint = stringResource(id = R.string.create_post_content_hint),
             title = stringResource(id = R.string.create_post_content),
             alignment = Alignment.Top,
             showLength = true,
@@ -139,7 +151,7 @@ internal fun CreatePost(
         )
         PostImage(
             uri = { imagePreview },
-            image = { details.image }
+            imageUrl = { details.image },
         ) {
             launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
@@ -148,7 +160,11 @@ internal fun CreatePost(
             text = stringResource(id = R.string.my_page_secession_check),
             onClick = {
                 if (imagePreview == null) {
-                    feedViewModel.createPost()
+                    if (feedId == -1L) {
+                        feedViewModel.createPost()
+                    } else {
+                        feedViewModel.editPost()
+                    }
                 } else {
                     attachmentViewModel.uploadFile()
                 }
@@ -162,7 +178,7 @@ internal fun CreatePost(
 @Composable
 private fun PostImage(
     uri: () -> Uri?,
-    image: () -> String?,
+    imageUrl: () -> String?,
     onClick: () -> Unit,
 ) {
     Box(
@@ -185,7 +201,8 @@ private fun PostImage(
         )
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
-            model = image() ?: uri(),
+            model = if (imageUrl().isNullOrBlank()) uri()
+            else imageUrl(),
             contentDescription = stringResource(id = R.string.feed_image),
             contentScale = ContentScale.Crop,
         )
