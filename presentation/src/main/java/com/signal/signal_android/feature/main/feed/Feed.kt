@@ -69,14 +69,12 @@ internal fun Feed(
     var showDialog by remember { mutableStateOf(false) }
 
     val alpha by animateFloatAsState(
-        targetValue = if (state.isPostsEmpty) 1f else 0f,
+        targetValue = if (state.posts.isEmpty()) 1f else 0f,
         label = "",
     )
 
     LaunchedEffect(Unit) {
-        if (state.isPostsEmpty) {
-            feedViewModel.fetchPosts()
-        }
+        feedViewModel.fetchPosts()
     }
 
     if (showDialog) {
@@ -120,7 +118,7 @@ internal fun Feed(
                 Posts(
                     moveToFeedDetails = moveToFeedDetails,
                     moveToReport = moveToReport,
-                    posts = state.posts,
+                    posts = { state.posts },
                     showDropDown = {
                         feedViewModel.setFeedId(it)
                         expanded = it
@@ -152,7 +150,7 @@ internal fun Feed(
                     Body(
                         modifier = Modifier.signalClickable(
                             onClick = moveToCreatePost,
-                            enabled = state.isPostsEmpty
+                            enabled = state.posts.isEmpty()
                         ),
                         text = stringResource(id = R.string.feed_posts_add),
                         color = SignalColor.Primary100,
@@ -244,13 +242,13 @@ private fun Posts(
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToReport: () -> Unit,
     showDropDown: (feedId: Long) -> Unit,
-    posts: List<PostsEntity.PostEntity>,
+    posts: () -> List<PostsEntity.PostEntity>,
     onDismissRequest: () -> Unit,
     expanded: Long,
     onDelete: () -> Unit,
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(posts) {
+        items(posts()) {
             Post(
                 moveToFeedDetails = { moveToFeedDetails(it.id) },
                 imageUrl = it.image,

@@ -12,7 +12,6 @@ data class FeedState(
     val tag: Tag,
     val page: Long,
     val size: Long,
-    val isPostsEmpty: Boolean,
     val title: String,
     val content: String,
     val postDetailsEntity: PostDetailsEntity,
@@ -27,7 +26,6 @@ data class FeedState(
             tag = Tag.GENERAL,
             page = 0,
             size = 8,
-            isPostsEmpty = true,
             title = "",
             content = "",
             postDetailsEntity = PostDetailsEntity(
