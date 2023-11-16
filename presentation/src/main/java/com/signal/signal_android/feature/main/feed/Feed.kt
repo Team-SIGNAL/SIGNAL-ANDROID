@@ -58,7 +58,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun Feed(
     moveToFeedDetails: (feedId: Long) -> Unit,
-    moveToCreatePost: () -> Unit,
+    moveToCreatePost: (feedId: Long) -> Unit,
     moveToReport: () -> Unit,
     feedViewModel: FeedViewModel = koinViewModel(),
 ) {
@@ -126,7 +126,7 @@ internal fun Feed(
                     expanded = expanded,
                     onDismissRequest = { expanded = -1 },
                     onDelete = feedViewModel::deletePost,
-                    onEdit = { moveToCreatePost() },
+                    onEdit = { moveToCreatePost(state.feedId) },
                 )
 
                 Column(
@@ -150,8 +150,8 @@ internal fun Feed(
                     )
                     Body(
                         modifier = Modifier.signalClickable(
-                            onClick = moveToCreatePost,
-                            enabled = state.posts.isEmpty()
+                            onClick = { moveToCreatePost(-1) },
+                            enabled = state.isPostsEmpty
                         ),
                         text = stringResource(id = R.string.feed_posts_add),
                         color = SignalColor.Primary100,
@@ -161,7 +161,7 @@ internal fun Feed(
         }
         FloatingActionButton(
             modifier = Modifier.padding(16.dp),
-            onClick = moveToCreatePost,
+            onClick = { moveToCreatePost(-1) },
             backgroundColor = SignalColor.Primary100,
         ) {
             Icon(

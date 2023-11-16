@@ -22,7 +22,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToLanding: () -> Unit,
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToBack: () -> Unit,
-    moveToCreatePost: () -> Unit,
+    moveToCreatePost: (feedId: Long) -> Unit,
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
@@ -85,8 +85,16 @@ internal fun NavGraphBuilder.mainNavigation(
             )
         }
 
-        composable(NavigationRoute.Main.CreatePost) {
-            CreatePost(moveToBack = moveToBack)
+        composable(
+            route = "${NavigationRoute.Main.CreatePost}/${NavArgument.FeedId}",
+            arguments = listOf(
+                navArgument("feedId") { type = NavType.LongType },
+            ),
+        ) {
+            CreatePost(
+                moveToBack = moveToBack,
+                feedId = it.arguments?.getLong("feedId") ?: -1,
+            )
         }
 
         composable(NavigationRoute.Main.Report) {
