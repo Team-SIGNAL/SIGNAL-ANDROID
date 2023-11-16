@@ -46,13 +46,22 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun CreatePost(
     moveToBack: () -> Unit,
+    feedId: Long,
     feedViewModel: FeedViewModel = koinViewModel(),
     attachmentViewModel: AttachmentViewModel = koinViewModel(),
 ) {
     val state by feedViewModel.state.collectAsState()
     val fileState by attachmentViewModel.state.collectAsState()
+    val details = state.postDetailsEntity
 
     var imagePreview: Uri? by remember { mutableStateOf(null) }
+    
+    LaunchedEffect(Unit) {
+        if (feedId != -1L) {
+            feedViewModel.setFeedId(feedId)
+            feedViewModel.fetchPostDetails()
+        }
+    }
 
     val context = LocalContext.current
 
@@ -111,7 +120,7 @@ internal fun CreatePost(
         SignalTextField(
             value = state.title,
             onValueChange = feedViewModel::setTitle,
-            hint = stringResource(id = R.string.create_post_title_hint),
+            hint = details.title.ifEmpty { stringResource(id = R.string.create_post_title_hint) },
             title = stringResource(id = R.string.create_post_title),
             showLength = true,
             maxLength = 20,
@@ -121,14 +130,17 @@ internal fun CreatePost(
             modifier = Modifier.fillMaxHeight(0.5f),
             value = state.content,
             onValueChange = feedViewModel::setContent,
-            hint = stringResource(id = R.string.create_post_content_hint),
+            hint = details.content.ifEmpty { stringResource(id = R.string.create_post_content_hint) },
             title = stringResource(id = R.string.create_post_content),
             alignment = Alignment.Top,
             showLength = true,
             singleLine = false,
             maxLength = 100,
         )
-        PostImage(uri = { imagePreview }) {
+        PostImage(
+            uri = { imagePreview },
+            image = { details.image }
+        ) {
             launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -150,6 +162,7 @@ internal fun CreatePost(
 @Composable
 private fun PostImage(
     uri: () -> Uri?,
+    image: () -> String?,
     onClick: () -> Unit,
 ) {
     Box(
@@ -172,7 +185,7 @@ private fun PostImage(
         )
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
-            model = uri(),
+            model = image() ?: uri(),
             contentDescription = stringResource(id = R.string.feed_image),
             contentScale = ContentScale.Crop,
         )
