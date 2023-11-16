@@ -11,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
-    private val diagnosisRepository: DiagnosisRepository,
     private val getDiagnosisHistoriesUseCase: GetDiagnosisHistoriesUseCase,
     private val getAccountIdUseCase: GetAccountIdUseCase,
 ) : BaseViewModel<HomeState, HomeSideEffect>(HomeState.getDefaultState()) {
@@ -51,12 +50,6 @@ internal class HomeViewModel(
         append(this@toLastDiagnosisDate.substring(8..9))
         append("일 ")
     }.toString()
-
-    private fun getLastDiagnosisDate() {
-        diagnosisRepository.getLastDiagnosisDate().onSuccess {
-            setState(state.value.copy(lastDiagnosisDate = it))
-        }
-    }
 
     internal fun nextChartViewType() {
         with(state.value) {

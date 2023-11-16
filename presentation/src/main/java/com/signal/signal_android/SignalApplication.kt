@@ -178,7 +178,6 @@ val viewModelModule: Module
         }
         viewModel {
             HomeViewModel(
-                diagnosisRepository = get(),
                 getDiagnosisHistoriesUseCase = get(),
                 getAccountIdUseCase = get(),
             )

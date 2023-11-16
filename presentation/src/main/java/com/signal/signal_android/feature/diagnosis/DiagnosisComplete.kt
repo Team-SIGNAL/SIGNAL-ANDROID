@@ -27,10 +27,7 @@ internal fun DiagnosisComplete(
     diagnosisViewModel: DiagnosisViewModel = koinViewModel(),
 ) {
     LaunchedEffect(Unit) {
-        with(diagnosisViewModel) {
-            saveLastDiagnosisDate()
-            addDiagnosisHistory()
-        }
+        diagnosisViewModel.addDiagnosisHistory()
     }
 
     Column(
