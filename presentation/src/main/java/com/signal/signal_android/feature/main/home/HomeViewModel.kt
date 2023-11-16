@@ -1,20 +1,61 @@
 package com.signal.signal_android.feature.main.home
 
+import androidx.lifecycle.viewModelScope
+import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.domain.enums.ChartViewType
 import com.signal.domain.repository.DiagnosisRepository
+import com.signal.domain.usecase.users.GetAccountIdUseCase
+import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
 import com.signal.signal_android.BaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
     private val diagnosisRepository: DiagnosisRepository,
+    private val getDiagnosisHistoriesUseCase: GetDiagnosisHistoriesUseCase,
+    private val getAccountIdUseCase: GetAccountIdUseCase,
 ) : BaseViewModel<HomeState, HomeSideEffect>(HomeState.getDefaultState()) {
+    private val diagnosisHistories: MutableList<DiagnosisHistoryEntity> = mutableListOf()
+
     init {
-        getLastDiagnosisDate()
+        getAccountId()
     }
+
+    private fun getAccountId() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getAccountIdUseCase().onSuccess {
+                getDiagnosisHistories(userId = it)
+            }
+        }
+    }
+
+    private fun getDiagnosisHistories(userId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            getDiagnosisHistoriesUseCase(userId = userId).onSuccess { it ->
+                diagnosisHistories.addAll(it)
+                setState(
+                    state.value.copy(
+                        diagnosisHistories = diagnosisHistories.map { it.copy(date = it.date.split("-")[2]) },
+                        lastDiagnosisDate = diagnosisHistories.last().date.toLastDiagnosisDate(),
+                    )
+                )
+            }
+        }
+    }
+
+    private fun String.toLastDiagnosisDate() = StringBuilder().apply {
+        append(this@toLastDiagnosisDate.substring(0..3))
+        append("년 ")
+        append(this@toLastDiagnosisDate.substring(5..6))
+        append("월 ")
+        append(this@toLastDiagnosisDate.substring(8..9))
+        append("일 ")
+    }.toString()
 
     private fun getLastDiagnosisDate() {
         diagnosisRepository.getLastDiagnosisDate().onSuccess {
             setState(state.value.copy(lastDiagnosisDate = it))
-        }.onFailure { }
+        }
     }
 
     internal fun nextChartViewType() {

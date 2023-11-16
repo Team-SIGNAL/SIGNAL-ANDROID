@@ -5,6 +5,7 @@ import com.signal.domain.entity.DiagnosisEntity
 import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.domain.repository.DiagnosisRepository
 import com.signal.domain.usecase.users.GetAccountIdUseCase
+import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,6 +14,7 @@ import java.time.LocalDate
 internal class DiagnosisViewModel(
     private val diagnosisRepository: DiagnosisRepository,
     private val getAccountIdUseCase: GetAccountIdUseCase,
+    private val getDiagnosisHistoriesUseCase: GetDiagnosisHistoriesUseCase,
 ) : BaseViewModel<DiagnosisState, DiagnosisSideEffect>(DiagnosisState.getDefaultState()) {
 
     private val diagnosis: MutableList<DiagnosisEntity> = mutableListOf()
@@ -25,7 +27,7 @@ internal class DiagnosisViewModel(
 
     private fun getDiagnosisHistories() {
         viewModelScope.launch(Dispatchers.IO) {
-            diagnosisRepository.getDiagnosisHistories().onSuccess {
+            getDiagnosisHistoriesUseCase(userId = state.value.accountId).onSuccess {
                 diagnosisHistories.addAll(it)
             }
         }

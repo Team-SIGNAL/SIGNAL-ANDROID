@@ -30,6 +30,7 @@ import com.signal.domain.repository.FeedRepository
 import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.GetAccountIdUseCase
+import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
 import com.signal.domain.usecase.users.SaveAccountIdUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
 import com.signal.domain.usecase.users.SignInUseCase
@@ -147,6 +148,7 @@ val useCaseModule: Module
         single { FetchUserInformationUseCase(userRepository = get()) }
         single { SaveAccountIdUseCase(userRepository = get()) }
         single { GetAccountIdUseCase(userRepository = get()) }
+        single { GetDiagnosisHistoriesUseCase(diagnosisRepository = get()) }
     }
 
 val viewModelModule: Module
@@ -171,8 +173,15 @@ val viewModelModule: Module
             DiagnosisViewModel(
                 diagnosisRepository = get(),
                 getAccountIdUseCase = get(),
+                getDiagnosisHistoriesUseCase = get(),
             )
         }
-        viewModel { HomeViewModel(diagnosisRepository = get()) }
+        viewModel {
+            HomeViewModel(
+                diagnosisRepository = get(),
+                getDiagnosisHistoriesUseCase = get(),
+                getAccountIdUseCase = get(),
+            )
+        }
         viewModel { DiaryViewModel(diaryRepository = get()) }
     }
