@@ -108,6 +108,7 @@ internal fun Feed(
             )
             Filter(
                 expanded = { filterExpanded },
+                onDismissRequest = { filterExpanded = it },
                 currentTag = { state.tag },
                 onSelect = {
                     feedViewModel.setTag(it)
@@ -176,6 +177,7 @@ internal fun Feed(
 @Composable
 private fun Filter(
     expanded: () -> Boolean,
+    onDismissRequest: (Boolean) -> Unit,
     currentTag: () -> Tag,
     onSelect: (Tag) -> Unit,
     onClick: () -> Unit,
@@ -200,7 +202,7 @@ private fun Filter(
             }
             DropdownMenu(
                 expanded = expanded(),
-                onDismissRequest = { /*TODO*/ },
+                onDismissRequest = { onDismissRequest(!expanded()) },
             ) {
                 DropdownMenuItem(
                     text = {
