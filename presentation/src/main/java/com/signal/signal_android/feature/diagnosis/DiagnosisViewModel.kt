@@ -22,6 +22,7 @@ internal class DiagnosisViewModel(
 
     init {
         getDiagnosis()
+        getAccountId()
         getDiagnosisHistories()
     }
 
@@ -44,16 +45,6 @@ internal class DiagnosisViewModel(
                     ),
                 )
             }
-        }
-    }
-
-    internal fun saveLastDiagnosisDate() {
-        getAccountId()
-        LocalDate.now().apply {
-            diagnosisRepository.saveLastDiagnosisDate(
-                date = "${year}년 ${monthValue}월 ${dayOfMonth}일",
-                accountId = state.value.accountId,
-            )
         }
     }
 
@@ -84,8 +75,8 @@ internal class DiagnosisViewModel(
                 if (diagnosisHistories.none { it.date == date }) {
                     diagnosisRepository.addDiagnosisHistory(
                         DiagnosisHistoryEntity(
-                            id = if (diagnosisHistories.isEmpty()) 0L
-                            else diagnosisHistories.last().id + 1L,
+                            id = if (diagnosisHistories.isEmpty()) 0
+                            else diagnosisHistories.last().id + 1,
                             score = score,
                             userId = accountId,
                             date = date,
