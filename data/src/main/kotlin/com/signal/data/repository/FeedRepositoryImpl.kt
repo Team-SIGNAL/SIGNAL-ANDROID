@@ -62,7 +62,6 @@ class FeedRepositoryImpl(
         title: String,
         content: String,
         image: String?,
-        tag: Tag
     ) = kotlin.runCatching {
         feedDataSource.editPost(
             feedId = feedId,

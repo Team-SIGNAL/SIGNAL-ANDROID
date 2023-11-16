@@ -129,7 +129,6 @@ internal class FeedViewModel(
                     title = title,
                     image = imageUrl ?: image.ifEmpty { postDetailsEntity.image },
                     content = content,
-                    tag = tag,
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.PostSuccess)
                     fetchPosts()
