@@ -5,6 +5,7 @@ object SignalUrl {
     private const val feed = "/feed"
     private const val attachment = "/attachment"
     private const val diary = "/diary"
+    private const val reservation = "/reservation"
 
     object Users {
         const val SignIn = "$users/signin"
@@ -31,5 +32,11 @@ object SignalUrl {
         const val FetchMonthDiaries = "$diary/month"
         const val FetchDiaryDetail = "$diary/details/{diary_id}"
         const val DeleteDiary = "$diary/{diary_id}"
+    }
+
+    object Reservation {
+        const val FetchHospitals = "$reservation/"
+        const val CreateReservation = reservation
+        const val FetchReservationDetails = "$reservation/detail/{reservation_id}"
     }
 }
