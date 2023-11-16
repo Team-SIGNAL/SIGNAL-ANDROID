@@ -170,6 +170,7 @@ internal fun CreatePost(
                 }
                 focusManager.clearFocus()
             },
+            enabled = state.buttonEnabled,
         )
         Spacer(modifier = Modifier.height(26.dp))
     }

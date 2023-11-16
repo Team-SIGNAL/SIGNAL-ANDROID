@@ -19,6 +19,7 @@ data class FeedState(
     val image: String,
     val comments: List<PostCommentsEntity.CommentEntity>,
     val comment: String,
+    val buttonEnabled: Boolean,
 ) {
     companion object {
         fun getDefaultState() = FeedState(
@@ -42,6 +43,7 @@ data class FeedState(
             image = "",
             comments = listOf(),
             comment = "",
+            buttonEnabled = false,
         )
     }
 }

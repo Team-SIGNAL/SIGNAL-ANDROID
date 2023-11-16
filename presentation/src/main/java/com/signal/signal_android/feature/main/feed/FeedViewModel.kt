@@ -1,6 +1,5 @@
 package com.signal.signal_android.feature.main.feed
 
-import android.util.Log
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.PostCommentsEntity
@@ -145,10 +144,22 @@ internal class FeedViewModel(
 
     internal fun setTitle(title: String) {
         setState(state.value.copy(title = title))
+        setButtonEnabled()
     }
 
     internal fun setContent(content: String) {
         setState(state.value.copy(content = content))
+        setButtonEnabled()
+    }
+
+    private fun setButtonEnabled() {
+        with(state.value) {
+            setState(
+                copy(
+                    buttonEnabled = title.isNotBlank() && content.isNotBlank()
+                )
+            )
+        }
     }
 
     internal fun setFeedId(feedId: Long) {
