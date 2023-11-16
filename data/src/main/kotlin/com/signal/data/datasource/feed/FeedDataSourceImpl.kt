@@ -52,4 +52,15 @@ class FeedDataSourceImpl(
     override suspend fun deletePost(feedId: Long) = ExceptionHandler<Unit>().httpRequest {
         feedApi.deletePost(feedId = feedId)
     }.sendRequest()
+
+    override suspend fun editPost(
+        feedId: Long,
+        createPostRequest: CreatePostRequest,
+    ) = ExceptionHandler<Unit>().httpRequest {
+        feedApi.editPost(
+            feedId = feedId,
+            createPostRequest = createPostRequest,
+        )
+    }.sendRequest()
 }
+
