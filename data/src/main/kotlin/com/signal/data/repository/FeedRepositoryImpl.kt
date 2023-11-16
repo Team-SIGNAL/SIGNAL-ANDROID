@@ -56,4 +56,22 @@ class FeedRepositoryImpl(
     override suspend fun deletePost(feedId: Long) = kotlin.runCatching {
         feedDataSource.deletePost(feedId = feedId)
     }
+
+    override suspend fun editPost(
+        feedId: Long,
+        title: String,
+        content: String,
+        image: String?,
+        tag: Tag
+    ) = kotlin.runCatching {
+        feedDataSource.editPost(
+            feedId = feedId,
+            createPostRequest = CreatePostRequest(
+                title = title,
+                content = content,
+                image = image,
+                tag = tag,
+            )
+        )
+    }
 }

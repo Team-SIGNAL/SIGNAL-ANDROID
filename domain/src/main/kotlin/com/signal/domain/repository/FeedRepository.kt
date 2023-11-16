@@ -28,4 +28,12 @@ interface FeedRepository {
     ): Result<Unit>
 
     suspend fun deletePost(feedId: Long): Result<Unit>
+
+    suspend fun editPost(
+        feedId: Long,
+        title: String,
+        content: String,
+        image: String?,
+        tag: Tag,
+    ): Result<Unit>
 }

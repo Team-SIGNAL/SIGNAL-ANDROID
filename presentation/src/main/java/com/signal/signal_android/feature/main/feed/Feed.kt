@@ -126,6 +126,7 @@ internal fun Feed(
                     expanded = expanded,
                     onDismissRequest = { expanded = -1 },
                     onDelete = feedViewModel::deletePost,
+                    onEdit = { moveToCreatePost() },
                 )
 
                 Column(
@@ -246,6 +247,7 @@ private fun Posts(
     onDismissRequest: () -> Unit,
     expanded: Long,
     onDelete: () -> Unit,
+    onEdit: () -> Unit,
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(posts()) {
@@ -259,7 +261,7 @@ private fun Posts(
                 onClick = { showDropDown(it.id) },
                 expanded = expanded == it.id,
                 onDismissRequest = onDismissRequest,
-                onEdit = {},
+                onEdit = onEdit,
                 onDelete = onDelete,
                 onReport = moveToReport,
             )
