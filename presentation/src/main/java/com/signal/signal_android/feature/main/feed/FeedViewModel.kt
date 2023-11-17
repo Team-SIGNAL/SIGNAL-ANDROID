@@ -96,8 +96,6 @@ internal class FeedViewModel(
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.ClearFocus)
                     fetchPostComments()
-                }.onFailure {
-
                 }
             }
         }
@@ -112,9 +110,11 @@ internal class FeedViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.deletePost(feedId = feedId).onSuccess {
                     remove()
+                    postSideEffect(FeedSideEffect.DeleteSuccess)
                 }.onFailure {
                     if (it is KotlinNullPointerException) {
                         remove()
+                        postSideEffect(FeedSideEffect.DeleteSuccess)
                     }
                 }
             }
