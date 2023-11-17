@@ -66,6 +66,8 @@ internal class FeedViewModel(
                                 profile = it.profile,
                                 isMine = it.isMine,
                             ),
+                            title = it.title,
+                            content = it.content,
                         ),
                     )
                 }
@@ -119,12 +121,44 @@ internal class FeedViewModel(
         }
     }
 
+    internal fun editPost(imageUrl: String? = null) {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                feedRepository.editPost(
+                    feedId = feedId,
+                    title = title,
+                    image = imageUrl ?: image.ifEmpty { postDetailsEntity.image },
+                    content = content,
+                ).onSuccess {
+                    postSideEffect(FeedSideEffect.PostSuccess)
+                    fetchPosts()
+                }.onFailure {
+                    if (it is KotlinNullPointerException) {
+                        postSideEffect(FeedSideEffect.PostSuccess)
+                    }
+                }
+            }
+        }
+    }
+
     internal fun setTitle(title: String) {
         setState(state.value.copy(title = title))
+        setButtonEnabled()
     }
 
     internal fun setContent(content: String) {
         setState(state.value.copy(content = content))
+        setButtonEnabled()
+    }
+
+    private fun setButtonEnabled() {
+        with(state.value) {
+            setState(
+                copy(
+                    buttonEnabled = title.isNotBlank() && content.isNotBlank()
+                )
+            )
+        }
     }
 
     internal fun setFeedId(feedId: Long) {

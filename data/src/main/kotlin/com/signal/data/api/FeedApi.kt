@@ -9,6 +9,7 @@ import com.signal.domain.enums.Tag
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -45,5 +46,11 @@ interface FeedApi {
     @DELETE(SignalUrl.Feed.FeedId)
     suspend fun deletePost(
         @Path("feed_id") feedId: Long,
+    )
+
+    @PATCH(SignalUrl.Feed.FeedId)
+    suspend fun editPost(
+        @Path("feed_id") feedId: Long,
+        @Body createPostRequest: CreatePostRequest,
     )
 }

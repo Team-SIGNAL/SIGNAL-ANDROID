@@ -46,13 +46,24 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun CreatePost(
     moveToBack: () -> Unit,
+    feedId: Long,
     feedViewModel: FeedViewModel = koinViewModel(),
     attachmentViewModel: AttachmentViewModel = koinViewModel(),
 ) {
     val state by feedViewModel.state.collectAsState()
     val fileState by attachmentViewModel.state.collectAsState()
+    val details = state.postDetailsEntity
 
     var imagePreview: Uri? by remember { mutableStateOf(null) }
+
+    LaunchedEffect(Unit) {
+        if (feedId != -1L) {
+            with(feedViewModel) {
+                setFeedId(feedId)
+                fetchPostDetails()
+            }
+        }
+    }
 
     val context = LocalContext.current
 
@@ -74,7 +85,11 @@ internal fun CreatePost(
         attachmentViewModel.sideEffect.collect {
             when (it) {
                 is AttachmentSideEffect.Success -> {
-                    feedViewModel.createPost(imageUrl = fileState.imageUrl)
+                    if (feedId == -1L) {
+                        feedViewModel.createPost(imageUrl = fileState.imageUrl)
+                    } else {
+                        feedViewModel.editPost(imageUrl = fileState.imageUrl)
+                    }
                 }
 
                 is AttachmentSideEffect.Failure -> {
@@ -104,7 +119,13 @@ internal fun CreatePost(
             .padding(horizontal = 16.dp),
     ) {
         Header(
-            title = stringResource(id = R.string.create_post_header_title),
+            title = stringResource(
+                id = if (feedId == -1L) {
+                    R.string.create_post_header_title
+                } else {
+                    R.string.edit_post_header_title
+                },
+            ),
             onLeadingClicked = moveToBack,
         )
         Spacer(modifier = Modifier.height(4.dp))
@@ -128,7 +149,10 @@ internal fun CreatePost(
             singleLine = false,
             maxLength = 100,
         )
-        PostImage(uri = { imagePreview }) {
+        PostImage(
+            uri = { imagePreview },
+            imageUrl = { details.image },
+        ) {
             launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -136,12 +160,17 @@ internal fun CreatePost(
             text = stringResource(id = R.string.my_page_secession_check),
             onClick = {
                 if (imagePreview == null) {
-                    feedViewModel.createPost()
+                    if (feedId == -1L) {
+                        feedViewModel.createPost()
+                    } else {
+                        feedViewModel.editPost()
+                    }
                 } else {
                     attachmentViewModel.uploadFile()
                 }
                 focusManager.clearFocus()
             },
+            enabled = state.buttonEnabled,
         )
         Spacer(modifier = Modifier.height(26.dp))
     }
@@ -150,6 +179,7 @@ internal fun CreatePost(
 @Composable
 private fun PostImage(
     uri: () -> Uri?,
+    imageUrl: () -> String?,
     onClick: () -> Unit,
 ) {
     Box(
@@ -172,7 +202,8 @@ private fun PostImage(
         )
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
-            model = uri(),
+            model = if (imageUrl().isNullOrBlank()) uri()
+            else imageUrl(),
             contentDescription = stringResource(id = R.string.feed_image),
             contentScale = ContentScale.Crop,
         )

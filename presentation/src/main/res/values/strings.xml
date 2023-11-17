@@ -155,6 +155,8 @@
 
     <string name="create_post_image">게시글 이미지</string>
 
+    <string name="edit_post_header_title">게시글 수정하기</string>
+
     <!--report-->
     <string name="report_header_title">게시글 신고하기</string>
     <string name="report_reason">신고 사유</string>

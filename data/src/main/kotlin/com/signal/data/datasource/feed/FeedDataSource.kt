@@ -26,4 +26,9 @@ interface FeedDataSource {
     )
 
     suspend fun deletePost(feedId: Long)
+
+    suspend fun editPost(
+        feedId: Long,
+        createPostRequest: CreatePostRequest,
+    )
 }
