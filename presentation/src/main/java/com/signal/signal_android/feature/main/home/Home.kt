@@ -2,9 +2,11 @@ package com.signal.signal_android.feature.main.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,6 +37,7 @@ import com.patrykandpatrick.vico.views.chart.line.lineChart
 import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.foundation.Body
+import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
@@ -72,12 +75,20 @@ internal fun Home(
                 )
             }
             Spacer(modifier = Modifier.height(34.dp))
-            HomeChart(
-                onNext = homeViewModel::nextChartViewType,
-                currentView = state.chartViewType.value,
-                onPrevious = homeViewModel::previousChartViewType,
-                diagnosisHistories = state.diagnosisHistories,
-            )
+            Box(contentAlignment = Alignment.Center) {
+                HomeChart(
+                    onNext = homeViewModel::nextChartViewType,
+                    currentView = state.chartViewType.value,
+                    onPrevious = homeViewModel::previousChartViewType,
+                    diagnosisHistories = state.diagnosisHistories,
+                )
+                if (state.diagnosisHistories.isEmpty()) {
+                    Body2(
+                        text = stringResource(id = R.string.home_diagnosis_history_null),
+                        color = SignalColor.Gray500,
+                    )
+                }
+            }
             Spacer(modifier = Modifier.height(34.dp))
         }
         Column(
@@ -160,44 +171,46 @@ private fun HomeChart(
 ) {
     val context = LocalContext.current
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        BodyStrong(text = stringResource(id = R.string.home_chart))
+    Column {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Icon(
-                modifier = Modifier
-                    .size(24.dp)
-                    .rotate(90f)
-                    .signalClickable(onClick = onPrevious),
-                painter = painterResource(id = R.drawable.ic_down),
-                contentDescription = stringResource(id = R.string.home_previous),
-                tint = SignalColor.Gray500,
-            )
-            Body(text = currentView)
-            Icon(
-                modifier = Modifier
-                    .size(24.dp)
-                    .rotate(270f)
-                    .signalClickable(onClick = onNext),
-                painter = painterResource(id = R.drawable.ic_down),
-                contentDescription = stringResource(id = R.string.next),
-                tint = SignalColor.Gray500,
-            )
+            BodyStrong(text = stringResource(id = R.string.home_chart))
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .rotate(90f)
+                        .signalClickable(onClick = onPrevious),
+                    painter = painterResource(id = R.drawable.ic_down),
+                    contentDescription = stringResource(id = R.string.home_previous),
+                    tint = SignalColor.Gray500,
+                )
+                Body(text = currentView)
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .rotate(270f)
+                        .signalClickable(onClick = onNext),
+                    painter = painterResource(id = R.drawable.ic_down),
+                    contentDescription = stringResource(id = R.string.next),
+                    tint = SignalColor.Gray500,
+                )
+            }
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        Chart(
+            chart = lineChart(context = context),
+            model = diagnosisHistories.toChartModel(),
+            startAxis = rememberStartAxis(),
+            bottomAxis = rememberBottomAxis(),
+        )
     }
-    Spacer(modifier = Modifier.height(8.dp))
-    Chart(
-        chart = lineChart(context = context),
-        model = diagnosisHistories.toChartModel(),
-        startAxis = rememberStartAxis(),
-        bottomAxis = rememberBottomAxis(),
-    )
 }
 
 private fun List<DiagnosisHistoryEntity>.toChartModel() =
