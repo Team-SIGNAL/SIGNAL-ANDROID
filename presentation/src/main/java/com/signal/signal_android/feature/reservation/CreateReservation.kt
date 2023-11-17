@@ -1,4 +1,4 @@
-package com.signal.signal_android.feature.main.reservation
+package com.signal.signal_android.feature.reservation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,6 +24,8 @@ import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -42,12 +44,19 @@ import com.signal.signal_android.designsystem.foundation.BodyLarge
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
+import org.koin.androidx.compose.koinViewModel
+import java.time.Instant
+import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CreateReservation(
     moveToBack: () -> Unit,
+    moveToReservation: () -> Unit,
+    reservationViewModel: ReservationViewModel = koinViewModel(),
 ) {
+    val state by reservationViewModel.state.collectAsState()
+
     val selectedHour by remember { mutableIntStateOf(0) }
     val selectedMinute by remember { mutableIntStateOf(0) }
 
@@ -59,49 +68,67 @@ internal fun CreateReservation(
 
     var isShowDateDialog by remember { mutableStateOf(false) }
     var isShowTimeDialog by remember { mutableStateOf(false) }
-    var date by remember { mutableStateOf("2020-10-20") }
-    var time by remember { mutableStateOf("15:00") }
-    var reason by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier.padding(
-            horizontal = 16.dp,
-            vertical = 8.dp,
-        )
-    ) {
+    val selectedMillis = datePickerState.selectedDateMillis ?: System.currentTimeMillis()
+
+    LaunchedEffect(selectedMillis) {
+        val localDateTime =
+            Instant.ofEpochMilli(selectedMillis).atZone(ZoneId.systemDefault()).toLocalDate()
+        reservationViewModel.setDate(localDateTime.toString())
+    }
+
+    LaunchedEffect(Unit) {
+        reservationViewModel.sideEffect.collect {
+            when(it) {
+                is ReservationSideEffect.CreateReservationSuccess -> {
+
+                }
+            }
+        }
+    }
+
+    Column {
         Header(
             title = stringResource(id = R.string.reservation_clinic),
             onLeadingClicked = moveToBack,
         )
-        ReservationDialog(
-            datePickerState = { datePickerState },
-            timePickerState = timePickerState,
-            isShowDateDialog = { isShowDateDialog },
-            isShowTimeDialog = { isShowTimeDialog },
-            showDateDialog = { isShowDateDialog = !isShowDateDialog },
-            showTimeDialog = { isShowTimeDialog = !isShowTimeDialog },
-            date = date,
-            time = time,
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        SignalTextField(
-            modifier = Modifier.fillMaxHeight(0.5f),
-            value = reason,
-            onValueChange = {
-                reason = it
-            },
-            hint = stringResource(id = R.string.create_reservation_reason_hint),
-            title = stringResource(id = R.string.create_reservation_reason),
-            alignment = Alignment.Top,
-            showLength = true,
-            singleLine = false,
-            maxLength = 100,
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        SignalFilledButton(
-            text = stringResource(id = R.string.my_page_secession_check),
-            onClick = {/*TODO*/ },
-        )
+        Column(
+            modifier = Modifier.padding(
+                horizontal = 16.dp,
+                vertical = 8.dp,
+            )
+        ) {
+            ReservationDialog(
+                datePickerState = { datePickerState },
+                timePickerState = { timePickerState },
+                isShowDateDialog = { isShowDateDialog },
+                isShowTimeDialog = { isShowTimeDialog },
+                showDateDialog = { isShowDateDialog = !isShowDateDialog },
+                showTimeDialog = {
+                    reservationViewModel.setTime("${timePickerState.hour}:${timePickerState.minute}")
+                    isShowTimeDialog = !isShowTimeDialog
+                },
+                date = { state.date },
+                time = { state.time },
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            SignalTextField(
+                modifier = Modifier.fillMaxHeight(0.5f),
+                value = state.reason,
+                onValueChange = reservationViewModel::setReason,
+                hint = stringResource(id = R.string.create_reservation_reason_hint),
+                title = stringResource(id = R.string.create_reservation_reason),
+                alignment = Alignment.Top,
+                showLength = true,
+                singleLine = false,
+                maxLength = 100,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            SignalFilledButton(
+                text = stringResource(id = R.string.my_page_secession_check),
+                onClick = { reservationViewModel.createReservation() },
+            )
+        }
     }
 }
 
@@ -109,13 +136,13 @@ internal fun CreateReservation(
 @Composable
 private fun ReservationDialog(
     datePickerState: () -> DatePickerState,
-    timePickerState: TimePickerState,
+    timePickerState: () -> TimePickerState,
     isShowDateDialog: () -> Boolean,
     isShowTimeDialog: () -> Boolean,
     showDateDialog: () -> Unit,
     showTimeDialog: () -> Unit,
-    date: String,
-    time: String,
+    date: () -> String,
+    time: () -> String,
 ) {
     if (isShowDateDialog()) {
         DatePickerDialog(
@@ -163,7 +190,7 @@ private fun ReservationDialog(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 TimePicker(
-                    state = timePickerState,
+                    state = timePickerState(),
                     colors = TimePickerDefaults.colors(
                         clockDialColor = SignalColor.White,
                         clockDialSelectedContentColor = SignalColor.White,
@@ -174,7 +201,6 @@ private fun ReservationDialog(
                         selectorColor = SignalColor.Primary100,
                     ),
                 )
-
                 Row(
                     modifier = Modifier
                         .padding(top = 12.dp)
@@ -220,7 +246,7 @@ private fun ReservationDialog(
             ),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        BodyLarge(text = date)
+        BodyLarge(text = date())
         Image(
             modifier = Modifier.signalClickable(onClick = showDateDialog),
             painter = painterResource(id = R.drawable.ic_calendar),
@@ -258,7 +284,7 @@ private fun ReservationDialog(
             ),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        BodyLarge(text = time)
+        BodyLarge(text = time())
         Image(
             modifier = Modifier.signalClickable(onClick = showTimeDialog),
             painter = painterResource(id = R.drawable.ic_calendar),

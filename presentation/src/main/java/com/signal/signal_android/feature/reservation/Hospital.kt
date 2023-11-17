@@ -1,4 +1,4 @@
-package com.signal.signal_android.feature.main.reservation
+package com.signal.signal_android.feature.reservation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -71,6 +71,7 @@ internal fun Hospital(
             title = stringResource(id = R.string.hospital_get_hospital_list),
             onLeadingClicked = moveToBack,
         )
+        Spacer(modifier = Modifier.height(20.dp))
         Body(text = "조회 결과 ${hospitals.size}건")
         Spacer(modifier = Modifier.height(8.dp))
         Hospitals(

@@ -107,7 +107,10 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(NavigationRoute.Main.Reservation) {
-            Reservation(moveToCreateReservation = moveToHospital)
+            Reservation(
+                moveToBack = moveToBack,
+                moveToCreateReservation = moveToHospital,
+            )
         }
 
         composable(NavigationRoute.Main.Hospital) {
@@ -118,7 +121,10 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(NavigationRoute.Main.CreateReservation) {
-            CreateReservation(moveToBack = moveToBack)
+            CreateReservation(
+                moveToBack = moveToBack,
+                moveToReservation = moveToReservation,
+            )
         }
 
         composable(NavigationRoute.Main.MoreAchievement) {
