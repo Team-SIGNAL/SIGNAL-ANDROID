@@ -82,7 +82,10 @@ internal fun Feed(
             SignalDialog(
                 title = stringResource(id = R.string.feed_delete_dialog_title),
                 onCancelBtnClick = { showDialog = false },
-                onCheckBtnClick = {},
+                onCheckBtnClick = {
+                    showDialog = false
+                    feedViewModel.deletePost()
+                },
             )
         }
     }
@@ -125,7 +128,7 @@ internal fun Feed(
                     },
                     expanded = expanded,
                     onDismissRequest = { expanded = -1 },
-                    onDelete = feedViewModel::deletePost,
+                    onDelete = { showDialog = true },
                     onEdit = { moveToCreatePost(state.feedId) },
                 )
 

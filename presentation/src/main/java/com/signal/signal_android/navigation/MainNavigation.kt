@@ -61,8 +61,8 @@ internal fun NavGraphBuilder.mainNavigation(
         ) {
             FeedDetails(
                 feedId = it.arguments?.getLong("feedId") ?: 0L,
-                moveToFeedDetails = moveToFeedDetails,
                 moveToBack = moveToBack,
+                moveToCreatePost = moveToCreatePost,
             )
         }
 

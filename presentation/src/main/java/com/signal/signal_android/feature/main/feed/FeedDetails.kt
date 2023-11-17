@@ -42,7 +42,6 @@ import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.component.SignalDialog
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
-import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
 import kotlinx.coroutines.launch
@@ -52,14 +51,26 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun FeedDetails(
     feedId: Long,
-    moveToFeedDetails: (feedId: Long) -> Unit,
     moveToBack: () -> Unit,
+    moveToCreatePost: (feedId: Long) -> Unit,
     feedViewModel: FeedViewModel = koinViewModel(),
 ) {
     LaunchedEffect(Unit) {
         with(feedViewModel) {
             setFeedId(feedId)
             fetchPostDetails()
+        }
+
+        feedViewModel.sideEffect.collect {
+            when (it) {
+                is FeedSideEffect.DeleteSuccess -> {
+                    moveToBack()
+                }
+
+                else -> {
+
+                }
+            }
         }
     }
 
@@ -84,7 +95,10 @@ internal fun FeedDetails(
             SignalDialog(
                 title = stringResource(id = R.string.feed_delete_dialog_title),
                 onCancelBtnClick = { showDialog = false },
-                onCheckBtnClick = {},
+                onCheckBtnClick = {
+                    showDialog = false
+                    feedViewModel.deletePost()
+                },
             )
         }
     }
@@ -122,6 +136,8 @@ internal fun FeedDetails(
                     expanded = expanded == feedId,
                     onDismissRequest = { expanded = -1 },
                     isMine = details.isMine,
+                    onEdit = { moveToCreatePost(feedId) },
+                    onDelete = { showDialog = true }
                 )
                 if (details.image != null) {
                     Spacer(modifier = Modifier.height(22.dp))
@@ -159,26 +175,6 @@ internal fun FeedDetails(
                         .padding(vertical = 24.dp),
                     color = SignalColor.Gray400,
                 )
-                BodyLarge2(
-                    modifier = Modifier.padding(5.dp),
-                    text = stringResource(id = R.string.feed_details_feed_list),
-                )
-                state.posts.forEach {
-                    Post(
-                        moveToFeedDetails = { moveToFeedDetails(it.id) },
-                        imageUrl = it.image,
-                        title = it.title,
-                        name = it.name,
-                        date = it.date,
-                        onClick = { expanded = it.id },
-                        expanded = expanded == it.id,
-                        onDismissRequest = { expanded = -1 },
-                        onEdit = {},
-                        onDelete = { showDialog = true },
-                        onReport = {},
-                        isMine = it.isMine,
-                    )
-                }
             }
         }
     }
@@ -193,6 +189,8 @@ private fun User(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     isMine: Boolean,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -204,7 +202,7 @@ private fun User(
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape),
-            model = profileImageUrl,
+            model = profileImageUrl ?: R.drawable.ic_profile_image,
             contentDescription = stringResource(id = R.string.my_page_profile_image),
         )
         Spacer(modifier = Modifier.width(6.dp))
@@ -229,8 +227,8 @@ private fun User(
                 expanded = expanded,
                 onDismissRequest = onDismissRequest,
                 isMine = isMine,
-                onEdit = { /*TODO*/ },
-                onDelete = { /*TODO*/ },
+                onEdit = onEdit,
+                onDelete = onDelete,
                 onReport = { /*TODO*/ },
             )
         }
