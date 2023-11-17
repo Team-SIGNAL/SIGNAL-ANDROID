@@ -20,13 +20,14 @@ data class FeedState(
     val comments: List<PostCommentsEntity.CommentEntity>,
     val comment: String,
     val buttonEnabled: Boolean,
+    val hasNextPage: Boolean,
 ) {
     companion object {
         fun getDefaultState() = FeedState(
             posts = mutableStateListOf(),
             tag = Tag.GENERAL,
             page = 0,
-            size = 8,
+            size = 10,
             title = "",
             content = "",
             postDetailsEntity = PostDetailsEntity(
@@ -44,6 +45,7 @@ data class FeedState(
             comments = listOf(),
             comment = "",
             buttonEnabled = false,
+            hasNextPage = false,
         )
     }
 }
