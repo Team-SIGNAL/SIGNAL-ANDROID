@@ -147,12 +147,13 @@ internal fun CreatePost(
             alignment = Alignment.Top,
             showLength = true,
             singleLine = false,
-            maxLength = 100,
+            maxLength = 300,
         )
         PostImage(
             uri = { imagePreview },
             imageUrl = { details.image },
         ) {
+            focusManager.clearFocus()
             launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
         Spacer(modifier = Modifier.weight(1f))
