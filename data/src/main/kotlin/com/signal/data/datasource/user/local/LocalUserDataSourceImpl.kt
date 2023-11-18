@@ -1,10 +1,14 @@
 package com.signal.data.datasource.user.local
 
+import com.signal.data.database.SignalDatabase
+import com.signal.data.model.mypage.FamousSayingModel
 import com.signal.data.util.PreferenceManager
 
 class LocalUserDataSourceImpl(
+    private val database: SignalDatabase,
     private val preferenceManager: PreferenceManager,
 ) : LocalUserDataSource {
+    private val myPageDao = database.getMyPageDao()
 
     override fun saveTokens(
         accessToken: String,
@@ -48,6 +52,12 @@ class LocalUserDataSourceImpl(
 
     override fun getAccountId() =
         preferenceManager.getSharedPreference().getString(Keys.ACCOUNT_ID, "") ?: ""
+
+    override suspend fun addFamousSaying(famousSayings: List<FamousSayingModel>) {
+        myPageDao.addFamousSaying(famousSayings)
+    }
+
+    override suspend fun getFamousSaying(id: Long) = myPageDao.getFamousSaying(id = id)
 }
 
 object Keys {

@@ -1,5 +1,7 @@
 package com.signal.data.datasource.user.local
 
+import com.signal.data.model.mypage.FamousSayingModel
+
 interface LocalUserDataSource {
     fun saveTokens(
         accessToken: String,
@@ -15,4 +17,7 @@ interface LocalUserDataSource {
 
     fun saveAccountId(email: String)
     fun getAccountId(): String
+
+    suspend fun addFamousSaying(famousSayings: List<FamousSayingModel>)
+    suspend fun getFamousSaying(id: Long): FamousSayingModel
 }
