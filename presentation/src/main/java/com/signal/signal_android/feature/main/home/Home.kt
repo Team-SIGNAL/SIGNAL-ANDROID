@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -32,6 +30,7 @@ import coil.compose.AsyncImage
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
+import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.views.chart.line.lineChart
 import com.signal.domain.entity.DiagnosisHistoryEntity
@@ -171,11 +170,8 @@ private fun HomeChart(
 ) {
     val context = LocalContext.current
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
+
+    Column{
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -215,15 +211,8 @@ private fun HomeChart(
             bottomAxis = rememberBottomAxis(),
         )
     }
-    Spacer(modifier = Modifier.height(8.dp))
-        Chart(
-            chart = lineChart(context = context),
-            model = chartEntryModel,
-            startAxis = rememberStartAxis(),
-            bottomAxis = rememberBottomAxis(),
-        )
-    }
 }
+
 
 private fun List<DiagnosisHistoryEntity>.toChartModel() =
     entryModelOf(this.map { FloatEntry(it.date.toFloat(), it.score.toFloat()) })
