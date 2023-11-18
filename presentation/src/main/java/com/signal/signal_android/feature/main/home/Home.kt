@@ -17,12 +17,14 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,9 +32,16 @@ import coil.compose.AsyncImage
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
+import com.patrykandpatrick.vico.compose.chart.line.lineChart
+import com.patrykandpatrick.vico.compose.chart.scroll.rememberChartScrollState
+import com.patrykandpatrick.vico.compose.component.shape.shader.fromBrush
+import com.patrykandpatrick.vico.compose.style.ChartStyle
+import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
+import com.patrykandpatrick.vico.core.DefaultAlpha
+import com.patrykandpatrick.vico.core.chart.line.LineChart
+import com.patrykandpatrick.vico.core.component.shape.shader.DynamicShaders
 import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
-import com.patrykandpatrick.vico.views.chart.line.lineChart
 import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.foundation.Body
@@ -168,10 +177,7 @@ private fun HomeChart(
     onNext: () -> Unit,
     currentView: String,
 ) {
-    val context = LocalContext.current
-
-
-    Column{
+    Column {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -204,12 +210,32 @@ private fun HomeChart(
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Chart(
-            chart = lineChart(context = context),
-            model = diagnosisHistories.toChartModel(),
-            startAxis = rememberStartAxis(),
-            bottomAxis = rememberBottomAxis(),
-        )
+
+        val datasetLineSpec = remember {
+            arrayListOf(
+                LineChart.LineSpec(
+                    lineColor = SignalColor.Primary100.toArgb(),
+                    lineBackgroundShader = DynamicShaders.fromBrush(
+                        brush = Brush.verticalGradient(
+                            listOf(
+                                SignalColor.Primary100.copy(DefaultAlpha.LINE_BACKGROUND_SHADER_START),
+                                SignalColor.Primary100.copy(DefaultAlpha.LINE_BACKGROUND_SHADER_END)
+                            )
+                        )
+                    ),
+                )
+            )
+        }
+
+        ProvideChartStyle {
+            Chart(
+                chart = lineChart(lines = datasetLineSpec),
+                model = diagnosisHistories.toChartModel(),
+                startAxis = rememberStartAxis(),
+                bottomAxis = rememberBottomAxis(),
+                chartScrollState = rememberChartScrollState(),
+            )
+        }
     }
 }
 
