@@ -32,7 +32,6 @@ import coil.compose.AsyncImage
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
-import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 import com.patrykandpatrick.vico.views.chart.line.lineChart
 import com.signal.domain.entity.DiagnosisHistoryEntity
@@ -172,7 +171,11 @@ private fun HomeChart(
 ) {
     val context = LocalContext.current
 
-    Column {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -208,6 +211,14 @@ private fun HomeChart(
         Chart(
             chart = lineChart(context = context),
             model = diagnosisHistories.toChartModel(),
+            startAxis = rememberStartAxis(),
+            bottomAxis = rememberBottomAxis(),
+        )
+    }
+    Spacer(modifier = Modifier.height(8.dp))
+        Chart(
+            chart = lineChart(context = context),
+            model = chartEntryModel,
             startAxis = rememberStartAxis(),
             bottomAxis = rememberBottomAxis(),
         )
