@@ -31,6 +31,7 @@ import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.GetAccountIdUseCase
 import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
+import com.signal.domain.usecase.users.GetFamousSayingUseCase
 import com.signal.domain.usecase.users.SaveAccountIdUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
 import com.signal.domain.usecase.users.SignInUseCase
@@ -41,7 +42,7 @@ import com.signal.signal_android.feature.file.AttachmentViewModel
 import com.signal.signal_android.feature.main.diary.DiaryViewModel
 import com.signal.signal_android.feature.main.feed.FeedViewModel
 import com.signal.signal_android.feature.main.home.HomeViewModel
-import com.signal.signal_android.feature.main.mypage.MyPageViewModel
+import com.signal.signal_android.feature.mypage.MyPageViewModel
 import com.signal.signal_android.feature.signin.SignInViewModel
 import com.signal.signal_android.feature.signup.SignUpViewModel
 import org.koin.android.ext.koin.androidContext
@@ -99,13 +100,19 @@ val daoModule: Module
         }
         single {
             PreferenceManager(context = androidContext())
+
         }
     }
 
 val dataSourceModule: Module
     get() = module {
         single<RemoteUserDataSource> { RemoteUserDataSourceImpl(userApi = get()) }
-        single<LocalUserDataSource> { LocalUserDataSourceImpl(preferenceManager = get()) }
+        single<LocalUserDataSource> {
+            LocalUserDataSourceImpl(
+                preferenceManager = get(),
+                database = get(),
+            )
+        }
         single<FeedDataSource> { FeedDataSourceImpl(feedApi = get()) }
         single<AttachmentDataSource> { AttachmentDataSourceImpl(attachmentApi = get()) }
         single<LocalDiagnosisDataSource> {
@@ -149,6 +156,7 @@ val useCaseModule: Module
         single { SaveAccountIdUseCase(userRepository = get()) }
         single { GetAccountIdUseCase(userRepository = get()) }
         single { GetDiagnosisHistoriesUseCase(diagnosisRepository = get()) }
+        single { GetFamousSayingUseCase(userRepository = get()) }
     }
 
 val viewModelModule: Module
@@ -165,6 +173,7 @@ val viewModelModule: Module
                 signOutUseCase = get(),
                 secessionUseCase = get(),
                 fetchUserInformationUseCase = get(),
+                getFamousSayingUseCase = get(),
             )
         }
         viewModel { FeedViewModel(feedRepository = get()) }
