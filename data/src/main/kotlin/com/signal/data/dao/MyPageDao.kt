@@ -11,5 +11,5 @@ interface MyPageDao {
     suspend fun addFamousSaying(famousSayings: List<FamousSayingModel>)
 
     @Query("select * from famousSaying where id = :id")
-    suspend fun getFamousSaying(id: Long): FamousSayingModel
+    suspend fun getFamousSaying(id: Long): FamousSayingModel?
 }

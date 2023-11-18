@@ -26,5 +26,5 @@ interface UserRepository {
     fun getAccountId(): String
 
     suspend fun addFamousSaying(famousSayings: List<FamousSayingEntity>)
-    suspend fun getFamousSaying(id: Long): FamousSayingEntity
+    suspend fun getFamousSaying(id: Long): FamousSayingEntity?
 }

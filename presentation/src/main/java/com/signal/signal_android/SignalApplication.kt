@@ -28,6 +28,7 @@ import com.signal.domain.repository.DiagnosisRepository
 import com.signal.domain.repository.DiaryRepository
 import com.signal.domain.repository.FeedRepository
 import com.signal.domain.repository.UserRepository
+import com.signal.domain.usecase.users.AddFamousSayingUseCase
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.GetAccountIdUseCase
 import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
@@ -96,6 +97,8 @@ val daoModule: Module
             DBInitializer(
                 context = androidContext(),
                 database = get(),
+                addFamousSayingUseCase = get(),
+                getFamousSayingUseCase = get(),
             )
         }
         single {
@@ -157,6 +160,7 @@ val useCaseModule: Module
         single { GetAccountIdUseCase(userRepository = get()) }
         single { GetDiagnosisHistoriesUseCase(diagnosisRepository = get()) }
         single { GetFamousSayingUseCase(userRepository = get()) }
+        single { AddFamousSayingUseCase(userRepository = get()) }
     }
 
 val viewModelModule: Module

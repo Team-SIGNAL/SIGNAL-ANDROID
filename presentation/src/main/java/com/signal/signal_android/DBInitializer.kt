@@ -4,6 +4,9 @@ import android.content.Context
 import com.signal.data.database.SignalDatabase
 import com.signal.data.model.diagnosis.DiagnosisModel
 import com.signal.data.model.mypage.FamousSayingModel
+import com.signal.data.model.mypage.toEntity
+import com.signal.domain.usecase.users.AddFamousSayingUseCase
+import com.signal.domain.usecase.users.GetFamousSayingUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -11,13 +14,11 @@ import kotlinx.coroutines.launch
 class DBInitializer(
     private val context: Context,
     private val database: SignalDatabase,
+    private val addFamousSayingUseCase: AddFamousSayingUseCase,
+    private val getFamousSayingUseCase: GetFamousSayingUseCase,
 ) {
     private val diagnosisDao by lazy {
         database.getDiagnosisDao()
-    }
-
-    private val myPageDao by lazy {
-        database.getMyPageDao()
     }
 
     private val diagnosisQuestions = mutableListOf<DiagnosisModel>()
@@ -70,15 +71,18 @@ class DBInitializer(
                 diagnosisDao.addDiagnosis(diagnosisQuestions)
             }
 
-            famousSayingResources.forEachIndexed { index, stringRes ->
-                famousSayings.add(
-                    FamousSayingModel(
-                        id = index.toLong(),
-                        famousSaying = context.getString(stringRes)
+            if (getFamousSayingUseCase(id = 0).getOrNull() == null) {
+                famousSayingResources.forEachIndexed { index, stringRes ->
+                    famousSayings.add(
+                        FamousSayingModel(
+                            id = index.toLong(),
+                            famousSaying = context.getString(stringRes)
+                        )
                     )
-                )
+                }
+                addFamousSayingUseCase(famousSayingEntities = famousSayings.map { it.toEntity() }).onSuccess {
+                }
             }
-            myPageDao.addFamousSaying(famousSayings = famousSayings)
         }
     }
 }

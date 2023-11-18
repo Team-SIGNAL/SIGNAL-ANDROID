@@ -63,7 +63,7 @@ class MyPageViewModel(
         val random = 1..10
         viewModelScope.launch(Dispatchers.IO) {
             getFamousSayingUseCase(id = random.random().toLong()).onSuccess {
-                setState(state.value.copy(famousSaying = it.famousSaying))
+                setState(state.value.copy(famousSaying = it?.famousSaying ?: ""))
             }
         }
     }

@@ -19,5 +19,5 @@ interface LocalUserDataSource {
     fun getAccountId(): String
 
     suspend fun addFamousSaying(famousSayings: List<FamousSayingModel>)
-    suspend fun getFamousSaying(id: Long): FamousSayingModel
+    suspend fun getFamousSaying(id: Long): FamousSayingModel?
 }

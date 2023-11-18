@@ -76,6 +76,6 @@ class UserRepositoryImpl(
     }
 
     override suspend fun getFamousSaying(id: Long) =
-        localUserDataSource.getFamousSaying(id = id).toEntity()
+        localUserDataSource.getFamousSaying(id = id)?.toEntity()
 
 }
