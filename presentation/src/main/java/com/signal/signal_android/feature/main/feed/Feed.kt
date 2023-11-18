@@ -75,7 +75,9 @@ internal fun Feed(
     )
 
     LaunchedEffect(Unit) {
-        feedViewModel.fetchPosts()
+        if (state.posts.isEmpty()) {
+            feedViewModel.fetchPosts()
+        }
     }
 
     if (showDialog) {
