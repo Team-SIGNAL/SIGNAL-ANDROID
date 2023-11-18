@@ -3,6 +3,7 @@ package com.signal.signal_android
 import android.content.Context
 import com.signal.data.database.SignalDatabase
 import com.signal.data.model.diagnosis.DiagnosisModel
+import com.signal.data.model.mypage.FamousSayingModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +16,13 @@ class DBInitializer(
         database.getDiagnosisDao()
     }
 
+    private val myPageDao by lazy {
+        database.getMyPageDao()
+    }
+
     private val diagnosisQuestions = mutableListOf<DiagnosisModel>()
+
+    private val famousSayings = mutableListOf<FamousSayingModel>()
 
     private val diagnosisResources = listOf(
         R.string.diagnosis_1,
@@ -35,6 +42,19 @@ class DBInitializer(
         R.string.diagnosis_15,
     )
 
+    private val famousSayingResources = listOf(
+        R.string.famous_saying_1,
+        R.string.famous_saying_2,
+        R.string.famous_saying_3,
+        R.string.famous_saying_4,
+        R.string.famous_saying_5,
+        R.string.famous_saying_6,
+        R.string.famous_saying_7,
+        R.string.famous_saying_8,
+        R.string.famous_saying_9,
+        R.string.famous_saying_10,
+    )
+
     internal fun initQuestions() {
         CoroutineScope(Dispatchers.IO).launch {
             if (diagnosisDao.getDiagnosis().isEmpty()) {
@@ -49,6 +69,16 @@ class DBInitializer(
                 }
                 diagnosisDao.addDiagnosis(diagnosisQuestions)
             }
+
+            famousSayingResources.forEachIndexed { index, stringRes ->
+                famousSayings.add(
+                    FamousSayingModel(
+                        id = index.toLong(),
+                        famousSaying = context.getString(stringRes)
+                    )
+                )
+            }
+            myPageDao.addFamousSaying(famousSayings = famousSayings)
         }
     }
 }
