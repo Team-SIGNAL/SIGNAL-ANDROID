@@ -51,7 +51,6 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
 import com.signal.signal_android.feature.main.mypage.MyPageSideEffect
-import com.signal.signal_android.feature.main.mypage.MyPageViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -114,7 +113,7 @@ internal fun MyPage(
             phoneNumber = state.phone,
             birth = state.birth,
             profileImageUrl = state.profile,
-            famousSaying = { "오늘의 나보다 더 나은 내일의 나를 위해" },
+            famousSaying = { state.famousSaying },
         )
         Achievement(moveToMoreAchievement = moveToMoreAchievement)
         Spacer(modifier = Modifier.height(30.dp))

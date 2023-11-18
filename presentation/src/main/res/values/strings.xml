@@ -106,6 +106,18 @@
 
     <string name="card_user_tool_icon">user tool icon</string>
 
+    <!--famous saying-->
+    <string name="famous_saying_1">어떤 어둠도, 항상 새로운 새벽을 만들어내기 위해 존재한다</string>
+    <string name="famous_saying_2">나는 강하고, 지금까지 극복한 모든 어려움은 나의 강함을 증명한다</string>
+    <string name="famous_saying_3">고통과 어려움은 성장의 씨앗이고, 그 씨앗이 강한 나무로 자라날 것이다</string>
+    <string name="famous_saying_4">희망은 어떠한 어둠도 밝게 비추는 빛이다</string>
+    <string name="famous_saying_5">지금까지의 실패는 단지 미래의 성공을 위한 연습일 뿐이다</string>
+    <string name="famous_saying_6">나를 사랑하고 존경하는 것이 어려울 때, 다른 사람들이 나를 사랑하고 존경할 것이다</string>
+    <string name="famous_saying_7">한 걸음씩 나아가는 것이 중요하다</string>
+    <string name="famous_saying_8">고통은 일시적이지만, 강함은 영원하다</string>
+    <string name="famous_saying_9">어려움은 성장의 밑거름이다</string>
+    <string name="famous_saying_10">자신을 사랑하는 순간, 힘이 생긴다</string>
+
     <!--feed-->
     <string name="feed_image">feed image</string>
     <string name="feed_all">전체</string>
