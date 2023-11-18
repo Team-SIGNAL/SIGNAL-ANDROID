@@ -27,9 +27,13 @@ internal class FeedViewModel(
                         size = size,
                     )
                 }.onSuccess {
-                    _posts.clear()
                     _posts.addAll(it.postEntities)
-                    setState(copy(posts = _posts.toMutableStateList()))
+                    setState(
+                        copy(
+                            posts = _posts.toMutableStateList(),
+                            hasNextPage = it.postEntities.isNotEmpty()
+                        )
+                    )
                 }
             }
         }
@@ -139,6 +143,13 @@ internal class FeedViewModel(
                 }
             }
         }
+    }
+
+    internal fun nextPage() {
+        with(state.value) {
+            setState(copy(page = page + 1))
+        }
+        fetchPosts()
     }
 
     internal fun setTitle(title: String) {

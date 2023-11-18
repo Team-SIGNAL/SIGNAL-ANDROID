@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
@@ -130,6 +131,11 @@ internal fun Feed(
                     onDismissRequest = { expanded = -1 },
                     onDelete = { showDialog = true },
                     onEdit = { moveToCreatePost(state.feedId) },
+                    nextPage = {
+                        if (state.hasNextPage) {
+                            feedViewModel.nextPage()
+                        }
+                    },
                 )
 
                 Column(
@@ -251,8 +257,21 @@ private fun Posts(
     expanded: Long,
     onDelete: () -> Unit,
     onEdit: () -> Unit,
+    nextPage: () -> Unit,
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    val lazyListState = remember { LazyListState() }
+
+    LaunchedEffect(lazyListState.layoutInfo.visibleItemsInfo.lastIndex) {
+        val visibleItemsInfo = lazyListState.layoutInfo.visibleItemsInfo
+        if (visibleItemsInfo.lastIndex != -1 && (visibleItemsInfo.last().index % 7 == 0)) {
+            nextPage()
+        }
+    }
+
+    LazyColumn(
+        state = lazyListState,
+        modifier = Modifier.fillMaxSize(),
+    ) {
         items(posts()) {
             Post(
                 moveToFeedDetails = { moveToFeedDetails(it.id) },
