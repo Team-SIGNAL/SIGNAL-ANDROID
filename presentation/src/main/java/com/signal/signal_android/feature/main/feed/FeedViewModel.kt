@@ -79,10 +79,10 @@ internal class FeedViewModel(
         }
     }
 
-    internal fun fetchPostComments() {
+    internal fun fetchComments() {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
-                feedRepository.fetchPostComments(feedId).onSuccess {
+                feedRepository.fetchComments(feedId).onSuccess {
                     _comments.clear()
                     _comments.addAll(it.comments)
                     setState(copy(comments = _comments))
@@ -99,7 +99,7 @@ internal class FeedViewModel(
                     content = comment,
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.ClearFocus)
-                    fetchPostComments()
+                    fetchComments()
                 }
             }
         }

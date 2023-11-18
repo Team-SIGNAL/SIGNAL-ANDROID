@@ -10,8 +10,7 @@ data class FetchCommentsResponse(
     data class Comment(
         @SerializedName("writer") val writer: String,
         @SerializedName("content") val content: String,
-        @SerializedName("is_mine") val isMine: Boolean,
-        @SerializedName("date_time") val dateTime: LocalDateTime,
+        @SerializedName("create_date_time") val dateTime: LocalDateTime,
         @SerializedName("profile") val profile: String,
     )
 }
@@ -23,7 +22,6 @@ fun FetchCommentsResponse.toEntity() = PostCommentsEntity(
 fun FetchCommentsResponse.Comment.toEntity() = PostCommentsEntity.CommentEntity(
     writer = this.writer,
     content = this.content,
-    isMine = this.isMine,
     dateTime = this.dateTime,
     profile = this.profile,
 )

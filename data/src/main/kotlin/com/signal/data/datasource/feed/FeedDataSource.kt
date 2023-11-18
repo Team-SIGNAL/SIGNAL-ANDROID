@@ -18,7 +18,7 @@ interface FeedDataSource {
 
     suspend fun fetchPostDetails(feedId: Long): FetchPostDetailsResponse
 
-    suspend fun fetchPostComments(feedId: Long): FetchCommentsResponse
+    suspend fun fetchComments(feedId: Long): FetchCommentsResponse
 
     suspend fun createComment(
         feedId: Long,

@@ -161,7 +161,7 @@ internal fun FeedDetails(
                         .signalClickable(
                             onClick = {
                                 coroutineScope.launch {
-                                    feedViewModel.fetchPostComments()
+                                    feedViewModel.fetchComments()
                                     sheetState.show()
                                 }
                             },

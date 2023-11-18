@@ -32,12 +32,12 @@ interface FeedApi {
         @Path("feed_id") feedId: Long,
     ): FetchPostDetailsResponse
 
-    @GET(SignalUrl.Feed.Comments)
-    suspend fun fetchPostComments(
+    @GET(SignalUrl.Feed.FetchComment)
+    suspend fun fetchComments(
         @Path("feed_id") feedId: Long,
     ): FetchCommentsResponse
 
-    @POST(SignalUrl.Feed.FeedId)
+    @POST(SignalUrl.Feed.CreateComment)
     suspend fun createComment(
         @Path("feed_id") feedId: Long,
         @Body createCommentRequest: CreateCommentRequest,

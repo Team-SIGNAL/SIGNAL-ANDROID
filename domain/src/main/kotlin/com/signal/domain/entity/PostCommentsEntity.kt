@@ -8,7 +8,6 @@ data class PostCommentsEntity(
     data class CommentEntity(
         val writer: String,
         val content: String,
-        val isMine: Boolean,
         val dateTime: LocalDateTime,
         val profile: String,
     )

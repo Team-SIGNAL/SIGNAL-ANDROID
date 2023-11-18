@@ -34,9 +34,9 @@ class FeedDataSourceImpl(
             feedApi.fetchPostDetails(feedId = feedId)
         }.sendRequest()
 
-    override suspend fun fetchPostComments(feedId: Long) =
+    override suspend fun fetchComments(feedId: Long) =
         ExceptionHandler<FetchCommentsResponse>().httpRequest {
-            feedApi.fetchPostComments(feedId = feedId)
+            feedApi.fetchComments(feedId = feedId)
         }.sendRequest()
 
     override suspend fun createComment(
