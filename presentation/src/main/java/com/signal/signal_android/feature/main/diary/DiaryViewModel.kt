@@ -1,5 +1,6 @@
 package com.signal.signal_android.feature.main.diary
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.entity.DiaryDetailsEntity
@@ -87,7 +88,11 @@ class DiaryViewModel(
                     date = date,
                     image = imageUrl,
                 ).onSuccess {
-                    DiarySideEffect.CreateDiarySuccess
+                    postSideEffect(DiarySideEffect.CreateDiarySuccess)
+                }.onFailure {
+                    if(it is KotlinNullPointerException) {
+                        postSideEffect(DiarySideEffect.CreateDiarySuccess)
+                    }
                 }
             }
         }
