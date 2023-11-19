@@ -41,8 +41,8 @@ import com.patrykandpatrick.vico.core.chart.line.LineChart
 import com.patrykandpatrick.vico.core.component.shape.shader.DynamicShaders
 import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.entry.entryModelOf
-import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.signal_android.R
+import com.signal.signal_android.designsystem.chart.rememberMarker
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
@@ -225,7 +225,7 @@ private fun HomeChart(
                 )
             )
         }
-
+        val marker = rememberMarker()
         ProvideChartStyle {
             Chart(
                 chart = lineChart(lines = datasetLineSpec),
@@ -233,6 +233,7 @@ private fun HomeChart(
                 startAxis = rememberStartAxis(),
                 bottomAxis = rememberBottomAxis(),
                 chartScrollState = rememberChartScrollState(),
+                marker = marker
             )
         }
     }
