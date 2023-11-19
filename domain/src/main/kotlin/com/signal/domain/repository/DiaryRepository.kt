@@ -18,4 +18,5 @@ interface DiaryRepository {
     ): Result<Unit>
 
     suspend fun fetchDiaryDetails(diaryId: Long): Result<DiaryDetailsEntity>
+    suspend fun deleteDiary(diaryId: Long): Result<Unit>
 }

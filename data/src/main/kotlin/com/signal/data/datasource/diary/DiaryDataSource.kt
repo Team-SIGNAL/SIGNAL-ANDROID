@@ -11,4 +11,5 @@ interface DiaryDataSource {
     suspend fun fetchMonthDiaries(date: String): FetchMonthDiariesResponse
     suspend fun fetchDayDiaries(date: String): FetchDiariesResponse
     suspend fun fetchDiaryDetails(diaryId: Long): FetchDiaryDetailsResponse
+    suspend fun deleteDiary(diaryId: Long)
 }

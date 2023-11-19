@@ -5,6 +5,7 @@ import com.signal.data.model.diary.FetchDiariesResponse
 import com.signal.data.model.diary.FetchDiaryDetailsResponse
 import com.signal.data.model.diary.FetchMonthDiariesResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -33,4 +34,9 @@ interface DiaryApi {
     suspend fun fetchDiaryDetails(
         @Path("diary_id") diaryId: Long,
     ): FetchDiaryDetailsResponse
+
+    @DELETE(SignalUrl.Diary.DeleteDiary)
+    suspend fun deleteDiary(
+        @Path("diary_id") diaryId: Long,
+    )
 }

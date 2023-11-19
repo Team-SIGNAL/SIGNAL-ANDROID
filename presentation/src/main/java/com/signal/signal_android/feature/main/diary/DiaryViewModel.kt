@@ -1,6 +1,6 @@
 package com.signal.signal_android.feature.main.diary
 
-import android.util.Log
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.entity.DiaryDetailsEntity
@@ -90,7 +90,7 @@ class DiaryViewModel(
                 ).onSuccess {
                     postSideEffect(DiarySideEffect.CreateDiarySuccess)
                 }.onFailure {
-                    if(it is KotlinNullPointerException) {
+                    if (it is KotlinNullPointerException) {
                         postSideEffect(DiarySideEffect.CreateDiarySuccess)
                     }
                 }
@@ -113,6 +113,26 @@ class DiaryViewModel(
                             )
                         )
                     )
+                }
+            }
+        }
+    }
+
+    internal fun deleteDiary() {
+        with(state.value) {
+            val remove = {
+                _diaries.remove(_diaries.find { it.id == diaryId })
+                setState(copy(diaries = _diaries.toMutableStateList()))
+            }
+            viewModelScope.launch(Dispatchers.IO) {
+                diaryRepository.deleteDiary(diaryId = diaryId).onSuccess {
+                    remove()
+                    postSideEffect(DiarySideEffect.DeleteSuccess)
+                }.onFailure {
+                    if (it is KotlinNullPointerException) {
+                        remove()
+                        postSideEffect(DiarySideEffect.DeleteSuccess)
+                    }
                 }
             }
         }

@@ -34,4 +34,8 @@ class DiaryDataSourceImpl(
             diaryApi.fetchDiaryDetails(diaryId = diaryId)
         }.sendRequest()
 
+    override suspend fun deleteDiary(diaryId: Long) = ExceptionHandler<Unit>().httpRequest {
+        diaryApi.deleteDiary(diaryId = diaryId)
+    }.sendRequest()
+
 }
