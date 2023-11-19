@@ -24,6 +24,7 @@ class DiaryViewModel(
                 kotlin.runCatching {
                     diaryRepository.fetchAllDiary()
                 }.onSuccess {
+                    _diaries.clear()
                     _diaries.addAll(it.diaryEntity)
                     setState(
                         copy(
@@ -32,6 +33,7 @@ class DiaryViewModel(
                         )
                     )
                 }.onFailure {
+                    _diaries.clear()
                     setState(copy(isAllDiariesEmpty = _diaries.isEmpty()))
                 }
             }
