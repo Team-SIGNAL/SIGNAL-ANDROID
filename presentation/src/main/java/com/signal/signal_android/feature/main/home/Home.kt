@@ -241,7 +241,7 @@ private fun HomeChart(
 
 
 private fun List<DiagnosisHistoryEntity>.toChartModel() =
-    entryModelOf(this.map { FloatEntry(it.date.toFloat(), it.score.toFloat()) })
+    entryModelOf(this.map { FloatEntry(it.day.toFloat(), it.score.toFloat()) })
 
 @Composable
 private fun ReservationCard(

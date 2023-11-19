@@ -33,8 +33,10 @@ internal class HomeViewModel(
                 diagnosisHistories.addAll(it)
                 setState(
                     state.value.copy(
-                        diagnosisHistories = diagnosisHistories.map { it.copy(date = it.date.split("-")[2]) },
-                        lastDiagnosisDate = diagnosisHistories.lastOrNull()?.date?.toLastDiagnosisDate()
+                        diagnosisHistories = diagnosisHistories,
+                        lastDiagnosisDate = diagnosisHistories.lastOrNull()?.run {
+                            "${year}-${month}-${day.toString().padStart(2, '0')}"
+                        }?.toLastDiagnosisDate()
                             ?: "",
                     )
                 )
