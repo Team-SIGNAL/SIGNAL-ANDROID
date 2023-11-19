@@ -97,6 +97,7 @@ internal fun CreateDiary(
         diaryViewModel.sideEffect.collect {
             when (it) {
                 is DiarySideEffect.CreateDiarySuccess -> moveToBack()
+                else -> {}
             }
         }
     }
