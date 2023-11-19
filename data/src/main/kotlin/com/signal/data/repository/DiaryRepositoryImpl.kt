@@ -10,7 +10,8 @@ import com.signal.domain.repository.DiaryRepository
 class DiaryRepositoryImpl(
     private val diaryDateSource: DiaryDataSource,
 ) : DiaryRepository {
-    override suspend fun fetchAllDiary(): DiariesEntity = diaryDateSource.fetchAllDiaries().toEntity()
+    override suspend fun fetchAllDiary(): DiariesEntity =
+        diaryDateSource.fetchAllDiaries().toEntity()
 
     override suspend fun fetchMonthDiary(date: String) =
         diaryDateSource.fetchMonthDiaries(date = date).toEntity()
@@ -38,5 +39,9 @@ class DiaryRepositoryImpl(
 
     override suspend fun fetchDiaryDetails(diaryId: Long) = runCatching {
         diaryDateSource.fetchDiaryDetails(diaryId = diaryId).toEntity()
+    }
+
+    override suspend fun deleteDiary(diaryId: Long) = runCatching {
+        diaryDateSource.deleteDiary(diaryId = diaryId)
     }
 }
