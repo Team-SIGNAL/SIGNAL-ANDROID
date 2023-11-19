@@ -5,13 +5,13 @@ import com.signal.domain.entity.PostCommentsEntity
 import java.time.LocalDateTime
 
 data class FetchCommentsResponse(
-    @SerializedName("comment") val comments: List<Comment>,
+    @SerializedName("comment_list") val comments: List<Comment>,
 ) {
     data class Comment(
-        @SerializedName("writer") val writer: String,
         @SerializedName("content") val content: String,
-        @SerializedName("create_date_time") val dateTime: LocalDateTime,
-        @SerializedName("profile") val profile: String,
+        @SerializedName("create_date_time") val dateTime: String,
+        @SerializedName("name") val name: String,
+        @SerializedName("profile") val profile: String?,
     )
 }
 
@@ -20,8 +20,8 @@ fun FetchCommentsResponse.toEntity() = PostCommentsEntity(
 )
 
 fun FetchCommentsResponse.Comment.toEntity() = PostCommentsEntity.CommentEntity(
-    writer = this.writer,
     content = this.content,
     dateTime = this.dateTime,
+    name = this.name,
     profile = this.profile,
 )

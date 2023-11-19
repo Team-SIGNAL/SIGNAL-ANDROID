@@ -1,5 +1,7 @@
 package com.signal.signal_android.feature.main.feed
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.PostCommentsEntity
@@ -15,7 +17,7 @@ internal class FeedViewModel(
     private val feedRepository: FeedRepository,
 ) : BaseViewModel<FeedState, FeedSideEffect>(FeedState.getDefaultState()) {
     private val _posts: MutableList<PostsEntity.PostEntity> = mutableListOf()
-    private val _comments: MutableList<PostCommentsEntity.CommentEntity> = mutableListOf()
+    private val _comments: SnapshotStateList<PostCommentsEntity.CommentEntity> = mutableStateListOf()
 
     internal fun fetchPosts() {
         with(state.value) {
@@ -83,9 +85,12 @@ internal class FeedViewModel(
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.fetchComments(feedId).onSuccess {
-                    _comments.clear()
-                    _comments.addAll(it.comments)
-                    setState(copy(comments = _comments))
+                    if(_comments.contains(it.comments.first())){
+                        _comments.add(it.comments.last())
+                    } else {
+                        _comments.addAll(it.comments)
+                    }
+                    setState(copy(comments = _comments.reversed().toMutableStateList()))
                 }
             }
         }
@@ -99,6 +104,12 @@ internal class FeedViewModel(
                     content = comment,
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.ClearFocus)
+                    setState(
+                        copy(
+                            buttonEnabled = false,
+                            comment = "",
+                        )
+                    )
                     fetchComments()
                 }
             }
