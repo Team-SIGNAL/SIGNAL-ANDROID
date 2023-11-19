@@ -91,11 +91,12 @@ internal fun CreateDiary(
                 }
             }
         }
+    }
+
+    LaunchedEffect(Unit) {
         diaryViewModel.sideEffect.collect {
             when (it) {
-                is DiarySideEffect.CreateDiarySuccess -> {
-                    moveToBack()
-                }
+                is DiarySideEffect.CreateDiarySuccess -> moveToBack()
             }
         }
     }
