@@ -85,7 +85,7 @@ internal class HomeViewModel(
         array = Array(
             when (state.value.chartViewType) {
                 ChartViewType.DAY -> 32
-                ChartViewType.WEEK -> 52
+                ChartViewType.WEEK -> 53
                 ChartViewType.MONTH -> 13
                 ChartViewType.YEAR -> 2100
             }
