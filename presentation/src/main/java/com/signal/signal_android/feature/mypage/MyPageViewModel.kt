@@ -1,21 +1,25 @@
-package com.signal.signal_android.feature.main.mypage
+package com.signal.signal_android.feature.mypage
 
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
+import com.signal.domain.usecase.users.GetFamousSayingUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
 import com.signal.domain.usecase.users.SignOutUseCase
 import com.signal.signal_android.BaseViewModel
+import com.signal.signal_android.feature.main.mypage.MyPageSideEffect
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MyPageViewModel(
-    val signOutUseCase: SignOutUseCase,
-    val secessionUseCase: SecessionUseCase,
-    val fetchUserInformationUseCase: FetchUserInformationUseCase,
+    private val signOutUseCase: SignOutUseCase,
+    private val secessionUseCase: SecessionUseCase,
+    private val fetchUserInformationUseCase: FetchUserInformationUseCase,
+    private val getFamousSayingUseCase: GetFamousSayingUseCase,
 ) : BaseViewModel<MyPageState, MyPageSideEffect>(MyPageState.getDefaultState()) {
 
     init {
         fetchUserInformation()
+        getFamousSaying()
     }
 
     internal fun signOut() {
@@ -51,6 +55,15 @@ class MyPageViewModel(
                 )
             }.onFailure {
 
+            }
+        }
+    }
+
+    private fun getFamousSaying() {
+        val random = 1..10
+        viewModelScope.launch(Dispatchers.IO) {
+            getFamousSayingUseCase(id = random.random().toLong()).onSuccess {
+                setState(state.value.copy(famousSaying = it?.famousSaying ?: ""))
             }
         }
     }

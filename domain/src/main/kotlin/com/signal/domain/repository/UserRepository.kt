@@ -1,5 +1,6 @@
 package com.signal.domain.repository
 
+import com.signal.domain.entity.FamousSayingEntity
 import com.signal.domain.entity.UserInformationEntity
 import com.signal.domain.enums.Gender
 
@@ -23,4 +24,7 @@ interface UserRepository {
     suspend fun fetchUserInformation(): UserInformationEntity
     fun saveAccountId(email: String)
     fun getAccountId(): String
+
+    suspend fun addFamousSaying(famousSayings: List<FamousSayingEntity>)
+    suspend fun getFamousSaying(id: Long): FamousSayingEntity?
 }

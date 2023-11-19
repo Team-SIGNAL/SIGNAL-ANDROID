@@ -1,7 +1,8 @@
-package com.signal.signal_android.feature.main.mypage
+package com.signal.signal_android.feature.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,6 +50,7 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
+import com.signal.signal_android.feature.main.mypage.MyPageSideEffect
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -82,8 +84,6 @@ internal fun MyPage(
         }
     }
 
-
-
     LaunchedEffect(Unit) {
         myPageViewModel.sideEffect.collect {
             when (it) {
@@ -113,10 +113,10 @@ internal fun MyPage(
             phoneNumber = state.phone,
             birth = state.birth,
             profileImageUrl = state.profile,
+            famousSaying = { state.famousSaying },
         )
         Achievement(moveToMoreAchievement = moveToMoreAchievement)
         Spacer(modifier = Modifier.height(30.dp))
-
         Column(
             modifier = Modifier.fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -234,45 +234,58 @@ private fun ProfileCard(
     phoneNumber: String,
     birth: String,
     profileImageUrl: String?,
+    famousSaying: () -> String,
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = SignalColor.White),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(containerColor = SignalColor.White),
     ) {
-        Card(
-            modifier = Modifier
-                .height(118.dp)
-                .fillMaxSize(),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp,
-            ),
+        Column(
+            modifier = Modifier.padding(
+                vertical = 18.dp,
+                horizontal = 26.dp,
+            )
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = SignalColor.White),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(14.dp),
             ) {
-                ProfileImage(
-                    profileImageUrl = profileImageUrl,
-                )
-                Column(
-                    modifier = Modifier.fillMaxHeight(),
-                    verticalArrangement = Arrangement.Center,
-                ) {
+                ProfileImage(profileImageUrl = profileImageUrl)
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     BodyStrong(
                         color = SignalColor.Primary200,
                         text = name,
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
                     Body(
                         color = SignalColor.Gray600,
                         text = phoneNumber,
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
                     Body(
                         color = SignalColor.Gray500,
                         text = birth,
                     )
                 }
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .border(
+                        width = 1.dp,
+                        color = SignalColor.Primary100,
+                        shape = RoundedCornerShape(8.dp),
+                    )
+                    .padding(
+                        horizontal = 20.dp,
+                        vertical = 10.dp,
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                Body2(text = famousSaying())
             }
         }
     }
@@ -280,7 +293,7 @@ private fun ProfileCard(
 
 @Composable
 private fun ProfileImage(profileImageUrl: String?) {
-    Box(modifier = Modifier.padding(19.dp)) {
+    Box {
         AsyncImage(
             modifier = Modifier
                 .size(80.dp)
@@ -306,17 +319,21 @@ private fun CardUserTool(
     tint: Color,
     onClick: () -> Unit,
 ) {
-    Card(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .clip(RoundedCornerShape(8.dp))
+
+            .background(color = SignalColor.White)
             .signalClickable(
                 rippleEnabled = true,
                 onClick = onClick,
             ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp,
-        ),
     ) {
         Row(
             modifier = Modifier
