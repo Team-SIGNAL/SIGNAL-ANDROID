@@ -35,7 +35,6 @@ import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.line.lineChart
 import com.patrykandpatrick.vico.compose.chart.scroll.rememberChartScrollState
 import com.patrykandpatrick.vico.compose.component.shape.shader.fromBrush
-import com.patrykandpatrick.vico.compose.style.ChartStyle
 import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
 import com.patrykandpatrick.vico.core.DefaultAlpha
 import com.patrykandpatrick.vico.core.chart.line.LineChart
@@ -88,9 +87,9 @@ internal fun Home(
                     onNext = homeViewModel::nextChartViewType,
                     currentView = state.chartViewType.value,
                     onPrevious = homeViewModel::previousChartViewType,
-                    diagnosisHistories = state.diagnosisHistories,
+                    diagnosisHistories = state.diagnosisHistoryUiModels,
                 )
-                if (state.diagnosisHistories.isEmpty()) {
+                if (state.diagnosisHistoryUiModels.isEmpty()) {
                     Body2(
                         text = stringResource(id = R.string.home_diagnosis_history_null),
                         color = SignalColor.Gray500,
@@ -172,7 +171,7 @@ private fun OngoingActivity(
 
 @Composable
 private fun HomeChart(
-    diagnosisHistories: List<DiagnosisHistoryEntity>,
+    diagnosisHistories: List<DiagnosisHistoryUiModel>,
     onPrevious: () -> Unit,
     onNext: () -> Unit,
     currentView: String,
@@ -239,9 +238,8 @@ private fun HomeChart(
     }
 }
 
-
-private fun List<DiagnosisHistoryEntity>.toChartModel() =
-    entryModelOf(this.map { FloatEntry(it.day.toFloat(), it.score.toFloat()) })
+private fun List<DiagnosisHistoryUiModel>.toChartModel() =
+    entryModelOf(this.map { FloatEntry(it.xLabel, it.score) })
 
 @Composable
 private fun ReservationCard(
