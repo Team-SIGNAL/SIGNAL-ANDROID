@@ -27,7 +27,7 @@ interface DiaryApi {
 
     @GET(SignalUrl.Diary.CreateDiary)
     suspend fun fetchDayDiaries(
-        @Query("date") date: String,
+        @Query("create_date") date: String,
     ): FetchDiariesResponse
 
     @GET(SignalUrl.Diary.FetchDiaryDetail)
