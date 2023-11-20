@@ -75,9 +75,7 @@ internal fun Feed(
     )
 
     LaunchedEffect(Unit) {
-        if (state.posts.isEmpty()) {
-            feedViewModel.fetchPosts()
-        }
+        feedViewModel.fetchPosts()
     }
 
     if (showDialog) {
@@ -124,7 +122,7 @@ internal fun Feed(
                 Posts(
                     moveToFeedDetails = moveToFeedDetails,
                     moveToReport = moveToReport,
-                    posts = feedViewModel._posts,
+                    posts = { state.posts },
                     showDropDown = {
                         feedViewModel.setFeedId(it)
                         expanded = it
@@ -254,7 +252,7 @@ private fun Posts(
     moveToFeedDetails: (feedId: Long) -> Unit,
     moveToReport: () -> Unit,
     showDropDown: (feedId: Long) -> Unit,
-    posts: List<PostsEntity.PostEntity>,
+    posts: () -> List<PostsEntity.PostEntity>,
     onDismissRequest: () -> Unit,
     expanded: Long,
     onDelete: () -> Unit,
@@ -274,7 +272,7 @@ private fun Posts(
         state = lazyListState,
         modifier = Modifier.fillMaxSize(),
     ) {
-        items(posts) {
+        items(posts()) {
             Post(
                 moveToFeedDetails = { moveToFeedDetails(it.id) },
                 imageUrl = it.image,

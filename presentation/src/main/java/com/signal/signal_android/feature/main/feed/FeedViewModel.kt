@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 internal class FeedViewModel(
     private val feedRepository: FeedRepository,
 ) : BaseViewModel<FeedState, FeedSideEffect>(FeedState.getDefaultState()) {
-    internal val _posts: SnapshotStateList<PostsEntity.PostEntity> = mutableStateListOf()
+    private val _posts: SnapshotStateList<PostsEntity.PostEntity> = mutableStateListOf()
     private val _comments: SnapshotStateList<PostCommentsEntity.CommentEntity> =
         mutableStateListOf()
 
@@ -31,16 +31,18 @@ internal class FeedViewModel(
                     )
                 }.onSuccess {
                     with(it.postEntities) {
-                        when (_posts.contains(firstOrNull())) {
-                            true -> _posts.add(last())
-                            else -> _posts.addAll(this)
-                        }
-                        setState(
-                            copy(
-                                posts = _posts,
-                                hasNextPage = isNotEmpty()
+                        if (_posts.size != it.postEntities.size) {
+                            when (_posts.contains(firstOrNull())) {
+                                true -> _posts.add(last())
+                                else -> _posts.addAll(this)
+                            }
+                            setState(
+                                copy(
+                                    posts = _posts,
+                                    hasNextPage = isNotEmpty()
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }
@@ -56,7 +58,6 @@ internal class FeedViewModel(
                     image = imageUrl,
                 ).onSuccess {
                     postSideEffect(FeedSideEffect.PostSuccess)
-                    fetchPosts()
                 }
             }
         }
