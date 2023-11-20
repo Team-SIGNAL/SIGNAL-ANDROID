@@ -18,6 +18,7 @@ import com.signal.signal_android.feature.main.home.Home
 import com.signal.signal_android.feature.main.recommend.Recommend
 import com.signal.signal_android.feature.mypage.MyPage
 import com.signal.signal_android.navigation.NavigationRoute
+import java.util.UUID
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -29,7 +30,7 @@ internal fun Main(
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
-    moveToDiaryDetails: (diaryId: Long) -> Unit,
+    moveToDiaryDetails: (diaryId: UUID) -> Unit,
     moveToAllDiary: () -> Unit,
     moveToReservation: () -> Unit,
     moveToMoreAchievement: () -> Unit,

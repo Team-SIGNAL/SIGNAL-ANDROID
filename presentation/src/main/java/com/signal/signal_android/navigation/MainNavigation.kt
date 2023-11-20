@@ -16,6 +16,7 @@ import com.signal.signal_android.feature.main.feed.Report
 import com.signal.signal_android.feature.main.reservation.CreateReservation
 import com.signal.signal_android.feature.main.reservation.Hospital
 import com.signal.signal_android.feature.main.reservation.Reservation
+import java.util.UUID
 
 internal fun NavGraphBuilder.mainNavigation(
     moveToSignIn: () -> Unit,
@@ -26,7 +27,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
-    moveToDiaryDetails: (diaryId: Long) -> Unit,
+    moveToDiaryDetails: (diaryId: UUID) -> Unit,
     moveToAllDiary: () -> Unit,
     moveToReservation: () -> Unit,
     moveToHospital: () -> Unit,
@@ -69,11 +70,11 @@ internal fun NavGraphBuilder.mainNavigation(
         composable(
             route = "${NavigationRoute.Main.DiaryDetails}/${NavArgument.DiaryId}",
             arguments = listOf(
-                navArgument("diaryId") { type = NavType.LongType },
+                navArgument("diaryId") { type = NavType.StringType },
             ),
         ) {
             DiaryDetail(
-                diaryId = it.arguments?.getLong("diaryId") ?: 0L,
+                diaryId = (UUID.fromString(it.arguments?.getString("diaryId")) ?: UUID.randomUUID()),
                 moveToBack = moveToBack,
             )
         }

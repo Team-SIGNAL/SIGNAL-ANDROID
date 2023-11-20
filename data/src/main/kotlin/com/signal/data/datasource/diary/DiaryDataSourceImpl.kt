@@ -6,6 +6,7 @@ import com.signal.data.model.diary.FetchDiariesResponse
 import com.signal.data.model.diary.FetchDiaryDetailsResponse
 import com.signal.data.model.diary.FetchMonthDiariesResponse
 import com.signal.data.util.ExceptionHandler
+import java.util.UUID
 
 class DiaryDataSourceImpl(
     private val diaryApi: DiaryApi,
@@ -29,9 +30,13 @@ class DiaryDataSourceImpl(
             diaryApi.fetchDayDiaries(date = date)
         }.sendRequest()
 
-    override suspend fun fetchDiaryDetails(diaryId: Long) =
+    override suspend fun fetchDiaryDetails(diaryId: UUID) =
         ExceptionHandler<FetchDiaryDetailsResponse>().httpRequest {
             diaryApi.fetchDiaryDetails(diaryId = diaryId)
         }.sendRequest()
+
+    override suspend fun deleteDiary(diaryId: UUID) = ExceptionHandler<Unit>().httpRequest {
+        diaryApi.deleteDiary(diaryId = diaryId)
+    }.sendRequest()
 
 }

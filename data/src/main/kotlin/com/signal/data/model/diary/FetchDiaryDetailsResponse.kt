@@ -5,7 +5,7 @@ import com.signal.domain.entity.DiaryDetailsEntity
 import com.signal.domain.enums.Emotion
 
 data class FetchDiaryDetailsResponse(
-    @SerializedName("date") val date: String,
+    @SerializedName("create_date") val date: String,
     @SerializedName("title") val title: String,
     @SerializedName("content") val content: String,
     @SerializedName("emotion") val emotion: Emotion,

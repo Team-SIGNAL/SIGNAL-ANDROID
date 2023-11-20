@@ -7,6 +7,6 @@ data class CreateDiaryRequest(
     @SerializedName("title") val title: String,
     @SerializedName("content") val content: String,
     @SerializedName("emotion") val emotion: Emotion,
-    @SerializedName("date") val date: String,
+    @SerializedName("create_date") val date: String,
     @SerializedName("image") val image: String?,
 )

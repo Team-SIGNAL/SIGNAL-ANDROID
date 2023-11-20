@@ -37,10 +37,11 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
 import org.koin.androidx.compose.koinViewModel
+import java.util.UUID
 
 @Composable
 internal fun AllDiary(
-    moveToDiaryDetails: (diaryId: Long) -> Unit,
+    moveToDiaryDetails: (diaryId: UUID) -> Unit,
     moveToBack: () -> Unit,
     diaryViewModel: DiaryViewModel = koinViewModel(),
 ) {
@@ -70,7 +71,7 @@ internal fun AllDiary(
 
 @Composable
 private fun Diaries(
-    moveToDiaryDetails: (diaryId: Long) -> Unit,
+    moveToDiaryDetails: (diaryId: UUID) -> Unit,
     diaries: List<DiariesEntity.DiaryEntity>,
 ) {
     LazyColumn(

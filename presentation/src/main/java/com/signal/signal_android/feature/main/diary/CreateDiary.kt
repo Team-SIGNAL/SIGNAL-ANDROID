@@ -1,5 +1,3 @@
-@file:Suppress("UNREACHABLE_CODE", "UNUSED_EXPRESSION")
-
 package com.signal.signal_android.feature.main.diary
 
 import android.net.Uri
@@ -91,11 +89,13 @@ internal fun CreateDiary(
                 }
             }
         }
+    }
+
+    LaunchedEffect(Unit) {
         diaryViewModel.sideEffect.collect {
             when (it) {
-                is DiarySideEffect.CreateDiarySuccess -> {
-                    moveToBack()
-                }
+                is DiarySideEffect.CreateDiarySuccess -> moveToBack()
+                else -> {}
             }
         }
     }
@@ -114,21 +114,12 @@ internal fun CreateDiary(
             contentColor = SignalColor.White,
             containerColor = SignalColor.White,
         ) {
-            // Sheet content
             SheetContent(
                 date = date,
-                onHappyEmotionClick = { diaryViewModel.setEmotion(Emotion.HAPPY) },
-                onSosoEmotionClick = { diaryViewModel.setEmotion(Emotion.SOSO) },
-                onDepressionEmotionClick = { diaryViewModel.setEmotion(Emotion.DEPRESSION) },
-                onSadnessEmotionClick = { diaryViewModel.setEmotion(Emotion.SADNESS) },
-                onSurprisedEmotionClick = { diaryViewModel.setEmotion(Emotion.SURPRISED) },
-                onDiscomfortEmotionClick = { diaryViewModel.setEmotion(Emotion.DISCOMFORT) },
-                onPleasedEmotionClick = { diaryViewModel.setEmotion(Emotion.PLEASED) },
-                onAngryEmotionClick = { diaryViewModel.setEmotion(Emotion.ANGRY) },
-                onAwkwardnessEmotionClick = { diaryViewModel.setEmotion(Emotion.AWKWARDNESS) },
-                onSobbingEmotionClick = { diaryViewModel.setEmotion(Emotion.SOBBING) },
-                onAnnoyingEmotionClick = { diaryViewModel.setEmotion(Emotion.ANNOYING) },
-                onBoreDomEmotionClick = { diaryViewModel.setEmotion(Emotion.BOREDOM) },
+                onEmotionClick = {
+                    diaryViewModel.setEmotion(emotion = it)
+                    showBottomSheet = false
+                },
             )
         }
     }
@@ -264,18 +255,7 @@ private fun PostImage(
 @Composable
 private fun SheetContent(
     date: LocalDate,
-    onHappyEmotionClick: () -> Unit,
-    onSosoEmotionClick: () -> Unit,
-    onDepressionEmotionClick: () -> Unit,
-    onSadnessEmotionClick: () -> Unit,
-    onSurprisedEmotionClick: () -> Unit,
-    onDiscomfortEmotionClick: () -> Unit,
-    onPleasedEmotionClick: () -> Unit,
-    onAngryEmotionClick: () -> Unit,
-    onAwkwardnessEmotionClick: () -> Unit,
-    onSobbingEmotionClick: () -> Unit,
-    onAnnoyingEmotionClick: () -> Unit,
-    onBoreDomEmotionClick: () -> Unit,
+    onEmotionClick: (Emotion) -> Unit,
 ) {
     Column(
         modifier = Modifier.background(color = SignalColor.White),
@@ -298,7 +278,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onHappyEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.HAPPY) },
                 painter = painterResource(id = R.drawable.ic_happy),
                 contentDescription = stringResource(
                     id = R.string.emotion_happy
@@ -307,7 +287,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onSosoEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.SOSO) },
                 painter = painterResource(id = R.drawable.ic_soso),
                 contentDescription = stringResource(
                     id = R.string.emotion_soso
@@ -316,7 +296,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onDepressionEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.DEPRESSION) },
                 painter = painterResource(id = R.drawable.ic_depression),
                 contentDescription = stringResource(
                     id = R.string.emotion_depression
@@ -331,7 +311,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onSadnessEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.SADNESS) },
                 painter = painterResource(id = R.drawable.ic_sadness),
                 contentDescription = stringResource(
                     id = R.string.emotion_sadness
@@ -340,7 +320,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onSurprisedEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.SURPRISED) },
                 painter = painterResource(id = R.drawable.ic_surprised),
                 contentDescription = stringResource(
                     id = R.string.emotion_surprised
@@ -349,7 +329,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onDiscomfortEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.DISCOMFORT) },
                 painter = painterResource(id = R.drawable.ic_discomfort),
                 contentDescription = stringResource(
                     id = R.string.emotion_discomfort
@@ -364,7 +344,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onPleasedEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.PLEASED) },
                 painter = painterResource(id = R.drawable.ic_pleased),
                 contentDescription = stringResource(
                     id = R.string.emotion_pleased
@@ -373,7 +353,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onAngryEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.ANGRY) },
                 painter = painterResource(id = R.drawable.ic_angry),
                 contentDescription = stringResource(
                     id = R.string.emotion_angry
@@ -382,7 +362,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onAwkwardnessEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.AWKWARDNESS) },
                 painter = painterResource(id = R.drawable.ic_awkwardness),
                 contentDescription = stringResource(
                     id = R.string.emotion_awkwardness
@@ -397,7 +377,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onSobbingEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.SOBBING) },
                 painter = painterResource(id = R.drawable.ic_sobbing),
                 contentDescription = stringResource(
                     id = R.string.emotion_sobbing
@@ -406,7 +386,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onAnnoyingEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.ANNOYING) },
                 painter = painterResource(id = R.drawable.ic_annoying),
                 contentDescription = stringResource(
                     id = R.string.emotion_annoying
@@ -415,7 +395,7 @@ private fun SheetContent(
             Image(
                 modifier = Modifier
                     .size(40.dp)
-                    .signalClickable { onBoreDomEmotionClick() },
+                    .signalClickable { onEmotionClick(Emotion.BOREDOM) },
                 painter = painterResource(id = R.drawable.ic_boredom),
                 contentDescription = stringResource(
                     id = R.string.emotion_boredom

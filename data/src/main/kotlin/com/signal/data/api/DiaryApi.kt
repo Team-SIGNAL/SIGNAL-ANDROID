@@ -5,10 +5,12 @@ import com.signal.data.model.diary.FetchDiariesResponse
 import com.signal.data.model.diary.FetchDiaryDetailsResponse
 import com.signal.data.model.diary.FetchMonthDiariesResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.util.UUID
 
 interface DiaryApi {
     @POST(SignalUrl.Diary.CreateDiary)
@@ -26,11 +28,16 @@ interface DiaryApi {
 
     @GET(SignalUrl.Diary.CreateDiary)
     suspend fun fetchDayDiaries(
-        @Query("date") date: String,
+        @Query("create_date") date: String,
     ): FetchDiariesResponse
 
     @GET(SignalUrl.Diary.FetchDiaryDetail)
     suspend fun fetchDiaryDetails(
-        @Path("diary_id") diaryId: Long,
+        @Path("diary_id") diaryId: UUID,
     ): FetchDiaryDetailsResponse
+
+    @DELETE(SignalUrl.Diary.DeleteDiary)
+    suspend fun deleteDiary(
+        @Path("diary_id") diaryId: UUID,
+    )
 }

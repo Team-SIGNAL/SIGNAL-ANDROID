@@ -3,12 +3,13 @@ package com.signal.data.model.diary
 import com.google.gson.annotations.SerializedName
 import com.signal.domain.entity.MonthDiaryEntity
 import java.time.LocalDateTime
+import java.util.UUID
 
 data class FetchMonthDiariesResponse(
     @SerializedName("month_diary_list") val monthDiaries: List<Diary>,
 ) {
     data class Diary(
-        @SerializedName("id") val id: Long,
+        @SerializedName("id") val id: UUID,
         @SerializedName("date") val date: LocalDateTime,
     )
 }

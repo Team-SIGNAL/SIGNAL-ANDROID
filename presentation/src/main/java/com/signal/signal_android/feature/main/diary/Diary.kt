@@ -50,13 +50,14 @@ import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun Diary(
     moveToCreateDiary: () -> Unit,
-    moveToDiaryDetails: (diaryId: Long) -> Unit,
+    moveToDiaryDetails: (diaryId: UUID) -> Unit,
     moveToAllDiary: () -> Unit,
     diaryViewModel: DiaryViewModel = koinViewModel(),
 ) {
@@ -175,7 +176,7 @@ private fun DiaryHeader(
 
 @Composable
 private fun Diaries(
-    moveToDiaryDetails: (diaryId: Long) -> Unit,
+    moveToDiaryDetails: (diaryId: UUID) -> Unit,
     diaries: List<DiariesEntity.DiaryEntity>,
 ) {
     LazyColumn(
