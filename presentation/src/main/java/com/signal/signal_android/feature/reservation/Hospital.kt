@@ -15,6 +15,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,45 +26,30 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.signal.domain.entity.FetchHospitalsEntity
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
+import org.koin.androidx.compose.koinViewModel
 
-internal data class _Hospital(
-    val imageUrl: String?,
-    val hospital: String,
-    val phone: String,
-    val address: String,
-)
 
-// TODO 더미
-internal val hospitals = listOf(
-    _Hospital(
-        imageUrl = null,
-        hospital = "은빛사랑정신건강의학과의원",
-        phone = "042-486-2800",
-        address = "대전광역시 서구 월평동 540",
-    ), _Hospital(
-        imageUrl = null,
-        hospital = "ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄹ병원",
-        phone = "042-221-1234",
-        address = "대전광역시 유성구 가정북로 76 대덕소프트웨어마이스터고등학교 우정관 택배보관함"
-    ), _Hospital(
-        imageUrl = null,
-        hospital = "ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄹ병원",
-        phone = "042-221-1234",
-        address = "대전광역시 유성구 가정북로 76 대덕소프트웨어마이스터고등학교 우정관 택배보관함"
-    )
-)
 
 @Composable
 internal fun Hospital(
     moveToBack: () -> Unit,
     moveToCreateReservation: () -> Unit,
+    reservationViewModel: ReservationViewModel = koinViewModel(),
 ) {
+    LaunchedEffect(Unit) {
+        reservationViewModel.fetchHospitals()
+    }
+
+    val state by reservationViewModel.state.collectAsState()
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,10 +60,10 @@ internal fun Hospital(
             onLeadingClicked = moveToBack,
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Body(text = "조회 결과 ${hospitals.size}건")
+        Body(text = "조회 결과 ${state.hospitals.size}건")
         Spacer(modifier = Modifier.height(8.dp))
         Hospitals(
-            hospitals = hospitals,
+            hospitals = state.hospitals,
             moveToCreateHospital = moveToCreateReservation,
         )
     }
@@ -84,7 +72,7 @@ internal fun Hospital(
 @Composable
 private fun Hospitals(
     moveToCreateHospital: () -> Unit,
-    hospitals: List<_Hospital>,
+    hospitals: List<FetchHospitalsEntity.HospitalsEntity>,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -92,8 +80,8 @@ private fun Hospitals(
     ) {
         items(hospitals) {
             HospitalItems(
-                imageUrl = it.imageUrl,
-                hospital = it.hospital,
+                imageUrl = it.profile,
+                hospital = it.name,
                 phone = it.phone,
                 address = it.address,
                 moveToCreateHospital = moveToCreateHospital,
