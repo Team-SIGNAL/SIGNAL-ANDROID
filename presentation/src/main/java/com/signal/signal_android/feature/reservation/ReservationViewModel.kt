@@ -43,6 +43,7 @@ class ReservationViewModel(
                 kotlin.runCatching {
                     reservationRepository.fetchHospitals()
                 }.onSuccess {
+                    _hospitals.clear()
                     _hospitals.addAll(it.hospitals)
                     setState(
                         copy(
