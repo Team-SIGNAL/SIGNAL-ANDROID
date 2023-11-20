@@ -92,12 +92,14 @@ internal class FeedViewModel(
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.fetchComments(feedId).onSuccess {
-                    if (_comments.contains(it.comments.firstOrNull()) && _comments.size != it.comments.size) {
-                        _comments.add(it.comments.last())
-                    } else {
-                        _comments.addAll(it.comments)
+                    if (_comments.size < it.comments.size) {
+                        if (_comments.contains(it.comments.firstOrNull())) {
+                            _comments.add(it.comments.last())
+                        } else {
+                            _comments.addAll(it.comments)
+                        }
+                        setState(copy(comments = _comments.reversed().toMutableStateList()))
                     }
-                    setState(copy(comments = _comments.reversed().toMutableStateList()))
                 }
             }
         }
