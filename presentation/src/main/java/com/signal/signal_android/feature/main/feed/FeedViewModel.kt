@@ -12,6 +12,7 @@ import com.signal.domain.repository.FeedRepository
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 internal class FeedViewModel(
     private val feedRepository: FeedRepository,
@@ -38,8 +39,7 @@ internal class FeedViewModel(
                             }
                             setState(
                                 copy(
-                                    posts = _posts,
-                                    hasNextPage = isNotEmpty()
+                                    posts = _posts, hasNextPage = isNotEmpty()
                                 )
                             )
                         }
@@ -92,7 +92,7 @@ internal class FeedViewModel(
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.fetchComments(feedId).onSuccess {
-                    if (_comments.contains(it.comments.first()) && _comments.size != it.comments.size) {
+                    if (_comments.contains(it.comments.firstOrNull()) && _comments.size != it.comments.size) {
                         _comments.add(it.comments.last())
                     } else {
                         _comments.addAll(it.comments)
@@ -190,7 +190,7 @@ internal class FeedViewModel(
         }
     }
 
-    internal fun setFeedId(feedId: Long) {
+    internal fun setFeedId(feedId: UUID) {
         setState(state.value.copy(feedId = feedId))
     }
 
@@ -210,4 +210,61 @@ internal class FeedViewModel(
     internal fun setComment(comment: String) {
         setState(state.value.copy(comment = comment))
     }
+
+    private fun getTimeMillis(createdDate: String) {
+        val date = createdDate.split('T')[0].split('.')
+    }
+
+    private fun getTime(time: Long): String {
+        val currentTime = System.currentTimeMillis()
+        var differentTime = (currentTime - time) / 1000
+        var message = ""
+        if (differentTime < TimeValue.SEC.value) {
+            message = "방금 전"
+        } else {
+            for (i in TimeValue.values()) {
+                differentTime /= i.value
+                if (differentTime < i.max) {
+                    message = i.message
+                    break
+                }
+            }
+        }
+
+        return message
+    }
 }
+
+enum class TimeValue(
+    val value: Int,
+    val max: Int,
+    val message: String,
+) {
+    SEC(
+        value = 60,
+        max = 60,
+        message = "분 전",
+    ),
+    MIN(
+        value = 60,
+        max = 24,
+        message = "시간 전",
+    ),
+    HOUR(
+        value = 24,
+        max = 30,
+        message = "일 전",
+    ),
+    DAY(
+        value = 30,
+        max = 12,
+        message = "달 전",
+    ),
+    MONTH(
+        value = 12,
+        max = Int.MAX_VALUE,
+        message = "년 전",
+    )
+}
+
+

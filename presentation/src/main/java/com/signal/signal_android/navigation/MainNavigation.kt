@@ -16,13 +16,14 @@ import com.signal.signal_android.feature.main.feed.Report
 import com.signal.signal_android.feature.main.reservation.CreateReservation
 import com.signal.signal_android.feature.main.reservation.Hospital
 import com.signal.signal_android.feature.main.reservation.Reservation
+import java.util.UUID
 
 internal fun NavGraphBuilder.mainNavigation(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
-    moveToFeedDetails: (feedId: Long) -> Unit,
+    moveToFeedDetails: (feedId: UUID) -> Unit,
     moveToBack: () -> Unit,
-    moveToCreatePost: (feedId: Long) -> Unit,
+    moveToCreatePost: (feedId: UUID) -> Unit,
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
@@ -56,11 +57,11 @@ internal fun NavGraphBuilder.mainNavigation(
         composable(
             route = "${NavigationRoute.Main.FeedDetails}/${NavArgument.FeedId}",
             arguments = listOf(
-                navArgument("feedId") { type = NavType.LongType },
+                navArgument("feedId") { type = NavType.StringType },
             ),
         ) {
             FeedDetails(
-                feedId = it.arguments?.getLong("feedId") ?: 0L,
+                feedId = UUID.fromString(it.arguments?.getString("feedId")),
                 moveToBack = moveToBack,
                 moveToCreatePost = moveToCreatePost,
             )
@@ -93,7 +94,7 @@ internal fun NavGraphBuilder.mainNavigation(
         ) {
             CreatePost(
                 moveToBack = moveToBack,
-                feedId = it.arguments?.getLong("feedId") ?: -1,
+                feedId = UUID.fromString(it.arguments?.getString("feedId")),
             )
         }
 

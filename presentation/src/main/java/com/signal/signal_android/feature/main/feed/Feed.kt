@@ -28,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,17 +54,18 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
 import org.koin.androidx.compose.koinViewModel
+import java.util.UUID
 
 @Composable
 internal fun Feed(
-    moveToFeedDetails: (feedId: Long) -> Unit,
-    moveToCreatePost: (feedId: Long) -> Unit,
+    moveToFeedDetails: (feedId: UUID) -> Unit,
+    moveToCreatePost: (feedId: UUID) -> Unit,
     moveToReport: () -> Unit,
     feedViewModel: FeedViewModel = koinViewModel(),
 ) {
     val state by feedViewModel.state.collectAsState()
 
-    var expanded by remember { mutableLongStateOf(-1) }
+    var expanded by remember { mutableStateOf(UUID.randomUUID()) }
 
     var showDialog by remember { mutableStateOf(false) }
 
@@ -128,7 +128,7 @@ internal fun Feed(
                         expanded = it
                     },
                     expanded = expanded,
-                    onDismissRequest = { expanded = -1 },
+                    onDismissRequest = { expanded = UUID.randomUUID() },
                     onDelete = { showDialog = true },
                     onEdit = { moveToCreatePost(state.feedId) },
                     nextPage = {
@@ -159,7 +159,7 @@ internal fun Feed(
                     )
                     Body(
                         modifier = Modifier.signalClickable(
-                            onClick = { moveToCreatePost(-1) },
+                            onClick = { moveToCreatePost(UUID.randomUUID()) },
                             enabled = state.posts.isEmpty(),
                         ),
                         text = stringResource(id = R.string.feed_posts_add),
@@ -170,7 +170,7 @@ internal fun Feed(
         }
         FloatingActionButton(
             modifier = Modifier.padding(16.dp),
-            onClick = { moveToCreatePost(-1) },
+            onClick = { moveToCreatePost(UUID.randomUUID()) },
             backgroundColor = SignalColor.Primary100,
         ) {
             Icon(
@@ -249,12 +249,12 @@ private fun Filter(
 
 @Composable
 private fun Posts(
-    moveToFeedDetails: (feedId: Long) -> Unit,
+    moveToFeedDetails: (feedId: UUID) -> Unit,
     moveToReport: () -> Unit,
-    showDropDown: (feedId: Long) -> Unit,
+    showDropDown: (feedId: UUID) -> Unit,
     posts: () -> List<PostsEntity.PostEntity>,
     onDismissRequest: () -> Unit,
-    expanded: Long,
+    expanded: UUID,
     onDelete: () -> Unit,
     onEdit: () -> Unit,
     nextPage: () -> Unit,

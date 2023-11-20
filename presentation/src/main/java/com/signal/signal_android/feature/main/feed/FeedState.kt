@@ -6,6 +6,7 @@ import com.signal.domain.entity.PostsEntity
 import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
 import com.signal.domain.enums.Tag
+import java.util.UUID
 
 data class FeedState(
     val posts: List<PostsEntity.PostEntity>,
@@ -15,7 +16,7 @@ data class FeedState(
     val title: String,
     val content: String,
     val postDetailsEntity: PostDetailsEntity,
-    val feedId: Long,
+    val feedId: UUID,
     val image: String,
     val comments: SnapshotStateList<PostCommentsEntity.CommentEntity>,
     val comment: String,
@@ -40,7 +41,7 @@ data class FeedState(
                 profile = "https://github.com/Team-SIGNAL/SIGNAL-ANDROID/blob/develop/presentation/src/main/res/drawable/ic_profile_image.png?raw=true",
                 isMine = false,
             ),
-            feedId = 0L,
+            feedId = UUID.randomUUID(),
             image = "",
             comments = mutableStateListOf(),
             comment = "",

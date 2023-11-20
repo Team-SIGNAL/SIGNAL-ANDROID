@@ -6,6 +6,7 @@ import com.signal.data.model.feed.response.FetchCommentsResponse
 import com.signal.data.model.feed.response.FetchPostDetailsResponse
 import com.signal.data.model.feed.response.FetchPostsResponse
 import com.signal.domain.enums.Tag
+import java.util.UUID
 
 interface FeedDataSource {
     suspend fun fetchPosts(
@@ -16,19 +17,19 @@ interface FeedDataSource {
 
     suspend fun createPost(createPostRequest: CreatePostRequest)
 
-    suspend fun fetchPostDetails(feedId: Long): FetchPostDetailsResponse
+    suspend fun fetchPostDetails(feedId: UUID): FetchPostDetailsResponse
 
-    suspend fun fetchComments(feedId: Long): FetchCommentsResponse
+    suspend fun fetchComments(feedId: UUID): FetchCommentsResponse
 
     suspend fun createComment(
-        feedId: Long,
+        feedId: UUID,
         createCommentRequest: CreateCommentRequest,
     )
 
-    suspend fun deletePost(feedId: Long)
+    suspend fun deletePost(feedId: UUID)
 
     suspend fun editPost(
-        feedId: Long,
+        feedId: UUID,
         createPostRequest: CreatePostRequest,
     )
 }
