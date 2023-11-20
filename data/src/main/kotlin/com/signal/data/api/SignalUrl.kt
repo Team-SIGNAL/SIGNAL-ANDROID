@@ -6,6 +6,7 @@ object SignalUrl {
     private const val attachment = "/attachment"
     private const val diary = "/diary"
     private const val reservation = "/reservation"
+    private const val admin = "/admin"
 
     object Users {
         const val SignIn = "$users/signin"
@@ -35,7 +36,7 @@ object SignalUrl {
     }
 
     object Reservation {
-        const val FetchHospitals = "$reservation/"
+        const val FetchHospitals = "$admin/hospital/list"
         const val CreateReservation = reservation
         const val FetchReservationDetails = "$reservation/detail/{reservation_id}"
     }
