@@ -1,5 +1,6 @@
 package com.signal.signal_android.feature.main.diary
 
+import android.util.Log
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.DiariesEntity
@@ -128,11 +129,10 @@ class DiaryViewModel(
             }
             viewModelScope.launch(Dispatchers.IO) {
                 diaryRepository.deleteDiary(diaryId = diaryId).onSuccess {
-                    remove()
-                    postSideEffect(DiarySideEffect.DeleteSuccess)
                 }.onFailure {
                     if (it is KotlinNullPointerException) {
                         remove()
+                        _diaries.clear()
                         postSideEffect(DiarySideEffect.DeleteSuccess)
                     }
                 }
