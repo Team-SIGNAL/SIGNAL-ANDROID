@@ -139,7 +139,7 @@ private fun Comments(
             Comment(
                 profileImageUrl = it.profile,
                 writer = it.name,
-                time = it.dateTime.toString(),
+                time = it.dateTime,
                 content = it.content,
                 onClick = {},
             )

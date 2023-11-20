@@ -8,7 +8,7 @@ import com.signal.domain.entity.PostDetailsEntity
 import com.signal.domain.enums.Tag
 
 data class FeedState(
-    val posts: SnapshotStateList<PostsEntity.PostEntity>,
+    val posts: List<PostsEntity.PostEntity>,
     val tag: Tag,
     val page: Long,
     val size: Long,
@@ -24,7 +24,7 @@ data class FeedState(
 ) {
     companion object {
         fun getDefaultState() = FeedState(
-            posts = mutableStateListOf(),
+            posts = emptyList(),
             tag = Tag.GENERAL,
             page = 0,
             size = 10,

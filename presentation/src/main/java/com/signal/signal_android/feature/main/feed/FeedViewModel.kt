@@ -16,8 +16,9 @@ import kotlinx.coroutines.launch
 internal class FeedViewModel(
     private val feedRepository: FeedRepository,
 ) : BaseViewModel<FeedState, FeedSideEffect>(FeedState.getDefaultState()) {
-    private val _posts: MutableList<PostsEntity.PostEntity> = mutableListOf()
-    private val _comments: SnapshotStateList<PostCommentsEntity.CommentEntity> = mutableStateListOf()
+    internal val _posts: SnapshotStateList<PostsEntity.PostEntity> = mutableStateListOf()
+    private val _comments: SnapshotStateList<PostCommentsEntity.CommentEntity> =
+        mutableStateListOf()
 
     internal fun fetchPosts() {
         with(state.value) {
@@ -29,13 +30,18 @@ internal class FeedViewModel(
                         size = size,
                     )
                 }.onSuccess {
-                    _posts.addAll(it.postEntities)
-                    setState(
-                        copy(
-                            posts = _posts.toMutableStateList(),
-                            hasNextPage = it.postEntities.isNotEmpty()
+                    with(it.postEntities) {
+                        when (_posts.contains(firstOrNull())) {
+                            true -> _posts.add(last())
+                            else -> _posts.addAll(this)
+                        }
+                        setState(
+                            copy(
+                                posts = _posts,
+                                hasNextPage = isNotEmpty()
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
@@ -85,7 +91,7 @@ internal class FeedViewModel(
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
                 feedRepository.fetchComments(feedId).onSuccess {
-                    if(_comments.contains(it.comments.first())){
+                    if (_comments.contains(it.comments.first()) && _comments.size != it.comments.size) {
                         _comments.add(it.comments.last())
                     } else {
                         _comments.addAll(it.comments)
@@ -189,7 +195,12 @@ internal class FeedViewModel(
 
     internal fun setTag(tag: Tag) {
         with(state.value) {
-            setState(copy(tag = tag))
+            setState(
+                copy(
+                    tag = tag,
+                    page = 0,
+                )
+            )
             _posts.clear()
             fetchPosts()
         }
