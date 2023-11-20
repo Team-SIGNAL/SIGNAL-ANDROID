@@ -119,18 +119,53 @@ internal fun CreateDiary(
             // Sheet content
             SheetContent(
                 date = date,
-                onHappyEmotionClick = { diaryViewModel.setEmotion(Emotion.HAPPY) },
-                onSosoEmotionClick = { diaryViewModel.setEmotion(Emotion.SOSO) },
-                onDepressionEmotionClick = { diaryViewModel.setEmotion(Emotion.DEPRESSION) },
-                onSadnessEmotionClick = { diaryViewModel.setEmotion(Emotion.SADNESS) },
-                onSurprisedEmotionClick = { diaryViewModel.setEmotion(Emotion.SURPRISED) },
-                onDiscomfortEmotionClick = { diaryViewModel.setEmotion(Emotion.DISCOMFORT) },
-                onPleasedEmotionClick = { diaryViewModel.setEmotion(Emotion.PLEASED) },
-                onAngryEmotionClick = { diaryViewModel.setEmotion(Emotion.ANGRY) },
-                onAwkwardnessEmotionClick = { diaryViewModel.setEmotion(Emotion.AWKWARDNESS) },
-                onSobbingEmotionClick = { diaryViewModel.setEmotion(Emotion.SOBBING) },
-                onAnnoyingEmotionClick = { diaryViewModel.setEmotion(Emotion.ANNOYING) },
-                onBoreDomEmotionClick = { diaryViewModel.setEmotion(Emotion.BOREDOM) },
+                onHappyEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.HAPPY)
+                    showBottomSheet = false
+                },
+                onSosoEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.SOSO)
+                    showBottomSheet = false
+                },
+                onDepressionEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.DEPRESSION)
+                },
+                onSadnessEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.SADNESS)
+                    showBottomSheet = false
+                },
+                onSurprisedEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.SURPRISED)
+                    showBottomSheet = false
+                },
+                onDiscomfortEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.DISCOMFORT)
+                    showBottomSheet = false
+                },
+                onPleasedEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.PLEASED)
+                    showBottomSheet = false
+                },
+                onAngryEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.ANGRY)
+                    showBottomSheet = false
+                },
+                onAwkwardnessEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.AWKWARDNESS)
+                    showBottomSheet = false
+                },
+                onSobbingEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.SOBBING)
+                    showBottomSheet = false
+                },
+                onAnnoyingEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.ANNOYING)
+                    showBottomSheet = false
+                },
+                onBoreDomEmotionClick = {
+                    diaryViewModel.setEmotion(Emotion.BOREDOM)
+                    showBottomSheet = false
+                },
             )
         }
     }
