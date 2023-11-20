@@ -13,11 +13,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -60,6 +63,10 @@ internal fun Home(
 ) {
     val state by homeViewModel.state.collectAsState()
 
+    var dialogState by remember { mutableStateOf(false) }
+    val showDialog = { dialogState = true }
+    val hideDialog = { dialogState = false }
+
     Column {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Spacer(modifier = Modifier.height(30.dp))
@@ -87,6 +94,7 @@ internal fun Home(
                     onNext = homeViewModel::nextChartViewType,
                     currentView = state.chartViewType.value,
                     onPrevious = homeViewModel::previousChartViewType,
+                    showDialog = showDialog,
                     diagnosisHistories = state.diagnosisHistoryUiModels,
                 )
                 if (state.diagnosisHistoryUiModels.isEmpty()) {
@@ -174,6 +182,7 @@ private fun HomeChart(
     diagnosisHistories: List<DiagnosisHistoryUiModel>,
     onPrevious: () -> Unit,
     onNext: () -> Unit,
+    showDialog: () -> Unit,
     currentView: String,
 ) {
     Column {
@@ -182,7 +191,18 @@ private fun HomeChart(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            BodyStrong(text = stringResource(id = R.string.home_chart))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                BodyStrong(text = stringResource(id = R.string.home_chart))
+                IconButton(onClick = showDialog) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_information),
+                        contentDescription = stringResource(id = R.string.home_information_icon),
+                        tint = SignalColor.Gray500,
+                    )
+                }
+            }
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
