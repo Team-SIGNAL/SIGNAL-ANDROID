@@ -2,9 +2,9 @@ package com.signal.signal_android.feature.main.feed
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.signal.domain.entity.PostsEntity
 import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
+import com.signal.domain.entity.PostsEntity
 import com.signal.domain.enums.Tag
 import java.util.UUID
 
@@ -32,7 +32,7 @@ data class FeedState(
             title = "",
             content = "",
             postDetailsEntity = PostDetailsEntity(
-                id = 0L,
+                id = UUID.randomUUID(),
                 image = null,
                 title = "",
                 date = "",

@@ -2,9 +2,10 @@ package com.signal.data.model.feed.response
 
 import com.google.gson.annotations.SerializedName
 import com.signal.domain.entity.PostDetailsEntity
+import java.util.UUID
 
 data class FetchPostDetailsResponse(
-    @SerializedName("id") val id: Long,
+    @SerializedName("id") val id: UUID,
     @SerializedName("image") val image: String?,
     @SerializedName("title") val title: String,
     @SerializedName("create_date") val date: String,
