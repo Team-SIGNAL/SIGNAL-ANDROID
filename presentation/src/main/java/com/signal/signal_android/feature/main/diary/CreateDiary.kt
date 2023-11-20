@@ -1,5 +1,3 @@
-@file:Suppress("UNREACHABLE_CODE", "UNUSED_EXPRESSION")
-
 package com.signal.signal_android.feature.main.diary
 
 import android.net.Uri
@@ -116,7 +114,6 @@ internal fun CreateDiary(
             contentColor = SignalColor.White,
             containerColor = SignalColor.White,
         ) {
-            // Sheet content
             SheetContent(
                 date = date,
                 onEmotionClick = {
@@ -259,18 +256,6 @@ private fun PostImage(
 private fun SheetContent(
     date: LocalDate,
     onEmotionClick: (Emotion) -> Unit,
-    /*onHappyEmotionClick: () -> Unit,
-    onSosoEmotionClick: () -> Unit,
-    onDepressionEmotionClick: () -> Unit,
-    onSadnessEmotionClick: () -> Unit,
-    onSurprisedEmotionClick: () -> Unit,
-    onDiscomfortEmotionClick: () -> Unit,
-    onPleasedEmotionClick: () -> Unit,
-    onAngryEmotionClick: () -> Unit,
-    onAwkwardnessEmotionClick: () -> Unit,
-    onSobbingEmotionClick: () -> Unit,
-    onAnnoyingEmotionClick: () -> Unit,
-    onBoreDomEmotionClick: () -> Unit,*/
 ) {
     Column(
         modifier = Modifier.background(color = SignalColor.White),
