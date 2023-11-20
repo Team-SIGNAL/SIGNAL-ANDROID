@@ -39,10 +39,11 @@ import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import org.koin.androidx.compose.koinViewModel
+import java.util.UUID
 
 @Composable
 internal fun DiaryDetail(
-    diaryId: Long,
+    diaryId: UUID,
     moveToBack: () -> Unit,
     diaryViewModel: DiaryViewModel = koinViewModel(),
 ) {

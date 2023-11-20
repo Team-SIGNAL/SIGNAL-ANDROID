@@ -1,6 +1,5 @@
 package com.signal.signal_android.feature.main.diary
 
-import android.util.Log
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.DiariesEntity
@@ -11,6 +10,7 @@ import com.signal.domain.repository.DiaryRepository
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class DiaryViewModel(
     private val diaryRepository: DiaryRepository,
@@ -67,6 +67,7 @@ class DiaryViewModel(
                 kotlin.runCatching {
                     diaryRepository.fetchDayDiary(date = date)
                 }.onSuccess {
+                    _diaries.clear()
                     _diaries.addAll(it.diaryEntity)
                     setState(
                         copy(
@@ -128,8 +129,7 @@ class DiaryViewModel(
                 setState(copy(diaries = _diaries.toMutableStateList()))
             }
             viewModelScope.launch(Dispatchers.IO) {
-                diaryRepository.deleteDiary(diaryId = diaryId).onSuccess {
-                }.onFailure {
+                diaryRepository.deleteDiary(diaryId = diaryId).onSuccess {}.onFailure {
                     if (it is KotlinNullPointerException) {
                         remove()
                         _diaries.clear()
@@ -156,7 +156,7 @@ class DiaryViewModel(
         setState(state.value.copy(emotion = emotion))
     }
 
-    internal fun setDiaryId(diaryId: Long) {
+    internal fun setDiaryId(diaryId: UUID) {
         setState(state.value.copy(diaryId = diaryId))
     }
 }

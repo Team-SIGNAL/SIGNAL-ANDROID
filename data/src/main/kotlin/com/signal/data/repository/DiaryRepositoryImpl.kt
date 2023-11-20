@@ -6,6 +6,7 @@ import com.signal.data.model.diary.toEntity
 import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.enums.Emotion
 import com.signal.domain.repository.DiaryRepository
+import java.util.UUID
 
 class DiaryRepositoryImpl(
     private val diaryDateSource: DiaryDataSource,
@@ -37,11 +38,11 @@ class DiaryRepositoryImpl(
         )
     }
 
-    override suspend fun fetchDiaryDetails(diaryId: Long) = runCatching {
+    override suspend fun fetchDiaryDetails(diaryId: UUID) = runCatching {
         diaryDateSource.fetchDiaryDetails(diaryId = diaryId).toEntity()
     }
 
-    override suspend fun deleteDiary(diaryId: Long) = runCatching {
+    override suspend fun deleteDiary(diaryId: UUID) = runCatching {
         diaryDateSource.deleteDiary(diaryId = diaryId)
     }
 }

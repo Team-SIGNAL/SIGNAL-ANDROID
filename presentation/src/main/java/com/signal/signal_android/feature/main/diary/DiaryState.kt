@@ -5,6 +5,7 @@ import com.signal.domain.entity.DiaryDetailsEntity
 import com.signal.domain.entity.MonthDiaryEntity
 import com.signal.domain.enums.Emotion
 import java.time.LocalDate
+import java.util.UUID
 
 data class DiaryState(
     val diaries: List<DiariesEntity.DiaryEntity>,
@@ -18,7 +19,7 @@ data class DiaryState(
     val emotion: Emotion,
     var date: String,
     val image: String?,
-    val diaryId: Long,
+    val diaryId: UUID,
 ) {
     companion object {
         fun getDefaultState() = DiaryState(
@@ -39,7 +40,7 @@ data class DiaryState(
             emotion = Emotion.HAPPY,
             date = LocalDate.now().toString(),
             image = null,
-            diaryId = 0L,
+            diaryId = UUID.randomUUID(),
         )
     }
 }

@@ -3,12 +3,13 @@ package com.signal.data.model.diary
 import com.google.gson.annotations.SerializedName
 import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.enums.Emotion
+import java.util.UUID
 
 data class FetchDiariesResponse(
     @SerializedName("diary_list") val diaries: List<Diaries>
 ) {
     data class Diaries(
-        @SerializedName("id") val id: Long,
+        @SerializedName("id") val id: UUID,
         @SerializedName("title") val title: String,
         @SerializedName("content") val content: String,
         @SerializedName("image") val image: String?,
