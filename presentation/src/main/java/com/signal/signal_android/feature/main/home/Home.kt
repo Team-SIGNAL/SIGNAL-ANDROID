@@ -253,7 +253,7 @@ private fun HomeChart(
                 startAxis = rememberStartAxis(),
                 bottomAxis = rememberBottomAxis(),
                 chartScrollState = rememberChartScrollState(),
-                marker = marker
+                marker = marker,
             )
         }
     }
