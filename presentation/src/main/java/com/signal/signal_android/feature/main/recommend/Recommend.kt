@@ -115,15 +115,15 @@ private fun ColumnScope.Categories() {
             .align(Alignment.Start),
         text = stringResource(id = R.string.recommend_categories),
     )
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(18.dp),
-    ) {
+    LazyRow(horizontalArrangement = Arrangement.spacedBy(18.dp)) {
         itemsIndexed(images) { index, item ->
             Column(
-                modifier = Modifier.signalClickable(
-                    rippleEnabled = true,
-                    onClick = {},
-                ),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .signalClickable(
+                        rippleEnabled = true,
+                        onClick = {},
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Image(
@@ -140,13 +140,8 @@ private fun ColumnScope.Categories() {
                     contentScale = ContentScale.Crop,
                 )
                 Body2(
-                    modifier = Modifier.padding(top = 4.dp),
+                    modifier = Modifier.padding(vertical = 8.dp),
                     text = stringResource(id = strings[index]),
-                )
-                Body2(
-                    modifier = Modifier.padding(top = 2.dp),
-                    text = "뭐시깽이",
-                    color = SignalColor.Primary100,
                 )
             }
         }
