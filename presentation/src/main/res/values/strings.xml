@@ -148,6 +148,9 @@
 
     <string name="recommend_my">내가 추천한 컨텐츠 보러가기</string>
 
+    <!--recommend details-->
+    <string name="recommend_details_move_to_link">링크 방문하기</string>
+
     <!--feed details-->
     <string name="feed_details_image">게시글 이미지</string>
     <string name="feed_details_check_comments">댓글 확인하기</string>
