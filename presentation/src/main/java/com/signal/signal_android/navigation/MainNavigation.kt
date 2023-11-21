@@ -23,7 +23,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToLanding: () -> Unit,
     moveToFeedDetails: (feedId: UUID) -> Unit,
     moveToBack: () -> Unit,
-    moveToCreatePost: (feedId: UUID) -> Unit,
+    moveToCreatePost: (feedId: UUID?) -> Unit,
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
@@ -89,12 +89,17 @@ internal fun NavGraphBuilder.mainNavigation(
         composable(
             route = "${NavigationRoute.Main.CreatePost}/${NavArgument.FeedId}",
             arguments = listOf(
-                navArgument("feedId") { type = NavType.LongType },
+                navArgument("feedId") { type = NavType.StringType },
             ),
         ) {
             CreatePost(
                 moveToBack = moveToBack,
-                feedId = UUID.fromString(it.arguments?.getString("feedId")),
+                feedId = if (!it.arguments?.getString("feedId").isNullOrBlank()) UUID.fromString(
+                    it.arguments?.getString(
+                        "feedId",
+                    )
+                )
+                else null,
             )
         }
 

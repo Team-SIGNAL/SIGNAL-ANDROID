@@ -30,20 +30,18 @@ internal class FeedViewModel(
                         page = page,
                         size = size,
                     )
-                }.onSuccess {
-                    with(it.postEntities) {
-                        if (_posts.size != it.postEntities.size) {
-                            when (_posts.contains(firstOrNull())) {
-                                true -> _posts.add(last())
-                                else -> _posts.addAll(this)
-                            }
-                            setState(
-                                copy(
-                                    posts = _posts, hasNextPage = isNotEmpty()
-                                )
-                            )
-                        }
+                }.onSuccess { it ->
+                    if (_posts.isEmpty()) {
+                        _posts.addAll(it.postEntities)
+                    } else {
+                        _posts.addAll(it.postEntities.filter { !_posts.contains(it) })
                     }
+                    setState(
+                        state.value.copy(
+                            posts = _posts,
+                            hasNextPage = it.postEntities.size == 10,
+                        )
+                    )
                 }
             }
         }

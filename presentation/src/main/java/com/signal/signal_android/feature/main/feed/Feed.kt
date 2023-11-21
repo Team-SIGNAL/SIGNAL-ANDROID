@@ -59,7 +59,7 @@ import java.util.UUID
 @Composable
 internal fun Feed(
     moveToFeedDetails: (feedId: UUID) -> Unit,
-    moveToCreatePost: (feedId: UUID) -> Unit,
+    moveToCreatePost: (feedId: UUID?) -> Unit,
     moveToReport: () -> Unit,
     feedViewModel: FeedViewModel = koinViewModel(),
 ) {
@@ -170,7 +170,7 @@ internal fun Feed(
         }
         FloatingActionButton(
             modifier = Modifier.padding(16.dp),
-            onClick = { moveToCreatePost(UUID.randomUUID()) },
+            onClick = { moveToCreatePost(null) },
             backgroundColor = SignalColor.Primary100,
         ) {
             Icon(
@@ -263,7 +263,7 @@ private fun Posts(
 
     LaunchedEffect(lazyListState.layoutInfo.visibleItemsInfo.lastIndex) {
         val visibleItemsInfo = lazyListState.layoutInfo.visibleItemsInfo
-        if (visibleItemsInfo.lastIndex != -1 && (visibleItemsInfo.last().index % 7 == 0)) {
+        if (visibleItemsInfo.lastIndex != -1 && (visibleItemsInfo.lastOrNull()?.index?.rem(8) == 0)) {
             nextPage()
         }
     }

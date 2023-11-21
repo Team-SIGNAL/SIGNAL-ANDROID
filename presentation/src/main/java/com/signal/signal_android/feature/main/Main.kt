@@ -26,7 +26,7 @@ internal fun Main(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
     moveToFeedDetails: (feedId: UUID) -> Unit,
-    moveToCreatePost: (feedId: UUID) -> Unit,
+    moveToCreatePost: (feedId: UUID?) -> Unit,
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
