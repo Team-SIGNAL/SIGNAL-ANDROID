@@ -13,6 +13,7 @@ import com.signal.signal_android.feature.main.diary.DiaryDetail
 import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 import com.signal.signal_android.feature.main.feed.Report
+import com.signal.signal_android.feature.main.recommend.Recommends
 import com.signal.signal_android.feature.main.reservation.CreateReservation
 import com.signal.signal_android.feature.main.reservation.Hospital
 import com.signal.signal_android.feature.main.reservation.Reservation
@@ -74,7 +75,8 @@ internal fun NavGraphBuilder.mainNavigation(
             ),
         ) {
             DiaryDetail(
-                diaryId = (UUID.fromString(it.arguments?.getString("diaryId")) ?: UUID.randomUUID()),
+                diaryId = (UUID.fromString(it.arguments?.getString("diaryId"))
+                    ?: UUID.randomUUID()),
                 moveToBack = moveToBack,
             )
         }
@@ -123,6 +125,21 @@ internal fun NavGraphBuilder.mainNavigation(
 
         composable(NavigationRoute.Main.MoreAchievement) {
             MoreAchievements(moveToBack = moveToBack)
+        }
+
+        composable(
+            route = "${NavigationRoute.Main.Recommends}${NavArgument.RecommendCode}",
+            arguments = listOf(
+                navArgument("recommendCode") { NavType.LongType }
+            ),
+        ) {
+            val code = it.arguments?.getLong("recommendCode")
+
+            Recommends(
+                moveToRecommendDetails = {},
+                moveToBack = moveToBack,
+                code = code ?: -1,
+            )
         }
     }
 }
