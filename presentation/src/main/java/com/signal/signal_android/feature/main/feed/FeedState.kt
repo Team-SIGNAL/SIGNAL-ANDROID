@@ -2,36 +2,37 @@ package com.signal.signal_android.feature.main.feed
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.signal.domain.entity.PostsEntity
 import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
+import com.signal.domain.entity.PostsEntity
 import com.signal.domain.enums.Tag
+import java.util.UUID
 
 data class FeedState(
-    val posts: SnapshotStateList<PostsEntity.PostEntity>,
+    val posts: List<PostsEntity.PostEntity>,
     val tag: Tag,
     val page: Long,
     val size: Long,
     val title: String,
     val content: String,
     val postDetailsEntity: PostDetailsEntity,
-    val feedId: Long,
+    val feedId: UUID,
     val image: String,
-    val comments: List<PostCommentsEntity.CommentEntity>,
+    val comments: SnapshotStateList<PostCommentsEntity.CommentEntity>,
     val comment: String,
     val buttonEnabled: Boolean,
     val hasNextPage: Boolean,
 ) {
     companion object {
         fun getDefaultState() = FeedState(
-            posts = mutableStateListOf(),
+            posts = emptyList(),
             tag = Tag.GENERAL,
             page = 0,
             size = 10,
             title = "",
             content = "",
             postDetailsEntity = PostDetailsEntity(
-                id = 0L,
+                id = UUID.randomUUID(),
                 image = null,
                 title = "",
                 date = "",
@@ -40,9 +41,9 @@ data class FeedState(
                 profile = "https://github.com/Team-SIGNAL/SIGNAL-ANDROID/blob/develop/presentation/src/main/res/drawable/ic_profile_image.png?raw=true",
                 isMine = false,
             ),
-            feedId = 0L,
+            feedId = UUID.randomUUID(),
             image = "",
-            comments = listOf(),
+            comments = mutableStateListOf(),
             comment = "",
             buttonEnabled = false,
             hasNextPage = false,

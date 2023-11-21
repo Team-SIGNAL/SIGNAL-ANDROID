@@ -25,8 +25,8 @@ import java.util.UUID
 internal fun Main(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
-    moveToFeedDetails: (feedId: Long) -> Unit,
-    moveToCreatePost: (feedId: Long) -> Unit,
+    moveToFeedDetails: (feedId: UUID) -> Unit,
+    moveToCreatePost: (feedId: UUID?) -> Unit,
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,

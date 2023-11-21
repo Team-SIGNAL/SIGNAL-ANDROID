@@ -7,6 +7,7 @@ import com.signal.data.model.feed.response.toEntity
 import com.signal.domain.entity.PostsEntity
 import com.signal.domain.enums.Tag
 import com.signal.domain.repository.FeedRepository
+import java.util.UUID
 
 class FeedRepositoryImpl(
     private val feedDataSource: FeedDataSource,
@@ -35,16 +36,16 @@ class FeedRepositoryImpl(
         )
     }
 
-    override suspend fun fetchPostDetails(feedId: Long) = runCatching {
+    override suspend fun fetchPostDetails(feedId: UUID) = runCatching {
         feedDataSource.fetchPostDetails(feedId = feedId).toEntity()
     }
 
-    override suspend fun fetchPostComments(feedId: Long) = runCatching {
-        feedDataSource.fetchPostComments(feedId = feedId).toEntity()
+    override suspend fun fetchComments(feedId: UUID) = runCatching {
+        feedDataSource.fetchComments(feedId = feedId).toEntity()
     }
 
     override suspend fun createComment(
-        feedId: Long,
+        feedId: UUID,
         content: String,
     ) = kotlin.runCatching {
         feedDataSource.createComment(
@@ -53,12 +54,12 @@ class FeedRepositoryImpl(
         )
     }
 
-    override suspend fun deletePost(feedId: Long) = kotlin.runCatching {
+    override suspend fun deletePost(feedId: UUID) = kotlin.runCatching {
         feedDataSource.deletePost(feedId = feedId)
     }
 
     override suspend fun editPost(
-        feedId: Long,
+        feedId: UUID,
         title: String,
         content: String,
         image: String?,

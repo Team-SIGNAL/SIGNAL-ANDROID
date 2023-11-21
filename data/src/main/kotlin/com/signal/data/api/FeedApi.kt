@@ -13,6 +13,7 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.util.UUID
 
 interface FeedApi {
     @GET(SignalUrl.Feed.List)
@@ -29,28 +30,28 @@ interface FeedApi {
 
     @GET(SignalUrl.Feed.Details)
     suspend fun fetchPostDetails(
-        @Path("feed_id") feedId: Long,
+        @Path("feed_id") feedId: UUID,
     ): FetchPostDetailsResponse
 
-    @GET(SignalUrl.Feed.Comments)
-    suspend fun fetchPostComments(
-        @Path("feed_id") feedId: Long,
+    @GET(SignalUrl.Feed.FetchComment)
+    suspend fun fetchComments(
+        @Path("feed_id") feedId: UUID,
     ): FetchCommentsResponse
 
-    @POST(SignalUrl.Feed.FeedId)
+    @POST(SignalUrl.Feed.CreateComment)
     suspend fun createComment(
-        @Path("feed_id") feedId: Long,
+        @Path("feed_id") feedId: UUID,
         @Body createCommentRequest: CreateCommentRequest,
     )
 
     @DELETE(SignalUrl.Feed.FeedId)
     suspend fun deletePost(
-        @Path("feed_id") feedId: Long,
+        @Path("feed_id") feedId: UUID,
     )
 
     @PATCH(SignalUrl.Feed.FeedId)
     suspend fun editPost(
-        @Path("feed_id") feedId: Long,
+        @Path("feed_id") feedId: UUID,
         @Body createPostRequest: CreatePostRequest,
     )
 }
