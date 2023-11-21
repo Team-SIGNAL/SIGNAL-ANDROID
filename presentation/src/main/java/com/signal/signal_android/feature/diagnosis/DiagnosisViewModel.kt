@@ -10,6 +10,7 @@ import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.util.Calendar
 
 internal class DiagnosisViewModel(
     private val diagnosisRepository: DiagnosisRepository,
@@ -70,23 +71,42 @@ internal class DiagnosisViewModel(
     internal fun addDiagnosisHistory() {
         with(state.value) {
             viewModelScope.launch(Dispatchers.IO) {
-                val date = LocalDate.now().toString()
+                val date = LocalDate.now()
+
+                val year = date.year
+                val month = date.monthValue
+                val day = date.dayOfMonth
+
+                val week = Calendar.getInstance().run {
+                    set(year, month - 1, day)
+                    get(Calendar.WEEK_OF_YEAR)
+                }
+
                 val score = diagnosis.sumOf { it.score ?: 0L }
-                if (diagnosisHistories.none { it.date == date }) {
+                if (diagnosisHistories.none {
+                        it.year == year &&
+                                it.month == month &&
+                                it.day == day
+                    }) {
                     diagnosisRepository.addDiagnosisHistory(
                         DiagnosisHistoryEntity(
                             id = if (diagnosisHistories.isEmpty()) 0
                             else diagnosisHistories.last().id + 1,
                             score = score,
                             userId = accountId,
-                            date = date,
+                            year = year,
+                            month = month,
+                            day = day,
+                            week = week,
                         )
                     )
                 } else {
                     diagnosisRepository.setDiagnosisHistory(
-                        diagnosisHistories.first { it.date == date }.copy(
-                            score = score,
-                        )
+                        diagnosisHistories.first {
+                            it.year == year &&
+                                    it.month == month &&
+                                    it.day == day
+                        }.copy(score = score)
                     )
                 }
             }

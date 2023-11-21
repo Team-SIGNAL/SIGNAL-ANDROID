@@ -14,6 +14,9 @@ internal class HomeViewModel(
     private val getAccountIdUseCase: GetAccountIdUseCase,
 ) : BaseViewModel<HomeState, HomeSideEffect>(HomeState.getDefaultState()) {
     private val diagnosisHistories: MutableList<DiagnosisHistoryEntity> = mutableListOf()
+    private val diagnosisHistoryUiModels: MutableList<DiagnosisHistoryUiModel> = mutableListOf()
+
+    private lateinit var array: Array<Pair<Float, Float>>
 
     init {
         getAccountId()
@@ -31,10 +34,21 @@ internal class HomeViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             getDiagnosisHistoriesUseCase(userId = userId).onSuccess { it ->
                 diagnosisHistories.addAll(it)
+                diagnosisHistories.forEach {
+                    diagnosisHistoryUiModels.add(
+                        DiagnosisHistoryUiModel(
+                            xLabel = it.day.toFloat(),
+                            score = it.score.toFloat(),
+                        )
+                    )
+                }
+
                 setState(
                     state.value.copy(
-                        diagnosisHistories = diagnosisHistories.map { it.copy(date = it.date.split("-")[2]) },
-                        lastDiagnosisDate = diagnosisHistories.lastOrNull()?.date?.toLastDiagnosisDate()
+                        diagnosisHistoryUiModels = diagnosisHistoryUiModels,
+                        lastDiagnosisDate = diagnosisHistories.lastOrNull()?.run {
+                            "${year}-${month}-${day.toString().padStart(2, '0')}"
+                        }?.toLastDiagnosisDate()
                             ?: "",
                     )
                 )
@@ -64,6 +78,44 @@ internal class HomeViewModel(
                 )
             )
         }
+        setDiagnosisHistoriesByChartViewType()
+    }
+
+    private fun setDiagnosisHistoriesByChartViewType() {
+        array = Array(
+            when (state.value.chartViewType) {
+                ChartViewType.DAY -> 32
+                ChartViewType.WEEK -> 53
+                ChartViewType.MONTH -> 13
+                ChartViewType.YEAR -> 2100
+            }
+        ) { 0f to 0f }
+
+        diagnosisHistories.forEach {
+            val index = when (state.value.chartViewType) {
+                ChartViewType.DAY -> it.day
+                ChartViewType.WEEK -> it.week
+                ChartViewType.MONTH -> it.month
+                ChartViewType.YEAR -> it.year
+            }
+
+            array[index] = Pair(
+                first = array[index].first + 1f,
+                second = array[index].second + it.score.toFloat()
+            )
+        }
+
+        diagnosisHistoryUiModels.clear()
+        array.forEachIndexed { index, pair ->
+            if (pair.first != 0f) {
+                diagnosisHistoryUiModels.add(
+                    DiagnosisHistoryUiModel(
+                        xLabel = index.toFloat(),
+                        score = pair.second / pair.first,
+                    )
+                )
+            }
+        }
     }
 
     internal fun previousChartViewType() {
@@ -79,5 +131,6 @@ internal class HomeViewModel(
                 )
             )
         }
+        setDiagnosisHistoriesByChartViewType()
     }
 }
