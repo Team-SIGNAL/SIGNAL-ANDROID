@@ -75,8 +75,6 @@ internal fun Recommend() {
         Header()
         Trends()
         Categories()
-        MyContent {
-        }
     }
 }
 
@@ -175,15 +173,6 @@ private fun Header() {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_search),
                     contentDescription = stringResource(id = R.string.recommend_search),
-                )
-            }
-            IconButton(
-                modifier = Modifier.size(22.dp),
-                onClick = {},
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_edit),
-                    contentDescription = stringResource(id = R.string.feed_post),
                 )
             }
         }
