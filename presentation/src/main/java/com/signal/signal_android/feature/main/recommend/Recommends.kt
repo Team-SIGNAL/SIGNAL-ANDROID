@@ -2,10 +2,12 @@ package com.signal.signal_android.feature.main.recommend
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.signal.domain.enums.RecommendType
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.feature.main.diary.DiaryItemList
@@ -19,7 +21,11 @@ internal fun Recommends(
 ) {
     val headerTitle = RecommendType.values()[code.toInt()].value
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+    ) {
         Header(
             title = headerTitle,
             onLeadingClicked = moveToBack,
@@ -29,8 +35,8 @@ internal fun Recommends(
                 Recommend(
                     id = UUID.randomUUID(),
                     imageUrl = null,
-                    title = "",
-                    writer = "",
+                    title = "title",
+                    writer = "writer",
                     link = null,
                 )
             )

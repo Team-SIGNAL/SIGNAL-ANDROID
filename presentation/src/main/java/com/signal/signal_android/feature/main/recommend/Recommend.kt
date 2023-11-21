@@ -2,7 +2,6 @@ package com.signal.signal_android.feature.main.recommend
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -60,7 +58,9 @@ private val strings = listOf(
 )
 
 @Composable
-internal fun Recommend() {
+internal fun Recommend(
+    moveToRecommends: (recommendType: Long) -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -74,38 +74,14 @@ internal fun Recommend() {
     ) {
         Header()
         Trends()
-        Categories()
+        Categories(moveToRecommends = moveToRecommends)
     }
 }
 
 @Composable
-private fun MyContent(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .shadow(
-                elevation = 2.dp,
-                shape = RoundedCornerShape(8.dp),
-                clip = true,
-            )
-            .background(
-                color = SignalColor.White,
-                shape = RoundedCornerShape(8.dp),
-            )
-            .clip(RoundedCornerShape(8.dp))
-            .signalClickable(
-                rippleEnabled = true,
-                onClick = onClick,
-            ),
-        contentAlignment = Alignment.Center,
-    ) {
-        Body2(text = stringResource(id = R.string.recommend_my))
-    }
-}
-
-@Composable
-private fun ColumnScope.Categories() {
+private fun ColumnScope.Categories(
+    moveToRecommends: (recommendType: Long) -> Unit,
+) {
     BodyLarge(
         modifier = Modifier
             .padding(
@@ -122,7 +98,7 @@ private fun ColumnScope.Categories() {
                     .clip(RoundedCornerShape(8.dp))
                     .signalClickable(
                         rippleEnabled = true,
-                        onClick = {},
+                        onClick = { moveToRecommends(index.toLong()) },
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {

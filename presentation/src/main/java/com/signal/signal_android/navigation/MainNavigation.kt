@@ -34,6 +34,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToHospital: () -> Unit,
     moveToCreateReservation: () -> Unit,
     moveToMoreAchievement: () -> Unit,
+    moveToRecommends: (recommendType: Long) -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -52,6 +53,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToAllDiary = moveToAllDiary,
                 moveToReservation = moveToReservation,
                 moveToMoreAchievement = moveToMoreAchievement,
+                moveToRecommends = moveToRecommends,
             )
         }
 
@@ -128,7 +130,7 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(
-            route = "${NavigationRoute.Main.Recommends}${NavArgument.RecommendCode}",
+            route = "${NavigationRoute.Main.Recommends}/${NavArgument.RecommendCode}",
             arguments = listOf(
                 navArgument("recommendCode") { NavType.LongType }
             ),

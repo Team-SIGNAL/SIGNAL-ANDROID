@@ -34,6 +34,7 @@ internal fun Main(
     moveToAllDiary: () -> Unit,
     moveToReservation: () -> Unit,
     moveToMoreAchievement: () -> Unit,
+    moveToRecommends: (recommendType: Long) -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -83,7 +84,7 @@ internal fun Main(
             }
 
             composable(NavigationRoute.Main.Recommend) {
-                Recommend()
+                Recommend(moveToRecommends = moveToRecommends)
             }
 
             composable(NavigationRoute.Main.MyPage) {

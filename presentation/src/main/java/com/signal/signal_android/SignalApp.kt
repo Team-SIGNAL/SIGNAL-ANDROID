@@ -28,7 +28,7 @@ internal fun SignalApp() {
             .statusBarsPadding()
             .navigationBarsPadding(),
         navController = navController,
-        startDestination = NavigationRoute.Main.route,
+        startDestination = NavigationRoute.User.route,
     ) {
         userNavigation(
             moveToLanding = {
@@ -126,6 +126,9 @@ internal fun SignalApp() {
             moveToMoreAchievement = {
                 navController.navigate(NavigationRoute.Main.MoreAchievement)
             },
+            moveToRecommends = {
+                navController.navigate("${NavigationRoute.Main.Recommends}/${it}")
+            }
         )
     }
 }
