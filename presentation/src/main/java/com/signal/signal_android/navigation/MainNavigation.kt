@@ -13,6 +13,8 @@ import com.signal.signal_android.feature.main.diary.DiaryDetail
 import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 import com.signal.signal_android.feature.main.feed.Report
+import com.signal.signal_android.feature.main.recommend.RecommendDetails
+import com.signal.signal_android.feature.main.recommend.Recommends
 import com.signal.signal_android.feature.main.reservation.CreateReservation
 import com.signal.signal_android.feature.main.reservation.Hospital
 import com.signal.signal_android.feature.main.reservation.Reservation
@@ -33,6 +35,8 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToHospital: () -> Unit,
     moveToCreateReservation: () -> Unit,
     moveToMoreAchievement: () -> Unit,
+    moveToRecommends: (recommendType: String) -> Unit,
+    moveToRecommendDetails: (recommendId: UUID) -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -51,6 +55,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToAllDiary = moveToAllDiary,
                 moveToReservation = moveToReservation,
                 moveToMoreAchievement = moveToMoreAchievement,
+                moveToRecommends = moveToRecommends,
             )
         }
 
@@ -74,7 +79,8 @@ internal fun NavGraphBuilder.mainNavigation(
             ),
         ) {
             DiaryDetail(
-                diaryId = (UUID.fromString(it.arguments?.getString("diaryId")) ?: UUID.randomUUID()),
+                diaryId = (UUID.fromString(it.arguments?.getString("diaryId"))
+                    ?: UUID.randomUUID()),
                 moveToBack = moveToBack,
             )
         }
@@ -128,6 +134,35 @@ internal fun NavGraphBuilder.mainNavigation(
 
         composable(NavigationRoute.Main.MoreAchievement) {
             MoreAchievements(moveToBack = moveToBack)
+        }
+
+        composable(
+            route = "${NavigationRoute.Main.Recommends}/${NavArgument.RecommendType}",
+            arguments = listOf(
+                navArgument("recommendType") { NavType.StringType }
+            ),
+        ) {
+            val recommendType = it.arguments?.getString("recommendType")
+
+            Recommends(
+                moveToRecommendDetails = moveToRecommendDetails,
+                moveToBack = moveToBack,
+                recommendType = recommendType,
+            )
+        }
+
+        composable(
+            route = "${NavigationRoute.Main.RecommendDetails}/${NavArgument.RecommendId}",
+            arguments = listOf(
+                navArgument("recommendId") { NavType.StringType },
+            ),
+        ) {
+            val recommendId = it.arguments?.getString("recommendId")
+
+            RecommendDetails(
+                moveToBack = moveToBack,
+                recommendId = UUID.fromString(recommendId),
+            )
         }
     }
 }

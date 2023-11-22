@@ -126,6 +126,12 @@ internal fun SignalApp() {
             moveToMoreAchievement = {
                 navController.navigate(NavigationRoute.Main.MoreAchievement)
             },
+            moveToRecommends = {
+                navController.navigate("${NavigationRoute.Main.Recommends}/${it}")
+            },
+            moveToRecommendDetails = {
+                navController.navigate("${NavigationRoute.Main.RecommendDetails}/${it}")
+            }
         )
     }
 }
