@@ -245,6 +245,8 @@
     <string name="reservation_stand_by">승인 대기 중</string>
     <string name="reservation_refuse">승인 거절됨</string>
     <string name="reservation_clinic">진료 예약</string>
+    <string name="reservation_hospital_image">병원 이미지</string>
+    <string name="reservation_date">일시</string>
     
     <!--hospital-->
     <string name="hospital_get_hospital_list">병원 조회</string>

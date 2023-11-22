@@ -12,6 +12,8 @@ import com.signal.data.datasource.feed.FeedDataSource
 import com.signal.data.datasource.feed.FeedDataSourceImpl
 import com.signal.data.datasource.file.AttachmentDataSource
 import com.signal.data.datasource.file.AttachmentDataSourceImpl
+import com.signal.data.datasource.reservation.ReservationDataSource
+import com.signal.data.datasource.reservation.ReservationDataSourceImpl
 import com.signal.data.datasource.user.local.LocalUserDataSource
 import com.signal.data.datasource.user.local.LocalUserDataSourceImpl
 import com.signal.data.datasource.user.remote.RemoteUserDataSource
@@ -20,6 +22,7 @@ import com.signal.data.repository.AttachmentRepositoryImpl
 import com.signal.data.repository.DiagnosisRepositoryImpl
 import com.signal.data.repository.DiaryRepositoryImpl
 import com.signal.data.repository.FeedRepositoryImpl
+import com.signal.data.repository.ReservationRepositoryImpl
 import com.signal.data.repository.UserRepositoryImpl
 import com.signal.data.util.PreferenceManager
 import com.signal.data.util.TokenInterceptor
@@ -27,6 +30,7 @@ import com.signal.domain.repository.AttachmentRepository
 import com.signal.domain.repository.DiagnosisRepository
 import com.signal.domain.repository.DiaryRepository
 import com.signal.domain.repository.FeedRepository
+import com.signal.domain.repository.ReservationRepository
 import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.users.AddFamousSayingUseCase
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
@@ -44,6 +48,7 @@ import com.signal.signal_android.feature.main.diary.DiaryViewModel
 import com.signal.signal_android.feature.main.feed.FeedViewModel
 import com.signal.signal_android.feature.main.home.HomeViewModel
 import com.signal.signal_android.feature.mypage.MyPageViewModel
+import com.signal.signal_android.feature.reservation.ReservationViewModel
 import com.signal.signal_android.feature.signin.SignInViewModel
 import com.signal.signal_android.feature.signup.SignUpViewModel
 import org.koin.android.ext.koin.androidContext
@@ -82,6 +87,7 @@ val apiModule: Module
         single { ApiProvider.getFeedApi(tokenInterceptor = get()) }
         single { ApiProvider.getFileApi(tokenInterceptor = get()) }
         single { ApiProvider.getDiaryApi(tokenInterceptor = get()) }
+        single { ApiProvider.getReservationApi(tokenInterceptor = get()) }
     }
 
 val daoModule: Module
@@ -125,6 +131,7 @@ val dataSourceModule: Module
             )
         }
         single<DiaryDataSource> { DiaryDataSourceImpl(diaryApi = get()) }
+        single<ReservationDataSource> { ReservationDataSourceImpl(reservationApi = get()) }
     }
 
 val repositoryModule: Module
@@ -146,6 +153,9 @@ val repositoryModule: Module
         }
         single<DiaryRepository> {
             DiaryRepositoryImpl(diaryDateSource = get())
+        }
+        single<ReservationRepository> {
+            ReservationRepositoryImpl(reservationDataSource = get())
         }
     }
 
@@ -196,4 +206,5 @@ val viewModelModule: Module
             )
         }
         viewModel { DiaryViewModel(diaryRepository = get()) }
+        viewModel { ReservationViewModel(reservationRepository = get()) }
     }
