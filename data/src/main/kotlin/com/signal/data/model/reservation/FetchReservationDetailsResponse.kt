@@ -12,8 +12,7 @@ data class FetchReservationDetailsResponse(
     @SerializedName("reason") val reason: String,
     @SerializedName("date") val date: String,
     @SerializedName("phone") val phone: String,
-) {
-}
+)
 
 fun FetchReservationDetailsResponse.toEntity() = FetchReservationDetailsEntity(
     image = this.image,

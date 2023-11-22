@@ -74,8 +74,8 @@ internal fun Reservation(
     var showBottomSheet by remember { mutableStateOf(false) }
 
     if (showBottomSheet) {
-        reservationViewModel.setReservationId(reservationId = )
         reservationViewModel.fetchReservationDetails()
+
         ModalBottomSheet(
             onDismissRequest = {
                 showBottomSheet = false
@@ -149,7 +149,10 @@ internal fun Reservation(
             Spacer(modifier = Modifier.height(8.dp))
             Reservations(
                 reservations = state.dayReservationsEntity,
-                onClick = { showBottomSheet = true },
+                onClick = {
+                    reservationViewModel.setReservationId(it)
+                    showBottomSheet = true
+                },
             )
         }
         FloatingActionButton(

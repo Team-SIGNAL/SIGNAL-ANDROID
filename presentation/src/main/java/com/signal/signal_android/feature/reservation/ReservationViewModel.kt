@@ -87,18 +87,8 @@ class ReservationViewModel(
                     reservationRepository.fetchReservationDetails(
                         reservationId = reservationId,
                     )
-                }.onSuccess {
-                    setState(
-                        copy(
-                            image = image,
-                            name = name,
-                            address = address,
-                            reservationStatus = reservationStatus,
-                            date = date,
-                            phone = phone,
-                            reason = reason,
-                        )
-                    )
+                }.onSuccess { details ->
+                    setState(copy(reservationDetailsEntity = details))
                 }
             }
         }
