@@ -37,7 +37,8 @@ object SignalUrl {
 
     object Reservation {
         const val FetchHospitals = "$admin/hospital/list"
-        const val CreateReservation = reservation
-        const val FetchReservationDetails = "$reservation/detail/{reservation_id}"
+        const val FetchDayReservation = "$reservation/user"
+        const val CreateReservation = "$reservation/{hospital_id}"
+        const val FetchReservationDetails = "$reservation/user/detail/{reservation_id}"
     }
 }
