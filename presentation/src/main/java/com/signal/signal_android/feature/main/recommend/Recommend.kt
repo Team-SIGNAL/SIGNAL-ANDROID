@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.signal.domain.enums.RecommendType
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Indicator
 import com.signal.signal_android.designsystem.foundation.Body2
@@ -59,7 +60,7 @@ private val strings = listOf(
 
 @Composable
 internal fun Recommend(
-    moveToRecommends: (recommendType: Long) -> Unit,
+    moveToRecommends: (recommendType: String) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -73,14 +74,14 @@ internal fun Recommend(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Header()
-        Trends()
+        Trends(moveToRecommends = moveToRecommends)
         Categories(moveToRecommends = moveToRecommends)
     }
 }
 
 @Composable
 private fun ColumnScope.Categories(
-    moveToRecommends: (recommendType: Long) -> Unit,
+    moveToRecommends: (recommendType: String) -> Unit,
 ) {
     BodyLarge(
         modifier = Modifier
@@ -98,7 +99,9 @@ private fun ColumnScope.Categories(
                     .clip(RoundedCornerShape(8.dp))
                     .signalClickable(
                         rippleEnabled = true,
-                        onClick = { moveToRecommends(index.toLong()) },
+                        onClick = {
+                            moveToRecommends(RecommendType.values()[index].toString())
+                        },
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -152,7 +155,9 @@ private fun Header() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ColumnScope.Trends() {
+private fun ColumnScope.Trends(
+    moveToRecommends: (recommendType: String) -> Unit,
+) {
     val coroutineScope = rememberCoroutineScope()
 
     val pagerState = rememberPagerState { images.size }
@@ -180,6 +185,12 @@ private fun ColumnScope.Trends() {
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(18.dp))
+                .signalClickable(
+                    rippleEnabled = true,
+                    onClick = {
+                        moveToRecommends(RecommendType.values()[pagerState.currentPage].toString())
+                    },
+                )
                 .fillMaxHeight(0.25f),
             state = pagerState,
         ) {

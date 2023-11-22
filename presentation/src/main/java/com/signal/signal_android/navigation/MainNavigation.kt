@@ -35,7 +35,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToHospital: () -> Unit,
     moveToCreateReservation: () -> Unit,
     moveToMoreAchievement: () -> Unit,
-    moveToRecommends: (recommendType: Long) -> Unit,
+    moveToRecommends: (recommendType: String) -> Unit,
     moveToRecommendDetails: (recommendId: UUID) -> Unit,
 ) {
     navigation(
@@ -132,17 +132,17 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(
-            route = "${NavigationRoute.Main.Recommends}/${NavArgument.RecommendCode}",
+            route = "${NavigationRoute.Main.Recommends}/${NavArgument.RecommendType}",
             arguments = listOf(
-                navArgument("recommendCode") { NavType.LongType }
+                navArgument("recommendType") { NavType.StringType }
             ),
         ) {
-            val code = it.arguments?.getLong("recommendCode")
+            val recommendType = it.arguments?.getString("recommendType")
 
             Recommends(
                 moveToRecommendDetails = moveToRecommendDetails,
                 moveToBack = moveToBack,
-                code = code ?: -1,
+                recommendType = recommendType,
             )
         }
 

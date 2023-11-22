@@ -34,7 +34,7 @@ internal fun Main(
     moveToAllDiary: () -> Unit,
     moveToReservation: () -> Unit,
     moveToMoreAchievement: () -> Unit,
-    moveToRecommends: (recommendType: Long) -> Unit,
+    moveToRecommends: (recommendType: String) -> Unit,
 ) {
     val navController = rememberNavController()
 

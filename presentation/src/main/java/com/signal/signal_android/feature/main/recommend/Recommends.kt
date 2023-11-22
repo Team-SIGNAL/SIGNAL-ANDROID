@@ -17,9 +17,9 @@ import java.util.UUID
 internal fun Recommends(
     moveToRecommendDetails: (feedId: UUID) -> Unit,
     moveToBack: () -> Unit,
-    code: Long,
+    recommendType: String?,
 ) {
-    val headerTitle = RecommendType.values()[code.toInt()].value
+    val headerTitle = recommendType?.run { RecommendType.valueOf(this).value }
 
     Column(
         modifier = Modifier
@@ -27,7 +27,7 @@ internal fun Recommends(
             .padding(horizontal = 16.dp),
     ) {
         Header(
-            title = headerTitle,
+            title = headerTitle ?: "",
             onLeadingClicked = moveToBack,
         )
         Recommends(

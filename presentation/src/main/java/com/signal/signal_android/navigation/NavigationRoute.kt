@@ -40,6 +40,6 @@ sealed class NavigationRoute(val route: String) {
 object NavArgument {
     const val FeedId = "{feedId}"
     const val DiaryId = "{diaryId}"
-    const val RecommendCode = "{recommendCode}"
+    const val RecommendType = "{recommendType}"
     const val RecommendId = "{recommendId}"
 }
