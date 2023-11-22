@@ -16,14 +16,19 @@ import com.signal.signal_android.feature.main.feed.Report
 import com.signal.signal_android.feature.reservation.CreateReservation
 import com.signal.signal_android.feature.reservation.Hospital
 import com.signal.signal_android.feature.reservation.Reservation
+import com.signal.signal_android.feature.main.recommend.RecommendDetails
+import com.signal.signal_android.feature.main.recommend.Recommends
+import com.signal.signal_android.feature.main.reservation.CreateReservation
+import com.signal.signal_android.feature.main.reservation.Hospital
+import com.signal.signal_android.feature.main.reservation.Reservation
 import java.util.UUID
 
 internal fun NavGraphBuilder.mainNavigation(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
-    moveToFeedDetails: (feedId: Long) -> Unit,
+    moveToFeedDetails: (feedId: UUID) -> Unit,
     moveToBack: () -> Unit,
-    moveToCreatePost: (feedId: Long) -> Unit,
+    moveToCreatePost: (feedId: UUID?) -> Unit,
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
@@ -33,6 +38,8 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToHospital: () -> Unit,
     moveToCreateReservation: (hospitalId: UUID) -> Unit,
     moveToMoreAchievement: () -> Unit,
+    moveToRecommends: (recommendType: String) -> Unit,
+    moveToRecommendDetails: (recommendId: UUID) -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -51,17 +58,18 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToAllDiary = moveToAllDiary,
                 moveToReservation = moveToReservation,
                 moveToMoreAchievement = moveToMoreAchievement,
+                moveToRecommends = moveToRecommends,
             )
         }
 
         composable(
             route = "${NavigationRoute.Main.FeedDetails}/${NavArgument.FeedId}",
             arguments = listOf(
-                navArgument("feedId") { type = NavType.LongType },
+                navArgument("feedId") { type = NavType.StringType },
             ),
         ) {
             FeedDetails(
-                feedId = it.arguments?.getLong("feedId") ?: 0L,
+                feedId = UUID.fromString(it.arguments?.getString("feedId")),
                 moveToBack = moveToBack,
                 moveToCreatePost = moveToCreatePost,
             )
@@ -90,12 +98,17 @@ internal fun NavGraphBuilder.mainNavigation(
         composable(
             route = "${NavigationRoute.Main.CreatePost}/${NavArgument.FeedId}",
             arguments = listOf(
-                navArgument("feedId") { type = NavType.LongType },
+                navArgument("feedId") { type = NavType.StringType },
             ),
         ) {
             CreatePost(
                 moveToBack = moveToBack,
-                feedId = it.arguments?.getLong("feedId") ?: -1,
+                feedId = if (!it.arguments?.getString("feedId").isNullOrBlank()) UUID.fromString(
+                    it.arguments?.getString(
+                        "feedId",
+                    )
+                )
+                else null,
             )
         }
 
@@ -135,6 +148,35 @@ internal fun NavGraphBuilder.mainNavigation(
 
         composable(NavigationRoute.Main.MoreAchievement) {
             MoreAchievements(moveToBack = moveToBack)
+        }
+
+        composable(
+            route = "${NavigationRoute.Main.Recommends}/${NavArgument.RecommendType}",
+            arguments = listOf(
+                navArgument("recommendType") { NavType.StringType }
+            ),
+        ) {
+            val recommendType = it.arguments?.getString("recommendType")
+
+            Recommends(
+                moveToRecommendDetails = moveToRecommendDetails,
+                moveToBack = moveToBack,
+                recommendType = recommendType,
+            )
+        }
+
+        composable(
+            route = "${NavigationRoute.Main.RecommendDetails}/${NavArgument.RecommendId}",
+            arguments = listOf(
+                navArgument("recommendId") { NavType.StringType },
+            ),
+        ) {
+            val recommendId = it.arguments?.getString("recommendId")
+
+            RecommendDetails(
+                moveToBack = moveToBack,
+                recommendId = UUID.fromString(recommendId),
+            )
         }
     }
 }

@@ -25,8 +25,8 @@ import java.util.UUID
 internal fun Main(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
-    moveToFeedDetails: (feedId: Long) -> Unit,
-    moveToCreatePost: (feedId: Long) -> Unit,
+    moveToFeedDetails: (feedId: UUID) -> Unit,
+    moveToCreatePost: (feedId: UUID?) -> Unit,
     moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
@@ -34,6 +34,7 @@ internal fun Main(
     moveToAllDiary: () -> Unit,
     moveToReservation: () -> Unit,
     moveToMoreAchievement: () -> Unit,
+    moveToRecommends: (recommendType: String) -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -83,7 +84,7 @@ internal fun Main(
             }
 
             composable(NavigationRoute.Main.Recommend) {
-                Recommend()
+                Recommend(moveToRecommends = moveToRecommends)
             }
 
             composable(NavigationRoute.Main.MyPage) {

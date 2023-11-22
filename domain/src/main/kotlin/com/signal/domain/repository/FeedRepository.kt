@@ -4,6 +4,7 @@ import com.signal.domain.entity.PostsEntity
 import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
 import com.signal.domain.enums.Tag
+import java.util.UUID
 
 interface FeedRepository {
     suspend fun fetchPosts(
@@ -18,19 +19,19 @@ interface FeedRepository {
         image: String?,
     ): Result<Unit>
 
-    suspend fun fetchPostDetails(feedId: Long): Result<PostDetailsEntity>
+    suspend fun fetchPostDetails(feedId: UUID): Result<PostDetailsEntity>
 
-    suspend fun fetchPostComments(feedId: Long): Result<PostCommentsEntity>
+    suspend fun fetchComments(feedId: UUID): Result<PostCommentsEntity>
 
     suspend fun createComment(
-        feedId: Long,
+        feedId: UUID,
         content: String,
     ): Result<Unit>
 
-    suspend fun deletePost(feedId: Long): Result<Unit>
+    suspend fun deletePost(feedId: UUID): Result<Unit>
 
     suspend fun editPost(
-        feedId: Long,
+        feedId: UUID,
         title: String,
         content: String,
         image: String?,

@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -46,13 +45,14 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+import java.util.UUID
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun FeedDetails(
-    feedId: Long,
+    feedId: UUID,
     moveToBack: () -> Unit,
-    moveToCreatePost: (feedId: Long) -> Unit,
+    moveToCreatePost: (feedId: UUID) -> Unit,
     feedViewModel: FeedViewModel = koinViewModel(),
 ) {
     LaunchedEffect(Unit) {
@@ -85,7 +85,7 @@ internal fun FeedDetails(
     )
 
     var expanded by remember {
-        mutableLongStateOf(-1)
+        mutableStateOf(UUID.randomUUID())
     }
 
     var showDialog by remember { mutableStateOf(false) }
@@ -134,7 +134,7 @@ internal fun FeedDetails(
                     date = details.date,
                     onClick = { expanded = feedId },
                     expanded = expanded == feedId,
-                    onDismissRequest = { expanded = -1 },
+                    onDismissRequest = { expanded = UUID.randomUUID() },
                     isMine = details.isMine,
                     onEdit = { moveToCreatePost(feedId) },
                     onDelete = { showDialog = true }
@@ -161,7 +161,7 @@ internal fun FeedDetails(
                         .signalClickable(
                             onClick = {
                                 coroutineScope.launch {
-                                    feedViewModel.fetchPostComments()
+                                    feedViewModel.fetchComments()
                                     sheetState.show()
                                 }
                             },

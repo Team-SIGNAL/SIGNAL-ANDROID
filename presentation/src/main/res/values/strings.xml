@@ -86,6 +86,8 @@
 
     <string name="home_diagnosis_history_null">데이터가 부족해요!</string>
 
+    <string name="home_information_icon">우울감 수치 그래프 정보 아이콘</string>
+
     <!--my page-->
     <string name="my_page_profile_image">프로필 사진</string>
     <string name="my_page_received_achievement">받은 업적</string>
@@ -147,6 +149,9 @@
     <string name="recommend_categories">카테고리별 컨텐츠</string>
 
     <string name="recommend_my">내가 추천한 컨텐츠 보러가기</string>
+
+    <!--recommend details-->
+    <string name="recommend_details_move_to_link">링크 방문하기</string>
 
     <!--feed details-->
     <string name="feed_details_image">게시글 이미지</string>
@@ -256,15 +261,15 @@
     <string name="diagnosis_1">나는 매사에 의욕이 없고 우울하거나 슬플 때가 있다</string>
     <string name="diagnosis_2">나는 갑자기 얼마동안 울음을 터뜨리거나 울고 싶을 때가 있다</string>
     <string name="diagnosis_3">나는 밤에 잠을 설칠 때가 있다</string>
-    <string name="diagnosis_4">나는 전과 같이 밥맛이 있다 (식욕이 좋다)</string>
-    <string name="diagnosis_5">나는 이성과 이야기하고 함께 있기를 좋아한다</string>
+    <string name="diagnosis_4">나는 전과 같이 밥맛이 없다</string>
+    <string name="diagnosis_5">나는 이성과 이야기하고 함께 있기를 두려워한다</string>
     <string name="diagnosis_6">나는 요즘 평상시보다 가슴이 빨리 뛰거나 두근거린다</string>
     <string name="diagnosis_7">나는 요즘 별 이유 없이 몸이 피곤하고 나른하다</string>
     <string name="diagnosis_8">나는 전보다 쉽게 일을 해내지 못한다</string>
     <string name="diagnosis_9">나는 안절부절못해서 진정할 수가 없다</string>
     <string name="diagnosis_10">나는 장래는 절망적이라고 생각한다</string>
     <string name="diagnosis_11">나는 전보다도 짜증이 많아졌다</string>
-    <string name="diagnosis_12">나는 매사에 결단력이 없다고 생각한다</string>
+    <string name="diagnosis_12">나는 매사에 결단력이 부족하다고 생각한다</string>
     <string name="diagnosis_13">나는 사회에 적응하지 못하고 뒤처진 사람이라고 생각한다</string>
     <string name="diagnosis_14">나는 전보다 일하는 것이 지루하다</string>
     <string name="diagnosis_15">내가 죽어야 다른 사람들, 특히 가족들이 편할 것 같다</string>

@@ -3,7 +3,6 @@ package com.signal.signal_android.feature.main.diary
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -91,12 +91,14 @@ private fun Diaries(
 }
 
 @Composable
-private fun DiaryItemList(
+internal fun DiaryItemList(
     moveToDiaryDetails: () -> Unit,
     title: String,
     content: String,
     imageUrl: String?,
-    emotion: Emotion,
+    emotion: Emotion? = null,
+    iconEnabled: Boolean = false,
+    onIconClicked: (() -> Unit)? = null,
 ) {
     Spacer(modifier = Modifier.height(8.dp))
     Row(
@@ -141,10 +143,14 @@ private fun DiaryItemList(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End,
         ) {
-            Box(modifier = Modifier.size(40.dp)) {
+            IconButton(
+                onClick = { onIconClicked?.invoke() },
+                enabled = iconEnabled,
+            ) {
                 Image(
                     painterResource(
-                        id = emotionDrawable(emotion)
+                        id = if (emotion != null) emotionDrawable(emotion)
+                        else R.drawable.ic_play,
                     ),
                     contentDescription = stringResource(id = R.string.diary_emotion_image),
                 )
