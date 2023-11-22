@@ -13,14 +13,11 @@ import com.signal.signal_android.feature.main.diary.DiaryDetail
 import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 import com.signal.signal_android.feature.main.feed.Report
+import com.signal.signal_android.feature.main.recommend.RecommendDetails
+import com.signal.signal_android.feature.main.recommend.Recommends
 import com.signal.signal_android.feature.reservation.CreateReservation
 import com.signal.signal_android.feature.reservation.Hospital
 import com.signal.signal_android.feature.reservation.Reservation
-import com.signal.signal_android.feature.main.recommend.RecommendDetails
-import com.signal.signal_android.feature.main.recommend.Recommends
-import com.signal.signal_android.feature.main.reservation.CreateReservation
-import com.signal.signal_android.feature.main.reservation.Hospital
-import com.signal.signal_android.feature.main.reservation.Reservation
 import java.util.UUID
 
 internal fun NavGraphBuilder.mainNavigation(
