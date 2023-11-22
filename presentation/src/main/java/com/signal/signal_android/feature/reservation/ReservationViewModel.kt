@@ -8,6 +8,7 @@ import com.signal.domain.repository.ReservationRepository
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class ReservationViewModel(
     private val reservationRepository: ReservationRepository,
@@ -63,14 +64,16 @@ class ReservationViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 kotlin.runCatching {
                     reservationRepository.createReservation(
+                        hospitalId = hospitalId,
                         reason = reason,
                         date = reservationDate,
+                        time = reservationTime,
                     )
                 }.onSuccess {
-                    ReservationSideEffect.CreateReservationSuccess
+                    postSideEffect(ReservationSideEffect.CreateReservationSuccess)
                 }.onFailure {
-                    when (it) {
-                        is KotlinNullPointerException -> Log.d("TEST", "sadfadsfas")
+                    if (it is KotlinNullPointerException) {
+                        postSideEffect(ReservationSideEffect.CreateReservationSuccess)
                     }
                 }
             }
@@ -113,7 +116,11 @@ class ReservationViewModel(
         setState(state.value.copy(reason = reason))
     }
 
-    internal fun setReservationId(reservationId: Long) {
+    internal fun setReservationId(reservationId: UUID) {
         setState(state.value.copy(reservationId = reservationId))
+    }
+
+    internal fun setHospitalId(hospitalId: UUID) {
+        setState(state.value.copy(hospitalId = hospitalId))
     }
 }
