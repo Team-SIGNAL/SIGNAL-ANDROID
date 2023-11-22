@@ -28,7 +28,7 @@ internal fun SignalApp() {
             .statusBarsPadding()
             .navigationBarsPadding(),
         navController = navController,
-        startDestination = NavigationRoute.Main.route,
+        startDestination = NavigationRoute.User.route,
     ) {
         userNavigation(
             moveToLanding = {
