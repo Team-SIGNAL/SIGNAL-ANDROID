@@ -112,7 +112,7 @@ internal fun Reservation(
         ) {
             Header(
                 title = stringResource(id = R.string.reservation),
-                onLeadingClicked = { moveToBack() },
+                onLeadingClicked = moveToBack,
             )
             Spacer(modifier = Modifier.height(12.dp))
             LazyColumn(
@@ -148,7 +148,7 @@ internal fun Reservation(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Reservations(
-                reservations = state.dayReservationsEntity,
+                reservations = state.dayReservationEntity,
                 onClick = {
                     reservationViewModel.setReservationId(it)
                     showBottomSheet = true
@@ -188,7 +188,7 @@ private fun ReservationHeader(
 
 @Composable
 private fun Reservations(
-    reservations: List<FetchDayReservationsEntity.DayReservationsEntity>,
+    reservations: List<FetchDayReservationsEntity.DayReservationEntity>,
     onClick: (reservationId: UUID) -> Unit,
 ) {
     LazyColumn(
@@ -309,30 +309,42 @@ private fun SheetContent(
         Column(
             modifier = Modifier
                 .border(
-                    width = 0.4.dp,
-                    color = SignalColor.Primary100,
-                    shape = RoundedCornerShape(4.dp)
+                    width = 0.4.dp, color = SignalColor.Primary100,
+                    shape = RoundedCornerShape(4.dp),
                 )
                 .fillMaxWidth(),
         ) {
             Body(
-                modifier = Modifier.padding(start = 6.dp, top = 6.dp),
+                modifier = Modifier.padding(
+                    start = 6.dp,
+                    top = 6.dp,
+                ),
                 text = stringResource(id = R.string.reservation_date),
                 color = SignalColor.Gray500,
             )
             Body(
-                modifier = Modifier.padding(start = 6.dp, top = 4.dp),
+                modifier = Modifier.padding(
+                    start = 6.dp,
+                    top = 4.dp,
+                ),
                 text = date,
                 color = SignalColor.Black,
             )
             Spacer(modifier = Modifier.height(12.dp))
             Body(
-                modifier = Modifier.padding(start = 6.dp, top = 12.dp),
+                modifier = Modifier.padding(
+                    start = 6.dp,
+                    top = 12.dp,
+                ),
                 text = stringResource(id = R.string.phone_number),
                 color = SignalColor.Gray500,
             )
             Body(
-                modifier = Modifier.padding(start = 6.dp, top = 4.dp, bottom = 6.dp),
+                modifier = Modifier.padding(
+                    start = 6.dp,
+                    top = 4.dp,
+                    bottom = 6.dp,
+                ),
                 text = phone,
                 color = SignalColor.Black,
             )
