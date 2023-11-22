@@ -45,7 +45,6 @@ internal fun Hospital(
 ) {
     LaunchedEffect(Unit) {
         reservationViewModel.fetchHospitals()
-
     }
 
     val state by reservationViewModel.state.collectAsState()
@@ -72,7 +71,7 @@ internal fun Hospital(
 @Composable
 private fun Hospitals(
     moveToCreateHospital: (hospitalId: UUID) -> Unit,
-    hospitals: List<FetchHospitalsEntity.HospitalsEntity>,
+    hospitals: List<FetchHospitalsEntity.HospitalEntity>,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
