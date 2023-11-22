@@ -34,17 +34,18 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
 import org.koin.androidx.compose.koinViewModel
-
+import java.util.UUID
 
 
 @Composable
 internal fun Hospital(
     moveToBack: () -> Unit,
-    moveToCreateReservation: () -> Unit,
+    moveToCreateReservation: (hospitalId: UUID) -> Unit,
     reservationViewModel: ReservationViewModel = koinViewModel(),
 ) {
     LaunchedEffect(Unit) {
         reservationViewModel.fetchHospitals()
+
     }
 
     val state by reservationViewModel.state.collectAsState()
@@ -71,7 +72,7 @@ internal fun Hospital(
 
 @Composable
 private fun Hospitals(
-    moveToCreateHospital: () -> Unit,
+    moveToCreateHospital: (hospitalId: UUID) -> Unit,
     hospitals: List<FetchHospitalsEntity.HospitalsEntity>,
 ) {
     LazyColumn(
@@ -84,7 +85,7 @@ private fun Hospitals(
                 hospital = it.name,
                 phone = it.phone,
                 address = it.address,
-                moveToCreateHospital = moveToCreateHospital,
+                moveToCreateHospital = { moveToCreateHospital(it.id) },
             )
         }
     }

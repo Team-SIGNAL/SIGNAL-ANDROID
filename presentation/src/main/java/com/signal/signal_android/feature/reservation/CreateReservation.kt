@@ -47,12 +47,14 @@ import com.signal.signal_android.designsystem.util.signalClickable
 import org.koin.androidx.compose.koinViewModel
 import java.time.Instant
 import java.time.ZoneId
+import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CreateReservation(
     moveToBack: () -> Unit,
     moveToReservation: () -> Unit,
+    hospitalId: UUID,
     reservationViewModel: ReservationViewModel = koinViewModel(),
 ) {
     val state by reservationViewModel.state.collectAsState()
@@ -81,10 +83,14 @@ internal fun CreateReservation(
         reservationViewModel.sideEffect.collect {
             when(it) {
                 is ReservationSideEffect.CreateReservationSuccess -> {
-
+                    moveToReservation()
                 }
             }
         }
+    }
+
+    LaunchedEffect(Unit) {
+        reservationViewModel.setHospitalId(hospitalId = hospitalId)
     }
 
     Column {

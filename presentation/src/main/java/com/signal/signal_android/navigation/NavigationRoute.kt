@@ -38,4 +38,6 @@ sealed class NavigationRoute(val route: String) {
 object NavArgument {
     const val FeedId = "{feedId}"
     const val DiaryId = "{diaryId}"
+    const val HospitalId = "{hospitalId}"
+    const val ReservationId = "{reservationId}"
 }

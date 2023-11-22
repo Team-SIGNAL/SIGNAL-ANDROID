@@ -13,9 +13,9 @@ import com.signal.signal_android.feature.main.diary.DiaryDetail
 import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 import com.signal.signal_android.feature.main.feed.Report
-import com.signal.signal_android.feature.main.reservation.CreateReservation
-import com.signal.signal_android.feature.main.reservation.Hospital
-import com.signal.signal_android.feature.main.reservation.Reservation
+import com.signal.signal_android.feature.reservation.CreateReservation
+import com.signal.signal_android.feature.reservation.Hospital
+import com.signal.signal_android.feature.reservation.Reservation
 import java.util.UUID
 
 internal fun NavGraphBuilder.mainNavigation(
@@ -31,7 +31,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToAllDiary: () -> Unit,
     moveToReservation: () -> Unit,
     moveToHospital: () -> Unit,
-    moveToCreateReservation: () -> Unit,
+    moveToCreateReservation: (hospitalId: UUID) -> Unit,
     moveToMoreAchievement: () -> Unit,
 ) {
     navigation(
@@ -74,7 +74,8 @@ internal fun NavGraphBuilder.mainNavigation(
             ),
         ) {
             DiaryDetail(
-                diaryId = (UUID.fromString(it.arguments?.getString("diaryId")) ?: UUID.randomUUID()),
+                diaryId = (UUID.fromString(it.arguments?.getString("diaryId"))
+                    ?: UUID.randomUUID()),
                 moveToBack = moveToBack,
             )
         }
@@ -120,10 +121,15 @@ internal fun NavGraphBuilder.mainNavigation(
             )
         }
 
-        composable(NavigationRoute.Main.CreateReservation) {
+        composable(
+            route = "${NavigationRoute.Main.CreateReservation}/${NavArgument.HospitalId}",
+            arguments = listOf(navArgument("hospitalId") { type = NavType.StringType })
+        ) {
             CreateReservation(
                 moveToBack = moveToBack,
                 moveToReservation = moveToReservation,
+                hospitalId = UUID.fromString(it.arguments?.getString("hospitalId"))
+                    ?: UUID.randomUUID(),
             )
         }
 
