@@ -1,6 +1,5 @@
 package com.signal.signal_android.feature.reservation
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.FetchDayReservationsEntity
 import com.signal.domain.entity.FetchHospitalsEntity
@@ -24,6 +23,7 @@ class ReservationViewModel(
                 kotlin.runCatching {
                     reservationRepository.fetchDayReservations(date = date)
                 }.onSuccess {
+                    _dayReservations.clear()
                     _dayReservations.addAll(it.reservations)
                     setState(
                         copy(
