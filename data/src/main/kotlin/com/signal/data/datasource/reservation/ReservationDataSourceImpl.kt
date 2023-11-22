@@ -12,7 +12,8 @@ class ReservationDataSourceImpl(
     private val reservationApi: ReservationApi,
 ) : ReservationDataSource {
     override suspend fun createReservation(
-        hospitalId: UUID, createReservationRequest: CreateReservationRequest
+        hospitalId: UUID,
+        createReservationRequest: CreateReservationRequest,
     ) = ExceptionHandler<Unit>().httpRequest {
         reservationApi.createReservation(
             hospitalId = hospitalId,

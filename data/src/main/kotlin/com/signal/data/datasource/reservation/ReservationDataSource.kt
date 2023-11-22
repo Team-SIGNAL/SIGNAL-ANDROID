@@ -9,7 +9,7 @@ import java.util.UUID
 interface ReservationDataSource {
     suspend fun createReservation(
         hospitalId: UUID,
-        createReservationRequest: CreateReservationRequest
+        createReservationRequest: CreateReservationRequest,
     )
     suspend fun fetchDayReservations(date: String): FetchDayReservationsResponse
     suspend fun fetchHospitals(): FetchHospitalsResponse

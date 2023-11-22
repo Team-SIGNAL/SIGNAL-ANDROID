@@ -21,5 +21,5 @@ fun FetchReservationDetailsResponse.toEntity() = FetchReservationDetailsEntity(
     reservationStatus = this.reservationStatus,
     reason = this.reason,
     date = this.date,
-    phone = this.phone
+    phone = this.phone,
 )
