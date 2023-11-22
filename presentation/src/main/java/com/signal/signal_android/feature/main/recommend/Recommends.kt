@@ -30,17 +30,20 @@ internal fun Recommends(
             title = headerTitle,
             onLeadingClicked = moveToBack,
         )
-        Recommends(moveToRecommendDetails = moveToRecommendDetails, recommends = {
-            listOf(
-                Recommend(
-                    id = UUID.randomUUID(),
-                    imageUrl = null,
-                    title = "title",
-                    writer = "writer",
-                    link = null,
+        Recommends(
+            moveToRecommendDetails = moveToRecommendDetails,
+            recommends = {
+                listOf(
+                    Recommend(
+                        id = UUID.randomUUID(),
+                        imageUrl = null,
+                        title = "title",
+                        writer = "writer",
+                        link = null,
+                    )
                 )
-            )
-        })
+            },
+        )
     }
 }
 

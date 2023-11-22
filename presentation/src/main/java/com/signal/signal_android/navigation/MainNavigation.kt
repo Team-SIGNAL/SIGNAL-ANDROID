@@ -13,6 +13,7 @@ import com.signal.signal_android.feature.main.diary.DiaryDetail
 import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 import com.signal.signal_android.feature.main.feed.Report
+import com.signal.signal_android.feature.main.recommend.RecommendDetails
 import com.signal.signal_android.feature.main.recommend.Recommends
 import com.signal.signal_android.feature.main.reservation.CreateReservation
 import com.signal.signal_android.feature.main.reservation.Hospital
@@ -35,6 +36,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToCreateReservation: () -> Unit,
     moveToMoreAchievement: () -> Unit,
     moveToRecommends: (recommendType: Long) -> Unit,
+    moveToRecommendDetails: (recommendId: UUID) -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -138,9 +140,23 @@ internal fun NavGraphBuilder.mainNavigation(
             val code = it.arguments?.getLong("recommendCode")
 
             Recommends(
-                moveToRecommendDetails = {},
+                moveToRecommendDetails = moveToRecommendDetails,
                 moveToBack = moveToBack,
                 code = code ?: -1,
+            )
+        }
+
+        composable(
+            route = "${NavigationRoute.Main.RecommendDetails}/${NavArgument.RecommendId}",
+            arguments = listOf(
+                navArgument("recommendId") { NavType.StringType },
+            ),
+        ) {
+            val recommendId = it.arguments?.getString("recommendId")
+
+            RecommendDetails(
+                moveToBack = moveToBack,
+                recommendId = UUID.fromString(recommendId),
             )
         }
     }

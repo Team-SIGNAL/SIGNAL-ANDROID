@@ -33,6 +33,7 @@ sealed class NavigationRoute(val route: String) {
         const val CreateReservation = "createReservation"
         const val MoreAchievement = "moreAchievement"
         const val Recommends = "recommends"
+        const val RecommendDetails = "recommendDetails"
     }
 }
 
@@ -40,4 +41,5 @@ object NavArgument {
     const val FeedId = "{feedId}"
     const val DiaryId = "{diaryId}"
     const val RecommendCode = "{recommendCode}"
+    const val RecommendId = "{recommendId}"
 }

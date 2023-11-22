@@ -18,10 +18,12 @@ import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.SignalColor
+import java.util.UUID
 
 @Composable
 internal fun RecommendDetails(
     moveToBack: () -> Unit,
+    recommendId: UUID?,
 ) {
     val title = ""
     val image: String? = null
