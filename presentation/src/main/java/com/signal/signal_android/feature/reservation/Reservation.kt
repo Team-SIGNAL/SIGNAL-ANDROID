@@ -1,7 +1,6 @@
 package com.signal.signal_android.feature.reservation
 
 import android.widget.CalendarView
-import android.widget.Space
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -52,6 +51,7 @@ import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -74,6 +74,7 @@ internal fun Reservation(
     var showBottomSheet by remember { mutableStateOf(false) }
 
     if (showBottomSheet) {
+        reservationViewModel.setReservationId(reservationId = )
         reservationViewModel.fetchReservationDetails()
         ModalBottomSheet(
             onDismissRequest = {
@@ -87,7 +88,7 @@ internal fun Reservation(
                 image = details.image,
                 hospital = details.name,
                 address = details.address,
-                reservationStatus = details.isReservation,
+                reservationStatus = details.reservationStatus,
                 date = details.date,
                 phone = details.phone,
                 reason = details.reason,
@@ -99,7 +100,7 @@ internal fun Reservation(
         reservationViewModel.setDate("$yearState-$monthState-$dayState")
         reservationViewModel.fetchDayReservations()
     }
-    
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
@@ -130,7 +131,6 @@ internal fun Reservation(
                     ) { calendarView ->
                         val selectedDate = "${yearState}-${monthState}-${dayState}"
                         calendarView.date = formatter.parse(selectedDate)!!.time
-
 
                         calendarView.setOnDateChangeListener { _, year, month, day ->
                             yearState = year.toString()
@@ -186,7 +186,7 @@ private fun ReservationHeader(
 @Composable
 private fun Reservations(
     reservations: List<FetchDayReservationsEntity.DayReservationsEntity>,
-    onClick: () -> Unit,
+    onClick: (reservationId: UUID) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -195,8 +195,8 @@ private fun Reservations(
         items(reservations) {
             ReservationItems(
                 hospital = it.name,
-                reservationStatus = it.isReservation,
-                onClick = onClick,
+                reservationStatus = it.reservationStatus,
+                onClick = { onClick(it.id) },
             )
         }
     }
@@ -239,7 +239,7 @@ private fun ReservationItems(
                     color = SignalColor.Primary100,
                 )
 
-                ReservationStatus.STAND_BY -> Body(
+                ReservationStatus.WAIT -> Body(
                     text = stringResource(id = R.string.reservation_stand_by),
                     color = SignalColor.Gray500,
                 )
@@ -292,7 +292,7 @@ private fun SheetContent(
                 color = SignalColor.Primary100,
             )
 
-            ReservationStatus.STAND_BY -> Body(
+            ReservationStatus.WAIT -> Body(
                 text = stringResource(id = R.string.reservation_stand_by),
                 color = SignalColor.Gray500,
             )

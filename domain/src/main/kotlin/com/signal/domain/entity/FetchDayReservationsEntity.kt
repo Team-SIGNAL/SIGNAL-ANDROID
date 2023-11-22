@@ -7,8 +7,8 @@ data class FetchDayReservationsEntity(
     val reservations: List<DayReservationsEntity>
 ) {
     data class DayReservationsEntity(
-        val reservationId: UUID,
+        val id: UUID,
         val name: String,
-        val isReservation: ReservationStatus,
+        val reservationStatus: ReservationStatus,
     )
 }

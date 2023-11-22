@@ -6,7 +6,7 @@ data class FetchReservationDetailsEntity(
     val image: String?,
     val name: String,
     val address: String,
-    val isReservation: ReservationStatus,
+    val reservationStatus: ReservationStatus,
     val reason: String,
     val date: String,
     val phone: String,

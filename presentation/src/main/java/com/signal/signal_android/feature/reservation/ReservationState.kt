@@ -35,7 +35,7 @@ data class ReservationState(
                 image = null,
                 name = "",
                 address = "",
-                isReservation = ReservationStatus.STAND_BY,
+                reservationStatus = ReservationStatus.WAIT,
                 reason = "",
                 date = "",
                 phone = "",
@@ -51,7 +51,7 @@ data class ReservationState(
             reservationDate = LocalDate.now().toString(),
             reservationTime = LocalTime.now().toString(),
             time = "${LocalTime.now().hour}:${LocalTime.now().minute}",
-            reservationStatus = ReservationStatus.STAND_BY,
+            reservationStatus = ReservationStatus.WAIT,
             reservationId = UUID.randomUUID(),
             hospitalId = UUID.randomUUID()
         )

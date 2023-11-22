@@ -11,7 +11,7 @@ data class FetchDayReservationsResponse(
     data class Reservations(
         @SerializedName("id") val reservationId: UUID,
         @SerializedName("name") val name: String,
-        @SerializedName("reservation_status") val isReservation: ReservationStatus,
+        @SerializedName("reservation_status") val reservationStatus: ReservationStatus,
     )
 }
 
@@ -20,7 +20,7 @@ fun FetchDayReservationsResponse.toEntity() =
 
 private fun FetchDayReservationsResponse.Reservations.toEntity() =
     FetchDayReservationsEntity.DayReservationsEntity(
-        reservationId = this.reservationId,
+        id = this.reservationId,
         name = this.name,
-        isReservation = this.isReservation,
+        reservationStatus = this.reservationStatus,
     )

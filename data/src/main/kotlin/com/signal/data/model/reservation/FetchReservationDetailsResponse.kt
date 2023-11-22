@@ -8,7 +8,7 @@ data class FetchReservationDetailsResponse(
     @SerializedName("image") val image: String?,
     @SerializedName("name") val name: String,
     @SerializedName("address") val address: String,
-    @SerializedName("is_reservation") val isReservation: ReservationStatus,
+    @SerializedName("reservation_status") val reservationStatus: ReservationStatus,
     @SerializedName("reason") val reason: String,
     @SerializedName("date") val date: String,
     @SerializedName("phone") val phone: String,
@@ -19,7 +19,7 @@ fun FetchReservationDetailsResponse.toEntity() = FetchReservationDetailsEntity(
     image = this.image,
     name = this.name,
     address = this.address,
-    isReservation = this.isReservation,
+    reservationStatus = this.reservationStatus,
     reason = this.reason,
     date = this.date,
     phone = this.phone
