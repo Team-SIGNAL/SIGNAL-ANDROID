@@ -61,6 +61,7 @@ internal fun Reservation(
     reservationViewModel: ReservationViewModel = koinViewModel(),
 ) {
     val state by reservationViewModel.state.collectAsState()
+    val details = state.reservationDetailsEntity
 
     val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
     val date = Date()
@@ -73,6 +74,7 @@ internal fun Reservation(
     var showBottomSheet by remember { mutableStateOf(false) }
 
     if (showBottomSheet) {
+        reservationViewModel.fetchReservationDetails()
         ModalBottomSheet(
             onDismissRequest = {
                 showBottomSheet = false
@@ -81,15 +83,14 @@ internal fun Reservation(
             contentColor = SignalColor.White,
             containerColor = SignalColor.White,
         ) {
-            // Sheet content
             SheetContent(
-                image = state.image.toString(),
-                hospital = /*state.name*/"ㅇㅁㄹㅇㅁㄴㄹ병원",
-                address = /*state.address*/"주소주소주소주소주소",
-                reservationStatus = state.reservationStatus,
-                date = state.date,
-                phone = /*state.phone*/"010-2321-1231",
-                reason = /*state.reason*/"이런 이런 이유 때문에 진료 예약합니다."
+                image = details.image,
+                hospital = details.name,
+                address = details.address,
+                reservationStatus = details.isReservation,
+                date = details.date,
+                phone = details.phone,
+                reason = details.reason,
             )
         }
     }
@@ -98,14 +99,7 @@ internal fun Reservation(
         reservationViewModel.setDate("$yearState-$monthState-$dayState")
         reservationViewModel.fetchDayReservations()
     }
-
-    LaunchedEffect(showBottomSheet) {
-        reservationViewModel.fetchReservationDetails()
-    }
-
-    LaunchedEffect(Unit) {
-    }
-
+    
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd,
@@ -154,7 +148,7 @@ internal fun Reservation(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Reservations(
-                reservations = dayReservationsEntity,
+                reservations = state.dayReservationsEntity,
                 onClick = { showBottomSheet = true },
             )
         }
@@ -171,18 +165,6 @@ internal fun Reservation(
         }
     }
 }
-
-private val dayReservationsEntity = listOf(
-    FetchDayReservationsEntity.DayReservationsEntity(
-        name = "sasddaasf", isReservation = ReservationStatus.APPROVE
-    ),
-    FetchDayReservationsEntity.DayReservationsEntity(
-        name = "sasddaasf", isReservation = ReservationStatus.APPROVE
-    ),
-    FetchDayReservationsEntity.DayReservationsEntity(
-        name = "sasddaasf", isReservation = ReservationStatus.APPROVE
-    ),
-)
 
 @Composable
 private fun ReservationHeader(
