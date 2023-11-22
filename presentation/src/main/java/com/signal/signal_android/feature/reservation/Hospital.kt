@@ -50,7 +50,6 @@ internal fun Hospital(
 
     val state by reservationViewModel.state.collectAsState()
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
