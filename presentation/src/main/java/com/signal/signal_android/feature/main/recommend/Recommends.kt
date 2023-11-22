@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.signal.domain.enums.RecommendType
+import com.signal.domain.enums.Category
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.feature.main.diary.DiaryItemList
@@ -22,11 +22,11 @@ internal fun Recommends(
     recommendType: String?,
 ) {
     val headerTitle = recommendType?.run {
-        when (RecommendType.valueOf(this)) {
-            RecommendType.MUSIC -> stringResource(id = R.string.recommend_music)
-            RecommendType.EXERCISE -> stringResource(id = R.string.recommend_exercise)
-            RecommendType.VIDEO -> stringResource(id = R.string.recommend_video)
-            RecommendType.HOSPITAL -> stringResource(id = R.string.recommend_hospital)
+        when (Category.valueOf(this)) {
+            Category.MUSIC -> stringResource(id = R.string.recommend_music)
+            Category.EXERCISE -> stringResource(id = R.string.recommend_exercise)
+            Category.SPORT -> stringResource(id = R.string.recommend_video)
+            Category.HOBBY -> stringResource(id = R.string.recommend_hospital)
         }
     }
 
