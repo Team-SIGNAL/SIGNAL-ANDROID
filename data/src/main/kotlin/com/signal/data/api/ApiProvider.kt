@@ -37,4 +37,8 @@ object ApiProvider {
     fun getDiaryApi(tokenInterceptor: TokenInterceptor): DiaryApi {
         return getRetrofit(tokenInterceptor).create(DiaryApi::class.java)
     }
+
+    fun getRecommendApi(tokenInterceptor: TokenInterceptor): RecommendApi {
+        return getRetrofit(tokenInterceptor).create(RecommendApi::class.java)
+    }
 }
