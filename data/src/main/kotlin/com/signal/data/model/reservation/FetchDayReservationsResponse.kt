@@ -3,13 +3,15 @@ package com.signal.data.model.reservation
 import com.google.gson.annotations.SerializedName
 import com.signal.domain.entity.FetchDayReservationsEntity
 import com.signal.domain.enums.ReservationStatus
+import java.util.UUID
 
 data class FetchDayReservationsResponse(
     @SerializedName("reservation_list") val reservations: List<Reservations>
 ) {
     data class Reservations(
+        @SerializedName("id") val reservationId: UUID,
         @SerializedName("name") val name: String,
-        @SerializedName("is_reservation") val isReservation: ReservationStatus,
+        @SerializedName("reservation_status") val isReservation: ReservationStatus,
     )
 }
 
@@ -18,5 +20,7 @@ fun FetchDayReservationsResponse.toEntity() =
 
 private fun FetchDayReservationsResponse.Reservations.toEntity() =
     FetchDayReservationsEntity.DayReservationsEntity(
-        name = this.name, isReservation = this.isReservation
+        reservationId = this.reservationId,
+        name = this.name,
+        isReservation = this.isReservation,
     )

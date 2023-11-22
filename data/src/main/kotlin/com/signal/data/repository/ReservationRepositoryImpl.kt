@@ -7,18 +7,23 @@ import com.signal.domain.entity.FetchDayReservationsEntity
 import com.signal.domain.entity.FetchHospitalsEntity
 import com.signal.domain.entity.FetchReservationDetailsEntity
 import com.signal.domain.repository.ReservationRepository
+import java.util.UUID
 
 class ReservationRepositoryImpl(
     private val reservationDataSource: ReservationDataSource,
 ) : ReservationRepository {
     override suspend fun createReservation(
+        hospitalId: UUID,
         reason: String,
         date: String,
+        time: String,
     ) = runCatching {
         reservationDataSource.createReservation(
+            hospitalId = hospitalId,
             CreateReservationRequest(
                 reason = reason,
                 date = date,
+                time = time,
             )
         )
     }
@@ -29,6 +34,6 @@ class ReservationRepositoryImpl(
     override suspend fun fetchHospitals(): FetchHospitalsEntity =
         reservationDataSource.fetchHospitals().toEntity()
 
-    override suspend fun fetchReservationDetails(reservationId: Long): FetchReservationDetailsEntity =
+    override suspend fun fetchReservationDetails(reservationId: UUID): FetchReservationDetailsEntity =
         reservationDataSource.fetchReservationDetails(reservationId = reservationId).toEntity()
 }
