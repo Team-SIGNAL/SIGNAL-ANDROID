@@ -80,6 +80,7 @@ internal fun CreateReservation(
     }
 
     LaunchedEffect(Unit) {
+        reservationViewModel.setHospitalId(hospitalId = hospitalId)
         reservationViewModel.sideEffect.collect {
             when(it) {
                 is ReservationSideEffect.CreateReservationSuccess -> {
@@ -87,10 +88,6 @@ internal fun CreateReservation(
                 }
             }
         }
-    }
-
-    LaunchedEffect(Unit) {
-        reservationViewModel.setHospitalId(hospitalId = hospitalId)
     }
 
     Column {
