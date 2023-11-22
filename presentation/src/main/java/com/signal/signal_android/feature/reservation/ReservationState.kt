@@ -9,8 +9,8 @@ import java.time.LocalTime
 import java.util.UUID
 
 data class ReservationState(
-    val dayReservationsEntity: List<FetchDayReservationsEntity.DayReservationsEntity>,
-    val hospitals: List<FetchHospitalsEntity.HospitalsEntity>,
+    val dayReservationEntity: List<FetchDayReservationsEntity.DayReservationEntity>,
+    val hospitals: List<FetchHospitalsEntity.HospitalEntity>,
     val reservationDetailsEntity: FetchReservationDetailsEntity,
     val isDayReservationsEmpty: Boolean,
     val isHospitalsEmpty: Boolean,
@@ -25,7 +25,7 @@ data class ReservationState(
 ) {
     companion object {
         fun getDefaultState() = ReservationState(
-            dayReservationsEntity = listOf(),
+            dayReservationEntity = listOf(),
             hospitals = listOf(),
             reservationDetailsEntity = FetchReservationDetailsEntity(
                 image = null,

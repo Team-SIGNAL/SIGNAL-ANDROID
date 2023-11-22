@@ -3,9 +3,9 @@ package com.signal.domain.entity
 import java.util.UUID
 
 data class FetchHospitalsEntity(
-    val hospitals: List<HospitalsEntity>
+    val hospitals: List<HospitalEntity>
 ) {
-    data class HospitalsEntity(
+    data class HospitalEntity(
         val id: UUID,
         val profile: String?,
         val name: String,

@@ -6,9 +6,9 @@ import com.signal.domain.enums.ReservationStatus
 import java.util.UUID
 
 data class FetchDayReservationsResponse(
-    @SerializedName("reservation_list") val reservations: List<Reservations>
+    @SerializedName("reservation_list") val reservations: List<Reservation>
 ) {
-    data class Reservations(
+    data class Reservation(
         @SerializedName("id") val reservationId: UUID,
         @SerializedName("name") val name: String,
         @SerializedName("reservation_status") val reservationStatus: ReservationStatus,
@@ -18,8 +18,8 @@ data class FetchDayReservationsResponse(
 fun FetchDayReservationsResponse.toEntity() =
     FetchDayReservationsEntity(reservations = this.reservations.map { it.toEntity() })
 
-private fun FetchDayReservationsResponse.Reservations.toEntity() =
-    FetchDayReservationsEntity.DayReservationsEntity(
+private fun FetchDayReservationsResponse.Reservation.toEntity() =
+    FetchDayReservationsEntity.DayReservationEntity(
         id = this.reservationId,
         name = this.name,
         reservationStatus = this.reservationStatus,

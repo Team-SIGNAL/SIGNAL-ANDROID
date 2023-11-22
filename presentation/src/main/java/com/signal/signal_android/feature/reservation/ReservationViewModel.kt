@@ -13,9 +13,9 @@ class ReservationViewModel(
     private val reservationRepository: ReservationRepository,
 ) : BaseViewModel<ReservationState, ReservationSideEffect>(ReservationState.getDefaultState()) {
 
-    private val _dayReservations: MutableList<FetchDayReservationsEntity.DayReservationsEntity> =
+    private val _dayReservations: MutableList<FetchDayReservationsEntity.DayReservationEntity> =
         mutableListOf()
-    private val _hospitals: MutableList<FetchHospitalsEntity.HospitalsEntity> = mutableListOf()
+    private val _hospitals: MutableList<FetchHospitalsEntity.HospitalEntity> = mutableListOf()
 
     internal fun fetchDayReservations() {
         with(state.value) {
@@ -27,7 +27,7 @@ class ReservationViewModel(
                     _dayReservations.addAll(it.reservations)
                     setState(
                         copy(
-                            dayReservationsEntity = _dayReservations,
+                            dayReservationEntity = _dayReservations,
                             isDayReservationsEmpty = _dayReservations.isEmpty(),
                         )
                     )

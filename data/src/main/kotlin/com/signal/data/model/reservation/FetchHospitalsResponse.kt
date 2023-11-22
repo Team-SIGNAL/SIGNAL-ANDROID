@@ -5,10 +5,10 @@ import com.signal.domain.entity.FetchHospitalsEntity
 import java.util.UUID
 
 data class FetchHospitalsResponse(
-    @SerializedName("hospital_list") val hospitals: List<Hospitals>
+    @SerializedName("hospital_list") val hospitals: List<Hospital>
 
 ) {
-    data class Hospitals(
+    data class Hospital(
         @SerializedName("id") val id: UUID,
         @SerializedName("profile") val profile: String,
         @SerializedName("name") val name: String,
@@ -20,7 +20,7 @@ data class FetchHospitalsResponse(
 fun FetchHospitalsResponse.toEntity() =
     FetchHospitalsEntity(hospitals = this.hospitals.map { it.toEntity() })
 
-private fun FetchHospitalsResponse.Hospitals.toEntity() = FetchHospitalsEntity.HospitalsEntity(
+private fun FetchHospitalsResponse.Hospital.toEntity() = FetchHospitalsEntity.HospitalEntity(
     id = this.id,
     profile = this.profile,
     name = this.name,
