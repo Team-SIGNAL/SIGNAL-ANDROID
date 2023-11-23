@@ -6,6 +6,8 @@ object SignalUrl {
     private const val attachment = "/attachment"
     private const val diary = "/diary"
     private const val recommend = "/recommend"
+    private const val reservation = "/reservation"
+    private const val admin = "/admin"
 
     object Users {
         const val SignIn = "$users/signin"
@@ -18,7 +20,8 @@ object SignalUrl {
         const val CreatePost = "$feed/user"
         const val List = "$feed/user/list"
         const val Details = "$feed/user/{feed_id}"
-        const val Comments = "$feed/comment/{feed_id}"
+        const val CreateComment = "/comment/user/{feed_id}"
+        const val FetchComment = "/comment/{feed_id}"
         const val FeedId = "$feed/{feed_id}"
     }
 
@@ -36,5 +39,12 @@ object SignalUrl {
 
     object Recommend{
         const val FetchRecommends = "$recommend/list"
+    }
+      
+    object Reservation {
+        const val FetchHospitals = "$admin/hospital/list"
+        const val FetchDayReservation = "$reservation/user"
+        const val CreateReservation = "$reservation/{hospital_id}"
+        const val FetchReservationDetails = "$reservation/user/detail/{reservation_id}"
     }
 }

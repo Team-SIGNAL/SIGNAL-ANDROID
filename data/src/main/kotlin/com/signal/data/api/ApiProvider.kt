@@ -41,4 +41,8 @@ object ApiProvider {
     fun getRecommendApi(tokenInterceptor: TokenInterceptor): RecommendApi {
         return getRetrofit(tokenInterceptor).create(RecommendApi::class.java)
     }
+    
+    fun getReservationApi(tokenInterceptor: TokenInterceptor): ReservationApi {
+        return getRetrofit(tokenInterceptor).create(ReservationApi::class.java)
+    }
 }

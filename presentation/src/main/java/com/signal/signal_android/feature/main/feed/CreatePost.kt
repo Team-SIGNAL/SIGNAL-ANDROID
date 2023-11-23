@@ -1,6 +1,7 @@
 package com.signal.signal_android.feature.main.feed
 
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,11 +43,12 @@ import com.signal.signal_android.designsystem.util.signalClickable
 import com.signal.signal_android.feature.file.AttachmentSideEffect
 import com.signal.signal_android.feature.file.AttachmentViewModel
 import org.koin.androidx.compose.koinViewModel
+import java.util.UUID
 
 @Composable
 internal fun CreatePost(
     moveToBack: () -> Unit,
-    feedId: Long,
+    feedId: UUID?,
     feedViewModel: FeedViewModel = koinViewModel(),
     attachmentViewModel: AttachmentViewModel = koinViewModel(),
 ) {
@@ -57,7 +59,7 @@ internal fun CreatePost(
     var imagePreview: Uri? by remember { mutableStateOf(null) }
 
     LaunchedEffect(Unit) {
-        if (feedId != -1L) {
+        if (feedId != null) {
             with(feedViewModel) {
                 setFeedId(feedId)
                 fetchPostDetails()
@@ -85,7 +87,7 @@ internal fun CreatePost(
         attachmentViewModel.sideEffect.collect {
             when (it) {
                 is AttachmentSideEffect.Success -> {
-                    if (feedId == -1L) {
+                    if (feedId == null) {
                         feedViewModel.createPost(imageUrl = fileState.imageUrl)
                     } else {
                         feedViewModel.editPost(imageUrl = fileState.imageUrl)
@@ -120,7 +122,7 @@ internal fun CreatePost(
     ) {
         Header(
             title = stringResource(
-                id = if (feedId == -1L) {
+                id = if (feedId == null) {
                     R.string.create_post_header_title
                 } else {
                     R.string.edit_post_header_title
@@ -161,7 +163,7 @@ internal fun CreatePost(
             text = stringResource(id = R.string.my_page_secession_check),
             onClick = {
                 if (imagePreview == null) {
-                    if (feedId == -1L) {
+                    if (feedId == null) {
                         feedViewModel.createPost()
                     } else {
                         feedViewModel.editPost()

@@ -41,5 +41,8 @@ object NavArgument {
     const val FeedId = "{feedId}"
     const val DiaryId = "{diaryId}"
     const val Category = "{category}"
+    const val HospitalId = "{hospitalId}"
+    const val ReservationId = "{reservationId}"
+    const val RecommendType = "{recommendType}"
     const val RecommendId = "{recommendId}"
 }

@@ -38,7 +38,6 @@ import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
-import kotlinx.coroutines.flow.SharedFlow
 
 @Composable
 internal fun CommentDialog(
@@ -139,8 +138,8 @@ private fun Comments(
         items(commentEntities) {
             Comment(
                 profileImageUrl = it.profile,
-                writer = it.writer,
-                time = it.dateTime.toString(),
+                writer = it.name,
+                time = it.dateTime,
                 content = it.content,
                 onClick = {},
             )
@@ -150,7 +149,7 @@ private fun Comments(
 
 @Composable
 private fun Comment(
-    profileImageUrl: String,
+    profileImageUrl: String?,
     writer: String,
     time: String,
     content: String,
@@ -161,7 +160,7 @@ private fun Comment(
             modifier = Modifier
                 .size(36.dp)
                 .clip(CircleShape),
-            model = profileImageUrl,
+            model = profileImageUrl ?: R.drawable.ic_profile_image,
             contentDescription = stringResource(id = R.string.my_page_profile_image),
         )
         Spacer(modifier = Modifier.width(8.dp))

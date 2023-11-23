@@ -1,7 +1,9 @@
 package com.signal.domain.entity
 
+import java.util.UUID
+
 data class PostDetailsEntity(
-    val id: Long,
+    val id: UUID,
     val image: String?,
     val title: String,
     val date: String,

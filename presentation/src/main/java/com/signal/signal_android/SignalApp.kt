@@ -97,7 +97,7 @@ internal fun SignalApp() {
             },
             moveToBack = moveToBack,
             moveToCreatePost = {
-                navController.navigate("${NavigationRoute.Main.CreatePost}/${it}")
+                navController.navigate("${NavigationRoute.Main.CreatePost}/${it ?: " "}")
             },
             moveToReport = {
                 navController.navigate(NavigationRoute.Main.Report)
@@ -121,7 +121,7 @@ internal fun SignalApp() {
                 navController.navigate(NavigationRoute.Main.Hospital)
             },
             moveToCreateReservation = {
-                navController.navigate(NavigationRoute.Main.CreateReservation)
+                navController.navigate("${NavigationRoute.Main.CreateReservation}/${it}")
             },
             moveToMoreAchievement = {
                 navController.navigate(NavigationRoute.Main.MoreAchievement)
