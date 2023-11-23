@@ -1,8 +1,8 @@
 package com.signal.domain.enums
 
-enum class RecommendType {
+enum class Category {
     MUSIC,
-    EXERCISE,
+    SPORT,
     VIDEO,
-    HOSPITAL,
+    HOBBY,
 }

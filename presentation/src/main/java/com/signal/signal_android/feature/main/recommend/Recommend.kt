@@ -32,7 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.signal.domain.enums.RecommendType
+import com.signal.domain.enums.Category
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Indicator
 import com.signal.signal_android.designsystem.foundation.Body2
@@ -100,7 +100,7 @@ private fun ColumnScope.Categories(
                     .signalClickable(
                         rippleEnabled = true,
                         onClick = {
-                            moveToRecommends(RecommendType.values()[index].toString())
+                            moveToRecommends(Category.values()[index].toString())
                         },
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -188,7 +188,7 @@ private fun ColumnScope.Trends(
                 .signalClickable(
                     rippleEnabled = true,
                     onClick = {
-                        moveToRecommends(RecommendType.values()[pagerState.currentPage].toString())
+                        moveToRecommends(Category.values()[pagerState.currentPage].toString())
                     },
                 )
                 .fillMaxHeight(0.25f),

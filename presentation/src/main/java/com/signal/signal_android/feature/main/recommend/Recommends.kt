@@ -6,27 +6,43 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.signal.domain.enums.RecommendType
+import com.signal.domain.entity.RecommendsEntity
+import com.signal.domain.enums.Category
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.feature.main.diary.DiaryItemList
+import org.koin.androidx.compose.koinViewModel
 import java.util.UUID
 
 @Composable
 internal fun Recommends(
     moveToRecommendDetails: (feedId: UUID) -> Unit,
     moveToBack: () -> Unit,
-    recommendType: String?,
+    category: Category,
+    recommendViewModel: RecommendViewModel = koinViewModel(),
 ) {
-    val headerTitle = recommendType?.run {
-        when (RecommendType.valueOf(this)) {
-            RecommendType.MUSIC -> stringResource(id = R.string.recommend_music)
-            RecommendType.EXERCISE -> stringResource(id = R.string.recommend_exercise)
-            RecommendType.VIDEO -> stringResource(id = R.string.recommend_video)
-            RecommendType.HOSPITAL -> stringResource(id = R.string.recommend_hospital)
+    val state by recommendViewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        with(recommendViewModel) {
+            setCategory(category = category)
+            fetchRecommends()
+        }
+    }
+
+    val headerTitle = category.run {
+        when (category) {
+            Category.MUSIC -> stringResource(id = R.string.recommend_music)
+            Category.SPORT -> stringResource(id = R.string.recommend_exercise)
+            Category.VIDEO -> stringResource(id = R.string.recommend_video)
+            Category.HOBBY -> stringResource(id = R.string.recommend_hospital)
         }
     }
 
@@ -36,46 +52,28 @@ internal fun Recommends(
             .padding(horizontal = 16.dp),
     ) {
         Header(
-            title = headerTitle ?: "",
+            title = headerTitle,
             onLeadingClicked = moveToBack,
         )
         Recommends(
             moveToRecommendDetails = moveToRecommendDetails,
-            recommends = {
-                listOf(
-                    Recommend(
-                        id = UUID.randomUUID(),
-                        imageUrl = null,
-                        title = "title",
-                        writer = "writer",
-                        link = null,
-                    )
-                )
-            },
+            recommends = { state.recommends },
         )
     }
 }
 
-data class Recommend(
-    val id: UUID,
-    val imageUrl: String?,
-    val title: String,
-    val writer: String,
-    val link: String?,
-)
-
 @Composable
 internal fun Recommends(
     moveToRecommendDetails: (feedId: UUID) -> Unit,
-    recommends: () -> List<Recommend>,
+    recommends: () -> SnapshotStateList<RecommendsEntity.Recommend>,
 ) {
     LazyColumn {
         items(recommends()) {
             DiaryItemList(
                 moveToDiaryDetails = { moveToRecommendDetails(it.id) },
                 title = it.title,
-                content = it.writer,
-                imageUrl = it.imageUrl,
+                content = it.content,
+                imageUrl = it.image,
             )
         }
     }

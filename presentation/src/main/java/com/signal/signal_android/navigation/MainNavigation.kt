@@ -5,6 +5,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.signal.domain.enums.Category
 import com.signal.signal_android.feature.achievement.MoreAchievements
 import com.signal.signal_android.feature.main.Main
 import com.signal.signal_android.feature.main.diary.AllDiary
@@ -148,17 +149,17 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(
-            route = "${NavigationRoute.Main.Recommends}/${NavArgument.RecommendType}",
+            route = "${NavigationRoute.Main.Recommends}/${NavArgument.Category}",
             arguments = listOf(
-                navArgument("recommendType") { NavType.StringType }
+                navArgument("category") { NavType.StringType }
             ),
         ) {
-            val recommendType = it.arguments?.getString("recommendType")
+            val category = it.arguments?.getString("category") ?: Category.MUSIC.toString()
 
             Recommends(
                 moveToRecommendDetails = moveToRecommendDetails,
                 moveToBack = moveToBack,
-                recommendType = recommendType,
+                category = Category.valueOf(category),
             )
         }
 
