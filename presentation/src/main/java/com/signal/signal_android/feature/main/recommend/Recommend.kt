@@ -12,15 +12,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,11 +31,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.signal.domain.enums.Category
 import com.signal.signal_android.R
+import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.component.Indicator
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge
 import com.signal.signal_android.designsystem.foundation.SignalColor
-import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.foundation.Title
 import com.signal.signal_android.designsystem.util.signalClickable
 import kotlinx.coroutines.delay
@@ -68,12 +65,14 @@ internal fun Recommend(
             .padding(
                 start = 16.dp,
                 end = 16.dp,
-                top = 30.dp,
                 bottom = 32.dp,
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Header()
+        Header(
+            title = stringResource(id = R.string.recommend),
+            leadingIcon = null,
+        )
         Trends(moveToRecommends = moveToRecommends)
         Categories(moveToRecommends = moveToRecommends)
     }
@@ -126,31 +125,6 @@ private fun ColumnScope.Categories(
         }
     }
     Spacer(modifier = Modifier.weight(1f))
-}
-
-@Composable
-private fun Header() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        SubTitle(text = stringResource(id = R.string.recommend))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
-            IconButton(
-                modifier = Modifier.size(20.dp),
-                onClick = {},
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_search),
-                    contentDescription = stringResource(id = R.string.recommend_search),
-                )
-            }
-        }
-    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
