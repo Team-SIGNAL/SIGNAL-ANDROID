@@ -7,6 +7,7 @@ import com.signal.domain.repository.RecommendRepository
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class RecommendViewModel(
     private val recommendRepository: RecommendRepository,
@@ -21,7 +22,21 @@ class RecommendViewModel(
         }
     }
 
+    internal fun fetchRecommendDetails() {
+        with(state.value) {
+            viewModelScope.launch(Dispatchers.IO) {
+                recommendRepository.fetchRecommendDetails(recommendId = recommendId).onSuccess {
+                    setState(copy(details = it))
+                }
+            }
+        }
+    }
+
     internal fun setCategory(category: Category) {
         setState(state.value.copy(category = category))
+    }
+
+    internal fun setRecommendId(recommendId: UUID) {
+        setState(state.value.copy(recommendId = recommendId))
     }
 }

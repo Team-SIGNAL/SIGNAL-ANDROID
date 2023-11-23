@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -18,14 +21,27 @@ import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.SignalColor
+import org.koin.androidx.compose.koinViewModel
 import java.util.UUID
 
 @Composable
 internal fun RecommendDetails(
     moveToBack: () -> Unit,
     recommendId: UUID?,
+    recommendViewModel: RecommendViewModel = koinViewModel(),
 ) {
-    val title = ""
+    val state by recommendViewModel.state.collectAsState()
+    val details = state.details
+
+    LaunchedEffect(Unit) {
+        with(recommendViewModel) {
+            recommendId?.run {
+                setRecommendId(recommendId = this)
+            }
+            fetchRecommendDetails()
+        }
+    }
+
     val image: String? = null
     val content = ""
 
@@ -37,7 +53,7 @@ internal fun RecommendDetails(
             .padding(horizontal = 16.dp),
     ) {
         Header(
-            title = title,
+            title = details.title,
             onLeadingClicked = moveToBack,
         )
         Spacer(modifier = Modifier.height(30.dp))
