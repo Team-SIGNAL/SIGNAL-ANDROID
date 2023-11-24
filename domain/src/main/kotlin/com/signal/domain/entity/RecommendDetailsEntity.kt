@@ -6,6 +6,6 @@ data class RecommendDetailsEntity(
     val content: String,
     val link: String,
     val name: String,
-    val profile: String,
+    val profile: String?,
     val createDate: String,
 )

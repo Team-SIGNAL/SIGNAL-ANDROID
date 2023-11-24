@@ -9,7 +9,7 @@ data class FetchRecommendDetailsResponse(
     @SerializedName("content") val content: String,
     @SerializedName("link") val link: String,
     @SerializedName("name") val name: String,
-    @SerializedName("profile") val profile: String,
+    @SerializedName("profile") val profile: String?,
     @SerializedName("create_date") val createDate: String,
 )
 

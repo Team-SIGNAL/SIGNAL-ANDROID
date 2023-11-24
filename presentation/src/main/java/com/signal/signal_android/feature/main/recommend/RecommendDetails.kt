@@ -1,5 +1,7 @@
 package com.signal.signal_android.feature.main.recommend
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -30,6 +33,8 @@ internal fun RecommendDetails(
     recommendId: UUID?,
     recommendViewModel: RecommendViewModel = koinViewModel(),
 ) {
+    val context = LocalContext.current
+
     val state by recommendViewModel.state.collectAsState()
     val details = state.details
 
@@ -42,10 +47,10 @@ internal fun RecommendDetails(
         }
     }
 
-    val image: String? = null
-    val content = ""
-
-    val intentToUrl = {}
+    val intentToUrl: () -> Unit = {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(details.link))
+        context.startActivity(intent)
+    }
 
     Column(
         modifier = Modifier
@@ -62,24 +67,27 @@ internal fun RecommendDetails(
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState()),
         ) {
-            if (image != null) {
+            if (details.image != null) {
                 Spacer(modifier = Modifier.height(22.dp))
                 AsyncImage(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp),
-                    model = image,
+                    model = details.image,
                     contentDescription = stringResource(id = R.string.feed_details_image),
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
             Body2(
-                text = content,
+                text = details.content,
                 color = SignalColor.Gray700,
             )
             Spacer(modifier = Modifier.weight(1f))
             SignalFilledButton(
-                modifier = Modifier.padding(bottom = 34.dp),
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                    bottom = 34.dp,
+                ),
                 text = stringResource(id = R.string.recommend_details_move_to_link),
                 onClick = intentToUrl,
             )
