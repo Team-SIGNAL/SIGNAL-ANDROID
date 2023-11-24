@@ -1,5 +1,7 @@
 package com.signal.signal_android.feature.main.recommend
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,11 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -41,6 +43,8 @@ internal fun Recommends(
     recommendViewModel: RecommendViewModel = koinViewModel(),
 ) {
     val state by recommendViewModel.state.collectAsState()
+
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         with(recommendViewModel) {
@@ -76,6 +80,10 @@ internal fun Recommends(
             Recommends(
                 moveToRecommendDetails = moveToRecommendDetails,
                 recommends = { state.recommends },
+                moveToLink = {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+                    context.startActivity(intent)
+                }
             )
             Column(
                 modifier = Modifier
@@ -105,6 +113,7 @@ internal fun Recommends(
 internal fun Recommends(
     moveToRecommendDetails: (feedId: UUID) -> Unit,
     recommends: () -> SnapshotStateList<RecommendsEntity.Recommend>,
+    moveToLink: (link: String) -> Unit,
 ) {
     LazyColumn(contentPadding = PaddingValues(vertical = 16.dp)) {
         items(recommends()) {
@@ -113,6 +122,8 @@ internal fun Recommends(
                 title = it.title,
                 content = it.content,
                 imageUrl = it.image,
+                iconEnabled = true,
+                onIconClicked = { moveToLink(it.link) },
             )
         }
     }
