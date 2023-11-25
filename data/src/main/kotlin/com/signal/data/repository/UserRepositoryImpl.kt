@@ -78,4 +78,15 @@ class UserRepositoryImpl(
     override suspend fun getFamousSaying(id: Long) =
         localUserDataSource.getFamousSaying(id = id)?.toEntity()
 
+    override suspend fun setUserInformation(userInformationEntity: UserInformationEntity) {
+        localUserDataSource.setUserInformation(userInformationModel = userInformationEntity.toModel())
+    }
+
+    override suspend fun updateUserInformation(userInformationEntity: UserInformationEntity) {
+        localUserDataSource.updateUserInformation(userInformationModel = userInformationEntity.toModel())
+    }
+
+    override suspend fun getUserInformation() =
+        localUserDataSource.getUserInformation().toEntity()
+
 }

@@ -2,6 +2,7 @@ package com.signal.data.datasource.user.local
 
 import com.signal.data.database.SignalDatabase
 import com.signal.data.model.mypage.FamousSayingModel
+import com.signal.data.model.mypage.UserInformationModel
 import com.signal.data.util.PreferenceManager
 
 class LocalUserDataSourceImpl(
@@ -58,6 +59,17 @@ class LocalUserDataSourceImpl(
     }
 
     override suspend fun getFamousSaying(id: Long) = myPageDao.getFamousSaying(id = id)
+
+    override suspend fun setUserInformation(userInformationModel: UserInformationModel) {
+        myPageDao.setUserInformation(userInformationModel = userInformationModel)
+    }
+
+    override suspend fun updateUserInformation(userInformationModel: UserInformationModel) {
+        myPageDao.updateUserInformation(userInformationModel = userInformationModel)
+    }
+
+    override suspend fun getUserInformation() =
+        myPageDao.getUserInformation()
 }
 
 object Keys {

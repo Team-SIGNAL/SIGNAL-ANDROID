@@ -7,12 +7,14 @@ import com.signal.data.dao.MyPageDao
 import com.signal.data.model.diagnosis.DiagnosisHistoryModel
 import com.signal.data.model.diagnosis.DiagnosisModel
 import com.signal.data.model.mypage.FamousSayingModel
+import com.signal.data.model.mypage.UserInformationModel
 
 @Database(
     entities = [
         DiagnosisModel::class,
         DiagnosisHistoryModel::class,
         FamousSayingModel::class,
+        UserInformationModel::class,
     ],
     version = 1,
 )
