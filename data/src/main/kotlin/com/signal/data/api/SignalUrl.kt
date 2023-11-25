@@ -39,6 +39,7 @@ object SignalUrl {
 
     object Recommend{
         const val FetchRecommends = "$recommend/list"
+        const val RecommendId = "$recommend/{recommend_id}"
     }
       
     object Reservation {

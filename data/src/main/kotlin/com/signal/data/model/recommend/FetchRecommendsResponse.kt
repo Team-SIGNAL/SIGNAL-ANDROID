@@ -12,6 +12,7 @@ data class FetchRecommendsResponse(
         @SerializedName("title") val title: String,
         @SerializedName("content") val content: String,
         @SerializedName("image") val image: String,
+        @SerializedName("link") val link: String?,
     )
 }
 
@@ -24,4 +25,5 @@ fun FetchRecommendsResponse.Recommend.toEntity() = RecommendsEntity.Recommend(
     title = this.title,
     content = this.content,
     image = this.image,
+    link = this.link,
 )

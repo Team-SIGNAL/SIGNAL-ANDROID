@@ -104,7 +104,6 @@ internal fun DiaryItemList(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(70.dp)
             .shadow(
                 elevation = 2.dp,
                 shape = RoundedCornerShape(8.dp),
@@ -131,30 +130,31 @@ internal fun DiaryItemList(
             )
             Spacer(modifier = Modifier.width(8.dp))
         }
-        Column(verticalArrangement = Arrangement.Center) {
-            BodyStrong(text = title)
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Center,
+        ) {
+            BodyStrong(
+                text = title,
+                maxLines = 1,
+            )
             Body(
                 text = content,
                 color = SignalColor.Gray500,
+                maxLines = 1,
             )
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End,
+        IconButton(
+            onClick = { onIconClicked?.invoke() },
+            enabled = iconEnabled,
         ) {
-            IconButton(
-                onClick = { onIconClicked?.invoke() },
-                enabled = iconEnabled,
-            ) {
-                Image(
-                    painterResource(
-                        id = if (emotion != null) emotionDrawable(emotion)
-                        else R.drawable.ic_play,
-                    ),
-                    contentDescription = stringResource(id = R.string.diary_emotion_image),
-                )
-            }
+            Image(
+                painterResource(
+                    id = if (emotion != null) emotionDrawable(emotion)
+                    else R.drawable.ic_play,
+                ),
+                contentDescription = stringResource(id = R.string.diary_emotion_image),
+            )
         }
     }
 }
