@@ -221,6 +221,7 @@ val viewModelModule: Module
             HomeViewModel(
                 getDiagnosisHistoriesUseCase = get(),
                 getAccountIdUseCase = get(),
+                getUserInformationUseCase = get(),
             )
         }
         viewModel { DiaryViewModel(diaryRepository = get()) }

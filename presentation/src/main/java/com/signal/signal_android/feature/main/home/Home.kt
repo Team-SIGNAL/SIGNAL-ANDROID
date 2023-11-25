@@ -84,7 +84,8 @@ internal fun Home(
                             rippleEnabled = true,
                             onClick = {},
                         ),
-                    model = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/640px-Instagram_logo_2022.svg.png",
+                    model = state.profile
+                        ?: R.drawable.ic_profile_image,
                     contentDescription = stringResource(id = R.string.my_page_profile_image),
                 )
             }

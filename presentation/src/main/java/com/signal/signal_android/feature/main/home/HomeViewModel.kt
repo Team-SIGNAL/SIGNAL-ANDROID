@@ -5,6 +5,7 @@ import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.domain.enums.ChartViewType
 import com.signal.domain.usecase.users.GetAccountIdUseCase
 import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
+import com.signal.domain.usecase.users.GetUserInformationUseCase
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 internal class HomeViewModel(
     private val getDiagnosisHistoriesUseCase: GetDiagnosisHistoriesUseCase,
     private val getAccountIdUseCase: GetAccountIdUseCase,
+    private val getUserInformationUseCase: GetUserInformationUseCase,
 ) : BaseViewModel<HomeState, HomeSideEffect>(HomeState.getDefaultState()) {
     private val diagnosisHistories: MutableList<DiagnosisHistoryEntity> = mutableListOf()
     private val diagnosisHistoryUiModels: MutableList<DiagnosisHistoryUiModel> = mutableListOf()
@@ -20,6 +22,7 @@ internal class HomeViewModel(
 
     init {
         getAccountId()
+        getUserInformation()
     }
 
     private fun getAccountId() {
@@ -132,5 +135,13 @@ internal class HomeViewModel(
             )
         }
         setDiagnosisHistoriesByChartViewType()
+    }
+
+    private fun getUserInformation() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getUserInformationUseCase().onSuccess {
+                setState(state.value.copy(profile = it.imageUrl))
+            }
+        }
     }
 }
