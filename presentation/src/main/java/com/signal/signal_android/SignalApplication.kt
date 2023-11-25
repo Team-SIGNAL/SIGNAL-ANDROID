@@ -41,18 +41,21 @@ import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.GetAccountIdUseCase
 import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
 import com.signal.domain.usecase.users.GetFamousSayingUseCase
+import com.signal.domain.usecase.users.GetUserInformationUseCase
 import com.signal.domain.usecase.users.SaveAccountIdUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
+import com.signal.domain.usecase.users.SetUserInformationUseCase
 import com.signal.domain.usecase.users.SignInUseCase
 import com.signal.domain.usecase.users.SignOutUseCase
 import com.signal.domain.usecase.users.SignUpUseCase
+import com.signal.domain.usecase.users.UpdateUserInformationUseCase
 import com.signal.signal_android.feature.diagnosis.DiagnosisViewModel
 import com.signal.signal_android.feature.file.AttachmentViewModel
 import com.signal.signal_android.feature.main.diary.DiaryViewModel
 import com.signal.signal_android.feature.main.feed.FeedViewModel
 import com.signal.signal_android.feature.main.home.HomeViewModel
+import com.signal.signal_android.feature.main.mypage.MyPageViewModel
 import com.signal.signal_android.feature.main.recommend.RecommendViewModel
-import com.signal.signal_android.feature.mypage.MyPageViewModel
 import com.signal.signal_android.feature.reservation.ReservationViewModel
 import com.signal.signal_android.feature.signin.SignInViewModel
 import com.signal.signal_android.feature.signup.SignUpViewModel
@@ -180,6 +183,9 @@ val useCaseModule: Module
         single { GetDiagnosisHistoriesUseCase(diagnosisRepository = get()) }
         single { GetFamousSayingUseCase(userRepository = get()) }
         single { AddFamousSayingUseCase(userRepository = get()) }
+        single { GetUserInformationUseCase(userRepository = get()) }
+        single { SetUserInformationUseCase(userRepository = get()) }
+        single { UpdateUserInformationUseCase(userRepository = get()) }
     }
 
 val viewModelModule: Module
@@ -197,6 +203,9 @@ val viewModelModule: Module
                 secessionUseCase = get(),
                 fetchUserInformationUseCase = get(),
                 getFamousSayingUseCase = get(),
+                getUserInformationUseCase = get(),
+                setUserInformationUseCase = get(),
+                updateUserInformationUseCase = get(),
             )
         }
         viewModel { FeedViewModel(feedRepository = get()) }
