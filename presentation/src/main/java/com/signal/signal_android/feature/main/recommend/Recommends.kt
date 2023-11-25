@@ -123,7 +123,9 @@ internal fun Recommends(
                 content = it.content,
                 imageUrl = it.image,
                 iconEnabled = true,
-                onIconClicked = { moveToLink(it.link) },
+                onIconClicked = {
+                    it.link?.run(moveToLink)
+                },
             )
         }
     }

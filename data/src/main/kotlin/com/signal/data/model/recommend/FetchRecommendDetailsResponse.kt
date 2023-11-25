@@ -5,9 +5,9 @@ import com.signal.domain.entity.RecommendDetailsEntity
 
 data class FetchRecommendDetailsResponse(
     @SerializedName("title") val title: String,
-    @SerializedName("image") val image: String,
+    @SerializedName("image") val image: String?,
     @SerializedName("content") val content: String,
-    @SerializedName("link") val link: String,
+    @SerializedName("link") val link: String?,
     @SerializedName("name") val name: String,
     @SerializedName("profile") val profile: String?,
     @SerializedName("create_date") val createDate: String,

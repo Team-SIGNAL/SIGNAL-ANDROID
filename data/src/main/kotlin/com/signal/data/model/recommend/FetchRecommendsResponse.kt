@@ -12,7 +12,7 @@ data class FetchRecommendsResponse(
         @SerializedName("title") val title: String,
         @SerializedName("content") val content: String,
         @SerializedName("image") val image: String,
-        @SerializedName("link") val link: String,
+        @SerializedName("link") val link: String?,
     )
 }
 

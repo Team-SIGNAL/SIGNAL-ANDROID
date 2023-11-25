@@ -48,8 +48,10 @@ internal fun RecommendDetails(
     }
 
     val intentToUrl: () -> Unit = {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(details.link))
-        context.startActivity(intent)
+        details.link?.run {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(this))
+            context.startActivity(intent)
+        }
     }
 
     Column(
