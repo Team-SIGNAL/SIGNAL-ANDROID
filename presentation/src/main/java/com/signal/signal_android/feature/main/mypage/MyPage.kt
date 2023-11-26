@@ -122,13 +122,13 @@ internal fun MyPage(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            CardUserTool(
+            /*CardUserTool(
                 text = stringResource(id = R.string.my_page_bug_report),
                 textColor = SignalColor.Black,
                 icon = painterResource(id = R.drawable.ic_bug),
                 tint = SignalColor.Black,
-                onClick = { /* TODO */ },
-            )
+                onClick = { *//* TODO *//* },
+            )*/
             CardUserTool(
                 text = stringResource(id = R.string.my_page_logout),
                 textColor = SignalColor.Black,
