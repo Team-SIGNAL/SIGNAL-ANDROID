@@ -51,6 +51,7 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
 import com.signal.signal_android.feature.main.mypage.MyPageSideEffect
+import com.signal.signal_android.feature.main.mypage.MyPageViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

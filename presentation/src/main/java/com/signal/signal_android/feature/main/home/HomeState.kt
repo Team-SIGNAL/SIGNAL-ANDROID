@@ -6,12 +6,14 @@ data class HomeState(
     val lastDiagnosisDate: String,
     val chartViewType: ChartViewType,
     val diagnosisHistoryUiModels: List<DiagnosisHistoryUiModel>,
+    val profile: String?,
 ) {
     companion object {
         fun getDefaultState() = HomeState(
             lastDiagnosisDate = "",
             chartViewType = ChartViewType.DAY,
             diagnosisHistoryUiModels = emptyList(),
+            profile = null,
         )
     }
 }

@@ -27,4 +27,8 @@ interface UserRepository {
 
     suspend fun addFamousSaying(famousSayings: List<FamousSayingEntity>)
     suspend fun getFamousSaying(id: Long): FamousSayingEntity?
+
+    suspend fun setUserInformation(userInformationEntity: UserInformationEntity)
+    suspend fun updateUserInformation(userInformationEntity: UserInformationEntity)
+    suspend fun getUserInformation(): UserInformationEntity
 }
