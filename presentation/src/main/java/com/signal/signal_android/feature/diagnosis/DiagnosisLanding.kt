@@ -37,6 +37,7 @@ internal fun DiagnosisLanding(
             onSubButtonClicked = {},
             mainText = stringResource(id = R.string.diagnosis_do_diagnosis),
             subText = stringResource(id = R.string.diagnosis_check_histories),
+            subVisibility = { false },
         )
     }
 }
@@ -71,6 +72,8 @@ internal fun Buttons(
     subText: String,
     mainEnabled: () -> Boolean? = { null },
     subEnabled: () -> Boolean? = { null },
+    mainVisibility: () -> Boolean = { true },
+    subVisibility: () -> Boolean = { true },
 ) {
     Column(
         modifier = Modifier.padding(
@@ -80,15 +83,19 @@ internal fun Buttons(
         ),
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
-        SignalFilledButton(
-            text = mainText,
-            onClick = onMainButtonClicked,
-            enabled = mainEnabled() ?: true,
-        )
-        SignalOutlinedButton(
-            text = subText,
-            onClick = onSubButtonClicked,
-            enabled = subEnabled() ?: true,
-        )
+        if (mainVisibility()) {
+            SignalFilledButton(
+                text = mainText,
+                onClick = onMainButtonClicked,
+                enabled = mainEnabled() ?: true,
+            )
+        }
+        if (subVisibility()) {
+            SignalOutlinedButton(
+                text = subText,
+                onClick = onSubButtonClicked,
+                enabled = subEnabled() ?: true,
+            )
+        }
     }
 }

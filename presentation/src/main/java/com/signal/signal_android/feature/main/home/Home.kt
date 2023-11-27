@@ -138,10 +138,10 @@ internal fun Home(
                 onClick = moveToReservation,
             )
             Spacer(modifier = Modifier.height(14.dp))
-            ActivityCard(
+            /*ActivityCard(
                 title = stringResource(id = R.string.home_activity_ongoing),
                 description = "총 17개",
-                onClick = { /*TODO*/ },
+                onClick = { *//*TODO*//* },
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 OngoingActivity(
@@ -149,7 +149,7 @@ internal fun Home(
                     max = 4f,
                     current = 2f,
                 )
-            }
+            }*/
             Spacer(modifier = Modifier.weight(1f))
         }
     }
