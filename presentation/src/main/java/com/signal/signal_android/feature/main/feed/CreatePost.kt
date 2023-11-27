@@ -1,7 +1,6 @@
 package com.signal.signal_android.feature.main.feed
 
 import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,14 +31,19 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.signal.data.util.FileUtil
+import com.signal.domain.enums.Coin
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.component.Header
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
+import com.signal.signal_android.feature.coin.CoinDialog
+import com.signal.signal_android.feature.coin.CoinSideEffect
+import com.signal.signal_android.feature.coin.CoinViewModel
 import com.signal.signal_android.feature.file.AttachmentSideEffect
 import com.signal.signal_android.feature.file.AttachmentViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -51,12 +55,24 @@ internal fun CreatePost(
     feedId: UUID?,
     feedViewModel: FeedViewModel = koinViewModel(),
     attachmentViewModel: AttachmentViewModel = koinViewModel(),
+    coinViewModel: CoinViewModel = koinViewModel(),
 ) {
     val state by feedViewModel.state.collectAsState()
+    val coinState by coinViewModel.state.collectAsState()
     val fileState by attachmentViewModel.state.collectAsState()
     val details = state.postDetailsEntity
+    var showCoinDialog by remember { mutableStateOf(false) }
 
     var imagePreview: Uri? by remember { mutableStateOf(null) }
+
+    if (showCoinDialog) {
+        Dialog(onDismissRequest = { showCoinDialog = false }) {
+            CoinDialog(
+                coin = Coin.FEED,
+                coinCount = coinState.createCoinEntity.coinCount,
+            )
+        }
+    }
 
     LaunchedEffect(Unit) {
         if (feedId != null) {
@@ -105,11 +121,25 @@ internal fun CreatePost(
         feedViewModel.sideEffect.collect {
             when (it) {
                 is FeedSideEffect.PostSuccess -> {
+                    coinViewModel.createCoin(
+                        coin = 2,
+                        type = Coin.FEED,
+                    )
                     moveToBack()
                 }
 
                 else -> {
 
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        coinViewModel.sideEffect.collect {
+            when (it) {
+                is CoinSideEffect.Success -> {
+                    showCoinDialog = true
                 }
             }
         }

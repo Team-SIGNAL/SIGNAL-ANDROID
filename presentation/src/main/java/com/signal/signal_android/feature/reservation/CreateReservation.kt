@@ -37,6 +37,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import com.signal.domain.enums.Coin
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.component.Header
@@ -44,6 +46,8 @@ import com.signal.signal_android.designsystem.foundation.BodyLarge
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
+import com.signal.signal_android.feature.coin.CoinDialog
+import com.signal.signal_android.feature.coin.CoinViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.time.Instant
 import java.time.ZoneId
@@ -56,8 +60,10 @@ internal fun CreateReservation(
     moveToReservation: () -> Unit,
     hospitalId: UUID,
     reservationViewModel: ReservationViewModel = koinViewModel(),
+    coinViewModel: CoinViewModel = koinViewModel(),
 ) {
     val state by reservationViewModel.state.collectAsState()
+    val coinState by coinViewModel.state.collectAsState()
 
     val selectedHour by remember { mutableIntStateOf(0) }
     val selectedMinute by remember { mutableIntStateOf(0) }
@@ -70,6 +76,7 @@ internal fun CreateReservation(
 
     var isShowDateDialog by remember { mutableStateOf(false) }
     var isShowTimeDialog by remember { mutableStateOf(false) }
+    var showCoinDialog by remember { mutableStateOf(false) }
 
     val selectedMillis = datePickerState.selectedDateMillis ?: System.currentTimeMillis()
 
@@ -82,11 +89,24 @@ internal fun CreateReservation(
     LaunchedEffect(Unit) {
         reservationViewModel.setHospitalId(hospitalId = hospitalId)
         reservationViewModel.sideEffect.collect {
-            when(it) {
+            when (it) {
                 is ReservationSideEffect.CreateReservationSuccess -> {
                     moveToReservation()
+                    coinViewModel.createCoin(
+                        coin = 4,
+                        type = Coin.RESERVATION,
+                    )
                 }
             }
+        }
+    }
+
+    if (showCoinDialog) {
+        Dialog(onDismissRequest = { showCoinDialog = false }) {
+            CoinDialog(
+                coin = Coin.RESERVATION,
+                coinCount = coinState.createCoinEntity.coinCount,
+            )
         }
     }
 

@@ -39,8 +39,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.signal.data.util.FileUtil
+import com.signal.domain.enums.Coin
 import com.signal.domain.enums.Emotion
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalFilledButton
@@ -49,6 +51,9 @@ import com.signal.signal_android.designsystem.foundation.BodyLarge
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
+import com.signal.signal_android.feature.coin.CoinDialog
+import com.signal.signal_android.feature.coin.CoinSideEffect
+import com.signal.signal_android.feature.coin.CoinViewModel
 import com.signal.signal_android.feature.file.AttachmentSideEffect
 import com.signal.signal_android.feature.file.AttachmentViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -60,14 +65,26 @@ internal fun CreateDiary(
     moveToBack: () -> Unit,
     diaryViewModel: DiaryViewModel = koinViewModel(),
     attachmentViewModel: AttachmentViewModel = koinViewModel(),
+    coinViewModel: CoinViewModel = koinViewModel(),
 ) {
     val state by diaryViewModel.state.collectAsState()
+    val coinState by coinViewModel.state.collectAsState()
 
     val fileState by attachmentViewModel.state.collectAsState()
     val focusManager = LocalFocusManager.current
 
     var imagePreview: Uri? by remember { mutableStateOf(null) }
     val context = LocalContext.current
+    var showCoinDialog by remember { mutableStateOf(false) }
+
+    if (showCoinDialog) {
+        Dialog(onDismissRequest = { showCoinDialog = false }) {
+            CoinDialog(
+                coin = Coin.DIARY,
+                coinCount = coinState.createCoinEntity.coinCount,
+            )
+        }
+    }
 
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         it?.run {
@@ -94,8 +111,24 @@ internal fun CreateDiary(
     LaunchedEffect(Unit) {
         diaryViewModel.sideEffect.collect {
             when (it) {
-                is DiarySideEffect.CreateDiarySuccess -> moveToBack()
+                is DiarySideEffect.CreateDiarySuccess -> {
+                    coinViewModel.createCoin(
+                        coin = 3,
+                        type = Coin.DIARY,
+                    )
+                }
+
                 else -> {}
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        coinViewModel.sideEffect.collect {
+            when(it) {
+                is CoinSideEffect.Success -> {
+                    showCoinDialog = true
+                }
             }
         }
     }

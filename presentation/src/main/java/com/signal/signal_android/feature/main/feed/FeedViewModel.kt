@@ -121,6 +121,7 @@ internal class FeedViewModel(
                                 buttonEnabled = false,
                                 comment = "",
                             )
+                    postSideEffect(FeedSideEffect.CommentSuccess)
                         )
                         fetchComments()
                     }
