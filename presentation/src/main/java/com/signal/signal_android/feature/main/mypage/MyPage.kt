@@ -59,6 +59,7 @@ internal fun MyPage(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
     moveToMoreAchievement: () -> Unit,
+    moveToCoinHistory: () -> Unit,
     myPageViewModel: MyPageViewModel = koinViewModel(),
 ) {
     var showSecessionDialog by remember { mutableStateOf(false) }
@@ -104,10 +105,33 @@ internal fun MyPage(
                 vertical = 30.dp,
             ),
     ) {
-        SubTitle(
-            text = stringResource(id = R.string.my_page),
-            color = SignalColor.Black,
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            SubTitle(
+                text = stringResource(id = R.string.my_page),
+                color = SignalColor.Black,
+            )
+            Row(
+                modifier = Modifier.signalClickable { moveToCoinHistory() },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                Image(
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(id = R.drawable.ic_my_page_coin),
+                    contentDescription = stringResource(
+                        id = R.string.coin_image
+                    ),
+                )
+                Body(
+                    text = state.coinCount.toString(),
+                    color = SignalColor.Black,
+                )
+            }
+        }
         Spacer(modifier = Modifier.height(24.dp))
         ProfileCard(
             name = state.name,
@@ -325,8 +349,7 @@ private fun CardUserTool(
             .fillMaxWidth()
             .height(60.dp)
             .shadow(
-                elevation = 2.dp,
-                shape = RoundedCornerShape(8.dp)
+                elevation = 2.dp, shape = RoundedCornerShape(8.dp)
             )
             .clip(RoundedCornerShape(8.dp))
 
