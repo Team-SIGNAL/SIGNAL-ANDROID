@@ -6,6 +6,7 @@ data class MyPageState(
     val birth: String,
     val profile: String?,
     val famousSaying: String,
+    val coinCount: Long,
 ) {
     companion object {
         fun getDefaultState() = MyPageState(
@@ -14,6 +15,7 @@ data class MyPageState(
             birth = "",
             profile = "https://github.com/Team-SIGNAL/SIGNAL-ANDROID/blob/develop/presentation/src/main/res/drawable/ic_profile_image.png?raw=true",
             famousSaying = "",
+            coinCount = 0L,
         )
     }
 }
