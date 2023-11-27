@@ -35,6 +35,7 @@ internal fun Main(
     moveToReservation: () -> Unit,
     moveToMoreAchievement: () -> Unit,
     moveToRecommends: (recommendType: String) -> Unit,
+    moveToCoinHistory: () -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -91,7 +92,8 @@ internal fun Main(
                 MyPage(
                     moveToSignIn = moveToSignIn,
                     moveToLanding = moveToLanding,
-                    moveToMoreAchievement = moveToMoreAchievement
+                    moveToMoreAchievement = moveToMoreAchievement,
+                    moveToCoinHistory = moveToCoinHistory,
                 )
             }
         }
