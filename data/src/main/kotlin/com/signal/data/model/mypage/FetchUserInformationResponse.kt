@@ -8,6 +8,7 @@ data class FetchUserInformationResponse(
     @SerializedName("phone") val phone: String,
     @SerializedName("birth") val birth: String,
     @SerializedName("profile") val profile: String?,
+    @SerializedName("coin_count") val coinCount: Long,
 )
 
 fun FetchUserInformationResponse.toEntity() = UserInformationEntity(
@@ -15,4 +16,6 @@ fun FetchUserInformationResponse.toEntity() = UserInformationEntity(
     phone = this.phone,
     birth = this.birth,
     imageUrl = this.profile,
+    coinCount = this.coinCount,
+
 )

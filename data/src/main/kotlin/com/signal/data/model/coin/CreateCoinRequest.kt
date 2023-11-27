@@ -4,5 +4,6 @@ import com.google.gson.annotations.SerializedName
 import com.signal.domain.enums.Coin
 
 data class CreateCoinRequest(
-    @SerializedName("coin") val coin: Coin
+    @SerializedName("coin") val coin: Long,
+    @SerializedName("type") val type: Coin,
 )

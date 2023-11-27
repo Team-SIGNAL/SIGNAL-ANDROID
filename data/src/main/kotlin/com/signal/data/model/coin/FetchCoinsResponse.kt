@@ -9,6 +9,7 @@ data class FetchCoinsResponse(
     data class Coins(
         @SerializedName("coin") val coin: Long,
         @SerializedName("activity") val activity: String,
+        @SerializedName("create_date") val createDate: String,
     )
 }
 
@@ -17,4 +18,5 @@ fun FetchCoinsResponse.toEntity() = CoinsEntity(coinsEntity = this.coins.map { i
 private fun FetchCoinsResponse.Coins.toEntity() = CoinsEntity.CoinEntity(
     coin = coin,
     activity = activity,
+    createDate = createDate,
 )
