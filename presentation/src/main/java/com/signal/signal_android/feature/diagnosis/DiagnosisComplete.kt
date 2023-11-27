@@ -48,6 +48,7 @@ internal fun DiagnosisComplete(
             onSubButtonClicked = moveToMain,
             mainText = stringResource(id = R.string.diagnosis_complete_check_result),
             subText = stringResource(id = R.string.diagnosis_complete_move_to_main),
+            mainVisibility = { false },
         )
     }
 }
