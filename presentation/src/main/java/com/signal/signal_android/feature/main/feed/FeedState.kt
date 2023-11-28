@@ -9,7 +9,7 @@ import com.signal.domain.enums.Tag
 import java.util.UUID
 
 data class FeedState(
-    val posts: List<PostsEntity.PostEntity>,
+    val posts: SnapshotStateList<PostsEntity.PostEntity>,
     val tag: Tag,
     val page: Long,
     val size: Long,
@@ -25,7 +25,7 @@ data class FeedState(
 ) {
     companion object {
         fun getDefaultState() = FeedState(
-            posts = emptyList(),
+            posts = mutableStateListOf(),
             tag = Tag.GENERAL,
             page = 0,
             size = 10,

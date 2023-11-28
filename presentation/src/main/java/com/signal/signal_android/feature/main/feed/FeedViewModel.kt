@@ -151,6 +151,11 @@ internal class FeedViewModel(
         }
     }
 
+    internal fun clearPost() {
+        _posts.clear()
+        setState(state.value.copy(posts = _posts))
+    }
+
     internal fun editPost(imageUrl: String? = null) {
         with(state.value) {
             if (feedId != null) {
@@ -160,11 +165,9 @@ internal class FeedViewModel(
                         title = title,
                         image = imageUrl ?: image.ifEmpty { postDetailsEntity.image },
                         content = content,
-                    ).onSuccess {
-                        postSideEffect(FeedSideEffect.PostSuccess)
-                        fetchPosts()
-                    }.onFailure {
+                    ).onFailure {
                         if (it is KotlinNullPointerException) {
+                            clearPost()
                             postSideEffect(FeedSideEffect.PostSuccess)
                         }
                     }
