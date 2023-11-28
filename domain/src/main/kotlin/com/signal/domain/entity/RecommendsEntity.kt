@@ -9,7 +9,7 @@ data class RecommendsEntity(
         val id: UUID,
         val title: String,
         val content: String,
-        val image: String,
+        val image: String?,
         val link: String?,
     )
 }
