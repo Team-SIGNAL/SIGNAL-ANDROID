@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -75,6 +76,7 @@ internal fun Feed(
     )
 
     LaunchedEffect(Unit) {
+        feedViewModel.clearPost()
         feedViewModel.fetchPosts()
     }
 
@@ -252,7 +254,7 @@ private fun Posts(
     moveToFeedDetails: (feedId: UUID) -> Unit,
     moveToReport: () -> Unit,
     showDropDown: (feedId: UUID) -> Unit,
-    posts: () -> List<PostsEntity.PostEntity>,
+    posts: () -> SnapshotStateList<PostsEntity.PostEntity>,
     onDismissRequest: () -> Unit,
     expanded: UUID,
     onDelete: () -> Unit,

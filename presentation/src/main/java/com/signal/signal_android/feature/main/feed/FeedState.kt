@@ -9,14 +9,14 @@ import com.signal.domain.enums.Tag
 import java.util.UUID
 
 data class FeedState(
-    val posts: List<PostsEntity.PostEntity>,
+    val posts: SnapshotStateList<PostsEntity.PostEntity>,
     val tag: Tag,
     val page: Long,
     val size: Long,
     val title: String,
     val content: String,
     val postDetailsEntity: PostDetailsEntity,
-    val feedId: UUID,
+    val feedId: UUID?,
     val image: String,
     val comments: SnapshotStateList<PostCommentsEntity.CommentEntity>,
     val comment: String,
@@ -25,7 +25,7 @@ data class FeedState(
 ) {
     companion object {
         fun getDefaultState() = FeedState(
-            posts = emptyList(),
+            posts = mutableStateListOf(),
             tag = Tag.GENERAL,
             page = 0,
             size = 10,
@@ -41,7 +41,7 @@ data class FeedState(
                 profile = "https://github.com/Team-SIGNAL/SIGNAL-ANDROID/blob/develop/presentation/src/main/res/drawable/ic_profile_image.png?raw=true",
                 isMine = false,
             ),
-            feedId = UUID.randomUUID(),
+            feedId = null,
             image = "",
             comments = mutableStateListOf(),
             comment = "",

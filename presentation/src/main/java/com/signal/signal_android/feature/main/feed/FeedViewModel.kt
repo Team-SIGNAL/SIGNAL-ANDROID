@@ -63,24 +63,26 @@ internal class FeedViewModel(
 
     internal fun fetchPostDetails() {
         with(state.value) {
-            viewModelScope.launch(Dispatchers.IO) {
-                feedRepository.fetchPostDetails(feedId = feedId).onSuccess {
-                    setState(
-                        copy(
-                            postDetailsEntity = PostDetailsEntity(
-                                id = it.id,
-                                image = it.image,
+            if (feedId != null) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    feedRepository.fetchPostDetails(feedId = feedId).onSuccess {
+                        setState(
+                            copy(
+                                postDetailsEntity = PostDetailsEntity(
+                                    id = it.id,
+                                    image = it.image,
+                                    title = it.title,
+                                    date = it.date,
+                                    writer = it.writer,
+                                    content = it.content,
+                                    profile = it.profile,
+                                    isMine = it.isMine,
+                                ),
                                 title = it.title,
-                                date = it.date,
-                                writer = it.writer,
                                 content = it.content,
-                                profile = it.profile,
-                                isMine = it.isMine,
                             ),
-                            title = it.title,
-                            content = it.content,
-                        ),
-                    )
+                        )
+                    }
                 }
             }
         }
@@ -88,15 +90,17 @@ internal class FeedViewModel(
 
     internal fun fetchComments() {
         with(state.value) {
-            viewModelScope.launch(Dispatchers.IO) {
-                feedRepository.fetchComments(feedId).onSuccess {
-                    if (_comments.size < it.comments.size) {
-                        if (_comments.contains(it.comments.firstOrNull())) {
-                            _comments.add(it.comments.last())
-                        } else {
-                            _comments.addAll(it.comments)
+            if (feedId != null) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    feedRepository.fetchComments(feedId).onSuccess {
+                        if (_comments.size < it.comments.size) {
+                            if (_comments.contains(it.comments.firstOrNull())) {
+                                _comments.add(it.comments.last())
+                            } else {
+                                _comments.addAll(it.comments)
+                            }
+                            setState(copy(comments = _comments.reversed().toMutableStateList()))
                         }
-                        setState(copy(comments = _comments.reversed().toMutableStateList()))
                     }
                 }
             }
@@ -105,19 +109,21 @@ internal class FeedViewModel(
 
     internal fun createComment() {
         with(state.value) {
-            viewModelScope.launch(Dispatchers.IO) {
-                feedRepository.createComment(
-                    feedId = feedId,
-                    content = comment,
-                ).onSuccess {
-                    postSideEffect(FeedSideEffect.ClearFocus)
-                    setState(
-                        copy(
-                            buttonEnabled = false,
-                            comment = "",
+            if (feedId != null) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    feedRepository.createComment(
+                        feedId = feedId,
+                        content = comment,
+                    ).onSuccess {
+                        postSideEffect(FeedSideEffect.ClearFocus)
+                        setState(
+                            copy(
+                                buttonEnabled = false,
+                                comment = "",
+                            )
                         )
-                    )
-                    fetchComments()
+                        fetchComments()
+                    }
                 }
             }
         }
@@ -125,38 +131,45 @@ internal class FeedViewModel(
 
     internal fun deletePost() {
         with(state.value) {
-            val remove = {
-                _posts.remove(_posts.find { it.id == feedId })
-                setState(copy(posts = _posts.toMutableStateList()))
-            }
-            viewModelScope.launch(Dispatchers.IO) {
-                feedRepository.deletePost(feedId = feedId).onSuccess {
-                    remove()
-                    postSideEffect(FeedSideEffect.DeleteSuccess)
-                }.onFailure {
-                    if (it is KotlinNullPointerException) {
+            if (feedId != null) {
+                val remove = {
+                    _posts.remove(_posts.find { it.id == feedId })
+                    setState(copy(posts = _posts.toMutableStateList()))
+                }
+                viewModelScope.launch(Dispatchers.IO) {
+                    feedRepository.deletePost(feedId = feedId).onSuccess {
                         remove()
                         postSideEffect(FeedSideEffect.DeleteSuccess)
+                    }.onFailure {
+                        if (it is KotlinNullPointerException) {
+                            remove()
+                            postSideEffect(FeedSideEffect.DeleteSuccess)
+                        }
                     }
                 }
             }
         }
     }
 
+    internal fun clearPost() {
+        _posts.clear()
+        setState(state.value.copy(posts = _posts))
+    }
+
     internal fun editPost(imageUrl: String? = null) {
         with(state.value) {
-            viewModelScope.launch(Dispatchers.IO) {
-                feedRepository.editPost(
-                    feedId = feedId,
-                    title = title,
-                    image = imageUrl ?: image.ifEmpty { postDetailsEntity.image },
-                    content = content,
-                ).onSuccess {
-                    postSideEffect(FeedSideEffect.PostSuccess)
-                    fetchPosts()
-                }.onFailure {
-                    if (it is KotlinNullPointerException) {
-                        postSideEffect(FeedSideEffect.PostSuccess)
+            if (feedId != null) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    feedRepository.editPost(
+                        feedId = feedId,
+                        title = title,
+                        image = imageUrl ?: image.ifEmpty { postDetailsEntity.image },
+                        content = content,
+                    ).onFailure {
+                        if (it is KotlinNullPointerException) {
+                            clearPost()
+                            postSideEffect(FeedSideEffect.PostSuccess)
+                        }
                     }
                 }
             }
