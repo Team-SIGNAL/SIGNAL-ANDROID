@@ -84,15 +84,15 @@ internal fun RecommendDetails(
                 text = details.content,
                 color = SignalColor.Gray700,
             )
-            Spacer(modifier = Modifier.weight(1f))
-            SignalFilledButton(
-                modifier = Modifier.padding(
-                    top = 16.dp,
-                    bottom = 34.dp,
-                ),
-                text = stringResource(id = R.string.recommend_details_move_to_link),
-                onClick = intentToUrl,
-            )
         }
+        Spacer(modifier = Modifier.weight(1f))
+        SignalFilledButton(
+            modifier = Modifier.padding(
+                top = 16.dp,
+                bottom = 34.dp,
+            ),
+            text = stringResource(id = R.string.recommend_details_move_to_link),
+            onClick = intentToUrl,
+        )
     }
 }
