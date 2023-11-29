@@ -44,7 +44,6 @@ internal fun CoinHistory(
         coinViewModel.fetchCoins()
     }
 
-
     Column {
         Header(
             title = stringResource(id = R.string.coin_history),
@@ -56,6 +55,7 @@ internal fun CoinHistory(
             )
         }
     }
+    Spacer(modifier = Modifier.height(12.dp))
 }
 
 @Composable
@@ -69,7 +69,6 @@ private fun Coins(
                 horizontal = 12.dp,
                 vertical = 16.dp,
             ),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(coins) {
             CoinItemList(
@@ -123,4 +122,5 @@ internal fun CoinItemList(
             contentDescription = stringResource(id = R.string.coin_image),
         )
     }
+    Spacer(modifier = Modifier.height(12.dp))
 }
