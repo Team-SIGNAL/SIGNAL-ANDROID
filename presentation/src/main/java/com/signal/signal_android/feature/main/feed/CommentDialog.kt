@@ -85,6 +85,7 @@ internal fun CommentDialog(
             CoinDialog(
                 coin = Coin.COMMENT,
                 coinCount = coinState.createCoinEntity.coinCount,
+                onClick = { showCoinDialog = false },
             )
         }
     }

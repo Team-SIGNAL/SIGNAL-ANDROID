@@ -91,7 +91,6 @@ internal fun CreateReservation(
         reservationViewModel.sideEffect.collect {
             when (it) {
                 is ReservationSideEffect.CreateReservationSuccess -> {
-                    moveToReservation()
                     coinViewModel.createCoin(
                         coin = 4,
                         type = Coin.RESERVATION,
@@ -106,6 +105,7 @@ internal fun CreateReservation(
             CoinDialog(
                 coin = Coin.RESERVATION,
                 coinCount = coinState.createCoinEntity.coinCount,
+                onClick = moveToReservation,
             )
         }
     }

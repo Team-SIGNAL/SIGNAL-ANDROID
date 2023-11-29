@@ -20,6 +20,7 @@ import com.signal.domain.enums.Coin.DIARY
 import com.signal.domain.enums.Coin.FEED
 import com.signal.domain.enums.Coin.RESERVATION
 import com.signal.signal_android.R
+import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
@@ -28,6 +29,7 @@ import com.signal.signal_android.designsystem.foundation.SubTitle
 internal fun CoinDialog(
     coin: Coin,
     coinCount: Long,
+    onClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -59,5 +61,10 @@ internal fun CoinDialog(
         )
         Spacer(modifier = Modifier.height(6.dp))
         Body(text = "현재 보유 코인 : $coinCount")
+        Spacer(modifier = Modifier.height(40.dp))
+        SignalFilledButton(
+            text = stringResource(id = R.string.header_back),
+            onClick = onClick,
+        )
     }
 }

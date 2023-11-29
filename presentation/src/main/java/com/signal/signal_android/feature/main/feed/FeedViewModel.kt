@@ -116,12 +116,12 @@ internal class FeedViewModel(
                         content = comment,
                     ).onSuccess {
                         postSideEffect(FeedSideEffect.ClearFocus)
+                        postSideEffect(FeedSideEffect.CommentSuccess)
                         setState(
                             copy(
                                 buttonEnabled = false,
                                 comment = "",
                             )
-                    postSideEffect(FeedSideEffect.CommentSuccess)
                         )
                         fetchComments()
                     }

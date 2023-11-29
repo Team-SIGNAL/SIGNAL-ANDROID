@@ -82,6 +82,7 @@ internal fun CreateDiary(
             CoinDialog(
                 coin = Coin.DIARY,
                 coinCount = coinState.createCoinEntity.coinCount,
+                onClick = moveToBack,
             )
         }
     }

@@ -70,6 +70,7 @@ internal fun CreatePost(
             CoinDialog(
                 coin = Coin.FEED,
                 coinCount = coinState.createCoinEntity.coinCount,
+                onClick = moveToBack,
             )
         }
     }
@@ -125,7 +126,6 @@ internal fun CreatePost(
                         coin = 2,
                         type = Coin.FEED,
                     )
-                    moveToBack()
                 }
 
                 else -> {

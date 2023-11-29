@@ -43,7 +43,6 @@ import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
-import com.signal.signal_android.feature.coin.CoinSideEffect
 import com.signal.signal_android.feature.coin.CoinViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -71,14 +70,6 @@ internal fun FeedDetails(
                 }
 
                 else -> {
-
-                }
-            }
-        }
-
-        coinViewModel.sideEffect.collect {
-            when(it) {
-                is CoinSideEffect.Success -> {
 
                 }
             }
