@@ -1,5 +1,7 @@
 package com.signal.signal_android.feature.coin
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.CoinsEntity
 import com.signal.domain.entity.CreateCoinEntity
@@ -13,7 +15,7 @@ class CoinViewModel(
     private val coinRepository: CoinRepository,
 ) : BaseViewModel<CoinState, CoinSideEffect>(CoinState.getDefaultState()) {
 
-    private val _coins: MutableList<CoinsEntity.CoinEntity> = mutableListOf()
+    private val _coins: SnapshotStateList<CoinsEntity.CoinEntity> = mutableStateListOf()
 
     internal fun createCoin(
         coin: Long,
