@@ -31,7 +31,7 @@ class CoinViewModel(
                 }.onSuccess {
                     setState(
                         copy(
-                            createCoinEntity = CreateCoinEntity(coinCount = it.coinCount)
+                            createCoinEntity = CreateCoinEntity(coinCount = it.coinCount),
                         )
                     )
                     postSideEffect(CoinSideEffect.Success)

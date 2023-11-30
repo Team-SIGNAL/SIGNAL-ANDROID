@@ -51,7 +51,6 @@ internal fun CoinHistory(
         )
         Coins(coins = state.coins)
     }
-    Spacer(modifier = Modifier.height(12.dp))
 }
 
 @Composable
@@ -109,7 +108,8 @@ internal fun CoinItemList(
             )
             Spacer(modifier = Modifier.height(10.dp))
             Body(
-                text = createDate, color = SignalColor.Gray500
+                text = createDate,
+                color = SignalColor.Gray500,
             )
         }
         Image(
