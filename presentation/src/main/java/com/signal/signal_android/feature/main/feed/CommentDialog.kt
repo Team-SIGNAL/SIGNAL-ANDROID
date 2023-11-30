@@ -35,6 +35,7 @@ import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
+import java.time.LocalDateTime
 
 @Composable
 internal fun CommentDialog(
@@ -80,7 +81,10 @@ internal fun CommentDialog(
                     .fillMaxWidth()
                     .padding(vertical = 10.dp),
             )
-            Comments(commentEntities = state.comments)
+            Comments(
+                commentEntities = state.comments,
+                feedViewModel = feedViewModel,
+            )
         }
         Box(
             modifier = Modifier
@@ -126,6 +130,7 @@ private fun Input(
 @Composable
 private fun Comments(
     commentEntities: List<PostCommentsEntity.CommentEntity>,
+    feedViewModel: FeedViewModel,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -136,7 +141,7 @@ private fun Comments(
             Comment(
                 profileImageUrl = it.profile,
                 writer = it.name,
-                time = it.dateTime,
+                time = feedViewModel.getCommentTime(LocalDateTime.parse(it.dateTime)),
                 content = it.content,
             )
         }

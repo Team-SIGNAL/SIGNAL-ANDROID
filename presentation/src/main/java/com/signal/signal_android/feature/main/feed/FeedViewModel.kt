@@ -12,6 +12,8 @@ import com.signal.domain.repository.FeedRepository
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.UUID
 
 internal class FeedViewModel(
@@ -224,27 +226,19 @@ internal class FeedViewModel(
         setState(state.value.copy(comment = comment))
     }
 
-    private fun getTimeMillis(createdDate: String) {
-        val date = createdDate.split('T')[0].split('.')
-    }
+    internal fun getCommentTime(date: LocalDateTime): String {
+        val today = LocalDateTime.now()
 
-    private fun getTime(time: Long): String {
-        val currentTime = System.currentTimeMillis()
-        var differentTime = (currentTime - time) / 1000
-        var message = ""
-        if (differentTime < TimeValue.SEC.value) {
-            message = "방금 전"
-        } else {
-            for (i in TimeValue.values()) {
-                differentTime /= i.value
-                if (differentTime < i.max) {
-                    message = i.message
-                    break
-                }
-            }
-        }
+        val daysDiff = ChronoUnit.DAYS.between(date.toLocalDate(), today.toLocalDate())
+        val hoursDiff = ChronoUnit.HOURS.between(date.toLocalTime(), today.toLocalTime())
+        val minutesDiff = ChronoUnit.MINUTES.between(date.toLocalTime(), today.toLocalTime())
 
-        return message
+        return when {
+            daysDiff > 30 -> "${daysDiff / 30}달 전"
+            daysDiff in 1..30 -> "${daysDiff}일 전"
+            hoursDiff > 0 -> "${hoursDiff}시간 전"
+            else -> "${minutesDiff}분 전"
+        }.let { if (it == "0분 전") "방금 전" else it }
     }
 }
 
