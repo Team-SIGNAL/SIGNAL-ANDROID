@@ -43,6 +43,7 @@ import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.util.signalClickable
+import com.signal.signal_android.feature.coin.CoinViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import java.util.UUID
@@ -54,6 +55,7 @@ internal fun FeedDetails(
     moveToBack: () -> Unit,
     moveToCreatePost: (feedId: UUID) -> Unit,
     feedViewModel: FeedViewModel = koinViewModel(),
+    coinViewModel: CoinViewModel = koinViewModel(),
 ) {
     LaunchedEffect(Unit) {
         with(feedViewModel) {
@@ -105,7 +107,10 @@ internal fun FeedDetails(
 
     ModalBottomSheetLayout(
         sheetContent = {
-            CommentDialog(feedViewModel = feedViewModel)
+            CommentDialog(
+                    feedViewModel = feedViewModel,
+                    coinViewModel = coinViewModel,
+            )
         },
         sheetState = sheetState,
         sheetShape = RoundedCornerShape(

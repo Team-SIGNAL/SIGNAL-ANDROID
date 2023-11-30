@@ -131,7 +131,10 @@ internal fun SignalApp() {
             },
             moveToRecommendDetails = {
                 navController.navigate("${NavigationRoute.Main.RecommendDetails}/${it}")
-            }
+            },
+            moveToCoinHistory = {
+                navController.navigate(NavigationRoute.Main.CoinHistory)
+            },
         )
     }
 }

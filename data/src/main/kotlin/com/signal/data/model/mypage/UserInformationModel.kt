@@ -12,6 +12,7 @@ data class UserInformationModel(
     val phone: String,
     val birth: String,
     val profile: String?,
+    val coinCount: Long,
 )
 
 fun UserInformationModel.toEntity() = UserInformationEntity(
@@ -19,6 +20,7 @@ fun UserInformationModel.toEntity() = UserInformationEntity(
     phone = this.phone,
     birth = this.birth,
     imageUrl = this.profile,
+    coinCount = this.coinCount,
 )
 
 fun UserInformationEntity.toModel() = UserInformationModel(
@@ -27,4 +29,5 @@ fun UserInformationEntity.toModel() = UserInformationModel(
     phone = this.phone,
     birth = this.birth,
     profile = this.imageUrl,
+    coinCount = this.coinCount,
 )

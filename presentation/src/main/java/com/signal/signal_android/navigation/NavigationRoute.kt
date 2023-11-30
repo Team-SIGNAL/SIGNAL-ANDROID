@@ -34,6 +34,7 @@ sealed class NavigationRoute(val route: String) {
         const val MoreAchievement = "moreAchievement"
         const val Recommends = "recommends"
         const val RecommendDetails = "recommendDetails"
+        const val CoinHistory = "coinHistory"
     }
 }
 

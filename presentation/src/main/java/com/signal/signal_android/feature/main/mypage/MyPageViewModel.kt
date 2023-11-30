@@ -26,7 +26,7 @@ class MyPageViewModel(
 
     init {
         getFamousSaying()
-        getUserInformation()
+        fetchUserInformation()
     }
 
     internal fun signOut() {
@@ -66,6 +66,7 @@ class MyPageViewModel(
                     phone = phone,
                     birth = birth,
                     profile = imageUrl,
+                    coinCount = coinCount,
                 )
             )
         }
