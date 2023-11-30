@@ -1,6 +1,7 @@
 package com.signal.signal_android.feature.main.feed
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +35,7 @@ import com.signal.signal_android.designsystem.foundation.Body
 import com.signal.signal_android.designsystem.foundation.Body2
 import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
+import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import java.time.LocalDateTime
 
@@ -81,10 +83,27 @@ internal fun CommentDialog(
                     .fillMaxWidth()
                     .padding(vertical = 10.dp),
             )
-            Comments(
-                commentEntities = state.comments,
-                feedViewModel = feedViewModel,
-            )
+            if (state.comments.isNotEmpty()) {
+                Comments(
+                    commentEntities = state.comments,
+                    feedViewModel = feedViewModel,
+                )
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.8f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    SubTitle(text = stringResource(id = R.string.comment_dialog_empty))
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Body(
+                        text = stringResource(id = R.string.comment_dialog_create),
+                        color = SignalColor.Primary100,
+                    )
+                }
+            }
         }
         Box(
             modifier = Modifier
