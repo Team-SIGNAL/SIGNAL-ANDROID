@@ -16,8 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -26,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -141,7 +138,6 @@ private fun Comments(
                 writer = it.name,
                 time = it.dateTime,
                 content = it.content,
-                onClick = {},
             )
         }
     }
@@ -153,7 +149,6 @@ private fun Comment(
     writer: String,
     time: String,
     content: String,
-    onClick: () -> Unit,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         AsyncImage(
@@ -179,16 +174,6 @@ private fun Comment(
             Body(
                 text = content,
                 color = SignalColor.Gray700,
-            )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(
-            modifier = Modifier.size(24.dp),
-            onClick = onClick,
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_more),
-                contentDescription = stringResource(id = R.string.feed_more),
             )
         }
     }
