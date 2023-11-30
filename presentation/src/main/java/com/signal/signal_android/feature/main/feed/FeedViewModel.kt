@@ -229,15 +229,15 @@ internal class FeedViewModel(
     internal fun getCommentTime(date: LocalDateTime): String {
         val today = LocalDateTime.now()
 
-        val daysDiff = ChronoUnit.DAYS.between(date.toLocalDate(), today.toLocalDate())
-        val hoursDiff = ChronoUnit.HOURS.between(date.toLocalTime(), today.toLocalTime())
-        val minutesDiff = ChronoUnit.MINUTES.between(date.toLocalTime(), today.toLocalTime())
+        val daysDifference = ChronoUnit.DAYS.between(date.toLocalDate(), today.toLocalDate())
+        val hoursDifference = ChronoUnit.HOURS.between(date.toLocalTime(), today.toLocalTime())
+        val minutesDifference = ChronoUnit.MINUTES.between(date.toLocalTime(), today.toLocalTime())
 
         return when {
-            daysDiff > 30 -> "${daysDiff / 30}달 전"
-            daysDiff in 1..30 -> "${daysDiff}일 전"
-            hoursDiff > 0 -> "${hoursDiff}시간 전"
-            else -> "${minutesDiff}분 전"
+            daysDifference > 30 -> "${daysDifference / 30}달 전"
+            daysDifference in 1..30 -> "${daysDifference}일 전"
+            hoursDifference > 0 -> "${hoursDifference}시간 전"
+            else -> "${minutesDifference}분 전"
         }.let { if (it == "0분 전") "방금 전" else it }
     }
 }
