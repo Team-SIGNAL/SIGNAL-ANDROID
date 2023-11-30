@@ -140,7 +140,10 @@ internal fun MyPage(
             profileImageUrl = state.profile,
             famousSaying = { state.famousSaying },
         )
-        Achievement(moveToMoreAchievement = moveToMoreAchievement)
+        Achievement(
+            moveToMoreAchievement = moveToMoreAchievement,
+            coin = state.coinCount,
+        )
         Spacer(modifier = Modifier.height(30.dp))
         Column(
             modifier = Modifier.fillMaxHeight(),
@@ -172,13 +175,31 @@ internal fun MyPage(
     }
 }
 
+internal data class _Achievement(
+    val message: String,
+    val coin: Long,
+)
+
+private val achievements = listOf(
+    _Achievement(
+        message = "10 코인 획득",
+        coin = 10,
+    ),
+    _Achievement(
+        message = "50 코인 획득",
+        coin = 50,
+    ),
+    _Achievement(
+        message = "100 코인 획득",
+        coin = 100,
+    ),
+)
+
 @Composable
 private fun Achievement(
     moveToMoreAchievement: () -> Unit,
+    coin: Long,
 ) {
-    val itemsList = (0..2).toList()
-    val itemsIndexedList = listOf("10 코인 획득!")
-
     Spacer(modifier = Modifier.height(20.dp))
 
     Row(
@@ -212,41 +233,43 @@ private fun Achievement(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(horizontal = 4.dp),
     ) {
-        items(itemsList) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .shadow(
-                        spotColor = SignalColor.Primary100,
-                        elevation = 4.dp,
-                        shape = RoundedCornerShape(10.dp),
-                    )
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(
-                        color = SignalColor.Gray100,
-                        shape = RoundedCornerShape(10.dp),
-                    )
-                    .padding(
-                        vertical = 23.dp,
-                        horizontal = 21.dp,
-                    ),
-                contentAlignment = Alignment.Center,
-            ) {
-                Row(
+        items(achievements) {
+            if (it.coin <= coin) {
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(SignalColor.White),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    BodyLarge(text = itemsIndexedList[0])
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Image(
-                        modifier = Modifier.size(60.dp),
-                        painter = painterResource(id = R.drawable.ic_coin_1k),
-                        contentDescription = stringResource(
-                            id = R.string.achievement_image
+                        .shadow(
+                            spotColor = SignalColor.Primary100,
+                            elevation = 4.dp,
+                            shape = RoundedCornerShape(10.dp),
+                        )
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(
+                            color = SignalColor.Gray100,
+                            shape = RoundedCornerShape(10.dp),
+                        )
+                        .padding(
+                            vertical = 23.dp,
+                            horizontal = 21.dp,
                         ),
-                    )
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(SignalColor.White),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        BodyLarge(text = it.message)
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Image(
+                            modifier = Modifier.size(60.dp),
+                            painter = painterResource(id = R.drawable.ic_coin_1k),
+                            contentDescription = stringResource(
+                                id = R.string.achievement_image
+                            ),
+                        )
+                    }
                 }
             }
         }
