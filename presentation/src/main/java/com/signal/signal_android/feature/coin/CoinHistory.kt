@@ -49,11 +49,7 @@ internal fun CoinHistory(
             title = stringResource(id = R.string.coin_history),
             onLeadingClicked = { moveToBack() },
         )
-        Row(modifier = Modifier.fillMaxSize()) {
-            Coins(
-                coins = state.coins,
-            )
-        }
+        Coins(coins = state.coins)
     }
     Spacer(modifier = Modifier.height(12.dp))
 }

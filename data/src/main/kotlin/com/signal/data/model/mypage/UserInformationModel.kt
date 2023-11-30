@@ -29,5 +29,5 @@ fun UserInformationEntity.toModel() = UserInformationModel(
     phone = this.phone,
     birth = this.birth,
     profile = this.imageUrl,
-    coinCount = this.coinCount
+    coinCount = this.coinCount,
 )

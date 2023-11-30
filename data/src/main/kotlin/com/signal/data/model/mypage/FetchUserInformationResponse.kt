@@ -17,5 +17,4 @@ fun FetchUserInformationResponse.toEntity() = UserInformationEntity(
     birth = this.birth,
     imageUrl = this.profile,
     coinCount = this.coinCount,
-
 )

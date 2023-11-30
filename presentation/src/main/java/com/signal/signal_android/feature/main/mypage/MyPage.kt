@@ -265,9 +265,7 @@ private fun Achievement(
                         Image(
                             modifier = Modifier.size(60.dp),
                             painter = painterResource(id = R.drawable.ic_coin_1k),
-                            contentDescription = stringResource(
-                                id = R.string.achievement_image
-                            ),
+                            contentDescription = stringResource(id = R.string.achievement_image),
                         )
                     }
                 }
@@ -372,10 +370,10 @@ private fun CardUserTool(
             .fillMaxWidth()
             .height(60.dp)
             .shadow(
-                elevation = 2.dp, shape = RoundedCornerShape(8.dp)
+                elevation = 2.dp,
+                shape = RoundedCornerShape(8.dp),
             )
             .clip(RoundedCornerShape(8.dp))
-
             .background(color = SignalColor.White)
             .signalClickable(
                 rippleEnabled = true,

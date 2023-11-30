@@ -132,9 +132,7 @@ private fun Achievement(
                     Spacer(modifier = Modifier.width(10.dp))
                     Image(
                         painter = painterResource(id = R.drawable.ic_coin),
-                        contentDescription = stringResource(
-                            id = R.string.achievement_image
-                        ),
+                        contentDescription = stringResource(id = R.string.achievement_image),
                     )
                 }
             }

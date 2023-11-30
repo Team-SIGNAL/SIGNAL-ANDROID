@@ -46,18 +46,18 @@ internal fun CoinDialog(
         Image(
             modifier = Modifier.size(70.dp),
             painter = painterResource(id = R.drawable.ic_coin),
-            contentDescription = stringResource(
-                id = R.string.coin_image
-            ),
+            contentDescription = stringResource(id = R.string.coin_image),
         )
         Spacer(modifier = Modifier.height(30.dp))
         SubTitle(
-            text = when (coin) {
-                COMMENT -> stringResource(id = R.string.get_1_coin)
-                FEED -> stringResource(id = R.string.get_2_coin)
-                DIARY -> stringResource(id = R.string.get_3_coin)
-                RESERVATION -> stringResource(id = R.string.get_4_coin)
-            }
+            text = stringResource(
+                id = when (coin) {
+                    COMMENT -> R.string.get_1_coin
+                    FEED -> R.string.get_2_coin
+                    DIARY -> R.string.get_3_coin
+                    RESERVATION -> R.string.get_4_coin
+                }
+            ),
         )
         Spacer(modifier = Modifier.height(6.dp))
         Body(text = "현재 보유 코인 : $coinCount")
