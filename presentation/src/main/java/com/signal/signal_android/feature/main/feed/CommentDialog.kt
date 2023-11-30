@@ -21,14 +21,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.signal.domain.entity.PostCommentsEntity
+import com.signal.domain.enums.Coin
 import com.signal.signal_android.R
 import com.signal.signal_android.designsystem.button.SignalFilledButton
 import com.signal.signal_android.designsystem.foundation.Body
@@ -38,12 +43,18 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import java.time.LocalDateTime
+import com.signal.signal_android.feature.coin.CoinDialog
+import com.signal.signal_android.feature.coin.CoinSideEffect
+import com.signal.signal_android.feature.coin.CoinViewModel
 
 @Composable
 internal fun CommentDialog(
     feedViewModel: FeedViewModel,
+    coinViewModel: CoinViewModel,
 ) {
     val state by feedViewModel.state.collectAsState()
+    val coinState by coinViewModel.state.collectAsState()
+    var showCoinDialog by remember { mutableStateOf(false) }
 
     val focusManager = LocalFocusManager.current
 
@@ -51,8 +62,31 @@ internal fun CommentDialog(
         feedViewModel.sideEffect.collect {
             when (it) {
                 is FeedSideEffect.ClearFocus -> focusManager.clearFocus()
+                is FeedSideEffect.CommentSuccess -> coinViewModel.createCoin(
+                    coin = 1,
+                    type = Coin.COMMENT,
+                )
+
                 else -> {}
             }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        coinViewModel.sideEffect.collect {
+            when (it) {
+                is CoinSideEffect.Success -> showCoinDialog = true
+            }
+        }
+    }
+
+    if (showCoinDialog) {
+        Dialog(onDismissRequest = { showCoinDialog = false }) {
+            CoinDialog(
+                coin = Coin.COMMENT,
+                coinCount = coinState.createCoinEntity.coinCount,
+                onClick = { showCoinDialog = false },
+            )
         }
     }
 

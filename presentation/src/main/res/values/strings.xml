@@ -281,4 +281,14 @@
     <!--achievement-->
     <string name="achievement">업적</string>
     <string name="achievement_image">업적 이미지</string>
+
+    <!--coin-->
+    <string name="coin_image">코인 이미지</string>
+    <string name="coin_history">코인 내역</string>
+    <string name="coin_history_check">코인 현황 보러가기</string>
+
+    <string name="get_4_coin">4 코인 획득!</string>
+    <string name="get_3_coin">3 코인 획득!</string>
+    <string name="get_2_coin">2 코인 획득!</string>
+    <string name="get_1_coin">1 코인 획득!</string>
 </resources>

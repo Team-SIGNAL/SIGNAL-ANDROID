@@ -51,20 +51,22 @@ internal fun AllDiary(
         diaryViewModel.fetchAllDiary()
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-    ) {
+    Column {
         Header(
             title = stringResource(id = R.string.diary_all_diary),
             onLeadingClicked = moveToBack,
         )
-        Row(modifier = Modifier.fillMaxSize()) {
-            Diaries(
-                moveToDiaryDetails = moveToDiaryDetails,
-                diaries = state.diaries,
-            )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+        ) {
+            Row(modifier = Modifier.fillMaxSize()) {
+                Diaries(
+                    moveToDiaryDetails = moveToDiaryDetails,
+                    diaries = state.diaries,
+                )
+            }
         }
     }
 }
@@ -145,6 +147,7 @@ internal fun DiaryItemList(
             )
         }
         IconButton(
+            modifier = Modifier.size(40.dp),
             onClick = { onIconClicked?.invoke() },
             enabled = iconEnabled,
         ) {

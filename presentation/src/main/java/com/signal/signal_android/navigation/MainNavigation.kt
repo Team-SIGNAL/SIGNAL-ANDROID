@@ -7,6 +7,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.signal.domain.enums.Category
 import com.signal.signal_android.feature.achievement.MoreAchievements
+import com.signal.signal_android.feature.coin.CoinHistory
 import com.signal.signal_android.feature.main.Main
 import com.signal.signal_android.feature.main.diary.AllDiary
 import com.signal.signal_android.feature.main.diary.CreateDiary
@@ -38,6 +39,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToMoreAchievement: () -> Unit,
     moveToRecommends: (recommendType: String) -> Unit,
     moveToRecommendDetails: (recommendId: UUID) -> Unit,
+    moveToCoinHistory: () -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -57,6 +59,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToReservation = moveToReservation,
                 moveToMoreAchievement = moveToMoreAchievement,
                 moveToRecommends = moveToRecommends,
+                moveToCoinHistory = moveToCoinHistory,
             )
         }
 
@@ -149,10 +152,8 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(
-            route = "${NavigationRoute.Main.Recommends}/${NavArgument.Category}",
-            arguments = listOf(
-                navArgument("category") { NavType.StringType }
-            ),
+            route = "${NavigationRoute.Main.Recommends}/${NavArgument.RecommendType}",
+            arguments = listOf(navArgument("recommendType") { NavType.StringType }),
         ) {
             val category = it.arguments?.getString("category") ?: Category.MUSIC.toString()
 
@@ -175,6 +176,10 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToBack = moveToBack,
                 recommendId = UUID.fromString(recommendId),
             )
+        }
+
+        composable(NavigationRoute.Main.CoinHistory) {
+            CoinHistory(moveToBack = moveToBack)
         }
     }
 }

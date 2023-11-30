@@ -59,6 +59,7 @@ internal fun MyPage(
     moveToSignIn: () -> Unit,
     moveToLanding: () -> Unit,
     moveToMoreAchievement: () -> Unit,
+    moveToCoinHistory: () -> Unit,
     myPageViewModel: MyPageViewModel = koinViewModel(),
 ) {
     var showSecessionDialog by remember { mutableStateOf(false) }
@@ -104,10 +105,33 @@ internal fun MyPage(
                 vertical = 30.dp,
             ),
     ) {
-        SubTitle(
-            text = stringResource(id = R.string.my_page),
-            color = SignalColor.Black,
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            SubTitle(
+                text = stringResource(id = R.string.my_page),
+                color = SignalColor.Black,
+            )
+            Row(
+                modifier = Modifier.signalClickable { moveToCoinHistory() },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                Image(
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(id = R.drawable.ic_my_page_coin),
+                    contentDescription = stringResource(
+                        id = R.string.coin_image
+                    ),
+                )
+                Body(
+                    text = state.coinCount.toString(),
+                    color = SignalColor.Black,
+                )
+            }
+        }
         Spacer(modifier = Modifier.height(24.dp))
         ProfileCard(
             name = state.name,
@@ -116,7 +140,10 @@ internal fun MyPage(
             profileImageUrl = state.profile,
             famousSaying = { state.famousSaying },
         )
-        Achievement(moveToMoreAchievement = moveToMoreAchievement)
+        Achievement(
+            moveToMoreAchievement = moveToMoreAchievement,
+            coin = state.coinCount,
+        )
         Spacer(modifier = Modifier.height(30.dp))
         Column(
             modifier = Modifier.fillMaxHeight(),
@@ -148,13 +175,31 @@ internal fun MyPage(
     }
 }
 
+internal data class _Achievement(
+    val message: String,
+    val coin: Long,
+)
+
+private val achievements = listOf(
+    _Achievement(
+        message = "10 코인 획득",
+        coin = 10,
+    ),
+    _Achievement(
+        message = "50 코인 획득",
+        coin = 50,
+    ),
+    _Achievement(
+        message = "100 코인 획득",
+        coin = 100,
+    ),
+)
+
 @Composable
 private fun Achievement(
     moveToMoreAchievement: () -> Unit,
+    coin: Long,
 ) {
-    val itemsList = (0..2).toList()
-    val itemsIndexedList = listOf("10 코인 획득!")
-
     Spacer(modifier = Modifier.height(20.dp))
 
     Row(
@@ -188,41 +233,41 @@ private fun Achievement(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(horizontal = 4.dp),
     ) {
-        items(itemsList) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .shadow(
-                        spotColor = SignalColor.Primary100,
-                        elevation = 4.dp,
-                        shape = RoundedCornerShape(10.dp),
-                    )
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(
-                        color = SignalColor.Gray100,
-                        shape = RoundedCornerShape(10.dp),
-                    )
-                    .padding(
-                        vertical = 23.dp,
-                        horizontal = 21.dp,
-                    ),
-                contentAlignment = Alignment.Center,
-            ) {
-                Row(
+        items(achievements) {
+            if (it.coin <= coin) {
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(SignalColor.White),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    BodyLarge(text = itemsIndexedList[0])
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Image(
-                        modifier = Modifier.size(60.dp),
-                        painter = painterResource(id = R.drawable.ic_coin_1k),
-                        contentDescription = stringResource(
-                            id = R.string.achievement_image
+                        .shadow(
+                            spotColor = SignalColor.Primary100,
+                            elevation = 4.dp,
+                            shape = RoundedCornerShape(10.dp),
+                        )
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(
+                            color = SignalColor.Gray100,
+                            shape = RoundedCornerShape(10.dp),
+                        )
+                        .padding(
+                            vertical = 23.dp,
+                            horizontal = 21.dp,
                         ),
-                    )
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(SignalColor.White),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        BodyLarge(text = it.message)
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Image(
+                            modifier = Modifier.size(60.dp),
+                            painter = painterResource(id = R.drawable.ic_coin_1k),
+                            contentDescription = stringResource(id = R.string.achievement_image),
+                        )
+                    }
                 }
             }
         }
@@ -326,10 +371,9 @@ private fun CardUserTool(
             .height(60.dp)
             .shadow(
                 elevation = 2.dp,
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
             )
             .clip(RoundedCornerShape(8.dp))
-
             .background(color = SignalColor.White)
             .signalClickable(
                 rippleEnabled = true,

@@ -4,4 +4,5 @@ sealed interface FeedSideEffect {
     object PostSuccess : FeedSideEffect
     object DeleteSuccess: FeedSideEffect
     object ClearFocus: FeedSideEffect
+    object CommentSuccess: FeedSideEffect
 }
