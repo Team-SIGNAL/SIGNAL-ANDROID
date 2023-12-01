@@ -161,6 +161,8 @@
     <!--comment dialog-->
     <string name="comment_dialog_comment">댓글</string>
     <string name="comment_dialog_input_comment">댓글을 입력하세요</string>
+    <string name="comment_dialog_empty">아직 댓글이 없어요!</string>
+    <string name="comment_dialog_create">반응을 남겨보세요!</string>
 
     <!--header-->
     <string name="header_back">뒤로가기</string>
