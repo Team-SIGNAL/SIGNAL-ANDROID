@@ -60,6 +60,7 @@ internal fun MyPage(
     moveToLanding: () -> Unit,
     moveToMoreAchievement: () -> Unit,
     moveToCoinHistory: () -> Unit,
+    moveToEditProfile: () -> Unit,
     myPageViewModel: MyPageViewModel = koinViewModel(),
 ) {
     var showSecessionDialog by remember { mutableStateOf(false) }
@@ -139,6 +140,7 @@ internal fun MyPage(
             birth = state.birth,
             profileImageUrl = state.profile,
             famousSaying = { state.famousSaying },
+            onClick = moveToEditProfile,
         )
         Achievement(
             moveToMoreAchievement = moveToMoreAchievement,
@@ -281,6 +283,7 @@ private fun ProfileCard(
     birth: String,
     profileImageUrl: String?,
     famousSaying: () -> String,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -299,7 +302,10 @@ private fun ProfileCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(14.dp),
             ) {
-                ProfileImage(profileImageUrl = profileImageUrl)
+                ProfileImage(
+                    profileImageUrl = profileImageUrl,
+                    onClick = onClick,
+                )
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     BodyStrong(
                         color = SignalColor.Primary200,
@@ -338,8 +344,15 @@ private fun ProfileCard(
 }
 
 @Composable
-private fun ProfileImage(profileImageUrl: String?) {
-    Box {
+private fun ProfileImage(
+    profileImageUrl: String?,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier.signalClickable {
+            onClick()
+        },
+    ) {
         AsyncImage(
             modifier = Modifier
                 .size(80.dp)

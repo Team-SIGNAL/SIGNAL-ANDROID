@@ -135,6 +135,9 @@ internal fun SignalApp() {
             moveToCoinHistory = {
                 navController.navigate(NavigationRoute.Main.CoinHistory)
             },
+            moveToEditProfile = {
+                navController.navigate(NavigationRoute.Main.EditProfile)
+            }
         )
     }
 }

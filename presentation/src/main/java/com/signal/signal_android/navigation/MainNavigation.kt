@@ -15,6 +15,7 @@ import com.signal.signal_android.feature.main.diary.DiaryDetail
 import com.signal.signal_android.feature.main.feed.CreatePost
 import com.signal.signal_android.feature.main.feed.FeedDetails
 import com.signal.signal_android.feature.main.feed.Report
+import com.signal.signal_android.feature.main.mypage.EditProfile
 import com.signal.signal_android.feature.main.recommend.RecommendDetails
 import com.signal.signal_android.feature.main.recommend.Recommends
 import com.signal.signal_android.feature.reservation.CreateReservation
@@ -40,6 +41,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToRecommends: (recommendType: String) -> Unit,
     moveToRecommendDetails: (recommendId: UUID) -> Unit,
     moveToCoinHistory: () -> Unit,
+    moveToEditProfile: () -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -60,6 +62,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToMoreAchievement = moveToMoreAchievement,
                 moveToRecommends = moveToRecommends,
                 moveToCoinHistory = moveToCoinHistory,
+                moveToEditProfile = moveToEditProfile,
             )
         }
 
@@ -180,6 +183,10 @@ internal fun NavGraphBuilder.mainNavigation(
 
         composable(NavigationRoute.Main.CoinHistory) {
             CoinHistory(moveToBack = moveToBack)
+        }
+
+        composable(NavigationRoute.Main.EditProfile) {
+            EditProfile(moveToBack = moveToBack)
         }
     }
 }
