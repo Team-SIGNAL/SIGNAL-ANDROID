@@ -1,5 +1,6 @@
 package com.signal.data.api
 
+import com.signal.data.model.mypage.EditProfileRequest
 import com.signal.data.model.mypage.FetchUserInformationResponse
 import com.signal.data.model.signin.SignInRequest
 import com.signal.data.model.signin.SignInResponse
@@ -7,6 +8,7 @@ import com.signal.data.model.signup.SignUpRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface UserApi {
@@ -25,4 +27,9 @@ interface UserApi {
 
     @GET(SignalUrl.Users.FetchUserInformation)
     suspend fun fetchUserInformation(): FetchUserInformationResponse
+
+    @PATCH(SignalUrl.Users.ProfileEdit)
+    suspend fun editProfile(
+        @Body editProfileRequest: EditProfileRequest,
+    )
 }
