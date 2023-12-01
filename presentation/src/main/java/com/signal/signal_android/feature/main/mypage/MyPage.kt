@@ -175,6 +175,22 @@ internal fun MyPage(
     }
 }
 
+@Composable
+private fun AchievementEmptyNotify() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        BodyStrong(text = stringResource(id = R.string.achievement_empty))
+        Spacer(modifier = Modifier.height(4.dp))
+        Body(
+            text = stringResource(id = R.string.achievement_empty_description),
+            color = SignalColor.Primary100,
+        )
+    }
+}
+
 internal data class _Achievement(
     val message: String,
     val coin: Long,
@@ -200,6 +216,8 @@ private fun Achievement(
     moveToMoreAchievement: () -> Unit,
     coin: Long,
 ) {
+    val showAchievement by remember { mutableStateOf(coin > achievements.first().coin) }
+
     Spacer(modifier = Modifier.height(20.dp))
 
     Row(
@@ -210,11 +228,12 @@ private fun Achievement(
             text = stringResource(id = R.string.my_page_received_achievement),
             color = SignalColor.Black,
         )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Body(
-                modifier = Modifier.signalClickable { moveToMoreAchievement() },
+                modifier = Modifier.signalClickable(
+                    enabled = showAchievement,
+                    onClick = moveToMoreAchievement,
+                ),
                 text = stringResource(id = R.string.more_achievement),
                 color = SignalColor.Gray500,
             )
@@ -226,51 +245,55 @@ private fun Achievement(
         }
     }
     Spacer(modifier = Modifier.height(6.dp))
-    LazyRow(
-        modifier = Modifier
-            .height(80.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(horizontal = 4.dp),
-    ) {
-        items(achievements) {
-            if (it.coin <= coin) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .shadow(
-                            spotColor = SignalColor.Primary100,
-                            elevation = 4.dp,
-                            shape = RoundedCornerShape(10.dp),
-                        )
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(
-                            color = SignalColor.Gray100,
-                            shape = RoundedCornerShape(10.dp),
-                        )
-                        .padding(
-                            vertical = 23.dp,
-                            horizontal = 21.dp,
-                        ),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Row(
+    if (showAchievement) {
+        LazyRow(
+            modifier = Modifier
+                .height(80.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(horizontal = 4.dp),
+        ) {
+            items(achievements) {
+                if (it.coin <= coin) {
+                    Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(SignalColor.White),
-                        verticalAlignment = Alignment.CenterVertically,
+                            .shadow(
+                                spotColor = SignalColor.Primary100,
+                                elevation = 4.dp,
+                                shape = RoundedCornerShape(10.dp),
+                            )
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(
+                                color = SignalColor.Gray100,
+                                shape = RoundedCornerShape(10.dp),
+                            )
+                            .padding(
+                                vertical = 23.dp,
+                                horizontal = 21.dp,
+                            ),
+                        contentAlignment = Alignment.Center,
                     ) {
-                        BodyLarge(text = it.message)
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Image(
-                            modifier = Modifier.size(60.dp),
-                            painter = painterResource(id = R.drawable.ic_coin_1k),
-                            contentDescription = stringResource(id = R.string.achievement_image),
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(SignalColor.White),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            BodyLarge(text = it.message)
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Image(
+                                modifier = Modifier.size(60.dp),
+                                painter = painterResource(id = R.drawable.ic_coin_1k),
+                                contentDescription = stringResource(id = R.string.achievement_image),
+                            )
+                        }
                     }
                 }
             }
         }
+    } else {
+        AchievementEmptyNotify()
     }
 }
 
