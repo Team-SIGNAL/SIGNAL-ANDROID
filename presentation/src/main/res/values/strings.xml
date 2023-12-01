@@ -82,7 +82,7 @@
     <string name="home_chart">우울감 수치 그래프</string>
     <string name="home_previous">이전</string>
     <string name="home_activity">활동</string>
-    <string name="home_activity_ongoing">진행중인 활동</string>
+    <string name="home_activity_ongoing">코인 내역 보러가기</string>
 
     <string name="home_diagnosis_history_null">데이터가 부족해요!</string>
 

@@ -44,7 +44,7 @@ internal fun CoinHistory(
         coinViewModel.fetchCoins()
     }
 
-    Column {
+    Column(modifier = Modifier.padding(horizontal = 12.dp)) {
         Header(
             title = stringResource(id = R.string.coin_history),
             onLeadingClicked = { moveToBack() },
@@ -60,10 +60,7 @@ private fun Coins(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(
-                horizontal = 12.dp,
-                vertical = 16.dp,
-            ),
+            .padding(vertical = 16.dp),
     ) {
         items(coins) {
             CoinItemList(
