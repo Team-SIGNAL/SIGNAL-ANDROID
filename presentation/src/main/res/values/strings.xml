@@ -281,6 +281,8 @@
     <!--achievement-->
     <string name="achievement">업적</string>
     <string name="achievement_image">업적 이미지</string>
+    <string name="achievement_empty">아직 업적이 없어요!</string>
+    <string name="achievement_empty_description">코인을 쌓아보세요!</string>
 
     <!--coin-->
     <string name="coin_image">코인 이미지</string>
