@@ -2,6 +2,7 @@ package com.signal.signal_android.feature.main.mypage
 
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.UserInformationEntity
+import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.GetFamousSayingUseCase
 import com.signal.domain.usecase.users.GetUserInformationUseCase
@@ -22,6 +23,7 @@ class MyPageViewModel(
     private val getUserInformationUseCase: GetUserInformationUseCase,
     private val setUserInformationUseCase: SetUserInformationUseCase,
     private val updateUserInformationUseCase: UpdateUserInformationUseCase,
+    private val userRepository: UserRepository,
 ) : BaseViewModel<MyPageState, MyPageSideEffect>(MyPageState.getDefaultState()) {
 
     init {
@@ -102,6 +104,18 @@ class MyPageViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             updateUserInformationUseCase(userInformationEntity = userInformationEntity).onSuccess {
                 getUserInformation()
+            }
+        }
+    }
+
+    internal fun editProfile(profile: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            userRepository.editProfile(profile = profile).onSuccess {
+                postSideEffect(MyPageSideEffect.EditProfileSuccess)
+            }.onFailure {
+                if (it is KotlinNullPointerException) {
+                    postSideEffect(MyPageSideEffect.EditProfileSuccess)
+                }
             }
         }
     }
