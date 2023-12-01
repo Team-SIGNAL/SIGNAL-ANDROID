@@ -2,6 +2,7 @@ package com.signal.data.repository
 
 import com.signal.data.datasource.user.local.LocalUserDataSource
 import com.signal.data.datasource.user.remote.RemoteUserDataSource
+import com.signal.data.model.mypage.EditProfileRequest
 import com.signal.data.model.mypage.toEntity
 import com.signal.data.model.mypage.toModel
 import com.signal.data.model.signin.SignInRequest
@@ -86,7 +87,12 @@ class UserRepositoryImpl(
         localUserDataSource.updateUserInformation(userInformationModel = userInformationEntity.toModel())
     }
 
-    override suspend fun getUserInformation() =
-        localUserDataSource.getUserInformation().toEntity()
-
+    override suspend fun getUserInformation() = localUserDataSource.getUserInformation().toEntity()
+    override suspend fun editProfile(profile: String) = runCatching {
+        remoteUserDataSource.editProfile(
+            EditProfileRequest(
+                profile = profile,
+            )
+        )
+    }
 }
