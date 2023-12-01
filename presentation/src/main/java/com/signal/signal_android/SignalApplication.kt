@@ -216,6 +216,7 @@ val viewModelModule: Module
                 getUserInformationUseCase = get(),
                 setUserInformationUseCase = get(),
                 updateUserInformationUseCase = get(),
+                userRepository = get(),
             )
         }
         viewModel { FeedViewModel(feedRepository = get()) }
