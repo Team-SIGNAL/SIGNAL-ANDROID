@@ -63,8 +63,9 @@ internal fun Main(
         ) {
             composable(NavigationRoute.Main.Home) {
                 Home(
-                  moveToReservation = moveToReservation,
-                  moveToDiagnosisLanding = moveToDiagnosisLanding,
+                    moveToReservation = moveToReservation,
+                    moveToDiagnosisLanding = moveToDiagnosisLanding,
+                    moveToCoinHistory = moveToCoinHistory,
                 )
             }
 

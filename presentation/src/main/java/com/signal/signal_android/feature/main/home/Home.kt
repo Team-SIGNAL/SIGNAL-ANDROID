@@ -53,15 +53,19 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
+import com.signal.signal_android.feature.main.mypage.MyPageViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun Home(
     moveToReservation: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
+    moveToCoinHistory: () -> Unit,
     homeViewModel: HomeViewModel = koinViewModel(),
+    myPageViewModel: MyPageViewModel = koinViewModel(),
 ) {
     val state by homeViewModel.state.collectAsState()
+    val myPageState by myPageViewModel.state.collectAsState()
 
     var dialogState by remember { mutableStateOf(false) }
     val showDialog = { dialogState = true }
@@ -84,8 +88,7 @@ internal fun Home(
                             rippleEnabled = true,
                             onClick = {},
                         ),
-                    model = state.profile
-                        ?: R.drawable.ic_profile_image,
+                    model = state.profile ?: R.drawable.ic_profile_image,
                     contentDescription = stringResource(id = R.string.my_page_profile_image),
                 )
             }
@@ -138,18 +141,18 @@ internal fun Home(
                 onClick = moveToReservation,
             )
             Spacer(modifier = Modifier.height(14.dp))
-            /*ActivityCard(
+            ActivityCard(
                 title = stringResource(id = R.string.home_activity_ongoing),
-                description = "총 17개",
-                onClick = { *//*TODO*//* },
+                description = null,
+                onClick = { moveToCoinHistory() },
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 OngoingActivity(
-                    title = "댓글 작성 완료",
-                    max = 4f,
-                    current = 2f,
+                    title = "총 코인 : ${myPageState.coinCount} 🪙",
+                    max = 500f,
+                    current = "${myPageState.coinCount}".toFloat(),
                 )
-            }*/
+            }
             Spacer(modifier = Modifier.weight(1f))
         }
     }
