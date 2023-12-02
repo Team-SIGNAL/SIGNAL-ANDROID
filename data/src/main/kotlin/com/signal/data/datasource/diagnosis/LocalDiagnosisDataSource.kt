@@ -8,6 +8,8 @@ interface LocalDiagnosisDataSource {
 
     suspend fun getDiagnosisHistories(userId: String): List<DiagnosisHistoryModel>
 
+    suspend fun getDiagnosisCount(): Long
+
     suspend fun setDiagnosis(diagnosisModel: DiagnosisModel)
 
     suspend fun setDiagnosisHistory(diagnosisHistoryModel: DiagnosisHistoryModel)
