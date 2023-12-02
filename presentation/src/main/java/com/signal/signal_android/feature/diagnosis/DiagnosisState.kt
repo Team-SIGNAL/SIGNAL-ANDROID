@@ -7,6 +7,7 @@ data class DiagnosisState(
     val diagnosis: List<DiagnosisEntity>,
     val count: Int,
     val accountId: String,
+    val historyCount: Long,
 ) {
     companion object {
         fun getDefaultState() = DiagnosisState(
@@ -20,6 +21,7 @@ data class DiagnosisState(
             ),
             count = 0,
             accountId = "",
+            historyCount = 0L,
         )
     }
 }

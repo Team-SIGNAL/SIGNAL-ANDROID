@@ -45,6 +45,7 @@ import com.signal.domain.usecase.users.FetchUserInformationUseCase
 import com.signal.domain.usecase.users.GetAccountIdUseCase
 import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
 import com.signal.domain.usecase.users.GetFamousSayingUseCase
+import com.signal.domain.usecase.users.GetHistoryCountUseCase
 import com.signal.domain.usecase.users.GetUserInformationUseCase
 import com.signal.domain.usecase.users.SaveAccountIdUseCase
 import com.signal.domain.usecase.users.SecessionUseCase
@@ -196,6 +197,7 @@ val useCaseModule: Module
         single { GetUserInformationUseCase(userRepository = get()) }
         single { SetUserInformationUseCase(userRepository = get()) }
         single { UpdateUserInformationUseCase(userRepository = get()) }
+        single { GetHistoryCountUseCase(diagnosisRepository = get()) }
     }
 
 val viewModelModule: Module
@@ -226,6 +228,7 @@ val viewModelModule: Module
                 diagnosisRepository = get(),
                 getAccountIdUseCase = get(),
                 getDiagnosisHistoriesUseCase = get(),
+                getHistoryCountUseCase = get(),
             )
         }
         viewModel {

@@ -1,11 +1,13 @@
 package com.signal.signal_android.feature.diagnosis
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.DiagnosisEntity
 import com.signal.domain.entity.DiagnosisHistoryEntity
 import com.signal.domain.repository.DiagnosisRepository
 import com.signal.domain.usecase.users.GetAccountIdUseCase
 import com.signal.domain.usecase.users.GetDiagnosisHistoriesUseCase
+import com.signal.domain.usecase.users.GetHistoryCountUseCase
 import com.signal.signal_android.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,6 +18,7 @@ internal class DiagnosisViewModel(
     private val diagnosisRepository: DiagnosisRepository,
     private val getAccountIdUseCase: GetAccountIdUseCase,
     private val getDiagnosisHistoriesUseCase: GetDiagnosisHistoriesUseCase,
+    private val getHistoryCountUseCase: GetHistoryCountUseCase,
 ) : BaseViewModel<DiagnosisState, DiagnosisSideEffect>(DiagnosisState.getDefaultState()) {
 
     private val diagnosis: MutableList<DiagnosisEntity> = mutableListOf()
@@ -23,6 +26,7 @@ internal class DiagnosisViewModel(
 
     init {
         getDiagnosis()
+        getHistoryCount()
         getAccountId()
         getDiagnosisHistories()
     }
@@ -45,6 +49,16 @@ internal class DiagnosisViewModel(
                         diagnosis = diagnosis,
                     ),
                 )
+            }
+        }
+    }
+
+    private fun getHistoryCount() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getHistoryCountUseCase().onSuccess {
+                setState(state.value.copy(historyCount = it))
+            }.onFailure {
+                Log.d("TEST", it.toString())
             }
         }
     }
@@ -90,8 +104,7 @@ internal class DiagnosisViewModel(
                     }) {
                     diagnosisRepository.addDiagnosisHistory(
                         DiagnosisHistoryEntity(
-                            id = if (diagnosisHistories.isEmpty()) 0
-                            else diagnosisHistories.last().id + 1,
+                            id = historyCount,
                             score = score,
                             userId = accountId,
                             year = year,
