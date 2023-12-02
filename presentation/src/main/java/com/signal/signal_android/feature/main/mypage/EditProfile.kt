@@ -110,7 +110,7 @@ internal fun EditProfile(
                 modifier = Modifier
                     .size(160.dp)
                     .clip(CircleShape),
-                model = R.drawable.ic_profile_image,
+                model = state.profile ?: R.drawable.ic_profile_image,
                 contentDescription = stringResource(id = R.string.my_page_profile_image),
             )
             AsyncImage(
