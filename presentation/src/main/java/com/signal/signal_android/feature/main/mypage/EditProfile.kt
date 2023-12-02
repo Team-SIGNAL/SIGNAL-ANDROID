@@ -68,7 +68,7 @@ internal fun EditProfile(
         attachmentViewModel.sideEffect.collect {
             when (it) {
                 is AttachmentSideEffect.Success -> {
-                    myPageViewModel.editProfile(profile = fileState.imageUrl)
+                    myPageViewModel.editProfile(image = fileState.imageUrl)
                 }
 
                 is AttachmentSideEffect.Failure -> {

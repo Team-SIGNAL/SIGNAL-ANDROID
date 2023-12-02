@@ -88,10 +88,10 @@ class UserRepositoryImpl(
     }
 
     override suspend fun getUserInformation() = localUserDataSource.getUserInformation().toEntity()
-    override suspend fun editProfile(profile: String) = runCatching {
+    override suspend fun editProfile(image: String) = runCatching {
         remoteUserDataSource.editProfile(
             EditProfileRequest(
-                profile = profile,
+                image = image,
             )
         )
     }

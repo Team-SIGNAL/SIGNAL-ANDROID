@@ -108,9 +108,9 @@ class MyPageViewModel(
         }
     }
 
-    internal fun editProfile(profile: String) {
+    internal fun editProfile(image: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            userRepository.editProfile(profile = profile).onSuccess {
+            userRepository.editProfile(image = image).onSuccess {
                 postSideEffect(MyPageSideEffect.EditProfileSuccess)
             }.onFailure {
                 if (it is KotlinNullPointerException) {
