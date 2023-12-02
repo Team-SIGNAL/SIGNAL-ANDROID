@@ -15,6 +15,9 @@ interface DiagnosisDao {
     @Query("select * from diagnosisHistory where userId = :userId")
     fun getDiagnosisHistories(userId: String): List<DiagnosisHistoryModel>
 
+    @Query("select count(*) from diagnosisHistory")
+    fun getHistoryCount(): Long
+
     @Update
     fun setDiagnosis(diagnosisModel: DiagnosisModel)
 

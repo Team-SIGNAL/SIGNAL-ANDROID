@@ -35,6 +35,7 @@ class DiagnosisRepositoryImpl(
     override suspend fun getDiagnosisHistories(userId: String) =
         localDiagnosisDataSource.getDiagnosisHistories(userId = userId).map { it.toEntity() }
 
+    override suspend fun getHistoryCount() = localDiagnosisDataSource.getDiagnosisCount()
 
     override suspend fun setDiagnosisHistory(diagnosisHistoryEntity: DiagnosisHistoryEntity) {
         localDiagnosisDataSource.setDiagnosisHistory(diagnosisHistoryEntity.toModel())
