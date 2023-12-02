@@ -140,7 +140,7 @@ internal fun MyPage(
             birth = state.birth,
             profileImageUrl = state.profile,
             famousSaying = { state.famousSaying },
-            onClick = moveToEditProfile,
+            onClick = { moveToEditProfile() },
         )
         Achievement(
             moveToMoreAchievement = moveToMoreAchievement,
