@@ -1,6 +1,5 @@
 package com.signal.signal_android.feature.diagnosis
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.DiagnosisEntity
 import com.signal.domain.entity.DiagnosisHistoryEntity
@@ -57,8 +56,6 @@ internal class DiagnosisViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             getHistoryCountUseCase().onSuccess {
                 setState(state.value.copy(historyCount = it))
-            }.onFailure {
-                Log.d("TEST", it.toString())
             }
         }
     }
