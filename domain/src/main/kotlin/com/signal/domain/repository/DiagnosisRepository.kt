@@ -15,6 +15,8 @@ interface DiagnosisRepository {
 
     suspend fun getDiagnosisHistories(userId: String): List<DiagnosisHistoryEntity>
 
+    suspend fun getHistoryCount(): Long
+
     suspend fun setDiagnosisHistory(diagnosisHistoryEntity: DiagnosisHistoryEntity)
 
     suspend fun addDiagnosisHistory(diagnosisHistoryEntity: DiagnosisHistoryEntity)
