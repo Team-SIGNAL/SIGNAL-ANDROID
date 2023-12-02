@@ -1,5 +1,6 @@
 package com.signal.signal_android.feature.reservation
 
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.entity.FetchDayReservationsEntity
 import com.signal.domain.entity.FetchHospitalsEntity
@@ -27,7 +28,7 @@ class ReservationViewModel(
                     _dayReservations.addAll(it.reservations)
                     setState(
                         copy(
-                            dayReservationEntity = _dayReservations,
+                            dayReservationEntity = _dayReservations.toMutableStateList(),
                             isDayReservationsEmpty = _dayReservations.isEmpty(),
                         )
                     )
@@ -66,7 +67,7 @@ class ReservationViewModel(
                     reservationRepository.createReservation(
                         hospitalId = hospitalId,
                         reason = reason,
-                        date = reservationDate,
+                        date = date,
                         time = reservationTime,
                     )
                 }.onSuccess {

@@ -96,6 +96,10 @@ internal fun Reservation(
         }
     }
 
+    LaunchedEffect(Unit) {
+        reservationViewModel.fetchDayReservations()
+    }
+
     LaunchedEffect("$yearState-$monthState-$dayState") {
         reservationViewModel.setDate("$yearState-$monthState-$dayState")
         reservationViewModel.fetchDayReservations()
