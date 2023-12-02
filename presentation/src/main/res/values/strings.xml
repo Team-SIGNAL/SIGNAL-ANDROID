@@ -108,6 +108,10 @@
 
     <string name="card_user_tool_icon">user tool icon</string>
 
+    <string name="edit_profile_image">프로필 사진 변경</string>
+    <string name="change_profile">사진 변경</string>
+    <string name="change">변경하기</string>
+
     <!--famous saying-->
     <string name="famous_saying_1">어떤 어둠도, 항상 새로운 새벽을 만들어내기 위해 존재한다</string>
     <string name="famous_saying_2">나는 강하고, 지금까지 극복한 모든 어려움은 나의 강함을 증명한다</string>

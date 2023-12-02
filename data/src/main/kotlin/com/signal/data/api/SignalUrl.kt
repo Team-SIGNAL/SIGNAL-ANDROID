@@ -15,6 +15,7 @@ object SignalUrl {
         const val SignUp = "$users/signup"
         const val Secession = "$users/secession"
         const val FetchUserInformation = "$users/info"
+        const val ProfileEdit = users
     }
 
     object Feed {

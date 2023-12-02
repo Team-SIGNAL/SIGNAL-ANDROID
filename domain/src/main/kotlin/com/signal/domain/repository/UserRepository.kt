@@ -31,4 +31,5 @@ interface UserRepository {
     suspend fun setUserInformation(userInformationEntity: UserInformationEntity)
     suspend fun updateUserInformation(userInformationEntity: UserInformationEntity)
     suspend fun getUserInformation(): UserInformationEntity
+    suspend fun editProfile(image: String): Result<Unit>
 }
