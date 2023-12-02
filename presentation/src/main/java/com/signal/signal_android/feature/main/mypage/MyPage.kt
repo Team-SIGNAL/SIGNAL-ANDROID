@@ -349,9 +349,7 @@ private fun ProfileImage(
     onClick: () -> Unit,
 ) {
     Box(
-        modifier = Modifier.signalClickable {
-            onClick()
-        },
+        modifier = Modifier.signalClickable(onClick = onClick)
     ) {
         AsyncImage(
             modifier = Modifier
