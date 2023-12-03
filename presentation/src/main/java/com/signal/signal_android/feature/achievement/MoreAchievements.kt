@@ -73,7 +73,7 @@ internal fun MoreAchievements(
 ) {
     val state by myPageViewModel.state.collectAsState()
 
-    Column {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Header(
             title = stringResource(id = R.string.achievement),
             onLeadingClicked = { moveToBack() },
@@ -97,12 +97,7 @@ private fun Achievement(
     message: String?,
 ) {
     if (message != null) {
-        Row(
-            modifier = Modifier.padding(
-                horizontal = 16.dp,
-                vertical = 10.dp,
-            ),
-        ) {
+        Row(modifier = Modifier.padding(vertical = 10.dp)) {
             Box(
                 modifier = Modifier
                     .shadow(
