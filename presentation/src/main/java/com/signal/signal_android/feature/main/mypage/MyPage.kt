@@ -1,4 +1,4 @@
-package com.signal.signal_android.feature.mypage
+package com.signal.signal_android.feature.main.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -50,8 +50,6 @@ import com.signal.signal_android.designsystem.foundation.BodyStrong
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.util.signalClickable
-import com.signal.signal_android.feature.main.mypage.MyPageSideEffect
-import com.signal.signal_android.feature.main.mypage.MyPageViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -145,6 +143,7 @@ internal fun MyPage(
         Achievement(
             moveToMoreAchievement = moveToMoreAchievement,
             coin = state.coinCount,
+            showAchievement = { state.coinCount > achievements.first().coin },
         )
         Spacer(modifier = Modifier.height(30.dp))
         Column(
@@ -216,10 +215,9 @@ private val achievements = listOf(
 @Composable
 private fun Achievement(
     moveToMoreAchievement: () -> Unit,
+    showAchievement: () -> Boolean,
     coin: Long,
 ) {
-    val showAchievement by remember { mutableStateOf(coin > achievements.first().coin) }
-
     Spacer(modifier = Modifier.height(20.dp))
 
     Row(
@@ -233,7 +231,7 @@ private fun Achievement(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Body(
                 modifier = Modifier.signalClickable(
-                    enabled = showAchievement,
+                    enabled = showAchievement(),
                     onClick = moveToMoreAchievement,
                 ),
                 text = stringResource(id = R.string.more_achievement),
@@ -247,7 +245,7 @@ private fun Achievement(
         }
     }
     Spacer(modifier = Modifier.height(6.dp))
-    if (showAchievement) {
+    if (true) {
         LazyRow(
             modifier = Modifier
                 .height(80.dp)
