@@ -99,9 +99,6 @@ internal fun SignalApp() {
             moveToCreatePost = {
                 navController.navigate("${NavigationRoute.Main.CreatePost}/${it ?: " "}")
             },
-            moveToReport = {
-                navController.navigate(NavigationRoute.Main.Report)
-            },
             moveToDiagnosisLanding = {
                 navController.navigate(NavigationRoute.User.DiagnosisLanding)
             },
