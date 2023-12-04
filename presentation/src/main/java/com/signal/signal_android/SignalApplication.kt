@@ -16,6 +16,8 @@ import com.signal.data.datasource.file.AttachmentDataSource
 import com.signal.data.datasource.file.AttachmentDataSourceImpl
 import com.signal.data.datasource.recommend.RecommendDataSource
 import com.signal.data.datasource.recommend.RecommendDataSourceImpl
+import com.signal.data.datasource.report.ReportDataSource
+import com.signal.data.datasource.report.ReportDataSourceImpl
 import com.signal.data.datasource.reservation.ReservationDataSource
 import com.signal.data.datasource.reservation.ReservationDataSourceImpl
 import com.signal.data.datasource.user.local.LocalUserDataSource
@@ -28,6 +30,7 @@ import com.signal.data.repository.DiagnosisRepositoryImpl
 import com.signal.data.repository.DiaryRepositoryImpl
 import com.signal.data.repository.FeedRepositoryImpl
 import com.signal.data.repository.RecommendRepositoryImpl
+import com.signal.data.repository.ReportRepositoryImpl
 import com.signal.data.repository.ReservationRepositoryImpl
 import com.signal.data.repository.UserRepositoryImpl
 import com.signal.data.util.PreferenceManager
@@ -38,6 +41,7 @@ import com.signal.domain.repository.DiagnosisRepository
 import com.signal.domain.repository.DiaryRepository
 import com.signal.domain.repository.FeedRepository
 import com.signal.domain.repository.RecommendRepository
+import com.signal.domain.repository.ReportRepository
 import com.signal.domain.repository.ReservationRepository
 import com.signal.domain.repository.UserRepository
 import com.signal.domain.usecase.users.AddFamousSayingUseCase
@@ -54,6 +58,7 @@ import com.signal.domain.usecase.users.SignInUseCase
 import com.signal.domain.usecase.users.SignOutUseCase
 import com.signal.domain.usecase.users.SignUpUseCase
 import com.signal.domain.usecase.users.UpdateUserInformationUseCase
+import com.signal.signal_android.feature.bug.BugViewModel
 import com.signal.signal_android.feature.coin.CoinViewModel
 import com.signal.signal_android.feature.diagnosis.DiagnosisViewModel
 import com.signal.signal_android.feature.file.AttachmentViewModel
@@ -104,6 +109,7 @@ val apiModule: Module
         single { ApiProvider.getRecommendApi(tokenInterceptor = get()) }
         single { ApiProvider.getReservationApi(tokenInterceptor = get()) }
         single { ApiProvider.getCoinApi(tokenInterceptor = get()) }
+        single { ApiProvider.getReportApi(tokenInterceptor = get()) }
     }
 
 val daoModule: Module
@@ -149,6 +155,7 @@ val dataSourceModule: Module
         single<RecommendDataSource> { RecommendDataSourceImpl(recommendApi = get()) }
         single<ReservationDataSource> { ReservationDataSourceImpl(reservationApi = get()) }
         single<CoinDataSource> { CoinDataSourceImpl(coinApi = get()) }
+        single<ReportDataSource> { ReportDataSourceImpl(reportApi = get()) }
     }
 
 val repositoryModule: Module
@@ -179,6 +186,9 @@ val repositoryModule: Module
         }
         single<CoinRepository> {
             CoinRepositoryImpl(coinDataSource = get())
+        }
+        single<ReportRepository> {
+            ReportRepositoryImpl(reportDataSource = get())
         }
     }
 
@@ -242,4 +252,5 @@ val viewModelModule: Module
         viewModel { RecommendViewModel(recommendRepository = get()) }
         viewModel { ReservationViewModel(reservationRepository = get()) }
         viewModel { CoinViewModel(coinRepository = get()) }
+        viewModel { BugViewModel(reportRepository = get()) }
     }
