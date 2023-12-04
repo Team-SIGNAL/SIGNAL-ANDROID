@@ -55,7 +55,7 @@ interface FeedApi {
         @Body createPostRequest: CreatePostRequest,
     )
 
-    @POST(SignalUrl.Feed.FeedId)
+    @PATCH(SignalUrl.Feed.ReportFeed)
     suspend fun reportFeed(
         @Path("feed_id") feedId: UUID,
     )
