@@ -210,7 +210,7 @@ internal fun CreatePost(
 }
 
 @Composable
-private fun PostImage(
+internal fun PostImage(
     uri: () -> Uri?,
     imageUrl: () -> String?,
     onClick: () -> Unit,
