@@ -29,7 +29,7 @@ class DiaryViewModel(
                     _diaries.addAll(it.diaryEntity)
                     setState(
                         copy(
-                            diaries = _diaries,
+                            diaries = _diaries.toMutableStateList(),
                             isAllDiariesEmpty = _diaries.isEmpty(),
                         )
                     )
@@ -71,7 +71,7 @@ class DiaryViewModel(
                     _diaries.addAll(it.diaryEntity)
                     setState(
                         copy(
-                            diaries = _diaries,
+                            diaries = _diaries.toMutableStateList(),
                             isDayDiariesEmpty = _diaries.isEmpty(),
                         )
                     )
