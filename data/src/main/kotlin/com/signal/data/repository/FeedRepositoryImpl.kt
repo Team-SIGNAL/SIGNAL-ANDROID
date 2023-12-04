@@ -65,11 +65,12 @@ class FeedRepositoryImpl(
         image: String?,
     ) = kotlin.runCatching {
         feedDataSource.editPost(
-            feedId = feedId, createPostRequest = CreatePostRequest(
+            feedId = feedId,
+            createPostRequest = CreatePostRequest(
                 title = title,
                 content = content,
                 image = image,
-            )
+            ),
         )
     }
 
