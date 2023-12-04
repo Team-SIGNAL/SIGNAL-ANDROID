@@ -15,8 +15,8 @@ import com.signal.signal_android.designsystem.component.SignalBottomBar
 import com.signal.signal_android.feature.main.diary.Diary
 import com.signal.signal_android.feature.main.feed.Feed
 import com.signal.signal_android.feature.main.home.Home
-import com.signal.signal_android.feature.main.recommend.Recommend
 import com.signal.signal_android.feature.main.mypage.MyPage
+import com.signal.signal_android.feature.main.recommend.Recommend
 import com.signal.signal_android.navigation.NavigationRoute
 import java.util.UUID
 
@@ -37,6 +37,7 @@ internal fun Main(
     moveToRecommends: (recommendType: String) -> Unit,
     moveToCoinHistory: () -> Unit,
     moveToEditProfile: () -> Unit,
+    moveToReportBug: () -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -97,6 +98,7 @@ internal fun Main(
                     moveToMoreAchievement = moveToMoreAchievement,
                     moveToCoinHistory = moveToCoinHistory,
                     moveToEditProfile = moveToEditProfile,
+                    moveToReportBug = moveToReportBug,
                 )
             }
         }

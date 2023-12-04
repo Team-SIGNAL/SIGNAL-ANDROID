@@ -138,6 +138,9 @@ internal fun SignalApp() {
             moveToEditProfile = {
                 navController.navigate(NavigationRoute.Main.EditProfile)
             },
+            moveToReportBug = {
+                navController.navigate(NavigationRoute.User.ReportBug)
+            }
         )
     }
 }
