@@ -1,5 +1,7 @@
 package com.signal.signal_android.feature.reservation
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.signal.domain.entity.FetchDayReservationsEntity
 import com.signal.domain.entity.FetchHospitalsEntity
 import com.signal.domain.entity.FetchReservationDetailsEntity
@@ -9,14 +11,13 @@ import java.time.LocalTime
 import java.util.UUID
 
 data class ReservationState(
-    val dayReservationEntity: List<FetchDayReservationsEntity.DayReservationEntity>,
+    val dayReservationEntity: SnapshotStateList<FetchDayReservationsEntity.DayReservationEntity>,
     val hospitals: List<FetchHospitalsEntity.HospitalEntity>,
     val reservationDetailsEntity: FetchReservationDetailsEntity,
     val isDayReservationsEmpty: Boolean,
     val isHospitalsEmpty: Boolean,
     val date: String,
     val reason: String,
-    val reservationDate: String,
     val reservationTime: String,
     val time: String,
     val reservationStatus: ReservationStatus,
@@ -25,7 +26,7 @@ data class ReservationState(
 ) {
     companion object {
         fun getDefaultState() = ReservationState(
-            dayReservationEntity = listOf(),
+            dayReservationEntity = mutableStateListOf(),
             hospitals = listOf(),
             reservationDetailsEntity = FetchReservationDetailsEntity(
                 image = null,
@@ -40,7 +41,6 @@ data class ReservationState(
             isHospitalsEmpty = true,
             date = LocalDate.now().toString(),
             reason = "",
-            reservationDate = LocalDate.now().toString(),
             reservationTime = LocalTime.now().toString(),
             time = "${LocalTime.now().hour}:${LocalTime.now().minute}",
             reservationStatus = ReservationStatus.WAIT,
