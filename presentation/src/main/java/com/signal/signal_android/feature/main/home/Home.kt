@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -85,11 +86,12 @@ internal fun Home(
                         .size(30.dp)
                         .clip(CircleShape)
                         .signalClickable(
-                            rippleEnabled = true,
+                            rippleEnabled = false,
                             onClick = {},
                         ),
                     model = state.profile ?: R.drawable.ic_profile_image,
                     contentDescription = stringResource(id = R.string.my_page_profile_image),
+                    contentScale = ContentScale.Crop,
                 )
             }
             Spacer(modifier = Modifier.height(34.dp))
