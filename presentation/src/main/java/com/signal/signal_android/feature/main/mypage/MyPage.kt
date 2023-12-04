@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -378,6 +379,7 @@ private fun ProfileImage(
                 .clip(CircleShape),
             model = profileImageUrl ?: R.drawable.ic_profile_image,
             contentDescription = stringResource(id = R.string.my_page_profile_image),
+            contentScale = ContentScale.Crop,
         )
         Image(
             modifier = Modifier
