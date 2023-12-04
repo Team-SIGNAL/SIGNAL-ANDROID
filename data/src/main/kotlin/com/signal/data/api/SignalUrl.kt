@@ -9,6 +9,7 @@ object SignalUrl {
     private const val reservation = "/reservation"
     private const val admin = "/admin"
     private const val coin = "/coin"
+    private const val report = "/report"
 
     object Users {
         const val SignIn = "$users/signin"
@@ -39,11 +40,11 @@ object SignalUrl {
         const val DeleteDiary = "$diary/{diary_id}"
     }
 
-    object Recommend{
+    object Recommend {
         const val FetchRecommends = "$recommend/list"
         const val RecommendId = "$recommend/{recommend_id}"
     }
-      
+
     object Reservation {
         const val FetchHospitals = "$admin/hospital/list"
         const val FetchDayReservation = "$reservation/user"
@@ -54,5 +55,9 @@ object SignalUrl {
     object Coin {
         const val CreateCoin = coin
         const val FetchCoins = "$coin/list"
+    }
+
+    object Report {
+        const val ReportBug = report
     }
 }

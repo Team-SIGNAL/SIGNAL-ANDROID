@@ -41,12 +41,16 @@ object ApiProvider {
     fun getRecommendApi(tokenInterceptor: TokenInterceptor): RecommendApi {
         return getRetrofit(tokenInterceptor).create(RecommendApi::class.java)
     }
-    
+
     fun getReservationApi(tokenInterceptor: TokenInterceptor): ReservationApi {
         return getRetrofit(tokenInterceptor).create(ReservationApi::class.java)
     }
 
     fun getCoinApi(tokenInterceptor: TokenInterceptor): CoinApi {
         return getRetrofit(tokenInterceptor).create(CoinApi::class.java)
+    }
+
+    fun getReportApi(tokenInterceptor: TokenInterceptor): ReportApi {
+        return getRetrofit(tokenInterceptor).create(ReportApi::class.java)
     }
 }
