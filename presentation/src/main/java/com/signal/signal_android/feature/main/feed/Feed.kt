@@ -120,8 +120,6 @@ internal fun Feed(
             Header(
                 title = stringResource(id = R.string.feed),
                 leadingIcon = null,
-                trailingIcon = painterResource(id = R.drawable.ic_search),
-                onTrailingClicked = {},
             )
             Filter(
                 expanded = { filterExpanded },
