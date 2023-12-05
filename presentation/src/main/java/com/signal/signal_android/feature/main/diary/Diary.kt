@@ -70,7 +70,7 @@ internal fun Diary(
     var dayState by remember { mutableStateOf(formatter.format(date).split("-").last()) }
 
     LaunchedEffect("$yearState-$monthState-$dayState") {
-        diaryViewModel.setDate("$yearState-$monthState-$dayState")
+        diaryViewModel.setDate("$yearState-$monthState-${dayState.padStart(2, '0')}")
         diaryViewModel.fetchDayDiary()
     }
 
