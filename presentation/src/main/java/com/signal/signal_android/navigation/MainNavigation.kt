@@ -155,10 +155,10 @@ internal fun NavGraphBuilder.mainNavigation(
         }
 
         composable(
-            route = "${NavigationRoute.Main.Recommends}/${NavArgument.RecommendType}",
-            arguments = listOf(navArgument("recommendType") { NavType.StringType }),
+            route = "${NavigationRoute.Main.Recommends}/${NavArgument.Category}",
+            arguments = listOf(navArgument("category") { NavType.StringType }),
         ) {
-            val category = it.arguments?.getString("category") ?: Category.MUSIC.toString()
+            val category = it.arguments?.getString("category")!!
 
             Recommends(
                 moveToRecommendDetails = moveToRecommendDetails,
