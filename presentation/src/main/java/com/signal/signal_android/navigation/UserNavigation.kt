@@ -3,6 +3,7 @@ package com.signal.signal_android.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.signal.signal_android.feature.bug.ReportBug
 import com.signal.signal_android.feature.diagnosis.Diagnosis
 import com.signal.signal_android.feature.diagnosis.DiagnosisComplete
 import com.signal.signal_android.feature.diagnosis.DiagnosisLanding
@@ -46,6 +47,10 @@ internal fun NavGraphBuilder.userNavigation(
 
         composable(NavigationRoute.User.DiagnosisComplete) {
             DiagnosisComplete(moveToMain = moveToMain)
+        }
+
+        composable(NavigationRoute.User.ReportBug){
+            ReportBug(moveToBack = moveToBack)
         }
     }
 }

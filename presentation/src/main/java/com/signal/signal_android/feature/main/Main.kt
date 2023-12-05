@@ -36,6 +36,7 @@ internal fun Main(
     moveToRecommends: (recommendType: String) -> Unit,
     moveToCoinHistory: () -> Unit,
     moveToEditProfile: () -> Unit,
+    moveToReportBug: () -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -95,6 +96,7 @@ internal fun Main(
                     moveToMoreAchievement = moveToMoreAchievement,
                     moveToCoinHistory = moveToCoinHistory,
                     moveToEditProfile = moveToEditProfile,
+                    moveToReportBug = moveToReportBug,
                 )
             }
         }

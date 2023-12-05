@@ -245,7 +245,7 @@
     <string name="emotion_sobbing">sobbing image</string>
     <string name="emotion_annoying">annoying image</string>
     <string name="emotion_boredom">boredom image</string>
-    
+
     <!--reservation-->
     <string name="reservation">진료 예약하기</string>
     <string name="reservation_approve">승인 완료</string>
@@ -254,7 +254,7 @@
     <string name="reservation_clinic">진료 예약</string>
     <string name="reservation_hospital_image">병원 이미지</string>
     <string name="reservation_date">일시</string>
-    
+
     <!--hospital-->
     <string name="hospital_get_hospital_list">병원 조회</string>
 
@@ -298,4 +298,8 @@
     <string name="get_3_coin">3 코인 획득!</string>
     <string name="get_2_coin">2 코인 획득!</string>
     <string name="get_1_coin">1 코인 획득!</string>
+
+    <!--report bug-->
+    <string name="report_bug_header_title">버그 제보</string>
+    <string name="report_bug_hint_reason">버그 내용을 입력해주세요</string>
 </resources>

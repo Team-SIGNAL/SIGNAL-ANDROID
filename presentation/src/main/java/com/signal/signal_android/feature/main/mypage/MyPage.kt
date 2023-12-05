@@ -60,6 +60,7 @@ internal fun MyPage(
     moveToMoreAchievement: () -> Unit,
     moveToCoinHistory: () -> Unit,
     moveToEditProfile: () -> Unit,
+    moveToReportBug: () -> Unit,
     myPageViewModel: MyPageViewModel = koinViewModel(),
 ) {
     var showSecessionDialog by remember { mutableStateOf(false) }
@@ -152,13 +153,13 @@ internal fun MyPage(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            /*CardUserTool(
+            CardUserTool(
                 text = stringResource(id = R.string.my_page_bug_report),
                 textColor = SignalColor.Black,
                 icon = painterResource(id = R.drawable.ic_bug),
                 tint = SignalColor.Black,
-                onClick = { *//* TODO *//* },
-            )*/
+                onClick = moveToReportBug,
+            )
             CardUserTool(
                 text = stringResource(id = R.string.my_page_logout),
                 textColor = SignalColor.Black,

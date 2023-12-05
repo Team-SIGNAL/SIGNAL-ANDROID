@@ -41,6 +41,7 @@ internal fun NavGraphBuilder.mainNavigation(
     moveToRecommendDetails: (recommendId: UUID) -> Unit,
     moveToCoinHistory: () -> Unit,
     moveToEditProfile: () -> Unit,
+    moveToReportBug: () -> Unit,
 ) {
     navigation(
         startDestination = NavigationRoute.Main.Main,
@@ -61,6 +62,7 @@ internal fun NavGraphBuilder.mainNavigation(
                 moveToRecommends = moveToRecommends,
                 moveToCoinHistory = moveToCoinHistory,
                 moveToEditProfile = moveToEditProfile,
+                moveToReportBug = moveToReportBug,
             )
         }
 
