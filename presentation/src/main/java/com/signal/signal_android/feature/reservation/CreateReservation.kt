@@ -133,7 +133,7 @@ internal fun CreateReservation(
         Column(
             modifier = Modifier.padding(
                 vertical = 8.dp,
-            )
+            ),
         ) {
             ReservationDialog(
                 datePickerState = { datePickerState },
