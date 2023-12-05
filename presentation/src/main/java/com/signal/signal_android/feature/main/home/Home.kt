@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
@@ -71,6 +72,134 @@ internal fun Home(
     var dialogState by remember { mutableStateOf(false) }
     val showDialog = { dialogState = true }
     val hideDialog = { dialogState = false }
+
+    if (dialogState) {
+        Dialog(onDismissRequest = { dialogState = false }) {
+            Column(
+                modifier = Modifier
+                    .background(
+                        color = SignalColor.White,
+                        shape = RoundedCornerShape(6.dp),
+                    )
+                    .padding(
+                        horizontal = 55.dp,
+                        vertical = 30.dp,
+                    ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                BodyLarge2(
+                    text = stringResource(id = R.string.home_information_title),
+                    color = SignalColor.Black,
+                )
+                Body(
+                    text = stringResource(id = R.string.home_information_description),
+                    color = SignalColor.Gray500,
+                )
+                Spacer(modifier = Modifier.height(30.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        BodyStrong(
+                            text = stringResource(id = R.string.home_very_high),
+                            color = SignalColor.Wine,
+                        )
+                        BodyStrong(
+                            text = stringResource(id = R.string.home_high),
+                            color = SignalColor.Error,
+                        )
+                        BodyStrong(
+                            text = stringResource(id = R.string.home_normal),
+                            color = SignalColor.Yellow,
+                        )
+                        BodyStrong(
+                            text = stringResource(id = R.string.home_low),
+                            color = SignalColor.Primary100,
+                        )
+                    }
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        Body(
+                            text = stringResource(id = R.string.home_very_high_score),
+                            color = SignalColor.Black,
+                        )
+                        Body(
+                            text = stringResource(id = R.string.home_high_score),
+                            color = SignalColor.Black,
+                        )
+                        Body(
+                            text = stringResource(id = R.string.home_normal_score),
+                            color = SignalColor.Black,
+                        )
+                        Body(
+                            text = stringResource(id = R.string.home_low_score),
+                            color = SignalColor.Black,
+                        )
+                    }
+                }
+                /*Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        BodyStrong(
+                            text = stringResource(id = R.string.home_very_high),
+                            color = SignalColor.Wine,
+                        )
+                        Body(
+                            text = stringResource(id = R.string.home_very_high_score),
+                            color = SignalColor.Black,
+                        )
+                    }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(30.dp),
+                    ) {
+                        BodyStrong(
+                            text = stringResource(id = R.string.home_high),
+                            color = SignalColor.Error,
+                        )
+                        Body(
+                            text = stringResource(id = R.string.home_high_score),
+                            color = SignalColor.Black,
+                        )
+                    }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(30.dp),
+                    ) {
+                        BodyStrong(
+                            text = stringResource(id = R.string.home_normal),
+                            color = SignalColor.Yellow,
+                        )
+                        Body(
+                            text = stringResource(id = R.string.home_normal_score),
+                            color = SignalColor.Black,
+                        )
+                    }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(30.dp),
+                    ) {
+                        BodyStrong(
+                            text = stringResource(id = R.string.home_low),
+                            color = SignalColor.Primary100,
+                        )
+                        Body(
+                            text = stringResource(id = R.string.home_low_score),
+                            color = SignalColor.Black,
+                        )
+                    }
+                }*/
+            }
+        }
+    }
 
     Column {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
