@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -42,10 +43,10 @@ import com.signal.signal_android.designsystem.foundation.BodyLarge2
 import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.foundation.SubTitle
 import com.signal.signal_android.designsystem.textfield.SignalTextField
-import java.time.LocalDateTime
 import com.signal.signal_android.feature.coin.CoinDialog
 import com.signal.signal_android.feature.coin.CoinSideEffect
 import com.signal.signal_android.feature.coin.CoinViewModel
+import java.time.LocalDateTime
 
 @Composable
 internal fun CommentDialog(
@@ -215,6 +216,7 @@ private fun Comment(
                 .clip(CircleShape),
             model = profileImageUrl ?: R.drawable.ic_profile_image,
             contentDescription = stringResource(id = R.string.my_page_profile_image),
+            contentScale = ContentScale.Crop,
         )
         Spacer(modifier = Modifier.width(8.dp))
         Column {

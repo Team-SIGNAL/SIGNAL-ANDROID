@@ -1,5 +1,7 @@
 package com.signal.signal_android.feature.main.diary
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.signal.domain.entity.DiariesEntity
 import com.signal.domain.entity.DiaryDetailsEntity
 import com.signal.domain.entity.MonthDiaryEntity
@@ -8,7 +10,7 @@ import java.time.LocalDate
 import java.util.UUID
 
 data class DiaryState(
-    val diaries: List<DiariesEntity.DiaryEntity>,
+    val diaries: SnapshotStateList<DiariesEntity.DiaryEntity>,
     val monthDiaries: List<MonthDiaryEntity.MonthDiaryEntity>,
     val diaryDetailsEntity: DiaryDetailsEntity,
     val isAllDiariesEmpty: Boolean,
@@ -23,7 +25,7 @@ data class DiaryState(
 ) {
     companion object {
         fun getDefaultState() = DiaryState(
-            diaries = listOf(),
+            diaries = mutableStateListOf(),
             monthDiaries = listOf(),
             diaryDetailsEntity = DiaryDetailsEntity(
                 date = "",

@@ -51,16 +51,16 @@ internal fun AllDiary(
         diaryViewModel.fetchAllDiary()
     }
 
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+    ) {
         Header(
             title = stringResource(id = R.string.diary_all_diary),
             onLeadingClicked = moveToBack,
         )
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-        ) {
+        Column {
             Row(modifier = Modifier.fillMaxSize()) {
                 Diaries(
                     moveToDiaryDetails = moveToDiaryDetails,

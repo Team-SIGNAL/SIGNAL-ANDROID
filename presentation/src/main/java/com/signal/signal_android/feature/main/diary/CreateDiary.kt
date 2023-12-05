@@ -238,7 +238,7 @@ private fun DiaryField(
             alignment = Alignment.Top,
             showLength = true,
             singleLine = false,
-            maxLength = 100,
+            maxLength = 2000,
         )
         PostImage(
             uri = { imagePreview },
