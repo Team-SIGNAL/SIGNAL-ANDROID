@@ -58,7 +58,7 @@ internal fun Recommends(
             Category.MUSIC -> stringResource(id = R.string.recommend_music)
             Category.SPORT -> stringResource(id = R.string.recommend_exercise)
             Category.VIDEO -> stringResource(id = R.string.recommend_video)
-            Category.HOBBY -> stringResource(id = R.string.recommend_hospital)
+            Category.HOBBY -> stringResource(id = R.string.recommend_hobby)
         }
     }
 

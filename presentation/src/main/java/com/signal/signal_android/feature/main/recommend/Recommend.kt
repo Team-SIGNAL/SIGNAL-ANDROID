@@ -52,7 +52,7 @@ private val strings = listOf(
     R.string.recommend_music,
     R.string.recommend_exercise,
     R.string.recommend_video,
-    R.string.recommend_hospital,
+    R.string.recommend_hobby,
 )
 
 @Composable
