@@ -149,7 +149,8 @@ internal fun FeedDetails(
                     AsyncImage(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp),
+                            .height(200.dp)
+                            .clip(CircleShape),
                         model = details.image,
                         contentDescription = stringResource(id = R.string.feed_details_image),
                     )
