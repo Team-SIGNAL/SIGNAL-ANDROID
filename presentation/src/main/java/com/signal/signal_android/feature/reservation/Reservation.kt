@@ -101,7 +101,7 @@ internal fun Reservation(
     }
 
     LaunchedEffect("$yearState-$monthState-$dayState") {
-        reservationViewModel.setDate("$yearState-$monthState-$dayState")
+        reservationViewModel.setDate("$yearState-$monthState-${dayState.padStart(2, '0')}")
         reservationViewModel.fetchDayReservations()
     }
 

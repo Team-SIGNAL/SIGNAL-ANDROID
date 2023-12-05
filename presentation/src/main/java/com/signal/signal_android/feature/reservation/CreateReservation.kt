@@ -47,6 +47,7 @@ import com.signal.signal_android.designsystem.foundation.SignalColor
 import com.signal.signal_android.designsystem.textfield.SignalTextField
 import com.signal.signal_android.designsystem.util.signalClickable
 import com.signal.signal_android.feature.coin.CoinDialog
+import com.signal.signal_android.feature.coin.CoinSideEffect
 import com.signal.signal_android.feature.coin.CoinViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.time.Instant
@@ -100,6 +101,16 @@ internal fun CreateReservation(
         }
     }
 
+    LaunchedEffect(Unit) {
+        coinViewModel.sideEffect.collect {
+            when (it) {
+                is CoinSideEffect.Success -> {
+                    showCoinDialog = true
+                }
+            }
+        }
+    }
+
     if (showCoinDialog) {
         Dialog(onDismissRequest = { showCoinDialog = false }) {
             CoinDialog(
@@ -110,16 +121,19 @@ internal fun CreateReservation(
         }
     }
 
-    Column {
+    Column(
+        modifier = Modifier.padding(
+            horizontal = 16.dp,
+        )
+    ) {
         Header(
             title = stringResource(id = R.string.reservation_clinic),
             onLeadingClicked = moveToBack,
         )
         Column(
             modifier = Modifier.padding(
-                horizontal = 16.dp,
                 vertical = 8.dp,
-            )
+            ),
         ) {
             ReservationDialog(
                 datePickerState = { datePickerState },
