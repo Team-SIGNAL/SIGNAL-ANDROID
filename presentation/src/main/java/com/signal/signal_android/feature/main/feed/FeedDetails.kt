@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -108,8 +109,8 @@ internal fun FeedDetails(
     ModalBottomSheetLayout(
         sheetContent = {
             CommentDialog(
-                    feedViewModel = feedViewModel,
-                    coinViewModel = coinViewModel,
+                feedViewModel = feedViewModel,
+                coinViewModel = coinViewModel,
             )
         },
         sheetState = sheetState,
@@ -149,10 +150,10 @@ internal fun FeedDetails(
                     AsyncImage(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp)
-                            .clip(CircleShape),
+                            .height(200.dp),
                         model = details.image,
                         contentDescription = stringResource(id = R.string.feed_details_image),
+                        contentScale = ContentScale.Crop,
                     )
                 }
                 Spacer(modifier = Modifier.height(12.dp))
