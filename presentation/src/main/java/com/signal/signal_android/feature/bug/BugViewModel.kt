@@ -1,6 +1,5 @@
 package com.signal.signal_android.feature.bug
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.signal.domain.repository.ReportRepository
 import com.signal.signal_android.BaseViewModel
@@ -31,7 +30,6 @@ internal class BugViewModel(
     }
 
     internal fun setImage(image: String){
-        Log.d("TEST", image)
         setState(state.value.copy(image = image))
     }
 }

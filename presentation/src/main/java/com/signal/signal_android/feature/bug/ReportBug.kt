@@ -112,6 +112,7 @@ internal fun ReportBug(
                 bugViewModel.setImage(image = attachmentState.imageUrl)
                 bugViewModel.reportBug()
             },
+            enabled = state.content.isNotEmpty(),
         )
     }
 }
