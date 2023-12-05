@@ -5,4 +5,5 @@ sealed interface FeedSideEffect {
     object DeleteSuccess: FeedSideEffect
     object ClearFocus: FeedSideEffect
     object CommentSuccess: FeedSideEffect
+    object ReportSuccess: FeedSideEffect
 }

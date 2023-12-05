@@ -1,8 +1,8 @@
 package com.signal.domain.repository
 
-import com.signal.domain.entity.PostsEntity
 import com.signal.domain.entity.PostCommentsEntity
 import com.signal.domain.entity.PostDetailsEntity
+import com.signal.domain.entity.PostsEntity
 import com.signal.domain.enums.Tag
 import java.util.UUID
 
@@ -36,4 +36,6 @@ interface FeedRepository {
         content: String,
         image: String?,
     ): Result<Unit>
+
+    suspend fun reportFeed(feedId: UUID): Result<Unit>
 }

@@ -15,8 +15,8 @@ import com.signal.signal_android.designsystem.component.SignalBottomBar
 import com.signal.signal_android.feature.main.diary.Diary
 import com.signal.signal_android.feature.main.feed.Feed
 import com.signal.signal_android.feature.main.home.Home
-import com.signal.signal_android.feature.main.recommend.Recommend
 import com.signal.signal_android.feature.main.mypage.MyPage
+import com.signal.signal_android.feature.main.recommend.Recommend
 import com.signal.signal_android.navigation.NavigationRoute
 import java.util.UUID
 
@@ -27,7 +27,6 @@ internal fun Main(
     moveToLanding: () -> Unit,
     moveToFeedDetails: (feedId: UUID) -> Unit,
     moveToCreatePost: (feedId: UUID?) -> Unit,
-    moveToReport: () -> Unit,
     moveToDiagnosisLanding: () -> Unit,
     moveToCreateDiary: () -> Unit,
     moveToDiaryDetails: (diaryId: UUID) -> Unit,
@@ -82,7 +81,6 @@ internal fun Main(
                 Feed(
                     moveToFeedDetails = moveToFeedDetails,
                     moveToCreatePost = moveToCreatePost,
-                    moveToReport = moveToReport,
                 )
             }
 

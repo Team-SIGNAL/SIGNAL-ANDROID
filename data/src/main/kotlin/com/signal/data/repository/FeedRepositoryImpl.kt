@@ -70,7 +70,11 @@ class FeedRepositoryImpl(
                 title = title,
                 content = content,
                 image = image,
-            )
+            ),
         )
+    }
+
+    override suspend fun reportFeed(feedId: UUID) = kotlin.runCatching {
+        feedDataSource.reportFeed(feedId = feedId)
     }
 }

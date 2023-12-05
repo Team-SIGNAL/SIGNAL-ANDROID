@@ -88,7 +88,7 @@ internal fun Home(
                             rippleEnabled = true,
                             onClick = {},
                         ),
-                    model = state.profile ?: R.drawable.ic_profile_image,
+                    model = myPageState.profile ?: R.drawable.ic_profile_image,
                     contentDescription = stringResource(id = R.string.my_page_profile_image),
                 )
             }

@@ -179,6 +179,22 @@ internal class FeedViewModel(
         }
     }
 
+    internal fun reportFeed() {
+        with(state.value) {
+            if (feedId != null) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    feedRepository.reportFeed(feedId = feedId).onSuccess {
+                        postSideEffect(FeedSideEffect.ReportSuccess)
+                    }.onFailure {
+                        if (it is KotlinNullPointerException) {
+                            postSideEffect(FeedSideEffect.ReportSuccess)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     internal fun nextPage() {
         with(state.value) {
             setState(copy(page = page + 1))

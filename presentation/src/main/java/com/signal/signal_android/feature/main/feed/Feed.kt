@@ -61,14 +61,14 @@ import java.util.UUID
 internal fun Feed(
     moveToFeedDetails: (feedId: UUID) -> Unit,
     moveToCreatePost: (feedId: UUID?) -> Unit,
-    moveToReport: () -> Unit,
     feedViewModel: FeedViewModel = koinViewModel(),
 ) {
     val state by feedViewModel.state.collectAsState()
 
     var expanded by remember { mutableStateOf(UUID.randomUUID()) }
 
-    var showDialog by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var showReportDialog by remember { mutableStateOf(false) }
 
     val alpha by animateFloatAsState(
         targetValue = if (state.posts.isEmpty()) 1f else 0f,
@@ -80,14 +80,27 @@ internal fun Feed(
         feedViewModel.fetchPosts()
     }
 
-    if (showDialog) {
-        Dialog(onDismissRequest = { showDialog = false }) {
+    if (showDeleteDialog) {
+        Dialog(onDismissRequest = { showDeleteDialog = false }) {
             SignalDialog(
                 title = stringResource(id = R.string.feed_delete_dialog_title),
-                onCancelBtnClick = { showDialog = false },
+                onCancelBtnClick = { showDeleteDialog = false },
                 onCheckBtnClick = {
-                    showDialog = false
+                    showDeleteDialog = false
                     feedViewModel.deletePost()
+                },
+            )
+        }
+    }
+
+    if (showReportDialog) {
+        Dialog(onDismissRequest = { showReportDialog = false }) {
+            SignalDialog(
+                title = stringResource(id = R.string.feed_report_dialog_title),
+                onCancelBtnClick = { showReportDialog = false },
+                onCheckBtnClick = {
+                    showReportDialog = false
+                    feedViewModel.reportFeed()
                 },
             )
         }
@@ -123,7 +136,7 @@ internal fun Feed(
             Box {
                 Posts(
                     moveToFeedDetails = moveToFeedDetails,
-                    moveToReport = moveToReport,
+                    moveToReport = { showReportDialog = true },
                     posts = { state.posts },
                     showDropDown = {
                         feedViewModel.setFeedId(it)
@@ -131,7 +144,7 @@ internal fun Feed(
                     },
                     expanded = expanded,
                     onDismissRequest = { expanded = UUID.randomUUID() },
-                    onDelete = { showDialog = true },
+                    onDelete = { showDeleteDialog = true },
                     onEdit = { moveToCreatePost(state.feedId) },
                     nextPage = {
                         if (state.hasNextPage) {

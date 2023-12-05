@@ -32,4 +32,6 @@ interface FeedDataSource {
         feedId: UUID,
         createPostRequest: CreatePostRequest,
     )
+
+    suspend fun reportFeed(feedId: UUID)
 }

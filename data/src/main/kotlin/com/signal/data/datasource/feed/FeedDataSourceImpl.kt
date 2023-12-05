@@ -63,5 +63,9 @@ class FeedDataSourceImpl(
             createPostRequest = createPostRequest,
         )
     }.sendRequest()
+
+    override suspend fun reportFeed(feedId: UUID) = ExceptionHandler<Unit>().httpRequest {
+        feedApi.reportFeed(feedId = feedId)
+    }.sendRequest()
 }
 
