@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -75,129 +76,7 @@ internal fun Home(
 
     if (dialogState) {
         Dialog(onDismissRequest = { dialogState = false }) {
-            Column(
-                modifier = Modifier
-                    .background(
-                        color = SignalColor.White,
-                        shape = RoundedCornerShape(6.dp),
-                    )
-                    .padding(
-                        horizontal = 55.dp,
-                        vertical = 30.dp,
-                    ),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                BodyLarge2(
-                    text = stringResource(id = R.string.home_information_title),
-                    color = SignalColor.Black,
-                )
-                Body(
-                    text = stringResource(id = R.string.home_information_description),
-                    color = SignalColor.Gray500,
-                )
-                Spacer(modifier = Modifier.height(30.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        BodyStrong(
-                            text = stringResource(id = R.string.home_very_high),
-                            color = SignalColor.Wine,
-                        )
-                        BodyStrong(
-                            text = stringResource(id = R.string.home_high),
-                            color = SignalColor.Error,
-                        )
-                        BodyStrong(
-                            text = stringResource(id = R.string.home_normal),
-                            color = SignalColor.Yellow,
-                        )
-                        BodyStrong(
-                            text = stringResource(id = R.string.home_low),
-                            color = SignalColor.Primary100,
-                        )
-                    }
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        Body(
-                            text = stringResource(id = R.string.home_very_high_score),
-                            color = SignalColor.Black,
-                        )
-                        Body(
-                            text = stringResource(id = R.string.home_high_score),
-                            color = SignalColor.Black,
-                        )
-                        Body(
-                            text = stringResource(id = R.string.home_normal_score),
-                            color = SignalColor.Black,
-                        )
-                        Body(
-                            text = stringResource(id = R.string.home_low_score),
-                            color = SignalColor.Black,
-                        )
-                    }
-                }
-                /*Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        BodyStrong(
-                            text = stringResource(id = R.string.home_very_high),
-                            color = SignalColor.Wine,
-                        )
-                        Body(
-                            text = stringResource(id = R.string.home_very_high_score),
-                            color = SignalColor.Black,
-                        )
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(30.dp),
-                    ) {
-                        BodyStrong(
-                            text = stringResource(id = R.string.home_high),
-                            color = SignalColor.Error,
-                        )
-                        Body(
-                            text = stringResource(id = R.string.home_high_score),
-                            color = SignalColor.Black,
-                        )
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(30.dp),
-                    ) {
-                        BodyStrong(
-                            text = stringResource(id = R.string.home_normal),
-                            color = SignalColor.Yellow,
-                        )
-                        Body(
-                            text = stringResource(id = R.string.home_normal_score),
-                            color = SignalColor.Black,
-                        )
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(30.dp),
-                    ) {
-                        BodyStrong(
-                            text = stringResource(id = R.string.home_low),
-                            color = SignalColor.Primary100,
-                        )
-                        Body(
-                            text = stringResource(id = R.string.home_low_score),
-                            color = SignalColor.Black,
-                        )
-                    }
-                }*/
-            }
+            ChartInformationDialog()
         }
     }
 
@@ -286,6 +165,74 @@ internal fun Home(
             }
             Spacer(modifier = Modifier.weight(1f))
         }
+    }
+}
+
+@Composable
+private fun ChartInformationDialog() {
+    Column(
+        modifier = Modifier
+            .background(
+                color = SignalColor.White,
+                shape = RoundedCornerShape(6.dp),
+            )
+            .padding(
+                horizontal = 55.dp,
+                vertical = 30.dp,
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        BodyLarge2(
+            text = stringResource(id = R.string.home_information_title),
+            color = SignalColor.Black,
+        )
+        Body(
+            modifier = Modifier.padding(bottom = 30.dp),
+            text = stringResource(id = R.string.home_information_description),
+            color = SignalColor.Gray500,
+        )
+        ChartInformationText(
+            scoreName = stringResource(id = R.string.home_very_high),
+            scoreNameColor = SignalColor.Wine,
+            score = stringResource(id = R.string.home_very_high_score),
+        )
+        ChartInformationText(
+            scoreName = stringResource(id = R.string.home_high),
+            scoreNameColor = SignalColor.Error,
+            score = stringResource(id = R.string.home_high_score),
+        )
+        ChartInformationText(
+            scoreName = stringResource(id = R.string.home_normal),
+            scoreNameColor = SignalColor.Yellow,
+            score = stringResource(id = R.string.home_normal_score),
+        )
+        ChartInformationText(
+            scoreName = stringResource(id = R.string.home_low),
+            scoreNameColor = SignalColor.Primary100,
+            score = stringResource(id = R.string.home_low_score),
+        )
+    }
+}
+
+@Composable
+private fun ChartInformationText(
+    scoreName: String,
+    scoreNameColor: Color,
+    score: String,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(0.8f),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        BodyStrong(
+            text = scoreName,
+            color = scoreNameColor,
+        )
+        Body(
+            text = score,
+            color = SignalColor.Black,
+        )
     }
 }
 
