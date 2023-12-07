@@ -52,4 +52,10 @@ object SignalColor {
 
     @Stable
     val Black = Color(0xFF000000)
+
+    @Stable
+    val Wine = Color(0xFFAF0000)
+
+    @Stable
+    val Yellow = Color(0xFFFFE040)
 }

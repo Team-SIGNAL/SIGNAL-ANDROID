@@ -27,11 +27,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
@@ -71,6 +73,12 @@ internal fun Home(
     var dialogState by remember { mutableStateOf(false) }
     val showDialog = { dialogState = true }
     val hideDialog = { dialogState = false }
+
+    if (dialogState) {
+        Dialog(onDismissRequest = { dialogState = false }) {
+            ChartInformationDialog()
+        }
+    }
 
     Column {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -157,6 +165,74 @@ internal fun Home(
             }
             Spacer(modifier = Modifier.weight(1f))
         }
+    }
+}
+
+@Composable
+private fun ChartInformationDialog() {
+    Column(
+        modifier = Modifier
+            .background(
+                color = SignalColor.White,
+                shape = RoundedCornerShape(6.dp),
+            )
+            .padding(
+                horizontal = 55.dp,
+                vertical = 30.dp,
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        BodyLarge2(
+            text = stringResource(id = R.string.home_information_title),
+            color = SignalColor.Black,
+        )
+        Body(
+            modifier = Modifier.padding(bottom = 30.dp),
+            text = stringResource(id = R.string.home_information_description),
+            color = SignalColor.Gray500,
+        )
+        ChartInformationText(
+            scoreName = stringResource(id = R.string.home_very_high),
+            scoreNameColor = SignalColor.Wine,
+            score = stringResource(id = R.string.home_very_high_score),
+        )
+        ChartInformationText(
+            scoreName = stringResource(id = R.string.home_high),
+            scoreNameColor = SignalColor.Error,
+            score = stringResource(id = R.string.home_high_score),
+        )
+        ChartInformationText(
+            scoreName = stringResource(id = R.string.home_normal),
+            scoreNameColor = SignalColor.Yellow,
+            score = stringResource(id = R.string.home_normal_score),
+        )
+        ChartInformationText(
+            scoreName = stringResource(id = R.string.home_low),
+            scoreNameColor = SignalColor.Primary100,
+            score = stringResource(id = R.string.home_low_score),
+        )
+    }
+}
+
+@Composable
+private fun ChartInformationText(
+    scoreName: String,
+    scoreNameColor: Color,
+    score: String,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(0.8f),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        BodyStrong(
+            text = scoreName,
+            color = scoreNameColor,
+        )
+        Body(
+            text = score,
+            color = SignalColor.Black,
+        )
     }
 }
 
