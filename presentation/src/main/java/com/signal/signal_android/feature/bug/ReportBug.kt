@@ -99,7 +99,7 @@ internal fun ReportBug(
             alignment = Alignment.Top,
         )
         PostImage(
-            uri = { imagePreview },
+            imagePreview = { imagePreview },
             imageUrl = { imageUrl },
         ) {
             focusManager.clearFocus()
