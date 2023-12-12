@@ -90,6 +90,9 @@ internal fun CreatePost(
 
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         it?.run {
+            feedViewModel.setButtonEnabled(
+                enabled = state.title.isNotBlank() && state.content.isNotBlank(),
+            )
             imagePreview = it
             attachmentViewModel.setFile(
                 FileUtil.toFile(
@@ -182,7 +185,7 @@ internal fun CreatePost(
             maxLength = 300,
         )
         PostImage(
-            uri = { imagePreview },
+            imagePreview = { imagePreview },
             imageUrl = { details.image },
         ) {
             focusManager.clearFocus()
@@ -211,7 +214,7 @@ internal fun CreatePost(
 
 @Composable
 internal fun PostImage(
-    uri: () -> Uri?,
+    imagePreview: () -> Uri?,
     imageUrl: () -> String?,
     onClick: () -> Unit,
 ) {
@@ -235,7 +238,7 @@ internal fun PostImage(
         )
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
-            model = if (imageUrl().isNullOrBlank()) uri()
+            model = if (imageUrl().isNullOrBlank() || imagePreview() != null) imagePreview()
             else imageUrl(),
             contentDescription = stringResource(id = R.string.feed_image),
             contentScale = ContentScale.Crop,

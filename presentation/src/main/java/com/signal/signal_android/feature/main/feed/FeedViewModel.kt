@@ -63,6 +63,10 @@ internal class FeedViewModel(
         }
     }
 
+    internal fun setButtonEnabled(enabled: Boolean) {
+        setState(state.value.copy(buttonEnabled = enabled))
+    }
+
     internal fun fetchPostDetails() {
         with(state.value) {
             if (feedId != null) {
